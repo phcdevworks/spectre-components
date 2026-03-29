@@ -1,0 +1,90 @@
+{
+  "name": "@phcdevworks/spectre-components",
+  "version": "0.1.0",
+  "description": "@phcdevworks/spectre-components is the Lit-based component layer of the Spectre system for reusable, accessible, framework-agnostic web components.",
+  "keywords": [
+    "phcdevworks",
+    "spectre",
+    "spectre-components",
+    "web-components",
+    "lit",
+    "design-system",
+    "component-library",
+    "framework-agnostic",
+    "accessible-components"
+  ],
+  "author": "PHCDevworks",
+  "license": "MIT",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/phcdevworks"
+    },
+    {
+      "type": "buymeacoffee",
+      "url": "https://buymeacoffee.com/phcdevworks"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phcdevworks/spectre-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phcdevworks/spectre-components/issues"
+  },
+  "homepage": "https://github.com/phcdevworks/spectre-components#readme",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./button": {
+      "types": "./dist/button.d.ts",
+      "import": "./dist/button.js",
+      "require": "./dist/button.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "clean": "rm -rf dist coverage",
+    "dev": "tsup --config tsup.config.ts --watch",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run lint && npm run test && npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@phcdevworks/spectre-tokens": "^2.1.1",
+    "@phcdevworks/spectre-ui": "^1.1.1",
+    "lit": "^3.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "@types/node": "^25.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
+    "eslint": "^9.38.0",
+    "globals": "^16.4.0",
+    "happy-dom": "^20.0.2",
+    "prettier": "^3.8.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2",
+    "vitest": "^4.1.2"
+  }
+}

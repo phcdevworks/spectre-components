@@ -1,0 +1,15 @@
+import { defineConfig } from 'tsup';
+
+export default defineConfig({
+  clean: true,
+  dts: true,
+  entry: {
+    index: 'src/index.ts',
+    button: 'src/components/button/index.ts',
+  },
+  format: ['esm', 'cjs'],
+  sourcemap: true,
+  splitting: false,
+  target: 'es2020',
+  treeshake: true,
+});
