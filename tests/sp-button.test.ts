@@ -15,7 +15,7 @@ describe('sp-button', () => {
     const element = document.createElement('sp-button') as SpectreButtonElement;
     element.variant = 'secondary';
     element.size = 'lg';
-    element.textContent = 'Save changes';
+    element.append(document.createTextNode('Save changes'));
 
     document.body.append(element);
     await element.updateComplete;
@@ -27,6 +27,7 @@ describe('sp-button', () => {
     expect(button?.className).toContain('sp-btn--secondary');
     expect(button?.className).toContain('sp-btn--lg');
     expect(button?.textContent?.trim()).toBe('Save changes');
+    expect(button?.getAttribute('aria-label')).toBeNull();
   });
 
   it('disables the native button while loading', async () => {
@@ -44,7 +45,7 @@ describe('sp-button', () => {
     expect(button?.textContent?.trim()).toBe('Submitting');
   });
 
-  it('passes an accessible label to the native control', async () => {
+  it('falls back to label when no projected content exists', async () => {
     const element = document.createElement('sp-button') as SpectreButtonElement;
     element.label = 'Open menu';
 
@@ -53,6 +54,37 @@ describe('sp-button', () => {
 
     const button = element.querySelector('button');
 
-    expect(button?.getAttribute('aria-label')).toBe('Open menu');
+    expect(button?.textContent?.trim()).toBe('Open menu');
+    expect(button?.getAttribute('aria-label')).toBeNull();
+  });
+
+  it('uses aria-label only when there is no visible text', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.setAttribute('aria-label', 'Icon action');
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+
+    expect(button?.textContent?.trim()).toBe('');
+    expect(button?.getAttribute('aria-label')).toBe('Icon action');
+  });
+
+  it('updates projected content when host content changes later', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.label = 'Fallback';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    element.append(document.createTextNode('Publish'));
+    await Promise.resolve();
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+
+    expect(button?.textContent?.trim()).toBe('Publish');
+    expect(button?.getAttribute('aria-label')).toBeNull();
   });
 });
