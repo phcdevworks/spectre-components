@@ -87,7 +87,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   // Native slot projection is a Shadow DOM feature, so in light DOM we keep
   // host-provided content reactive by tracking and reusing the host nodes.
   private projectedContent: Node[] = [];
-  private contentObserver?: MutationObserver;
+  private contentObserver?: MutationObserver | undefined;
 
   createRenderRoot(): this {
     // Spectre components intentionally render in light DOM so the global
@@ -150,13 +150,13 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     return trimmedLabel ? trimmedLabel : undefined;
   }
 
-  private get ariaLabel(): string | undefined {
+  override get ariaLabel(): string | null {
     if (this.loading || this.hasProjectedContent || this.visibleLabelFallback) {
-      return undefined;
+      return null;
     }
 
     const nonVisualLabel = this.getAttribute('aria-label')?.trim();
-    return nonVisualLabel ? nonVisualLabel : undefined;
+    return nonVisualLabel ? nonVisualLabel : null;
   }
 
   private startContentObserver(): void {
@@ -233,7 +233,7 @@ export function defineSpectreButton(tagName = 'sp-button'): typeof SpectreButton
   const existingElement = customElements.get(tagName);
 
   if (existingElement) {
-    return existingElement as typeof SpectreButtonElement;
+    return existingElement as unknown as typeof SpectreButtonElement;
   }
 
   customElements.define(tagName, SpectreButtonElement);

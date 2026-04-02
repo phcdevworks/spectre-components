@@ -6,6 +6,7 @@ export default defineConfig({
   entry: {
     index: 'src/index.ts',
     button: 'src/components/button/index.ts',
+    input: 'src/components/input/index.ts',
   },
   format: ['esm', 'cjs'],
   sourcemap: true,

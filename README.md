@@ -47,6 +47,7 @@ Use the components in markup:
 ```html
 <sp-button variant="primary" size="md">Save</sp-button>
 <sp-button variant="ghost" size="sm">Cancel</sp-button>
+<sp-input name="email" type="email" placeholder="Email address"></sp-input>
 ```
 
 Register only the button when you want a narrower entry point:
@@ -55,6 +56,14 @@ Register only the button when you want a narrower entry point:
 import { defineSpectreButton } from '@phcdevworks/spectre-components/button';
 
 defineSpectreButton();
+```
+
+Register only the input when you want the input-only entry point:
+
+```ts
+import { defineSpectreInput } from '@phcdevworks/spectre-components/input';
+
+defineSpectreInput();
 ```
 
 ## What this package owns
@@ -86,17 +95,28 @@ contracts locally.
 
 - `defineSpectreComponents()`
 - `defineSpectreButton()`
+- `defineSpectreInput()`
 - `SpectreButtonElement`
+- `SpectreInputElement`
 - `spectreButtonVariants`
 - `spectreButtonSizes`
 - `spectreButtonTypes`
+- `spectreInputTypes`
+- `spectreInputSizes`
 - `SpectreButtonProps` and related button types
+- `SpectreInputProps` and related input types
 
 ### Button entry point
 
 `@phcdevworks/spectre-components/button` exports the button-only API so
 consumers can register a single component without importing the full package
 entry.
+
+### Input entry point
+
+`@phcdevworks/spectre-components/input` exports the input-only API so
+consumers can register just `sp-input` when they do not need the broader
+component bundle.
 
 ## Relationship to the rest of Spectre
 
@@ -119,6 +139,7 @@ This v0 foundation includes:
 - a publishable TypeScript package build
 - root and subpath exports
 - a Lit-based `sp-button` starter component
+- a Lit-based `sp-input` foundation component
 - explicit registration helpers instead of implicit global side effects
 - Vitest coverage for baseline rendering and accessibility behavior
 

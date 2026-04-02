@@ -43,6 +43,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./input": {
+      "types": "./dist/input.d.ts",
+      "import": "./dist/input.js",
+      "require": "./dist/input.cjs"
+    },
     "./button": {
       "types": "./dist/button.d.ts",
       "import": "./dist/button.js",
