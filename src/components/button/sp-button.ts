@@ -84,6 +84,27 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   size: SpectreButtonSize = 'md';
   type: SpectreButtonType = 'button';
   variant: SpectreButtonVariant = 'primary';
+  private inputId?: string;
+
+  override get id(): string {
+    return this.inputId ?? '';
+  }
+
+  override set id(value: string) {
+    if ((this.inputId ?? '') === value) {
+      return;
+    }
+
+    this.inputId = value;
+
+    const host = this as unknown as HTMLElement;
+    if (HTMLElement.prototype.hasAttribute.call(host, 'id')) {
+      HTMLElement.prototype.removeAttribute.call(host, 'id');
+    }
+
+    this.requestUpdate();
+  }
+
   // Native slot projection is a Shadow DOM feature, so in light DOM we keep
   // host-provided content reactive by tracking and reusing the host nodes.
   private projectedContent: Node[] = [];
@@ -97,8 +118,49 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
 
   override connectedCallback(): void {
     super.connectedCallback();
+
+    const hostId = super.getAttribute('id');
+
+    if (hostId !== null) {
+      this.id = hostId;
+    }
+
     this.syncProjectedContent();
     this.startContentObserver();
+  }
+
+  override getAttribute(qualifiedName: string): string | null {
+    if (qualifiedName === 'id') {
+      return this.id || null;
+    }
+
+    return super.getAttribute(qualifiedName);
+  }
+
+  override hasAttribute(qualifiedName: string): boolean {
+    if (qualifiedName === 'id') {
+      return this.id !== '';
+    }
+
+    return super.hasAttribute(qualifiedName);
+  }
+
+  override setAttribute(qualifiedName: string, value: string): void {
+    if (qualifiedName === 'id') {
+      this.id = value;
+      return;
+    }
+
+    super.setAttribute(qualifiedName, value);
+  }
+
+  override removeAttribute(qualifiedName: string): void {
+    if (qualifiedName === 'id') {
+      this.id = '';
+      return;
+    }
+
+    super.removeAttribute(qualifiedName);
   }
 
   override disconnectedCallback(): void {
@@ -150,13 +212,23 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     return trimmedLabel ? trimmedLabel : undefined;
   }
 
-  override get ariaLabel(): string | null {
+  private get forwardedAriaLabel(): string | undefined {
     if (this.loading || this.hasProjectedContent || this.visibleLabelFallback) {
-      return null;
+      return undefined;
     }
 
-    const nonVisualLabel = this.getAttribute('aria-label')?.trim();
-    return nonVisualLabel ? nonVisualLabel : null;
+    const ariaLabel = this.getAttribute('aria-label')?.trim();
+    return ariaLabel ? ariaLabel : undefined;
+  }
+
+  private get forwardedAriaLabelledBy(): string | undefined {
+    const ariaLabelledBy = this.getAttribute('aria-labelledby')?.trim();
+    return ariaLabelledBy ? ariaLabelledBy : undefined;
+  }
+
+  private get forwardedAriaDescribedBy(): string | undefined {
+    const ariaDescribedBy = this.getAttribute('aria-describedby')?.trim();
+    return ariaDescribedBy ? ariaDescribedBy : undefined;
   }
 
   private startContentObserver(): void {
@@ -164,7 +236,18 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
       return;
     }
 
-    this.contentObserver = new MutationObserver(() => {
+    this.contentObserver = new MutationObserver((mutations) => {
+      const isInternalMovement = mutations.every((mutation) => {
+        return (
+          Array.from(mutation.removedNodes).every((node) => this.isInternalButtonNode(node)) &&
+          Array.from(mutation.addedNodes).every((node) => this.isInternalButtonNode(node))
+        );
+      });
+
+      if (isInternalMovement) {
+        return;
+      }
+
       if (this.syncProjectedContent()) {
         this.requestUpdate();
       }
@@ -197,8 +280,9 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   }
 
   private isInternalButtonNode(node: Node): boolean {
-    return node.nodeType === Node.ELEMENT_NODE
-      && (node as Element).matches('[data-sp-button-native]');
+    return (
+      node.nodeType === Node.ELEMENT_NODE && (node as Element).hasAttribute('data-sp-button-native')
+    );
   }
 
   private renderButtonContent(): TemplateResult | Node[] | string {
@@ -217,10 +301,13 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     return html`
       <button
         aria-busy=${this.loading ? 'true' : 'false'}
-        aria-label=${ifDefined(this.ariaLabel)}
+        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
+        aria-label=${ifDefined(this.forwardedAriaLabel)}
+        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
         class=${this.buttonClasses}
         data-sp-button-native
         ?disabled=${this.isDisabled}
+        id=${ifDefined(this.id || undefined)}
         type=${this.type}
       >
         ${this.renderButtonContent() || nothing}

@@ -148,6 +148,38 @@ describe('sp-input', () => {
     expect(input?.getAttribute('type')).toBe('text');
     expect(input?.className).toContain('sp-input--md');
   });
+
+  it('forwards aria-labelledby and aria-describedby', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.setAttribute('aria-labelledby', 'label-id');
+    element.setAttribute('aria-describedby', 'desc-id');
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.getAttribute('aria-labelledby')).toBe('label-id');
+    expect(input?.getAttribute('aria-describedby')).toBe('desc-id');
+  });
+
+  it('handles focus and blur correctly', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+
+    input?.addEventListener('focus', onFocus);
+    input?.addEventListener('blur', onBlur);
+
+    element.focus();
+    expect(onFocus).toHaveBeenCalled();
+
+    element.blur();
+    expect(onBlur).toHaveBeenCalled();
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
