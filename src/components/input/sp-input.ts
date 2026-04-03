@@ -100,17 +100,15 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   }
 
   override set id(value: string) {
-    const previousId = this.inputId ?? '';
-    const nextId = value || '';
-
-    if (previousId === nextId) {
+    if ((this.inputId ?? '') === value) {
       return;
     }
 
-    this.inputId = nextId || undefined;
+    this.inputId = value;
 
-    if (super.hasAttribute('id')) {
-      super.removeAttribute('id');
+    const host = this as unknown as HTMLElement;
+    if (HTMLElement.prototype.hasAttribute.call(host, 'id')) {
+      HTMLElement.prototype.removeAttribute.call(host, 'id');
     }
 
     this.requestUpdate();
@@ -202,6 +200,11 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
     return ariaLabelledBy ? ariaLabelledBy : undefined;
   }
 
+  private get forwardedAriaDescribedBy(): string | undefined {
+    const ariaDescribedBy = this.getAttribute('aria-describedby')?.trim();
+    return ariaDescribedBy ? ariaDescribedBy : undefined;
+  }
+
   private handleInput(event: Event): void {
     const input = event.currentTarget as HTMLInputElement;
     this.value = input.value;
@@ -223,6 +226,7 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   override render() {
     return html`
       <input
+        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
         aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
