@@ -19,10 +19,6 @@
     {
       "type": "github",
       "url": "https://github.com/sponsors/phcdevworks"
-    },
-    {
-      "type": "buymeacoffee",
-      "url": "https://buymeacoffee.com/phcdevworks"
     }
   ],
   "repository": {
@@ -72,6 +68,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9 || ^6.0"
   },
   "dependencies": {
     "@phcdevworks/spectre-tokens": "^2.1.1",
