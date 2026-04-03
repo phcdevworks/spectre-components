@@ -87,4 +87,31 @@ describe('sp-button', () => {
     expect(button?.textContent?.trim()).toBe('Publish');
     expect(button?.getAttribute('aria-label')).toBeNull();
   });
+
+  it('forwards id to the native button', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.id = 'submit-btn';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    expect(button?.id).toBe('submit-btn');
+    expect(element.getAttribute('id')).toBe('submit-btn');
+    // Ensure the id is not on the host element's actual DOM attributes
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false);
+  });
+
+  it('forwards aria-labelledby and aria-describedby', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.setAttribute('aria-labelledby', 'label-id');
+    element.setAttribute('aria-describedby', 'desc-id');
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    expect(button?.getAttribute('aria-labelledby')).toBe('label-id');
+    expect(button?.getAttribute('aria-describedby')).toBe('desc-id');
+  });
 });
