@@ -93,18 +93,18 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   step?: string;
   type: SpectreInputType = 'text';
   value = '';
-  private inputId?: string;
+  private _id?: string;
 
   override get id(): string {
-    return this.inputId ?? '';
+    return this._id ?? '';
   }
 
   override set id(value: string) {
-    if ((this.inputId ?? '') === value) {
+    if ((this._id ?? '') === value) {
       return;
     }
 
-    this.inputId = value;
+    this._id = value;
 
     const host = this as unknown as HTMLElement;
     if (HTMLElement.prototype.hasAttribute.call(host, 'id')) {
