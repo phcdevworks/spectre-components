@@ -1,4 +1,4 @@
-import { afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { defineSpectreButton, SpectreButtonElement } from '../src';
 
@@ -55,19 +55,19 @@ describe('sp-button', () => {
     const button = element.querySelector('button');
 
     expect(button?.textContent?.trim()).toBe('Open menu');
-    expect(button?.getAttribute('aria-label')).toBeNull();
   });
 
-  it('uses aria-label only when there is no visible text', async () => {
+  it('forwards aria-label even when there is visible text', async () => {
     const element = document.createElement('sp-button') as SpectreButtonElement;
     element.setAttribute('aria-label', 'Icon action');
+    element.label = 'Visible text';
 
     document.body.append(element);
     await element.updateComplete;
 
     const button = element.querySelector('button');
 
-    expect(button?.textContent?.trim()).toBe('');
+    expect(button?.textContent?.trim()).toBe('Visible text');
     expect(button?.getAttribute('aria-label')).toBe('Icon action');
   });
 
@@ -113,5 +113,24 @@ describe('sp-button', () => {
     const button = element.querySelector('button');
     expect(button?.getAttribute('aria-labelledby')).toBe('label-id');
     expect(button?.getAttribute('aria-describedby')).toBe('desc-id');
+  });
+
+  it('handles focus and blur correctly', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+
+    button?.addEventListener('focus', onFocus);
+    button?.addEventListener('blur', onBlur);
+
+    element.focus();
+    expect(onFocus).toHaveBeenCalled();
+
+    element.blur();
+    expect(onBlur).toHaveBeenCalled();
   });
 });
