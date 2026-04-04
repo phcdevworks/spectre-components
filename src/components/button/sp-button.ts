@@ -84,18 +84,18 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   size: SpectreButtonSize = 'md';
   type: SpectreButtonType = 'button';
   variant: SpectreButtonVariant = 'primary';
-  private inputId?: string;
+  private _id?: string;
 
   override get id(): string {
-    return this.inputId ?? '';
+    return this._id ?? '';
   }
 
   override set id(value: string) {
-    if ((this.inputId ?? '') === value) {
+    if ((this._id ?? '') === value) {
       return;
     }
 
-    this.inputId = value;
+    this._id = value;
 
     const host = this as unknown as HTMLElement;
     if (HTMLElement.prototype.hasAttribute.call(host, 'id')) {
@@ -213,10 +213,6 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   }
 
   private get forwardedAriaLabel(): string | undefined {
-    if (this.loading || this.hasProjectedContent || this.visibleLabelFallback) {
-      return undefined;
-    }
-
     const ariaLabel = this.getAttribute('aria-label')?.trim();
     return ariaLabel ? ariaLabel : undefined;
   }
@@ -239,7 +235,9 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     this.contentObserver = new MutationObserver((mutations) => {
       const isInternalMovement = mutations.every((mutation) => {
         return (
-          Array.from(mutation.removedNodes).every((node) => this.isInternalButtonNode(node)) &&
+          Array.from(mutation.removedNodes).every(
+            (node) => this.isInternalButtonNode(node) || this.contains(node),
+          ) &&
           Array.from(mutation.addedNodes).every((node) => this.isInternalButtonNode(node))
         );
       });
@@ -264,9 +262,19 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   }
 
   private syncProjectedContent(): boolean {
-    const nextProjectedContent = Array.from(this.childNodes).filter(
-      (node) => !this.isInternalButtonNode(node),
-    );
+    const nextProjectedContent: Node[] = [];
+
+    Array.from(this.childNodes).forEach((node) => {
+      if (this.isInternalButtonNode(node)) {
+        this.projectedContent.forEach((pNode) => {
+          if (pNode.parentNode !== this && this.contains(pNode)) {
+            nextProjectedContent.push(pNode);
+          }
+        });
+      } else {
+        nextProjectedContent.push(node);
+      }
+    });
 
     const hasChanged =
       nextProjectedContent.length !== this.projectedContent.length ||
@@ -283,6 +291,18 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     return (
       node.nodeType === Node.ELEMENT_NODE && (node as Element).hasAttribute('data-sp-button-native')
     );
+  }
+
+  private get nativeButton(): HTMLButtonElement | null {
+    return this.querySelector('[data-sp-button-native]');
+  }
+
+  override focus(options?: FocusOptions): void {
+    this.nativeButton?.focus(options);
+  }
+
+  override blur(): void {
+    this.nativeButton?.blur();
   }
 
   private renderButtonContent(): TemplateResult | Node[] | string {
