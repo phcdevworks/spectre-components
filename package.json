@@ -48,6 +48,11 @@
       "types": "./dist/button.d.ts",
       "import": "./dist/button.js",
       "require": "./dist/button.cjs"
+    },
+    "./textarea": {
+      "types": "./dist/textarea.d.ts",
+      "import": "./dist/textarea.js",
+      "require": "./dist/textarea.cjs"
     }
   },
   "files": [
