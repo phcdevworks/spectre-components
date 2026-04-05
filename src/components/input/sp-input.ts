@@ -29,20 +29,25 @@ export type SpectreInputSize = (typeof spectreInputSizes)[number];
 
 export interface SpectreInputProps {
   autocomplete?: string;
+  autofocus?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
   inputmode?: string;
   invalid?: boolean;
+  loading?: boolean;
   max?: string;
   maxlength?: number;
   min?: string;
   minlength?: number;
   name?: string;
+  pill?: boolean;
   placeholder?: string;
   readonly?: boolean;
   required?: boolean;
   size?: SpectreInputSize;
   step?: string;
+  success?: boolean;
+  title?: string;
   type?: SpectreInputType;
   value?: string;
 }
@@ -58,39 +63,49 @@ function isInputSize(value: string): value is InputSize {
 export class SpectreInputElement extends LitElement implements SpectreInputProps {
   static properties = {
     autocomplete: { type: String },
+    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     inputmode: { type: String },
     invalid: { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
     max: { type: String },
     maxlength: { type: Number },
     min: { type: String },
     minlength: { type: Number },
     name: { type: String },
+    pill: { type: Boolean, reflect: true },
     placeholder: { type: String },
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
     step: { type: String },
+    success: { type: Boolean, reflect: true },
+    title: { type: String, reflect: true },
     type: { type: String, reflect: true },
     value: { type: String },
   };
 
   autocomplete?: string;
+  autofocus = false;
   disabled = false;
   fullWidth = false;
   inputmode?: string;
   invalid = false;
+  loading = false;
   max?: string;
   maxlength?: number;
   min?: string;
   minlength?: number;
   name?: string;
+  pill = false;
   placeholder?: string;
   readonly = false;
   required = false;
   size: SpectreInputSize = 'md';
   step?: string;
+  success = false;
+  override title = '';
   type: SpectreInputType = 'text';
   value = '';
   private _id?: string;
@@ -181,8 +196,17 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   private get inputClasses(): string {
     return getInputClasses({
       fullWidth: this.fullWidth,
+      pill: this.pill,
       size: this.size,
-      state: this.disabled ? 'disabled' : this.invalid ? 'error' : 'default',
+      state: this.disabled
+        ? 'disabled'
+        : this.loading
+          ? 'loading'
+          : this.invalid
+            ? 'error'
+            : this.success
+              ? 'success'
+              : 'default',
     });
   }
 
@@ -231,6 +255,7 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
         autocomplete=${ifDefined(this.autocomplete)}
+        ?autofocus=${this.autofocus}
         class=${this.inputClasses}
         data-sp-input-native
         ?disabled=${this.disabled}
@@ -245,6 +270,7 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
         name=${ifDefined(this.name)}
         placeholder=${ifDefined(this.placeholder)}
         step=${ifDefined(this.step)}
+        title=${ifDefined(this.title || undefined)}
         type=${this.type}
         .value=${live(this.value)}
         @change=${this.handleChange}
