@@ -180,6 +180,40 @@ describe('sp-input', () => {
     element.blur();
     expect(onBlur).toHaveBeenCalled();
   });
+
+  it('forwards title and autofocus to the native input', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.title = 'Enter your email';
+    element.autofocus = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.getAttribute('title')).toBe('Enter your email');
+    expect(input?.hasAttribute('autofocus')).toBe(true);
+  });
+
+  it('applies success, loading, and pill classes correctly', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.success = true;
+    element.pill = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    let input = element.querySelector('input');
+    expect(input?.className).toContain('sp-input--success');
+    expect(input?.className).toContain('sp-input--pill');
+
+    element.success = false;
+    element.loading = true;
+    await element.updateComplete;
+
+    input = element.querySelector('input');
+    expect(input?.className).toContain('sp-input--loading');
+    expect(input?.className).not.toContain('sp-input--success');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {

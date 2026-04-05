@@ -25,15 +25,19 @@ export type SpectreButtonSize = (typeof spectreButtonSizes)[number];
 export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 
 export interface SpectreButtonProps {
+  autofocus?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
   label?: string;
   loading?: boolean;
   loadingLabel?: string;
+  name?: string;
   pill?: boolean;
   size?: SpectreButtonSize;
+  title?: string;
   type?: SpectreButtonType;
   variant?: SpectreButtonVariant;
+  value?: string;
 }
 
 function isButtonVariant(value: string): value is ButtonVariant {
@@ -64,26 +68,34 @@ function hasMeaningfulContent(nodes: readonly Node[]): boolean {
 
 export class SpectreButtonElement extends LitElement implements SpectreButtonProps {
   static properties = {
+    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
     loadingLabel: { attribute: 'loading-label', type: String },
+    name: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
+    title: { type: String, reflect: true },
     type: { type: String, reflect: true },
     variant: { type: String, reflect: true },
+    value: { type: String, reflect: true },
   };
 
+  autofocus = false;
   disabled = false;
   fullWidth = false;
   label?: string;
   loading = false;
   loadingLabel = 'Loading';
+  name?: string;
   pill = false;
   size: SpectreButtonSize = 'md';
+  override title = '';
   type: SpectreButtonType = 'button';
   variant: SpectreButtonVariant = 'primary';
+  value?: string;
   private _id?: string;
 
   override get id(): string {
@@ -324,11 +336,15 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
         aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
+        ?autofocus=${this.autofocus}
         class=${this.buttonClasses}
         data-sp-button-native
         ?disabled=${this.isDisabled}
         id=${ifDefined(this.id || undefined)}
+        name=${ifDefined(this.name)}
+        title=${ifDefined(this.title || undefined)}
         type=${this.type}
+        value=${ifDefined(this.value)}
       >
         ${this.renderButtonContent() || nothing}
       </button>
