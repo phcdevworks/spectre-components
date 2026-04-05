@@ -7,6 +7,7 @@ export default defineConfig({
     index: 'src/index.ts',
     button: 'src/components/button/index.ts',
     input: 'src/components/input/index.ts',
+    textarea: 'src/components/textarea/index.ts',
   },
   format: ['esm', 'cjs'],
   sourcemap: true,
