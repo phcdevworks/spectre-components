@@ -133,4 +133,44 @@ describe('sp-button', () => {
     element.blur();
     expect(onBlur).toHaveBeenCalled();
   });
+
+  it('forwards name, value, title, and autofocus to the native button', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.name = 'submit-action';
+    element.value = 'save';
+    element.title = 'Click to save changes';
+    element.autofocus = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    expect(button?.getAttribute('name')).toBe('submit-action');
+    expect(button?.getAttribute('value')).toBe('save');
+    expect(button?.getAttribute('title')).toBe('Click to save changes');
+    expect(button?.hasAttribute('autofocus')).toBe(true);
+  });
+
+  it('preserves content when toggling loading state', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.append(document.createTextNode('Original Content'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    let button = element.querySelector('button');
+    expect(button?.textContent?.trim()).toBe('Original Content');
+
+    // Toggle loading
+    element.loading = true;
+    await element.updateComplete;
+    button = element.querySelector('button');
+    expect(button?.textContent?.trim()).toBe('Loading'); // Default loading label
+
+    // Toggle back
+    element.loading = false;
+    await element.updateComplete;
+    button = element.querySelector('button');
+    expect(button?.textContent?.trim()).toBe('Original Content');
+  });
 });
