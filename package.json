@@ -78,16 +78,16 @@
     "typescript": "^5.9 || ^6.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^2.1.1",
-    "@phcdevworks/spectre-ui": "^1.1.1",
+    "@phcdevworks/spectre-tokens": "^2.1.2",
+    "@phcdevworks/spectre-ui": "^1.1.2",
     "lit": "^3.3.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.5.2",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
     "@typescript-eslint/parser": "^8.58.0",
-    "eslint": "^10.1.0",
+    "eslint": "^10.2.0",
     "globals": "^17.4.0",
     "happy-dom": "^20.8.9",
     "prettier": "^3.8.1",
