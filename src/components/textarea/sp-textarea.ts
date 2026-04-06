@@ -5,9 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export interface SpectreTextareaProps {
-  autofocus?: boolean;
   disabled?: boolean;
-  fullWidth?: boolean;
   id?: string;
   invalid?: boolean;
   maxlength?: number | undefined;
@@ -17,7 +15,6 @@ export interface SpectreTextareaProps {
   readonly?: boolean;
   required?: boolean;
   rows?: number;
-  title?: string;
   value?: string;
 }
 
@@ -28,9 +25,7 @@ export class SpectreTextareaElement
   implements SpectreTextareaProps
 {
   static properties = {
-    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
-    fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     invalid: { type: Boolean, reflect: true },
     maxlength: { type: Number },
     minlength: { type: Number },
@@ -39,13 +34,10 @@ export class SpectreTextareaElement
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     rows: { type: Number },
-    title: { type: String, reflect: true },
     value: { type: String },
   };
 
-  autofocus = false;
   disabled = false;
-  fullWidth = false;
   invalid = false;
   maxlength?: number | undefined;
   minlength?: number | undefined;
@@ -54,7 +46,6 @@ export class SpectreTextareaElement
   readonly = false;
   required = false;
   rows = DEFAULT_ROWS;
-  override title = '';
   value = '';
   private _id?: string;
 
@@ -161,7 +152,6 @@ export class SpectreTextareaElement
 
   private get textareaClasses(): string {
     return getInputClasses({
-      fullWidth: this.fullWidth,
       size: 'md',
       state: this.disabled ? 'disabled' : this.invalid ? 'error' : 'default',
     });
@@ -211,7 +201,6 @@ export class SpectreTextareaElement
         aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        ?autofocus=${this.autofocus}
         class=${this.textareaClasses}
         data-sp-textarea-native
         ?disabled=${this.disabled}
@@ -223,7 +212,6 @@ export class SpectreTextareaElement
         name=${ifDefined(this.name)}
         placeholder=${ifDefined(this.placeholder)}
         rows=${this.rows}
-        title=${ifDefined(this.title || undefined)}
         .value=${live(this.value)}
         @change=${this.handleChange}
         @input=${this.handleInput}
