@@ -179,6 +179,23 @@ describe('sp-textarea', () => {
     expect(textarea?.hasAttribute('minlength')).toBe(false);
   });
 
+  it('forwards title, autofocus, and fullWidth to the native textarea', async () => {
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.title = 'Enter detailed notes';
+    element.autofocus = true;
+    element.fullWidth = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const textarea = element.querySelector('textarea');
+    expect(textarea?.getAttribute('title')).toBe('Enter detailed notes');
+    expect(textarea?.hasAttribute('autofocus')).toBe(true);
+    expect(textarea?.className).toContain('sp-input--full');
+  });
+
   it('handles focus and blur correctly', async () => {
     const element = document.createElement(
       'sp-textarea',

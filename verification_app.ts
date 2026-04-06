@@ -1,5 +1,5 @@
 import { html, render } from 'lit';
-import { defineSpectreButton, defineSpectreInput } from './src';
+import { defineSpectreButton, defineSpectreInput, defineSpectreTextarea } from './src';
 
 // Inject styles for better visual verification
 const style = document.createElement('style');
@@ -20,6 +20,7 @@ style.textContent = `
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
   }
   /* Mock Spectre UI classes for visual distinction since we don't have the real CSS */
   .sp-btn { border: 1px solid #ccc; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
@@ -30,11 +31,14 @@ style.textContent = `
   .sp-input--success { border-color: #28a745; background-color: #d4edda; }
   .sp-input--loading { border-color: #ffc107; background-color: #fff3cd; }
   .sp-input--pill { border-radius: 50px; }
+  .sp-input--full { width: 100%; }
+  .sp-input--error { border-color: #dc3545; background-color: #f8d7da; }
 `;
 document.head.appendChild(style);
 
 defineSpectreButton();
 defineSpectreInput();
+defineSpectreTextarea();
 
 const template = html`
   <section>
@@ -55,6 +59,16 @@ const template = html`
       <sp-input placeholder="Pill Input" pill></sp-input>
       <sp-input value="Success state" success title="Success input"></sp-input>
       <sp-input value="Loading state" loading title="Loading input"></sp-input>
+    </div>
+  </section>
+
+  <section>
+    <h2>sp-textarea Enhancements</h2>
+    <div class="row">
+      <sp-textarea placeholder="Standard Textarea" title="Standard textarea"></sp-textarea>
+      <sp-textarea placeholder="Full Width Textarea" full-width title="Full width textarea"></sp-textarea>
+      <sp-textarea placeholder="Invalid Textarea" invalid title="Invalid textarea"></sp-textarea>
+      <sp-textarea placeholder="Autofocus Textarea" autofocus title="Autofocus textarea"></sp-textarea>
     </div>
   </section>
 `;
