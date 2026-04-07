@@ -2,12 +2,20 @@ import { LitElement, html } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { getInputClasses } from '@phcdevworks/spectre-ui';
+import {
+  getInputClasses,
+  type InputSize,
+} from '@phcdevworks/spectre-ui';
+
+import {
+  spectreInputSizes,
+  type SpectreInputSize,
+} from '../input/sp-input';
 
 export interface SpectreTextareaProps {
   disabled?: boolean;
-  id?: string;
   invalid?: boolean;
+  loading?: boolean;
   maxlength?: number | undefined;
   minlength?: number | undefined;
   name?: string;
@@ -15,10 +23,17 @@ export interface SpectreTextareaProps {
   readonly?: boolean;
   required?: boolean;
   rows?: number;
+  size?: SpectreInputSize;
+  success?: boolean;
+  title?: string;
   value?: string;
 }
 
 const DEFAULT_ROWS = 2;
+
+function isInputSize(value: string): value is InputSize {
+  return (spectreInputSizes as readonly string[]).includes(value);
+}
 
 export class SpectreTextareaElement
   extends LitElement
@@ -27,6 +42,7 @@ export class SpectreTextareaElement
   static properties = {
     disabled: { type: Boolean, reflect: true },
     invalid: { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
     maxlength: { type: Number },
     minlength: { type: Number },
     name: { type: String },
@@ -34,11 +50,15 @@ export class SpectreTextareaElement
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     rows: { type: Number },
+    size: { type: String, reflect: true },
+    success: { type: Boolean, reflect: true },
+    title: { type: String, reflect: true },
     value: { type: String },
   };
 
   disabled = false;
   invalid = false;
+  loading = false;
   maxlength?: number | undefined;
   minlength?: number | undefined;
   name?: string;
@@ -46,6 +66,9 @@ export class SpectreTextareaElement
   readonly = false;
   required = false;
   rows = DEFAULT_ROWS;
+  size: SpectreInputSize = 'md';
+  success = false;
+  override title = '';
   value = '';
   private _id?: string;
 
@@ -121,6 +144,10 @@ export class SpectreTextareaElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>,
   ): void {
+    if (changedProperties.has('size') && !isInputSize(this.size)) {
+      this.size = 'md';
+    }
+
     if (changedProperties.has('rows') && !Number.isInteger(this.rows)) {
       this.rows = DEFAULT_ROWS;
     }
@@ -152,8 +179,16 @@ export class SpectreTextareaElement
 
   private get textareaClasses(): string {
     return getInputClasses({
-      size: 'md',
-      state: this.disabled ? 'disabled' : this.invalid ? 'error' : 'default',
+      size: this.size,
+      state: this.disabled
+        ? 'disabled'
+        : this.loading
+          ? 'loading'
+          : this.invalid
+            ? 'error'
+            : this.success
+              ? 'success'
+              : 'default',
     });
   }
 
@@ -212,6 +247,7 @@ export class SpectreTextareaElement
         name=${ifDefined(this.name)}
         placeholder=${ifDefined(this.placeholder)}
         rows=${this.rows}
+        title=${ifDefined(this.title || undefined)}
         .value=${live(this.value)}
         @change=${this.handleChange}
         @input=${this.handleInput}
