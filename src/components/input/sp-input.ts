@@ -36,9 +36,9 @@ export interface SpectreInputProps {
   invalid?: boolean;
   loading?: boolean;
   max?: string;
-  maxlength?: number;
+  maxlength?: number | undefined;
   min?: string;
-  minlength?: number;
+  minlength?: number | undefined;
   name?: string;
   pill?: boolean;
   placeholder?: string;
@@ -94,9 +94,9 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   invalid = false;
   loading = false;
   max?: string;
-  maxlength?: number;
+  maxlength?: number | undefined;
   min?: string;
-  minlength?: number;
+  minlength?: number | undefined;
   name?: string;
   pill = false;
   placeholder?: string;
@@ -190,6 +190,22 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
 
     if (changedProperties.has('value') && this.value == null) {
       this.value = '';
+    }
+
+    if (
+      changedProperties.has('maxlength') &&
+      this.maxlength != null &&
+      (!Number.isInteger(this.maxlength) || this.maxlength < 0)
+    ) {
+      this.maxlength = undefined;
+    }
+
+    if (
+      changedProperties.has('minlength') &&
+      this.minlength != null &&
+      (!Number.isInteger(this.minlength) || this.minlength < 0)
+    ) {
+      this.minlength = undefined;
     }
   }
 
