@@ -17,6 +17,8 @@ describe('sp-textarea', () => {
     ) as SpectreTextareaElement;
     element.placeholder = 'Add more detail';
     element.rows = 4;
+    element.fullWidth = true;
+    element.pill = true;
 
     document.body.append(element);
     await element.updateComplete;
@@ -26,6 +28,8 @@ describe('sp-textarea', () => {
     expect(textarea).not.toBeNull();
     expect(textarea?.className).toContain('sp-input');
     expect(textarea?.className).toContain('sp-input--md');
+    expect(textarea?.className).toContain('sp-input--full');
+    expect(textarea?.className).toContain('sp-input--pill');
     expect(textarea?.getAttribute('placeholder')).toBe('Add more detail');
     expect(textarea?.getAttribute('rows')).toBe('4');
     expect(textarea?.getAttribute('aria-invalid')).toBeNull();
@@ -226,6 +230,7 @@ describe('sp-textarea', () => {
     let textarea = element.querySelector('textarea');
     expect(textarea?.className).toContain('sp-input--sm');
     expect(textarea?.className).toContain('sp-input--loading');
+    expect(textarea?.getAttribute('aria-busy')).toBe('true');
 
     element.loading = false;
     element.success = true;
@@ -235,6 +240,24 @@ describe('sp-textarea', () => {
     textarea = element.querySelector('textarea');
     expect(textarea?.className).toContain('sp-input--lg');
     expect(textarea?.className).toContain('sp-input--success');
+    expect(textarea?.getAttribute('aria-busy')).toBe('false');
+  });
+
+  it('forwards autocomplete, autofocus, and inputmode', async () => {
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.autocomplete = 'on';
+    element.autofocus = true;
+    element.inputmode = 'text';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const textarea = element.querySelector('textarea');
+    expect(textarea?.getAttribute('autocomplete')).toBe('on');
+    expect(textarea?.hasAttribute('autofocus')).toBe(true);
+    expect(textarea?.getAttribute('inputmode')).toBe('text');
   });
 });
 
