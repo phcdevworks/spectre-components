@@ -199,6 +199,43 @@ describe('sp-textarea', () => {
     element.blur();
     expect(onBlur).toHaveBeenCalled();
   });
+
+  it('forwards title to the native textarea', async () => {
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.title = 'Please enter your feedback';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const textarea = element.querySelector('textarea');
+    expect(textarea?.getAttribute('title')).toBe('Please enter your feedback');
+  });
+
+  it('applies classes for size, loading, and success states', async () => {
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.size = 'sm';
+    element.loading = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    let textarea = element.querySelector('textarea');
+    expect(textarea?.className).toContain('sp-input--sm');
+    expect(textarea?.className).toContain('sp-input--loading');
+
+    element.loading = false;
+    element.success = true;
+    element.size = 'lg';
+    await element.updateComplete;
+
+    textarea = element.querySelector('textarea');
+    expect(textarea?.className).toContain('sp-input--lg');
+    expect(textarea?.className).toContain('sp-input--success');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
