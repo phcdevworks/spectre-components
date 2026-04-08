@@ -266,6 +266,7 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   override render() {
     return html`
       <input
+        aria-busy=${this.loading ? 'true' : 'false'}
         aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
         aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
