@@ -213,6 +213,12 @@ describe('sp-input', () => {
     input = element.querySelector('input');
     expect(input?.className).toContain('sp-input--loading');
     expect(input?.className).not.toContain('sp-input--success');
+    expect(input?.getAttribute('aria-busy')).toBe('true');
+
+    element.loading = false;
+    await element.updateComplete;
+    input = element.querySelector('input');
+    expect(input?.getAttribute('aria-busy')).toBe('false');
   });
 });
 
