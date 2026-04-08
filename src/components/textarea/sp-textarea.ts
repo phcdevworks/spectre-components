@@ -13,12 +13,17 @@ import {
 } from '../input/sp-input';
 
 export interface SpectreTextareaProps {
+  autocomplete?: string;
+  autofocus?: boolean;
   disabled?: boolean;
+  fullWidth?: boolean;
+  inputmode?: string;
   invalid?: boolean;
   loading?: boolean;
   maxlength?: number | undefined;
   minlength?: number | undefined;
   name?: string;
+  pill?: boolean;
   placeholder?: string;
   readonly?: boolean;
   required?: boolean;
@@ -40,12 +45,17 @@ export class SpectreTextareaElement
   implements SpectreTextareaProps
 {
   static properties = {
+    autocomplete: { type: String },
+    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
+    fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    inputmode: { type: String },
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
     maxlength: { type: Number },
     minlength: { type: Number },
     name: { type: String },
+    pill: { type: Boolean, reflect: true },
     placeholder: { type: String },
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
@@ -56,12 +66,17 @@ export class SpectreTextareaElement
     value: { type: String },
   };
 
+  autocomplete?: string;
+  autofocus = false;
   disabled = false;
+  fullWidth = false;
+  inputmode?: string;
   invalid = false;
   loading = false;
   maxlength?: number | undefined;
   minlength?: number | undefined;
   name?: string;
+  pill = false;
   placeholder?: string;
   readonly = false;
   required = false;
@@ -179,6 +194,8 @@ export class SpectreTextareaElement
 
   private get textareaClasses(): string {
     return getInputClasses({
+      fullWidth: this.fullWidth,
+      pill: this.pill,
       size: this.size,
       state: this.disabled
         ? 'disabled'
@@ -232,13 +249,17 @@ export class SpectreTextareaElement
   override render() {
     return html`
       <textarea
+        aria-busy=${this.loading ? 'true' : 'false'}
         aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
         aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
+        autocomplete=${ifDefined(this.autocomplete)}
+        ?autofocus=${this.autofocus}
         class=${this.textareaClasses}
         data-sp-textarea-native
         ?disabled=${this.disabled}
+        inputmode=${ifDefined(this.inputmode)}
         ?readonly=${this.readonly}
         ?required=${this.required}
         id=${ifDefined(this.id || undefined)}
