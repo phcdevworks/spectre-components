@@ -45,6 +45,9 @@ export class SpectreTextareaElement
   implements SpectreTextareaProps
 {
   static properties = {
+    ariaLabel: { attribute: 'aria-label', type: String },
+    ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
+    ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autocomplete: { type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -66,6 +69,9 @@ export class SpectreTextareaElement
     value: { type: String },
   };
 
+  ariaLabel: string | null = null;
+  ariaLabelledBy: string | null = null;
+  ariaDescribedBy: string | null = null;
   autocomplete?: string;
   autofocus = false;
   disabled = false;
@@ -197,16 +203,20 @@ export class SpectreTextareaElement
       fullWidth: this.fullWidth,
       pill: this.pill,
       size: this.size,
-      state: this.disabled
-        ? 'disabled'
-        : this.loading
-          ? 'loading'
-          : this.invalid
-            ? 'error'
-            : this.success
-              ? 'success'
-              : 'default',
+      state: this.isDisabled
+        ? this.disabled
+          ? 'disabled'
+          : 'loading'
+        : this.invalid
+          ? 'error'
+          : this.success
+            ? 'success'
+            : 'default',
     });
+  }
+
+  private get isDisabled(): boolean {
+    return this.disabled || this.loading;
   }
 
   private get nativeTextarea(): HTMLTextAreaElement | null {
@@ -214,17 +224,17 @@ export class SpectreTextareaElement
   }
 
   private get forwardedAriaLabel(): string | undefined {
-    const ariaLabel = this.getAttribute('aria-label')?.trim();
+    const ariaLabel = this.ariaLabel?.trim();
     return ariaLabel ? ariaLabel : undefined;
   }
 
   private get forwardedAriaLabelledBy(): string | undefined {
-    const ariaLabelledBy = this.getAttribute('aria-labelledby')?.trim();
+    const ariaLabelledBy = this.ariaLabelledBy?.trim();
     return ariaLabelledBy ? ariaLabelledBy : undefined;
   }
 
   private get forwardedAriaDescribedBy(): string | undefined {
-    const ariaDescribedBy = this.getAttribute('aria-describedby')?.trim();
+    const ariaDescribedBy = this.ariaDescribedBy?.trim();
     return ariaDescribedBy ? ariaDescribedBy : undefined;
   }
 
@@ -258,7 +268,7 @@ export class SpectreTextareaElement
         ?autofocus=${this.autofocus}
         class=${this.textareaClasses}
         data-sp-textarea-native
-        ?disabled=${this.disabled}
+        ?disabled=${this.isDisabled}
         inputmode=${ifDefined(this.inputmode)}
         ?readonly=${this.readonly}
         ?required=${this.required}

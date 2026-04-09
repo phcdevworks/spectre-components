@@ -62,6 +62,9 @@ function isInputSize(value: string): value is InputSize {
 
 export class SpectreInputElement extends LitElement implements SpectreInputProps {
   static properties = {
+    ariaLabel: { attribute: 'aria-label', type: String },
+    ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
+    ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autocomplete: { type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -86,6 +89,9 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
     value: { type: String },
   };
 
+  ariaLabel: string | null = null;
+  ariaLabelledBy: string | null = null;
+  ariaDescribedBy: string | null = null;
   autocomplete?: string;
   autofocus = false;
   disabled = false;
@@ -214,16 +220,20 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
       fullWidth: this.fullWidth,
       pill: this.pill,
       size: this.size,
-      state: this.disabled
-        ? 'disabled'
-        : this.loading
-          ? 'loading'
-          : this.invalid
-            ? 'error'
-            : this.success
-              ? 'success'
-              : 'default',
+      state: this.isDisabled
+        ? this.disabled
+          ? 'disabled'
+          : 'loading'
+        : this.invalid
+          ? 'error'
+          : this.success
+            ? 'success'
+            : 'default',
     });
+  }
+
+  private get isDisabled(): boolean {
+    return this.disabled || this.loading;
   }
 
   private get nativeInput(): HTMLInputElement | null {
@@ -231,17 +241,17 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   }
 
   private get forwardedAriaLabel(): string | undefined {
-    const ariaLabel = this.getAttribute('aria-label')?.trim();
+    const ariaLabel = this.ariaLabel?.trim();
     return ariaLabel ? ariaLabel : undefined;
   }
 
   private get forwardedAriaLabelledBy(): string | undefined {
-    const ariaLabelledBy = this.getAttribute('aria-labelledby')?.trim();
+    const ariaLabelledBy = this.ariaLabelledBy?.trim();
     return ariaLabelledBy ? ariaLabelledBy : undefined;
   }
 
   private get forwardedAriaDescribedBy(): string | undefined {
-    const ariaDescribedBy = this.getAttribute('aria-describedby')?.trim();
+    const ariaDescribedBy = this.ariaDescribedBy?.trim();
     return ariaDescribedBy ? ariaDescribedBy : undefined;
   }
 
@@ -275,7 +285,7 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
         ?autofocus=${this.autofocus}
         class=${this.inputClasses}
         data-sp-input-native
-        ?disabled=${this.disabled}
+        ?disabled=${this.isDisabled}
         ?readonly=${this.readonly}
         ?required=${this.required}
         id=${ifDefined(this.id || undefined)}
