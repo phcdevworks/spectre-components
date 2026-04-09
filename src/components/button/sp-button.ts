@@ -68,6 +68,9 @@ function hasMeaningfulContent(nodes: readonly Node[]): boolean {
 
 export class SpectreButtonElement extends LitElement implements SpectreButtonProps {
   static properties = {
+    ariaLabel: { attribute: 'aria-label', type: String },
+    ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
+    ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
@@ -83,6 +86,9 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     value: { type: String, reflect: true },
   };
 
+  ariaLabel: string | null = null;
+  ariaLabelledBy: string | null = null;
+  ariaDescribedBy: string | null = null;
   autofocus = false;
   disabled = false;
   fullWidth = false;
@@ -225,17 +231,17 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   }
 
   private get forwardedAriaLabel(): string | undefined {
-    const ariaLabel = this.getAttribute('aria-label')?.trim();
+    const ariaLabel = this.ariaLabel?.trim();
     return ariaLabel ? ariaLabel : undefined;
   }
 
   private get forwardedAriaLabelledBy(): string | undefined {
-    const ariaLabelledBy = this.getAttribute('aria-labelledby')?.trim();
+    const ariaLabelledBy = this.ariaLabelledBy?.trim();
     return ariaLabelledBy ? ariaLabelledBy : undefined;
   }
 
   private get forwardedAriaDescribedBy(): string | undefined {
-    const ariaDescribedBy = this.getAttribute('aria-describedby')?.trim();
+    const ariaDescribedBy = this.ariaDescribedBy?.trim();
     return ariaDescribedBy ? ariaDescribedBy : undefined;
   }
 
