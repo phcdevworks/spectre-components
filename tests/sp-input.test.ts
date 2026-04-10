@@ -220,6 +220,29 @@ describe('sp-input', () => {
     input = element.querySelector('input');
     expect(input?.getAttribute('aria-busy')).toBe('false');
   });
+
+  it('tightens maxlength and minlength validation', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    // @ts-ignore
+    element.maxlength = 'invalid';
+    // @ts-ignore
+    element.minlength = -5;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.maxlength).toBeUndefined();
+    expect(element.minlength).toBeUndefined();
+
+    element.maxlength = 10;
+    await element.updateComplete;
+    expect(element.maxlength).toBe(10);
+
+    // @ts-ignore
+    element.maxlength = null;
+    await element.updateComplete;
+    expect(element.maxlength).toBeUndefined();
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
