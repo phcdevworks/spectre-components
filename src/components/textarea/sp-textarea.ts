@@ -4,11 +4,10 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import {
   getInputClasses,
-  type InputSize,
 } from '@phcdevworks/spectre-ui';
 
 import {
-  spectreInputSizes,
+  isInputSize,
   type SpectreInputSize,
 } from '../input/sp-input';
 
@@ -35,10 +34,6 @@ export interface SpectreTextareaProps {
 }
 
 const DEFAULT_ROWS = 2;
-
-function isInputSize(value: string): value is InputSize {
-  return (spectreInputSizes as readonly string[]).includes(value);
-}
 
 export class SpectreTextareaElement
   extends LitElement

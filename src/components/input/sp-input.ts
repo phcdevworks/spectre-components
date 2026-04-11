@@ -52,11 +52,11 @@ export interface SpectreInputProps {
   value?: string;
 }
 
-function isInputType(value: string): value is SpectreInputType {
+export function isInputType(value: string): value is SpectreInputType {
   return (spectreInputTypes as readonly string[]).includes(value);
 }
 
-function isInputSize(value: string): value is InputSize {
+export function isInputSize(value: string): value is InputSize {
   return (spectreInputSizes as readonly string[]).includes(value);
 }
 
