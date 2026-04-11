@@ -259,6 +259,34 @@ describe('sp-textarea', () => {
     expect(textarea?.hasAttribute('autofocus')).toBe(true);
     expect(textarea?.getAttribute('inputmode')).toBe('text');
   });
+
+  it('tightens maxlength, minlength and rows validation', async () => {
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    // @ts-ignore
+    element.maxlength = 'invalid';
+    // @ts-ignore
+    element.minlength = -5;
+    // @ts-ignore
+    element.rows = 0;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.maxlength).toBeUndefined();
+    expect(element.minlength).toBeUndefined();
+    expect(element.rows).toBe(2);
+
+    element.rows = 5;
+    await element.updateComplete;
+    expect(element.rows).toBe(5);
+
+    // @ts-ignore
+    element.rows = null;
+    await element.updateComplete;
+    expect(element.rows).toBe(2);
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {

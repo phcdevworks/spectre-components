@@ -56,7 +56,7 @@ function isInputType(value: string): value is SpectreInputType {
   return (spectreInputTypes as readonly string[]).includes(value);
 }
 
-function isInputSize(value: string): value is InputSize {
+export function isInputSize(value: string): value is InputSize {
   return (spectreInputSizes as readonly string[]).includes(value);
 }
 
@@ -198,20 +198,24 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
       this.value = '';
     }
 
-    if (
-      changedProperties.has('maxlength') &&
-      this.maxlength != null &&
-      (!Number.isInteger(this.maxlength) || this.maxlength < 0)
-    ) {
-      this.maxlength = undefined;
+    if (changedProperties.has('maxlength')) {
+      if (
+        this.maxlength == null ||
+        !Number.isInteger(this.maxlength) ||
+        this.maxlength < 0
+      ) {
+        this.maxlength = undefined;
+      }
     }
 
-    if (
-      changedProperties.has('minlength') &&
-      this.minlength != null &&
-      (!Number.isInteger(this.minlength) || this.minlength < 0)
-    ) {
-      this.minlength = undefined;
+    if (changedProperties.has('minlength')) {
+      if (
+        this.minlength == null ||
+        !Number.isInteger(this.minlength) ||
+        this.minlength < 0
+      ) {
+        this.minlength = undefined;
+      }
     }
   }
 
