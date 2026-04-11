@@ -173,4 +173,27 @@ describe('sp-button', () => {
     button = element.querySelector('button');
     expect(button?.textContent?.trim()).toBe('Original Content');
   });
+
+  it('tightens loadingLabel fallback', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.loading = true;
+    element.loadingLabel = '  '; // Empty/whitespace
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    let button = element.querySelector('button');
+    expect(button?.textContent?.trim()).toBe('Loading');
+
+    element.loadingLabel = 'Processing...';
+    await element.updateComplete;
+    button = element.querySelector('button');
+    expect(button?.textContent?.trim()).toBe('Processing...');
+
+    // @ts-expect-error - Testing invalid value
+    element.loadingLabel = null;
+    await element.updateComplete;
+    button = element.querySelector('button');
+    expect(button?.textContent?.trim()).toBe('Loading');
+  });
 });

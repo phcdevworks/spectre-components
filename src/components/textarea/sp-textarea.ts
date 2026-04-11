@@ -164,32 +164,38 @@ export class SpectreTextareaElement
       this.size = 'md';
     }
 
-    if (changedProperties.has('rows') && !Number.isInteger(this.rows)) {
-      this.rows = DEFAULT_ROWS;
-    }
-
-    if (changedProperties.has('rows') && this.rows < 1) {
-      this.rows = DEFAULT_ROWS;
+    if (changedProperties.has('rows')) {
+      if (
+        this.rows == null ||
+        !Number.isInteger(this.rows) ||
+        this.rows < 1
+      ) {
+        this.rows = DEFAULT_ROWS;
+      }
     }
 
     if (changedProperties.has('value') && this.value == null) {
       this.value = '';
     }
 
-    if (
-      changedProperties.has('maxlength') &&
-      this.maxlength != null &&
-      (!Number.isInteger(this.maxlength) || this.maxlength < 0)
-    ) {
-      this.maxlength = undefined;
+    if (changedProperties.has('maxlength')) {
+      if (
+        this.maxlength == null ||
+        !Number.isInteger(this.maxlength) ||
+        this.maxlength < 0
+      ) {
+        this.maxlength = undefined;
+      }
     }
 
-    if (
-      changedProperties.has('minlength') &&
-      this.minlength != null &&
-      (!Number.isInteger(this.minlength) || this.minlength < 0)
-    ) {
-      this.minlength = undefined;
+    if (changedProperties.has('minlength')) {
+      if (
+        this.minlength == null ||
+        !Number.isInteger(this.minlength) ||
+        this.minlength < 0
+      ) {
+        this.minlength = undefined;
+      }
     }
   }
 

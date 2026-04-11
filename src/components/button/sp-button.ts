@@ -247,7 +247,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     return ariaLabelledBy ? ariaLabelledBy : undefined;
   }
 
-  private get forwardedAriaDescribedBy(): string | undefined {
+  private get forwardedAria_describedBy(): string | undefined {
     const ariaDescribedBy = this.ariaDescribedBy?.trim();
     return ariaDescribedBy ? ariaDescribedBy : undefined;
   }
@@ -346,7 +346,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     return html`
       <button
         aria-busy=${this.loading ? 'true' : 'false'}
-        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
+        aria-describedby=${ifDefined(this.forwardedAria_describedBy)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
         ?autofocus=${this.autofocus}
