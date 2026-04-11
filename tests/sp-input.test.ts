@@ -223,9 +223,9 @@ describe('sp-input', () => {
 
   it('tightens maxlength and minlength validation', async () => {
     const element = document.createElement('sp-input') as SpectreInputElement;
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.maxlength = 'invalid';
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.minlength = -5;
 
     document.body.append(element);
@@ -238,7 +238,7 @@ describe('sp-input', () => {
     await element.updateComplete;
     expect(element.maxlength).toBe(10);
 
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.maxlength = null;
     await element.updateComplete;
     expect(element.maxlength).toBeUndefined();

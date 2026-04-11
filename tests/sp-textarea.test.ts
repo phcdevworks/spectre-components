@@ -264,11 +264,11 @@ describe('sp-textarea', () => {
     const element = document.createElement(
       'sp-textarea',
     ) as SpectreTextareaElement;
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.maxlength = 'invalid';
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.minlength = -5;
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.rows = 0;
 
     document.body.append(element);
@@ -282,7 +282,7 @@ describe('sp-textarea', () => {
     await element.updateComplete;
     expect(element.rows).toBe(5);
 
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.rows = null;
     await element.updateComplete;
     expect(element.rows).toBe(2);

@@ -1,61 +1,59 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { getInputClasses } from '@phcdevworks/spectre-ui';
-
 import {
-  isInputSize,
-  type SpectreInputSize,
-} from '../input/sp-input';
+  getInputClasses,
+  type InputSize,
+} from '@phcdevworks/spectre-ui';
 
-export interface SpectreTextareaProps {
-  autocomplete?: string;
+export const spectreSelectSizes = ['sm', 'md', 'lg'] as const;
+
+export type SpectreSelectSize = (typeof spectreSelectSizes)[number];
+
+export interface SpectreSelectProps {
   autofocus?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
-  inputmode?: string;
   invalid?: boolean;
   loading?: boolean;
-  maxlength?: number | undefined;
-  minlength?: number | undefined;
   name?: string;
-  pill?: boolean;
-  placeholder?: string;
-  readonly?: boolean;
   required?: boolean;
-  rows?: number;
-  size?: SpectreInputSize;
+  size?: SpectreSelectSize;
   success?: boolean;
   title?: string;
   value?: string;
 }
 
-const DEFAULT_ROWS = 2;
+function isSelectSize(value: string): value is InputSize {
+  return (spectreSelectSizes as readonly string[]).includes(value);
+}
 
-export class SpectreTextareaElement
-  extends LitElement
-  implements SpectreTextareaProps
-{
+function isSelectableContent(node: Node): boolean {
+  if (node.nodeType === Node.ELEMENT_NODE) {
+    const tagName = (node as Element).tagName;
+    return tagName === 'OPTION' || tagName === 'OPTGROUP';
+  }
+
+  if (node.nodeType === Node.TEXT_NODE) {
+    return (node.textContent?.trim().length ?? 0) > 0;
+  }
+
+  return false;
+}
+
+export class SpectreSelectElement extends LitElement implements SpectreSelectProps {
   static properties = {
     ariaLabel: { attribute: 'aria-label', type: String },
     ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
-    autocomplete: { type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
-    inputmode: { type: String },
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
-    maxlength: { type: Number },
-    minlength: { type: Number },
     name: { type: String },
-    pill: { type: Boolean, reflect: true },
-    placeholder: { type: String },
-    readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
-    rows: { type: Number },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
     title: { type: String, reflect: true },
@@ -65,26 +63,20 @@ export class SpectreTextareaElement
   ariaLabel: string | null = null;
   ariaLabelledBy: string | null = null;
   ariaDescribedBy: string | null = null;
-  autocomplete?: string;
   autofocus = false;
   disabled = false;
   fullWidth = false;
-  inputmode?: string;
   invalid = false;
   loading = false;
-  maxlength?: number | undefined;
-  minlength?: number | undefined;
   name?: string;
-  pill = false;
-  placeholder?: string;
-  readonly = false;
   required = false;
-  rows = DEFAULT_ROWS;
-  size: SpectreInputSize = 'md';
+  size: SpectreSelectSize = 'md';
   success = false;
   override title = '';
   value = '';
   private _id?: string;
+  private projectedOptions: Node[] = [];
+  private contentObserver?: MutationObserver | undefined;
 
   override get id(): string {
     return this._id ?? '';
@@ -107,7 +99,7 @@ export class SpectreTextareaElement
 
   createRenderRoot(): this {
     // Spectre components intentionally render in light DOM so the global
-    // `@phcdevworks/spectre-ui` styling contract can apply directly.
+    // Spectre UI styling contract can apply directly.
     return this;
   }
 
@@ -119,6 +111,14 @@ export class SpectreTextareaElement
     if (hostId !== null) {
       this.id = hostId;
     }
+
+    this.syncProjectedOptions();
+    this.startContentObserver();
+  }
+
+  override disconnectedCallback(): void {
+    this.stopContentObserver();
+    super.disconnectedCallback();
   }
 
   override getAttribute(qualifiedName: string): string | null {
@@ -155,52 +155,27 @@ export class SpectreTextareaElement
     super.removeAttribute(qualifiedName);
   }
 
-  protected override willUpdate(
-    changedProperties: Map<PropertyKey, unknown>,
-  ): void {
-    if (changedProperties.has('size') && !isInputSize(this.size)) {
+  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('size') && !isSelectSize(this.size)) {
       this.size = 'md';
-    }
-
-    if (changedProperties.has('rows')) {
-      if (
-        this.rows == null ||
-        !Number.isInteger(this.rows) ||
-        this.rows < 1
-      ) {
-        this.rows = DEFAULT_ROWS;
-      }
     }
 
     if (changedProperties.has('value') && this.value == null) {
       this.value = '';
     }
-
-    if (changedProperties.has('maxlength')) {
-      if (
-        this.maxlength == null ||
-        !Number.isInteger(this.maxlength) ||
-        this.maxlength < 0
-      ) {
-        this.maxlength = undefined;
-      }
-    }
-
-    if (changedProperties.has('minlength')) {
-      if (
-        this.minlength == null ||
-        !Number.isInteger(this.minlength) ||
-        this.minlength < 0
-      ) {
-        this.minlength = undefined;
-      }
-    }
   }
 
-  private get textareaClasses(): string {
+  protected override update(changedProperties: Map<PropertyKey, unknown>): void {
+    this.stopContentObserver();
+    super.update(changedProperties);
+    this.startContentObserver();
+  }
+
+  protected override updated(changedProperties: Map<PropertyKey, unknown>): void {    super.updated(changedProperties);    const nativeSelect = this.nativeSelect;    if (!nativeSelect) {      return;    }    if (this.value !== "" && nativeSelect.value !== this.value) {      nativeSelect.value = this.value;      return;    }    if (      this.value === "" &&      !this.hasAttribute("value")    ) {      const nativeValue = nativeSelect.value ?? "";      if (nativeValue !== "") {        this.value = nativeValue;      }    }  }
+
+  private get selectClasses(): string {
     return getInputClasses({
       fullWidth: this.fullWidth,
-      pill: this.pill,
       size: this.size,
       state: this.isDisabled
         ? this.disabled
@@ -218,8 +193,8 @@ export class SpectreTextareaElement
     return this.disabled || this.loading;
   }
 
-  private get nativeTextarea(): HTMLTextAreaElement | null {
-    return this.querySelector('[data-sp-textarea-native]');
+  private get nativeSelect(): HTMLSelectElement | null {
+    return this.querySelector('[data-sp-select-native]');
   }
 
   private get forwardedAriaLabel(): string | undefined {
@@ -237,64 +212,127 @@ export class SpectreTextareaElement
     return ariaDescribedBy ? ariaDescribedBy : undefined;
   }
 
+  private startContentObserver(): void {
+    if (this.contentObserver) {
+      return;
+    }
+
+    this.contentObserver = new MutationObserver((mutations) => {
+      const isInternalMovement = mutations.every((mutation) => {
+        return (
+          Array.from(mutation.removedNodes).every(
+            (node) => this.isInternalSelectNode(node) || this.contains(node),
+          ) &&
+          Array.from(mutation.addedNodes).every((node) => this.isInternalSelectNode(node))
+        );
+      });
+
+      if (isInternalMovement) {
+        return;
+      }
+
+      if (this.syncProjectedOptions()) {
+        this.requestUpdate();
+      }
+    });
+
+    this.contentObserver.observe(this, {
+      childList: true,
+    });
+  }
+
+  private stopContentObserver(): void {
+    this.contentObserver?.disconnect();
+    this.contentObserver = undefined;
+  }
+
+  private syncProjectedOptions(): boolean {
+    const nextProjectedOptions: Node[] = [];
+
+    Array.from(this.childNodes).forEach((node) => {
+      if (this.isInternalSelectNode(node)) {
+        this.projectedOptions.forEach((projectedNode) => {
+          if (projectedNode.parentNode !== this && this.contains(projectedNode)) {
+            nextProjectedOptions.push(projectedNode);
+          }
+        });
+        return;
+      }
+
+      if (isSelectableContent(node)) {
+        nextProjectedOptions.push(node);
+      }
+    });
+
+    const hasChanged =
+      nextProjectedOptions.length !== this.projectedOptions.length ||
+      nextProjectedOptions.some((node, index) => node !== this.projectedOptions[index]);
+
+    if (hasChanged) {
+      this.projectedOptions = nextProjectedOptions;
+    }
+
+    return hasChanged;
+  }
+
+  private isInternalSelectNode(node: Node): boolean {
+    return (
+      node.nodeType === Node.ELEMENT_NODE && (node as Element).hasAttribute('data-sp-select-native')
+    );
+  }
+
   private handleInput(event: Event): void {
-    const textarea = event.currentTarget as HTMLTextAreaElement;
-    this.value = textarea.value;
+    const select = event.currentTarget as HTMLSelectElement;
+    this.value = select.value;
   }
 
   private handleChange(event: Event): void {
-    const textarea = event.currentTarget as HTMLTextAreaElement;
-    this.value = textarea.value;
+    const select = event.currentTarget as HTMLSelectElement;
+    this.value = select.value;
   }
 
   override focus(options?: FocusOptions): void {
-    this.nativeTextarea?.focus(options);
+    this.nativeSelect?.focus(options);
   }
 
   override blur(): void {
-    this.nativeTextarea?.blur();
+    this.nativeSelect?.blur();
   }
+
 
   override render() {
     return html`
-      <textarea
+      <select
         aria-busy=${this.loading ? 'true' : 'false'}
         aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
         aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        autocomplete=${ifDefined(this.autocomplete)}
         ?autofocus=${this.autofocus}
-        class=${this.textareaClasses}
-        data-sp-textarea-native
+        class=${this.selectClasses}
+        data-sp-select-native
         ?disabled=${this.isDisabled}
-        inputmode=${ifDefined(this.inputmode)}
-        ?readonly=${this.readonly}
-        ?required=${this.required}
         id=${ifDefined(this.id || undefined)}
-        maxlength=${ifDefined(this.maxlength)}
-        minlength=${ifDefined(this.minlength)}
         name=${ifDefined(this.name)}
-        placeholder=${ifDefined(this.placeholder)}
-        rows=${this.rows}
+        ?required=${this.required}
         title=${ifDefined(this.title || undefined)}
         .value=${live(this.value)}
         @change=${this.handleChange}
         @input=${this.handleInput}
-      ></textarea>
+      >
+        ${this.projectedOptions.length > 0 ? this.projectedOptions : nothing}
+      </select>
     `;
   }
 }
 
-export function defineSpectreTextarea(
-  tagName = 'sp-textarea',
-): typeof SpectreTextareaElement {
+export function defineSpectreSelect(tagName = 'sp-select'): typeof SpectreSelectElement {
   const existingElement = customElements.get(tagName);
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreTextareaElement;
+    return existingElement as unknown as typeof SpectreSelectElement;
   }
 
-  customElements.define(tagName, SpectreTextareaElement);
-  return SpectreTextareaElement;
+  customElements.define(tagName, SpectreSelectElement);
+  return SpectreSelectElement;
 }
