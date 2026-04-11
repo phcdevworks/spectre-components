@@ -190,7 +190,7 @@ describe('sp-button', () => {
     button = element.querySelector('button');
     expect(button?.textContent?.trim()).toBe('Processing...');
 
-    // @ts-ignore
+    // @ts-expect-error -- exercising runtime fallback for invalid consumer value
     element.loadingLabel = null;
     await element.updateComplete;
     button = element.querySelector('button');
