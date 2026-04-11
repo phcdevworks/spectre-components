@@ -78,22 +78,22 @@
     "typescript": "^5.9 || ^6.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^2.1.2",
-    "@phcdevworks/spectre-ui": "^1.1.2",
+    "@phcdevworks/spectre-tokens": "^2.2.0",
+    "@phcdevworks/spectre-ui": "^1.2.0",
     "lit": "^3.3.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^25.5.2",
-    "@typescript-eslint/eslint-plugin": "^8.58.0",
-    "@typescript-eslint/parser": "^8.58.0",
+    "@types/node": "^25.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.58.1",
+    "@typescript-eslint/parser": "^8.58.1",
     "eslint": "^10.2.0",
     "globals": "^17.4.0",
     "happy-dom": "^20.8.9",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "tsup": "^8.5.1",
     "typescript": "^6.0.2",
-    "typescript-eslint": "^8.58.0",
-    "vitest": "^4.1.2"
+    "typescript-eslint": "^8.58.1",
+    "vitest": "^4.1.4"
   }
 }
