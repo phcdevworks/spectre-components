@@ -198,6 +198,12 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     if (changedProperties.has('type') && !isButtonType(this.type)) {
       this.type = 'button';
     }
+
+    if (changedProperties.has('loadingLabel')) {
+      if (this.loadingLabel == null || this.loadingLabel.trim() === '') {
+        this.loadingLabel = 'Loading';
+      }
+    }
   }
 
   protected override update(changedProperties: Map<PropertyKey, unknown>): void {
