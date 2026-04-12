@@ -2,12 +2,14 @@ import { LitElement, html } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 export interface SpectreRadioProps {
+  autofocus?: boolean;
   checked?: boolean;
   disabled?: boolean;
   invalid?: boolean;
   label?: string;
   name?: string;
   required?: boolean;
+  title?: string;
   value?: string;
 }
 
@@ -16,24 +18,28 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
     ariaLabel: { attribute: 'aria-label', type: String },
     ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
+    autofocus: { type: Boolean, reflect: true },
     checked: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     invalid: { type: Boolean, reflect: true },
-    label: { type: String },
+    label: { type: String, reflect: true },
     name: { type: String },
     required: { type: Boolean, reflect: true },
+    title: { type: String, reflect: true },
     value: { type: String },
   };
 
   ariaLabel: string | null = null;
   ariaLabelledBy: string | null = null;
   ariaDescribedBy: string | null = null;
+  autofocus = false;
   checked = false;
   disabled = false;
   invalid = false;
   label = '';
   name?: string;
   required = false;
+  override title = '';
   value = 'on';
   private _id?: string;
 
@@ -103,6 +109,12 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
     super.removeAttribute(qualifiedName);
   }
 
+  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('value') && this.value == null) {
+      this.value = 'on';
+    }
+  }
+
   private get nativeInput(): HTMLInputElement | null {
     return this.querySelector('[data-sp-radio-native]');
   }
@@ -148,12 +160,14 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
           aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
           aria-label=${ifDefined(this.forwardedAriaLabel)}
           aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
+          ?autofocus=${this.autofocus}
           data-sp-radio-native
           ?checked=${this.checked}
           ?disabled=${this.disabled}
           id=${ifDefined(this.id || undefined)}
           name=${ifDefined(this.name)}
           ?required=${this.required}
+          title=${ifDefined(this.title || undefined)}
           type='radio'
           value=${ifDefined(this.value || undefined)}
           @change=${this.handleChange}
