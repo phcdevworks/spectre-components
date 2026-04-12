@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { defineSpectreRadio, SpectreRadioElement } from '../src';
 
 describe('sp-radio', () => {

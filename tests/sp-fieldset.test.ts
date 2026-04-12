@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-
 import { defineSpectreFieldset, SpectreFieldsetElement } from '../src';
 
 describe('sp-fieldset', () => {
