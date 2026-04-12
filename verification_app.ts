@@ -1,7 +1,5 @@
-import '@phcdevworks/spectre-tokens/dist/index.css';
-import '@phcdevworks/spectre-ui/dist/base.css';
-import '@phcdevworks/spectre-ui/dist/components.css';
-import '@phcdevworks/spectre-ui/dist/utilities.css';
+import '@phcdevworks/spectre-tokens/index.css';
+import '@phcdevworks/spectre-ui/index.css';
 
 import { html, render } from 'lit';
 import {

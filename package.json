@@ -1,6 +1,6 @@
 {
   "name": "@phcdevworks/spectre-components",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "@phcdevworks/spectre-components is the Lit-based component layer of the Spectre system for reusable, accessible, framework-agnostic web components.",
   "keywords": [
     "phcdevworks",
