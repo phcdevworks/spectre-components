@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { defineSpectreTextarea, SpectreTextareaElement } from '../src';
 
 describe('sp-textarea', () => {

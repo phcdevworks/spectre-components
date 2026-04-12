@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { defineSpectreSelect, SpectreSelectElement } from '../src';
 
 describe('sp-select', () => {

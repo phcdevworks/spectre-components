@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-
 import { defineSpectreLabel, SpectreLabelElement } from '../src';
 
 describe('sp-label', () => {

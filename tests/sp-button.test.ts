@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { defineSpectreButton, SpectreButtonElement } from '../src';
 
 describe('sp-button', () => {

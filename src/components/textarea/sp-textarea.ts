@@ -35,8 +35,7 @@ const DEFAULT_ROWS = 2;
 
 export class SpectreTextareaElement
   extends LitElement
-  implements SpectreTextareaProps
-{
+  implements SpectreTextareaProps {
   static properties = {
     ariaLabel: { attribute: 'aria-label', type: String },
     ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
