@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { defineSpectreInput, SpectreInputElement } from '../src';
 
 describe('sp-input', () => {

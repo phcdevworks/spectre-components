@@ -1,5 +1,4 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-
 import { defineSpectreCheckbox, SpectreCheckboxElement } from '../src';
 
 describe('sp-checkbox', () => {

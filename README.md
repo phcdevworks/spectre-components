@@ -34,10 +34,10 @@ Import the Spectre CSS layers first, then register the custom elements you want
 to use:
 
 ```ts
-import '@phcdevworks/spectre-tokens/index.css';
-import '@phcdevworks/spectre-ui/index.css';
+import "@phcdevworks/spectre-tokens/index.css";
+import "@phcdevworks/spectre-ui/index.css";
 
-import { defineSpectreComponents } from '@phcdevworks/spectre-components';
+import { defineSpectreComponents } from "@phcdevworks/spectre-components";
 
 defineSpectreComponents();
 ```
@@ -53,7 +53,7 @@ Use the components in markup:
 Register only the button when you want a narrower entry point:
 
 ```ts
-import { defineSpectreButton } from '@phcdevworks/spectre-components/button';
+import { defineSpectreButton } from "@phcdevworks/spectre-components/button";
 
 defineSpectreButton();
 ```
@@ -61,7 +61,7 @@ defineSpectreButton();
 Register only the input when you want the input-only entry point:
 
 ```ts
-import { defineSpectreInput } from '@phcdevworks/spectre-components/input';
+import { defineSpectreInput } from "@phcdevworks/spectre-components/input";
 
 defineSpectreInput();
 ```

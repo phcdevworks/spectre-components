@@ -20,6 +20,13 @@
     "skipLibCheck": true,
     "ignoreDeprecations": "6.0"
   },
-  "include": ["src", "tests", "vitest.config.ts", "tsup.config.ts", "eslint.config.js", "verification_app.ts"],
+  "include": [
+    "src",
+    "tests",
+    "vitest.config.ts",
+    "tsup.config.ts",
+    "eslint.config.js",
+    "verification_app.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

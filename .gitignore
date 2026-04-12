@@ -1,3 +1,13 @@
-dist
-coverage
-node_modules
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+coverage/
+
+# Logs and caches
+*.log
+.eslintcache
+
+# OS files
+.DS_Store
