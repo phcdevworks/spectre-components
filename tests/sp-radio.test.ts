@@ -117,6 +117,36 @@ describe('sp-radio', () => {
     element.blur();
     expect(onBlur).toHaveBeenCalled();
   });
+
+  it('reflects label, title, and autofocus properties', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    element.label = 'Reflected Label';
+    element.title = 'Radio Title';
+    element.autofocus = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input[type=radio]');
+
+    expect(element.getAttribute('label')).toBe('Reflected Label');
+    expect(element.getAttribute('title')).toBe('Radio Title');
+    expect(element.hasAttribute('autofocus')).toBe(true);
+    expect(input?.getAttribute('title')).toBe('Radio Title');
+    expect(input?.hasAttribute('autofocus')).toBe(true);
+  });
+
+  it('normalizes null/undefined value to "on"', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    element.value = null as never;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.value).toBe('on');
+    const input = element.querySelector('input[type=radio]');
+    expect(input?.getAttribute('value')).toBe('on');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {

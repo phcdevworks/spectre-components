@@ -12,7 +12,7 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
     ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     disabled: { type: Boolean, reflect: true },
-    legend: { type: String },
+    legend: { type: String, reflect: true },
   };
 
   ariaLabel: string | null = null;

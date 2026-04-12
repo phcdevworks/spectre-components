@@ -18,6 +18,7 @@ export interface SpectreSelectProps {
   invalid?: boolean;
   loading?: boolean;
   name?: string;
+  pill?: boolean;
   required?: boolean;
   size?: SpectreSelectSize;
   success?: boolean;
@@ -53,6 +54,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
     name: { type: String },
+    pill: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
@@ -69,6 +71,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   invalid = false;
   loading = false;
   name?: string;
+  pill = false;
   required = false;
   size: SpectreSelectSize = 'md';
   success = false;
@@ -163,6 +166,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     if (changedProperties.has('value') && this.value == null) {
       this.value = '';
     }
+
   }
 
   protected override update(changedProperties: Map<PropertyKey, unknown>): void {
@@ -171,11 +175,31 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     this.startContentObserver();
   }
 
-  protected override updated(changedProperties: Map<PropertyKey, unknown>): void {    super.updated(changedProperties);    const nativeSelect = this.nativeSelect;    if (!nativeSelect) {      return;    }    if (this.value !== "" && nativeSelect.value !== this.value) {      nativeSelect.value = this.value;      return;    }    if (      this.value === "" &&      !this.hasAttribute("value")    ) {      const nativeValue = nativeSelect.value ?? "";      if (nativeValue !== "") {        this.value = nativeValue;      }    }  }
+  protected override updated(changedProperties: Map<PropertyKey, unknown>): void {
+    super.updated(changedProperties);
+
+    const nativeSelect = this.nativeSelect;
+    if (!nativeSelect) {
+      return;
+    }
+
+    if (this.value !== '' && nativeSelect.value !== this.value) {
+      nativeSelect.value = this.value;
+      return;
+    }
+
+    if (this.value === '' && !this.hasAttribute('value')) {
+      const nativeValue = nativeSelect.value ?? '';
+      if (nativeValue !== '') {
+        this.value = nativeValue;
+      }
+    }
+  }
 
   private get selectClasses(): string {
     return getInputClasses({
       fullWidth: this.fullWidth,
+      pill: this.pill,
       size: this.size,
       state: this.isDisabled
         ? this.disabled
