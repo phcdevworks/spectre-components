@@ -76,7 +76,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
-    loadingLabel: { attribute: 'loading-label', type: String },
+    loadingLabel: { attribute: 'loading-label', type: String, reflect: true },
     name: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },

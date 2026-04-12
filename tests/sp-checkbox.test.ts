@@ -117,6 +117,36 @@ describe('sp-checkbox', () => {
     element.blur();
     expect(onBlur).toHaveBeenCalled();
   });
+
+  it('reflects label, title, and autofocus properties', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.label = 'Reflected Label';
+    element.title = 'Checkbox Title';
+    element.autofocus = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input[type=checkbox]');
+
+    expect(element.getAttribute('label')).toBe('Reflected Label');
+    expect(element.getAttribute('title')).toBe('Checkbox Title');
+    expect(element.hasAttribute('autofocus')).toBe(true);
+    expect(input?.getAttribute('title')).toBe('Checkbox Title');
+    expect(input?.hasAttribute('autofocus')).toBe(true);
+  });
+
+  it('normalizes null/undefined value to "on"', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.value = null as never;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.value).toBe('on');
+    const input = element.querySelector('input[type=checkbox]');
+    expect(input?.getAttribute('value')).toBe('on');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {

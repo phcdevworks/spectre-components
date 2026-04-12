@@ -237,6 +237,24 @@ describe('sp-select', () => {
     expect(select?.className).toContain('sp-input--md');
   });
 
+  it('reflects the pill property and applies the pill class', async () => {
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.pill = true;
+    element.append(createOption('free', 'Free'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const select = element.querySelector('select');
+    expect(element.hasAttribute('pill')).toBe(true);
+    expect(select?.className).toContain('sp-input--pill');
+
+    element.pill = false;
+    await element.updateComplete;
+    expect(element.hasAttribute('pill')).toBe(false);
+    expect(select?.className).not.toContain('sp-input--pill');
+  });
+
 });
 
 function createOption(value: string, label: string): HTMLOptionElement {
