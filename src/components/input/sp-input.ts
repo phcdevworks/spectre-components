@@ -245,18 +245,18 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   }
 
   private get forwardedAriaLabel(): string | undefined {
-    const ariaLabel = this.ariaLabel?.trim();
-    return ariaLabel ? ariaLabel : undefined;
+    const value = this.ariaLabel?.trim();
+    return value ? value : undefined;
   }
 
   private get forwardedAriaLabelledBy(): string | undefined {
-    const ariaLabelledBy = this.ariaLabelledBy?.trim();
-    return ariaLabelledBy ? ariaLabelledBy : undefined;
+    const value = this.ariaLabelledBy?.trim();
+    return value ? value : undefined;
   }
 
   private get forwardedAriaDescribedBy(): string | undefined {
-    const ariaDescribedBy = this.ariaDescribedBy?.trim();
-    return ariaDescribedBy ? ariaDescribedBy : undefined;
+    const value = this.ariaDescribedBy?.trim();
+    return value ? value : undefined;
   }
 
   private handleInput(event: Event): void {
