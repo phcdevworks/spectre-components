@@ -166,7 +166,6 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     if (changedProperties.has('value') && this.value == null) {
       this.value = '';
     }
-
   }
 
   protected override update(changedProperties: Map<PropertyKey, unknown>): void {
@@ -174,6 +173,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     super.update(changedProperties);
     this.startContentObserver();
   }
+
 
   protected override updated(changedProperties: Map<PropertyKey, unknown>): void {
     super.updated(changedProperties);
@@ -222,18 +222,18 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   }
 
   private get forwardedAriaLabel(): string | undefined {
-    const ariaLabel = this.ariaLabel?.trim();
-    return ariaLabel ? ariaLabel : undefined;
+    const value = this.ariaLabel?.trim();
+    return value ? value : undefined;
   }
 
   private get forwardedAriaLabelledBy(): string | undefined {
-    const ariaLabelledBy = this.ariaLabelledBy?.trim();
-    return ariaLabelledBy ? ariaLabelledBy : undefined;
+    const value = this.ariaLabelledBy?.trim();
+    return value ? value : undefined;
   }
 
   private get forwardedAriaDescribedBy(): string | undefined {
-    const ariaDescribedBy = this.ariaDescribedBy?.trim();
-    return ariaDescribedBy ? ariaDescribedBy : undefined;
+    const value = this.ariaDescribedBy?.trim();
+    return value ? value : undefined;
   }
 
   private startContentObserver(): void {
