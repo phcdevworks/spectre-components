@@ -14,6 +14,7 @@ export type SpectreSelectSize = (typeof spectreSelectSizes)[number];
 export interface SpectreSelectProps {
   autofocus?: boolean;
   disabled?: boolean;
+  form?: string;
   fullWidth?: boolean;
   invalid?: boolean;
   loading?: boolean;
@@ -50,6 +51,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
+    form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
@@ -67,6 +69,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   ariaDescribedBy: string | null = null;
   autofocus = false;
   disabled = false;
+  form?: string;
   fullWidth = false;
   invalid = false;
   loading = false;
