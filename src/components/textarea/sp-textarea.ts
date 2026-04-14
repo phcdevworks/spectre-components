@@ -13,6 +13,7 @@ export interface SpectreTextareaProps {
   autocomplete?: string;
   autofocus?: boolean;
   disabled?: boolean;
+  form?: string;
   fullWidth?: boolean;
   inputmode?: string;
   invalid?: boolean;
@@ -43,6 +44,7 @@ export class SpectreTextareaElement
     autocomplete: { type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
+    form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     inputmode: { type: String },
     invalid: { type: Boolean, reflect: true },
@@ -67,6 +69,7 @@ export class SpectreTextareaElement
   autocomplete?: string;
   autofocus = false;
   disabled = false;
+  form?: string;
   fullWidth = false;
   inputmode?: string;
   invalid = false;
