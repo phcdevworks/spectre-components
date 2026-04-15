@@ -183,7 +183,10 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
   }
 
   private isInternalFieldsetNode(node: Node): boolean {
-    return node === this.nativeFieldset;
+    return (
+      node.nodeType === Node.ELEMENT_NODE &&
+      (node as Element).hasAttribute('data-sp-fieldset-native')
+    );
   }
 
   override focus(options?: FocusOptions): void {
