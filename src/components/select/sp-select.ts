@@ -2,16 +2,16 @@ import { LitElement, html, nothing } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { getInputClasses } from '@phcdevworks/spectre-ui';
+
 import {
-  getInputClasses,
-  type InputSize,
-} from '@phcdevworks/spectre-ui';
-
-export const spectreSelectSizes = ['sm', 'md', 'lg'] as const;
-
-export type SpectreSelectSize = (typeof spectreSelectSizes)[number];
+  isInputSize,
+  spectreInputSizes,
+  type SpectreInputSize,
+} from '../input/sp-input';
 
 export interface SpectreSelectProps {
+  autocomplete?: string;
   autofocus?: boolean;
   disabled?: boolean;
   form?: string;
@@ -25,10 +25,6 @@ export interface SpectreSelectProps {
   success?: boolean;
   title?: string;
   value?: string;
-}
-
-function isSelectSize(value: string): value is InputSize {
-  return (spectreSelectSizes as readonly string[]).includes(value);
 }
 
 function isSelectableContent(node: Node): boolean {
@@ -49,6 +45,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     ariaLabel: { attribute: 'aria-label', type: String },
     ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
+    autocomplete: { type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
@@ -67,6 +64,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   ariaLabel: string | null = null;
   ariaLabelledBy: string | null = null;
   ariaDescribedBy: string | null = null;
+  autocomplete?: string;
   autofocus = false;
   disabled = false;
   form?: string;
@@ -76,7 +74,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   name?: string;
   pill = false;
   required = false;
-  size: SpectreSelectSize = 'md';
+  size: SpectreInputSize = 'md';
   success = false;
   override title = '';
   value = '';
@@ -162,7 +160,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
-    if (changedProperties.has('size') && !isSelectSize(this.size)) {
+    if (changedProperties.has('size') && !isInputSize(this.size)) {
       this.size = 'md';
     }
 
@@ -188,13 +186,16 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
 
     if (this.value !== '' && nativeSelect.value !== this.value) {
       nativeSelect.value = this.value;
-      return;
     }
 
     if (this.value === '' && !this.hasAttribute('value')) {
       const nativeValue = nativeSelect.value ?? '';
-      if (nativeValue !== '') {
-        this.value = nativeValue;
+      if (nativeValue !== '' && nativeValue !== this.value) {
+        this.updateComplete.then(() => {
+          if (this.value === '' && !this.hasAttribute('value')) {
+            this.value = nativeValue;
+          }
+        });
       }
     }
   }
@@ -335,6 +336,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
         aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
         aria-label=${ifDefined(this.forwardedAriaLabel)}
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
+        autocomplete=${ifDefined(this.autocomplete)}
         ?autofocus=${this.autofocus}
         class=${this.selectClasses}
         data-sp-select-native
