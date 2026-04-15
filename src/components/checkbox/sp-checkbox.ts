@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 export interface SpectreCheckboxProps {
@@ -173,7 +173,7 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
           @change=${this.handleChange}
           @input=${this.handleInput}
         />
-        <span class='sp-label'>${this.label}</span>
+        ${this.label ? html`<span class='sp-label'>${this.label}</span>` : nothing}
       </label>
     `;
   }

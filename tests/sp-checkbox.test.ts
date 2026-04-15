@@ -146,6 +146,17 @@ describe('sp-checkbox', () => {
     const input = element.querySelector('input[type=checkbox]');
     expect(input?.getAttribute('value')).toBe('on');
   });
+
+  it('does not render a label span if label is empty', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.label = '';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('.sp-label');
+    expect(label).toBeNull();
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
