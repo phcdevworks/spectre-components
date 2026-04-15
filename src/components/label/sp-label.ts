@@ -159,7 +159,10 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
   }
 
   private isInternalLabelNode(node: Node): boolean {
-    return node === this.nativeLabel;
+    return (
+      node.nodeType === Node.ELEMENT_NODE &&
+      (node as Element).hasAttribute('data-sp-label-native')
+    );
   }
 
   override focus(options?: FocusOptions): void {
