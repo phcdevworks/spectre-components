@@ -40,6 +40,22 @@ describe('sp-label', () => {
     expect(label?.getAttribute('for')).toBe('project-name');
     expect(label?.id).toBe('project-name-label');
   });
+
+  it('forwards ARIA attributes to the native label', async () => {
+    const element = document.createElement('sp-label') as SpectreLabelElement;
+    element.setAttribute('aria-label', 'Custom Label');
+    element.setAttribute('aria-labelledby', 'label-id');
+    element.setAttribute('aria-describedby', 'description-id');
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('label');
+
+    expect(label?.getAttribute('aria-label')).toBe('Custom Label');
+    expect(label?.getAttribute('aria-labelledby')).toBe('label-id');
+    expect(label?.getAttribute('aria-describedby')).toBe('description-id');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {

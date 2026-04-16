@@ -146,6 +146,17 @@ describe('sp-radio', () => {
     const input = element.querySelector('input[type=radio]');
     expect(input?.getAttribute('value')).toBe('on');
   });
+
+  it('does not render a label span if label is empty', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    element.label = '';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('.sp-label');
+    expect(label).toBeNull();
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
