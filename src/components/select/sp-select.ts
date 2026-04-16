@@ -6,7 +6,6 @@ import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 import {
   isInputSize,
-  spectreInputSizes,
   type SpectreInputSize,
 } from '../input/sp-input';
 
@@ -21,7 +20,7 @@ export interface SpectreSelectProps {
   name?: string;
   pill?: boolean;
   required?: boolean;
-  size?: SpectreSelectSize;
+  size?: SpectreInputSize;
   success?: boolean;
   title?: string;
   value?: string;
