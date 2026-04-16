@@ -2,14 +2,23 @@ import { LitElement, html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 export interface SpectreLabelProps {
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   htmlFor?: string;
 }
 
 export class SpectreLabelElement extends LitElement implements SpectreLabelProps {
   static properties = {
+    ariaLabel: { attribute: 'aria-label', type: String },
+    ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
+    ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     htmlFor: { attribute: 'for', type: String },
   };
 
+  ariaLabel: string | null = null;
+  ariaLabelledBy: string | null = null;
+  ariaDescribedBy: string | null = null;
   htmlFor?: string;
   private _id?: string;
   private projectedContent: Node[] = [];
@@ -99,6 +108,21 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
     return this.querySelector('[data-sp-label-native]');
   }
 
+  private get forwardedAriaLabel(): string | undefined {
+    const value = this.ariaLabel?.trim();
+    return value ? value : undefined;
+  }
+
+  private get forwardedAriaLabelledBy(): string | undefined {
+    const value = this.ariaLabelledBy?.trim();
+    return value ? value : undefined;
+  }
+
+  private get forwardedAriaDescribedBy(): string | undefined {
+    const value = this.ariaDescribedBy?.trim();
+    return value ? value : undefined;
+  }
+
   private startContentObserver(): void {
     if (this.contentObserver) {
       return;
@@ -176,6 +200,9 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
   override render() {
     return html`
       <label
+        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
+        aria-label=${ifDefined(this.forwardedAriaLabel)}
+        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
         class='sp-label'
         data-sp-label-native
         for=${ifDefined(this.htmlFor)}
