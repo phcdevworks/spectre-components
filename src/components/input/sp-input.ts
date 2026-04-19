@@ -293,6 +293,7 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
         class=${this.inputClasses}
         data-sp-input-native
         ?disabled=${this.isDisabled}
+        form=${ifDefined(this.form)}
         ?readonly=${this.readonly}
         ?required=${this.required}
         id=${ifDefined(this.id || undefined)}

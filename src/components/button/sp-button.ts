@@ -27,6 +27,7 @@ export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 export interface SpectreButtonProps {
   autofocus?: boolean;
   disabled?: boolean;
+  form?: string;
   fullWidth?: boolean;
   label?: string;
   loading?: boolean;
@@ -73,6 +74,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
+    form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
@@ -91,6 +93,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   ariaDescribedBy: string | null = null;
   autofocus = false;
   disabled = false;
+  form?: string;
   fullWidth = false;
   label?: string;
   loading = false;
@@ -293,20 +296,16 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     const nextProjectedContent: Node[] = [];
 
     Array.from(this.childNodes).forEach((node) => {
-      if (this.isInternalButtonNode(node)) {
-        this.projectedContent.forEach((pNode) => {
-          if (pNode.parentNode !== this && this.contains(pNode)) {
-            nextProjectedContent.push(pNode);
-          }
-        });
-      } else {
+      if (!this.isInternalButtonNode(node)) {
         nextProjectedContent.push(node);
       }
     });
 
     const hasChanged =
       nextProjectedContent.length !== this.projectedContent.length ||
-      nextProjectedContent.some((node, index) => node !== this.projectedContent[index]);
+      nextProjectedContent.some(
+        (node, index) => node !== this.projectedContent[index],
+      );
 
     if (hasChanged) {
       this.projectedContent = nextProjectedContent;
@@ -356,6 +355,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
         class=${this.buttonClasses}
         data-sp-button-native
         ?disabled=${this.isDisabled}
+        form=${ifDefined(this.form)}
         id=${ifDefined(this.id || undefined)}
         name=${ifDefined(this.name)}
         title=${ifDefined(this.title || undefined)}
