@@ -159,21 +159,16 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
     const nextProjectedContent: Node[] = [];
 
     Array.from(this.childNodes).forEach((node) => {
-      if (this.isInternalLabelNode(node)) {
-        this.projectedContent.forEach((projectedNode) => {
-          if (projectedNode.parentNode !== this && this.contains(projectedNode)) {
-            nextProjectedContent.push(projectedNode);
-          }
-        });
-        return;
+      if (!this.isInternalLabelNode(node)) {
+        nextProjectedContent.push(node);
       }
-
-      nextProjectedContent.push(node);
     });
 
     if (
       nextProjectedContent.length === this.projectedContent.length &&
-      nextProjectedContent.every((node, index) => node === this.projectedContent[index])
+      nextProjectedContent.every(
+        (node, index) => node === this.projectedContent[index],
+      )
     ) {
       return false;
     }

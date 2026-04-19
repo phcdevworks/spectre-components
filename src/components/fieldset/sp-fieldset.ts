@@ -3,6 +3,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 export interface SpectreFieldsetProps {
   disabled?: boolean;
+  form?: string;
   legend?: string;
 }
 
@@ -12,6 +13,7 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
     ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     disabled: { type: Boolean, reflect: true },
+    form: { type: String },
     legend: { type: String, reflect: true },
   };
 
@@ -19,6 +21,7 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
   ariaLabelledBy: string | null = null;
   ariaDescribedBy: string | null = null;
   disabled = false;
+  form?: string;
   legend = '';
   private _id?: string;
   private projectedContent: Node[] = [];
@@ -159,21 +162,16 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
     const nextProjectedContent: Node[] = [];
 
     Array.from(this.childNodes).forEach((node) => {
-      if (this.isInternalFieldsetNode(node)) {
-        this.projectedContent.forEach((projectedNode) => {
-          if (projectedNode.parentNode !== this && this.contains(projectedNode)) {
-            nextProjectedContent.push(projectedNode);
-          }
-        });
-        return;
+      if (!this.isInternalFieldsetNode(node)) {
+        nextProjectedContent.push(node);
       }
-
-      nextProjectedContent.push(node);
     });
 
     if (
       nextProjectedContent.length === this.projectedContent.length &&
-      nextProjectedContent.every((node, index) => node === this.projectedContent[index])
+      nextProjectedContent.every(
+        (node, index) => node === this.projectedContent[index],
+      )
     ) {
       return false;
     }
@@ -205,6 +203,7 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
         aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
         data-sp-fieldset-native
         ?disabled=${this.disabled}
+        form=${ifDefined(this.form)}
         id=${ifDefined(this.id || undefined)}
       >
         ${this.legend ? html`<legend class='sp-label'>${this.legend}</legend>` : nothing}

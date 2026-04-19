@@ -28,6 +28,34 @@ describe('sp-radio', () => {
     expect(label?.textContent).toBe('Pro plan');
   });
 
+  it('forwards the form attribute to the native radio', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    element.form = 'test-form';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input[type=radio]');
+    expect(input?.getAttribute('form')).toBe('test-form');
+  });
+
+  it('supports rich content labels via projection', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    element.innerHTML = '<span>Select <strong>Option</strong></span>';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('label');
+    expect(label?.innerHTML).toContain('<span>Select <strong>Option</strong></span>');
+
+    // Should favor projected content over label property
+    element.label = 'Should be ignored';
+    await element.updateComplete;
+    expect(label?.innerHTML).toContain('<span>Select <strong>Option</strong></span>');
+    expect(label?.textContent).not.toContain('Should be ignored');
+  });
+
   it('forwards the consumer-facing id to the native radio only', async () => {
     const element = document.createElement('sp-radio') as SpectreRadioElement;
     element.setAttribute('id', 'plan-pro');
