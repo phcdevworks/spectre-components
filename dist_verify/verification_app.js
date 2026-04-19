@@ -1,18 +1,7 @@
 import '@phcdevworks/spectre-tokens/index.css';
 import '@phcdevworks/spectre-ui/index.css';
-
 import { html, render } from 'lit';
-import {
-  defineSpectreButton,
-  defineSpectreCheckbox,
-  defineSpectreFieldset,
-  defineSpectreInput,
-  defineSpectreLabel,
-  defineSpectreRadio,
-  defineSpectreSelect,
-  defineSpectreTextarea,
-} from './src';
-
+import { defineSpectreButton, defineSpectreCheckbox, defineSpectreFieldset, defineSpectreInput, defineSpectreLabel, defineSpectreRadio, defineSpectreSelect, defineSpectreTextarea, } from './src';
 defineSpectreButton();
 defineSpectreCheckbox();
 defineSpectreFieldset();
@@ -21,8 +10,7 @@ defineSpectreLabel();
 defineSpectreRadio();
 defineSpectreSelect();
 defineSpectreTextarea();
-
-const template = html`
+const template = html `
   <section>
     <h2>sp-button</h2>
     <div class='row'>
@@ -115,5 +103,4 @@ const template = html`
     </sp-fieldset>
   </section>
 `;
-
 render(template, document.body);

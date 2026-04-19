@@ -193,6 +193,17 @@ describe('sp-input', () => {
     expect(input?.hasAttribute('autofocus')).toBe(true);
   });
 
+  it('forwards the form attribute to the native input', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.form = 'test-form';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.getAttribute('form')).toBe('test-form');
+  });
+
   it('applies success, loading, and pill classes correctly', async () => {
     const element = document.createElement('sp-input') as SpectreInputElement;
     element.success = true;
