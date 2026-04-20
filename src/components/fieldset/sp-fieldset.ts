@@ -1,10 +1,16 @@
 import { LitElement, html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { hasMeaningfulContent } from '../../utils/dom';
+
 export interface SpectreFieldsetProps {
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   disabled?: boolean;
   form?: string;
   legend?: string;
+  title?: string;
 }
 
 export class SpectreFieldsetElement extends LitElement implements SpectreFieldsetProps {
@@ -15,6 +21,7 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     legend: { type: String, reflect: true },
+    title: { type: String, reflect: true },
   };
 
   ariaLabel: string | null = null;
@@ -23,6 +30,7 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
   disabled = false;
   form?: string;
   legend = '';
+  override title = '';
   private _id?: string;
   private projectedContent: Node[] = [];
   private contentObserver?: MutationObserver | undefined;
@@ -167,17 +175,17 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
       }
     });
 
-    if (
-      nextProjectedContent.length === this.projectedContent.length &&
-      nextProjectedContent.every(
-        (node, index) => node === this.projectedContent[index],
-      )
-    ) {
-      return false;
+    const hasChanged =
+      nextProjectedContent.length !== this.projectedContent.length ||
+      nextProjectedContent.some(
+        (node, index) => node !== this.projectedContent[index],
+      );
+
+    if (hasChanged) {
+      this.projectedContent = nextProjectedContent;
     }
 
-    this.projectedContent = nextProjectedContent;
-    return true;
+    return hasChanged;
   }
 
   private isInternalFieldsetNode(node: Node): boolean {
@@ -195,6 +203,10 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
     this.nativeFieldset?.blur();
   }
 
+  private get hasProjectedContent(): boolean {
+    return hasMeaningfulContent(this.projectedContent);
+  }
+
   override render() {
     return html`
       <fieldset
@@ -205,9 +217,10 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
         ?disabled=${this.disabled}
         form=${ifDefined(this.form)}
         id=${ifDefined(this.id || undefined)}
+        title=${ifDefined(this.title || undefined)}
       >
         ${this.legend ? html`<legend class='sp-label'>${this.legend}</legend>` : nothing}
-        ${this.projectedContent.length > 0 ? this.projectedContent : nothing}
+        ${this.hasProjectedContent ? this.projectedContent : nothing}
       </fieldset>
     `;
   }

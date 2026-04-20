@@ -28,6 +28,9 @@ export type SpectreInputType = (typeof spectreInputTypes)[number];
 export type SpectreInputSize = (typeof spectreInputSizes)[number];
 
 export interface SpectreInputProps {
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   autocomplete?: string;
   autofocus?: boolean;
   disabled?: boolean;

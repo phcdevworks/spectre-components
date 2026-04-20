@@ -10,6 +10,9 @@ import {
 } from '../input/sp-input';
 
 export interface SpectreSelectProps {
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   autocomplete?: string;
   autofocus?: boolean;
   disabled?: boolean;
