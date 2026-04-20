@@ -1,6 +1,8 @@
 import { LitElement, html, nothing, type TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { hasMeaningfulContent } from '../../utils/dom';
+
 import {
   getButtonClasses,
   type ButtonSize,
@@ -25,6 +27,9 @@ export type SpectreButtonSize = (typeof spectreButtonSizes)[number];
 export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 
 export interface SpectreButtonProps {
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   autofocus?: boolean;
   disabled?: boolean;
   form?: string;
@@ -51,20 +56,6 @@ function isButtonSize(value: string): value is ButtonSize {
 
 function isButtonType(value: string): value is SpectreButtonType {
   return (spectreButtonTypes as readonly string[]).includes(value);
-}
-
-function hasMeaningfulContent(nodes: readonly Node[]): boolean {
-  return nodes.some((node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      return true;
-    }
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      return (node.textContent?.trim().length ?? 0) > 0;
-    }
-
-    return false;
-  });
 }
 
 export class SpectreButtonElement extends LitElement implements SpectreButtonProps {
