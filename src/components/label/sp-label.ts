@@ -1,11 +1,14 @@
 import { LitElement, html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { hasMeaningfulContent } from '../../utils/dom';
+
 export interface SpectreLabelProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
   htmlFor?: string;
+  title?: string;
 }
 
 export class SpectreLabelElement extends LitElement implements SpectreLabelProps {
@@ -14,12 +17,14 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
     ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
     ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     htmlFor: { attribute: 'for', type: String },
+    title: { type: String, reflect: true },
   };
 
   ariaLabel: string | null = null;
   ariaLabelledBy: string | null = null;
   ariaDescribedBy: string | null = null;
   htmlFor?: string;
+  override title = '';
   private _id?: string;
   private projectedContent: Node[] = [];
   private contentObserver?: MutationObserver | undefined;
@@ -164,17 +169,17 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
       }
     });
 
-    if (
-      nextProjectedContent.length === this.projectedContent.length &&
-      nextProjectedContent.every(
-        (node, index) => node === this.projectedContent[index],
-      )
-    ) {
-      return false;
+    const hasChanged =
+      nextProjectedContent.length !== this.projectedContent.length ||
+      nextProjectedContent.some(
+        (node, index) => node !== this.projectedContent[index],
+      );
+
+    if (hasChanged) {
+      this.projectedContent = nextProjectedContent;
     }
 
-    this.projectedContent = nextProjectedContent;
-    return true;
+    return hasChanged;
   }
 
   private isInternalLabelNode(node: Node): boolean {
@@ -192,6 +197,10 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
     this.nativeLabel?.blur();
   }
 
+  private get hasProjectedContent(): boolean {
+    return hasMeaningfulContent(this.projectedContent);
+  }
+
   override render() {
     return html`
       <label
@@ -203,8 +212,9 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
         for=${ifDefined(this.htmlFor)}
         id=${ifDefined(this.id || undefined)}
         tabindex='-1'
+        title=${ifDefined(this.title || undefined)}
       >
-        ${this.projectedContent.length > 0 ? this.projectedContent : nothing}
+        ${this.hasProjectedContent ? this.projectedContent : nothing}
       </label>
     `;
   }
