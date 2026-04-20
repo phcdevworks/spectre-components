@@ -2,7 +2,12 @@ import { LitElement, html, nothing } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { hasMeaningfulContent } from '../../utils/dom';
+
 export interface SpectreCheckboxProps {
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   autofocus?: boolean;
   checked?: boolean;
   disabled?: boolean;
@@ -140,17 +145,7 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
   }
 
   private get hasProjectedContent(): boolean {
-    return this.projectedContent.some((node) => {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        return true;
-      }
-
-      if (node.nodeType === Node.TEXT_NODE) {
-        return (node.textContent?.trim().length ?? 0) > 0;
-      }
-
-      return false;
-    });
+    return hasMeaningfulContent(this.projectedContent);
   }
 
   private get forwardedAriaLabel(): string | undefined {
@@ -209,17 +204,17 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
       }
     });
 
-    if (
-      nextProjectedContent.length === this.projectedContent.length &&
-      nextProjectedContent.every(
-        (node, index) => node === this.projectedContent[index],
-      )
-    ) {
-      return false;
+    const hasChanged =
+      nextProjectedContent.length !== this.projectedContent.length ||
+      nextProjectedContent.some(
+        (node, index) => node !== this.projectedContent[index],
+      );
+
+    if (hasChanged) {
+      this.projectedContent = nextProjectedContent;
     }
 
-    this.projectedContent = nextProjectedContent;
-    return true;
+    return hasChanged;
   }
 
   private isInternalCheckboxNode(node: Node): boolean {
