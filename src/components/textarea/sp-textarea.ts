@@ -270,6 +270,7 @@ export class SpectreTextareaElement
         class=${this.textareaClasses}
         data-sp-textarea-native
         ?disabled=${this.isDisabled}
+        form=${ifDefined(this.form)}
         inputmode=${ifDefined(this.inputmode)}
         ?readonly=${this.readonly}
         ?required=${this.required}

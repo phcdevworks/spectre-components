@@ -58,6 +58,17 @@ describe('sp-fieldset', () => {
     expect(superHasIdAttribute(element)).toBe(false);
     expect(fieldset?.id).toBe('contact-methods');
   });
+
+  it('forwards the form attribute to the native fieldset', async () => {
+    const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
+    element.form = 'test-form';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const fieldset = element.querySelector('fieldset');
+    expect(fieldset?.getAttribute('form')).toBe('test-form');
+  });
 });
 
 function createChild(text: string): HTMLDivElement {

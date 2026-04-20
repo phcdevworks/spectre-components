@@ -87,6 +87,17 @@ describe('sp-button', () => {
     expect(button?.getAttribute('aria-label')).toBeNull();
   });
 
+  it('forwards the form attribute to the native button', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.form = 'test-form';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    expect(button?.getAttribute('form')).toBe('test-form');
+  });
+
   it('forwards id to the native button', async () => {
     const element = document.createElement('sp-button') as SpectreButtonElement;
     element.id = 'submit-btn';
