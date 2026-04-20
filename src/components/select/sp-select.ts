@@ -277,23 +277,16 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     const nextProjectedOptions: Node[] = [];
 
     Array.from(this.childNodes).forEach((node) => {
-      if (this.isInternalSelectNode(node)) {
-        this.projectedOptions.forEach((projectedNode) => {
-          if (projectedNode.parentNode !== this && this.contains(projectedNode)) {
-            nextProjectedOptions.push(projectedNode);
-          }
-        });
-        return;
-      }
-
-      if (isSelectableContent(node)) {
+      if (!this.isInternalSelectNode(node) && isSelectableContent(node)) {
         nextProjectedOptions.push(node);
       }
     });
 
     const hasChanged =
       nextProjectedOptions.length !== this.projectedOptions.length ||
-      nextProjectedOptions.some((node, index) => node !== this.projectedOptions[index]);
+      nextProjectedOptions.some(
+        (node, index) => node !== this.projectedOptions[index],
+      );
 
     if (hasChanged) {
       this.projectedOptions = nextProjectedOptions;
@@ -340,6 +333,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
         class=${this.selectClasses}
         data-sp-select-native
         ?disabled=${this.isDisabled}
+        form=${ifDefined(this.form)}
         id=${ifDefined(this.id || undefined)}
         name=${ifDefined(this.name)}
         ?required=${this.required}

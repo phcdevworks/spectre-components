@@ -216,6 +216,17 @@ describe('sp-textarea', () => {
     expect(textarea?.getAttribute('title')).toBe('Please enter your feedback');
   });
 
+  it('forwards the form attribute to the native textarea', async () => {
+    const element = document.createElement('sp-textarea') as SpectreTextareaElement;
+    element.form = 'test-form';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const textarea = element.querySelector('textarea');
+    expect(textarea?.getAttribute('form')).toBe('test-form');
+  });
+
   it('applies classes for size, loading, and success states', async () => {
     const element = document.createElement(
       'sp-textarea',

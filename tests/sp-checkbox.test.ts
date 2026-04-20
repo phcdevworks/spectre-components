@@ -28,6 +28,34 @@ describe('sp-checkbox', () => {
     expect(label?.textContent).toBe('Accept terms');
   });
 
+  it('forwards the form attribute to the native checkbox', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.form = 'test-form';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input[type=checkbox]');
+    expect(input?.getAttribute('form')).toBe('test-form');
+  });
+
+  it('supports rich content labels via projection', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.innerHTML = '<span>Accept <strong>Terms</strong></span>';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('label');
+    expect(label?.innerHTML).toContain('<span>Accept <strong>Terms</strong></span>');
+
+    // Should favor projected content over label property
+    element.label = 'Should be ignored';
+    await element.updateComplete;
+    expect(label?.innerHTML).toContain('<span>Accept <strong>Terms</strong></span>');
+    expect(label?.textContent).not.toContain('Should be ignored');
+  });
+
   it('forwards the consumer-facing id to the native checkbox only', async () => {
     const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
     element.setAttribute('id', 'terms-checkbox');
