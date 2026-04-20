@@ -254,6 +254,17 @@ describe('sp-select', () => {
     expect(select?.className).not.toContain('sp-input--pill');
   });
 
+  it('forwards the form attribute to the native select', async () => {
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.form = 'test-form';
+    element.append(createOption('free', 'Free'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const select = element.querySelector('select');
+    expect(select?.getAttribute('form')).toBe('test-form');
+  });
 });
 
 function createOption(value: string, label: string): HTMLOptionElement {
