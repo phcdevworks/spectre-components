@@ -13,9 +13,11 @@ export interface SpectreCheckboxProps {
   disabled?: boolean;
   form?: string;
   invalid?: boolean;
+  loading?: boolean;
   label?: string;
   name?: string;
   required?: boolean;
+  success?: boolean;
   title?: string;
   value?: string;
 }
@@ -30,9 +32,11 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     invalid: { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     name: { type: String },
     required: { type: Boolean, reflect: true },
+    success: { type: Boolean, reflect: true },
     title: { type: String, reflect: true },
     value: { type: String },
   };
@@ -45,9 +49,11 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
   disabled = false;
   form?: string;
   invalid = false;
+  loading = false;
   label = '';
   name?: string;
   required = false;
+  success = false;
   override title = '';
   value = 'on';
   private _id?: string;
@@ -142,6 +148,10 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
 
   private get nativeInput(): HTMLInputElement | null {
     return this.querySelector('[data-sp-checkbox-native]');
+  }
+
+  private get isDisabled(): boolean {
+    return this.disabled || this.loading;
   }
 
   private get hasProjectedContent(): boolean {
@@ -252,6 +262,7 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
     return html`
       <label data-sp-checkbox-label>
         <input
+          aria-busy=${this.loading ? 'true' : 'false'}
           aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
           aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
           aria-label=${ifDefined(this.forwardedAriaLabel)}
@@ -259,7 +270,7 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
           ?autofocus=${this.autofocus}
           data-sp-checkbox-native
           .checked=${live(this.checked)}
-          ?disabled=${this.disabled}
+          ?disabled=${this.isDisabled}
           form=${ifDefined(this.form)}
           id=${ifDefined(this.id || undefined)}
           name=${ifDefined(this.name)}
