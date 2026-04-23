@@ -2,6 +2,7 @@ import { LitElement, html, nothing } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+import { hasMeaningfulContent } from '../../utils/dom';
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 import {
@@ -27,19 +28,6 @@ export interface SpectreSelectProps {
   success?: boolean;
   title?: string;
   value?: string;
-}
-
-function isSelectableContent(node: Node): boolean {
-  if (node.nodeType === Node.ELEMENT_NODE) {
-    const tagName = (node as Element).tagName;
-    return tagName === 'OPTION' || tagName === 'OPTGROUP';
-  }
-
-  if (node.nodeType === Node.TEXT_NODE) {
-    return (node.textContent?.trim().length ?? 0) > 0;
-  }
-
-  return false;
 }
 
 export class SpectreSelectElement extends LitElement implements SpectreSelectProps {
@@ -81,7 +69,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   override title = '';
   value = '';
   private _id?: string;
-  private projectedOptions: Node[] = [];
+  private projectedContent: Node[] = [];
   private contentObserver?: MutationObserver | undefined;
 
   override get id(): string {
@@ -118,7 +106,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
       this.id = hostId;
     }
 
-    this.syncProjectedOptions();
+    this.syncProjectedContent();
     this.startContentObserver();
   }
 
@@ -227,6 +215,10 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     return this.querySelector('[data-sp-select-native]');
   }
 
+  private get hasProjectedContent(): boolean {
+    return hasMeaningfulContent(this.projectedContent);
+  }
+
   private get forwardedAriaLabel(): string | undefined {
     const value = this.ariaLabel?.trim();
     return value ? value : undefined;
@@ -261,7 +253,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
         return;
       }
 
-      if (this.syncProjectedOptions()) {
+      if (this.syncProjectedContent()) {
         this.requestUpdate();
       }
     });
@@ -276,23 +268,23 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     this.contentObserver = undefined;
   }
 
-  private syncProjectedOptions(): boolean {
-    const nextProjectedOptions: Node[] = [];
+  private syncProjectedContent(): boolean {
+    const nextProjectedContent: Node[] = [];
 
     Array.from(this.childNodes).forEach((node) => {
-      if (!this.isInternalSelectNode(node) && isSelectableContent(node)) {
-        nextProjectedOptions.push(node);
+      if (!this.isInternalSelectNode(node)) {
+        nextProjectedContent.push(node);
       }
     });
 
     const hasChanged =
-      nextProjectedOptions.length !== this.projectedOptions.length ||
-      nextProjectedOptions.some(
-        (node, index) => node !== this.projectedOptions[index],
+      nextProjectedContent.length !== this.projectedContent.length ||
+      nextProjectedContent.some(
+        (node, index) => node !== this.projectedContent[index],
       );
 
     if (hasChanged) {
-      this.projectedOptions = nextProjectedOptions;
+      this.projectedContent = nextProjectedContent;
     }
 
     return hasChanged;
@@ -345,7 +337,7 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
         @change=${this.handleChange}
         @input=${this.handleInput}
       >
-        ${this.projectedOptions.length > 0 ? this.projectedOptions : nothing}
+        ${this.hasProjectedContent ? this.projectedContent : nothing}
       </select>
     `;
   }
