@@ -285,9 +285,13 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
 
   private syncProjectedContent(): boolean {
     const nextProjectedContent: Node[] = [];
+    const sourceNodes = [
+      ...this.childNodes,
+      ...(this.nativeButton?.childNodes ?? []),
+    ];
 
-    Array.from(this.childNodes).forEach((node) => {
-      if (!this.isInternalButtonNode(node)) {
+    sourceNodes.forEach((node) => {
+      if (!this.isInternalButtonNode(node) && !nextProjectedContent.includes(node)) {
         nextProjectedContent.push(node);
       }
     });
@@ -306,8 +310,15 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   }
 
   private isInternalButtonNode(node: Node): boolean {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
+    }
+
+    const el = node as Element;
     return (
-      node.nodeType === Node.ELEMENT_NODE && (node as Element).hasAttribute('data-sp-button-native')
+      el.hasAttribute('data-sp-button-native') ||
+      el.hasAttribute('data-sp-button-loading-label') ||
+      el.hasAttribute('data-sp-button-label-fallback')
     );
   }
 
@@ -325,14 +336,16 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
 
   private renderButtonContent(): TemplateResult | Node[] | string {
     if (this.loading) {
-      return this.loadingLabel;
+      return html`<span data-sp-button-loading-label>${this.loadingLabel}</span>`;
     }
 
     if (this.hasProjectedContent) {
       return this.projectedContent;
     }
 
-    return this.visibleLabelFallback ?? '';
+    return this.visibleLabelFallback
+      ? html`<span data-sp-button-label-fallback>${this.visibleLabelFallback}</span>`
+      : '';
   }
 
   override render() {
