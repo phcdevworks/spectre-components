@@ -13,9 +13,11 @@ export interface SpectreRadioProps {
   disabled?: boolean;
   form?: string;
   invalid?: boolean;
+  loading?: boolean;
   label?: string;
   name?: string;
   required?: boolean;
+  success?: boolean;
   title?: string;
   value?: string;
 }
@@ -30,9 +32,11 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     invalid: { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     name: { type: String },
     required: { type: Boolean, reflect: true },
+    success: { type: Boolean, reflect: true },
     title: { type: String, reflect: true },
     value: { type: String },
   };
@@ -45,9 +49,11 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
   disabled = false;
   form?: string;
   invalid = false;
+  loading = false;
   label = '';
   name?: string;
   required = false;
+  success = false;
   override title = '';
   value = 'on';
   private _id?: string;
@@ -142,6 +148,10 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
 
   private get nativeInput(): HTMLInputElement | null {
     return this.querySelector('[data-sp-radio-native]');
+  }
+
+  private get isDisabled(): boolean {
+    return this.disabled || this.loading;
   }
 
   private get hasProjectedContent(): boolean {
@@ -252,6 +262,7 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
     return html`
       <label data-sp-radio-label>
         <input
+          aria-busy=${this.loading ? 'true' : 'false'}
           aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
           aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
           aria-label=${ifDefined(this.forwardedAriaLabel)}
@@ -259,7 +270,7 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
           ?autofocus=${this.autofocus}
           data-sp-radio-native
           .checked=${live(this.checked)}
-          ?disabled=${this.disabled}
+          ?disabled=${this.isDisabled}
           form=${ifDefined(this.form)}
           id=${ifDefined(this.id || undefined)}
           name=${ifDefined(this.name)}

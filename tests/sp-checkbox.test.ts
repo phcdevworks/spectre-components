@@ -185,6 +185,34 @@ describe('sp-checkbox', () => {
     const label = element.querySelector('.sp-label');
     expect(label).toBeNull();
   });
+
+  it('supports loading state and forwards aria-busy', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.loading = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input[type=checkbox]');
+    expect(input?.disabled).toBe(true);
+    expect(input?.getAttribute('aria-busy')).toBe('true');
+
+    element.loading = false;
+    await element.updateComplete;
+    expect(input?.disabled).toBe(false);
+    expect(input?.getAttribute('aria-busy')).toBe('false');
+  });
+
+  it('supports success state', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.success = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.success).toBe(true);
+    expect(element.hasAttribute('success')).toBe(true);
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
