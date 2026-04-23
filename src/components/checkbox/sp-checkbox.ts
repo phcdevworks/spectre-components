@@ -150,6 +150,10 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
     return this.querySelector('[data-sp-checkbox-native]');
   }
 
+  private get nativeLabelContainer(): HTMLLabelElement | null {
+    return this.querySelector('[data-sp-checkbox-label]');
+  }
+
   private get isDisabled(): boolean {
     return this.disabled || this.loading;
   }
@@ -207,9 +211,13 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
 
   private syncProjectedContent(): boolean {
     const nextProjectedContent: Node[] = [];
+    const sourceNodes = [
+      ...this.childNodes,
+      ...(this.nativeLabelContainer?.childNodes ?? []),
+    ];
 
-    Array.from(this.childNodes).forEach((node) => {
-      if (!this.isInternalCheckboxNode(node)) {
+    sourceNodes.forEach((node) => {
+      if (!this.isInternalCheckboxNode(node) && !nextProjectedContent.includes(node)) {
         nextProjectedContent.push(node);
       }
     });
@@ -228,9 +236,16 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
   }
 
   private isInternalCheckboxNode(node: Node): boolean {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
+    }
+
+    const el = node as Element;
     return (
-      node.nodeType === Node.ELEMENT_NODE &&
-      (node as Element).hasAttribute('data-sp-checkbox-label')
+      el.hasAttribute('data-sp-checkbox-label') ||
+      el.hasAttribute('data-sp-checkbox-native') ||
+      el.hasAttribute('data-sp-checkbox-label-fallback') ||
+      el.hasAttribute('data-sp-checkbox-indicator')
     );
   }
 
@@ -256,7 +271,7 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
     const labelContent = this.hasProjectedContent
       ? this.projectedContent
       : this.label
-        ? html`<span class='sp-label'>${this.label}</span>`
+        ? html`<span class='sp-label' data-sp-checkbox-label-fallback>${this.label}</span>`
         : nothing;
 
     return html`
@@ -281,6 +296,7 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
           @change=${this.handleChange}
           @input=${this.handleInput}
         />
+        <span class="sp-checkbox-indicator" data-sp-checkbox-indicator></span>
         ${labelContent}
       </label>
     `;

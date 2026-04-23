@@ -168,9 +168,13 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
 
   private syncProjectedContent(): boolean {
     const nextProjectedContent: Node[] = [];
+    const sourceNodes = [
+      ...this.childNodes,
+      ...(this.nativeFieldset?.childNodes ?? []),
+    ];
 
-    Array.from(this.childNodes).forEach((node) => {
-      if (!this.isInternalFieldsetNode(node)) {
+    sourceNodes.forEach((node) => {
+      if (!this.isInternalFieldsetNode(node) && !nextProjectedContent.includes(node)) {
         nextProjectedContent.push(node);
       }
     });
@@ -189,9 +193,14 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
   }
 
   private isInternalFieldsetNode(node: Node): boolean {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
+    }
+
+    const el = node as Element;
     return (
-      node.nodeType === Node.ELEMENT_NODE &&
-      (node as Element).hasAttribute('data-sp-fieldset-native')
+      el.hasAttribute('data-sp-fieldset-native') ||
+      el.hasAttribute('data-sp-fieldset-legend')
     );
   }
 
@@ -219,7 +228,9 @@ export class SpectreFieldsetElement extends LitElement implements SpectreFieldse
         id=${ifDefined(this.id || undefined)}
         title=${ifDefined(this.title || undefined)}
       >
-        ${this.legend ? html`<legend class='sp-label'>${this.legend}</legend>` : nothing}
+        ${this.legend
+          ? html`<legend class='sp-label' data-sp-fieldset-legend>${this.legend}</legend>`
+          : nothing}
         ${this.hasProjectedContent ? this.projectedContent : nothing}
       </fieldset>
     `;
