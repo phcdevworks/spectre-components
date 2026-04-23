@@ -270,9 +270,13 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
 
   private syncProjectedContent(): boolean {
     const nextProjectedContent: Node[] = [];
+    const sourceNodes = [
+      ...this.childNodes,
+      ...(this.nativeSelect?.childNodes ?? []),
+    ];
 
-    Array.from(this.childNodes).forEach((node) => {
-      if (!this.isInternalSelectNode(node)) {
+    sourceNodes.forEach((node) => {
+      if (!this.isInternalSelectNode(node) && !nextProjectedContent.includes(node)) {
         nextProjectedContent.push(node);
       }
     });
@@ -291,9 +295,12 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   }
 
   private isInternalSelectNode(node: Node): boolean {
-    return (
-      node.nodeType === Node.ELEMENT_NODE && (node as Element).hasAttribute('data-sp-select-native')
-    );
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
+    }
+
+    const el = node as Element;
+    return el.hasAttribute('data-sp-select-native');
   }
 
   private handleInput(event: Event): void {

@@ -162,9 +162,13 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
 
   private syncProjectedContent(): boolean {
     const nextProjectedContent: Node[] = [];
+    const sourceNodes = [
+      ...this.childNodes,
+      ...(this.nativeLabel?.childNodes ?? []),
+    ];
 
-    Array.from(this.childNodes).forEach((node) => {
-      if (!this.isInternalLabelNode(node)) {
+    sourceNodes.forEach((node) => {
+      if (!this.isInternalLabelNode(node) && !nextProjectedContent.includes(node)) {
         nextProjectedContent.push(node);
       }
     });
@@ -183,10 +187,12 @@ export class SpectreLabelElement extends LitElement implements SpectreLabelProps
   }
 
   private isInternalLabelNode(node: Node): boolean {
-    return (
-      node.nodeType === Node.ELEMENT_NODE &&
-      (node as Element).hasAttribute('data-sp-label-native')
-    );
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
+    }
+
+    const el = node as Element;
+    return el.hasAttribute('data-sp-label-native');
   }
 
   override focus(options?: FocusOptions): void {
