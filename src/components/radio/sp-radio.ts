@@ -150,6 +150,10 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
     return this.querySelector('[data-sp-radio-native]');
   }
 
+  private get nativeLabelContainer(): HTMLLabelElement | null {
+    return this.querySelector('[data-sp-radio-label]');
+  }
+
   private get isDisabled(): boolean {
     return this.disabled || this.loading;
   }
@@ -207,9 +211,13 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
 
   private syncProjectedContent(): boolean {
     const nextProjectedContent: Node[] = [];
+    const sourceNodes = [
+      ...this.childNodes,
+      ...(this.nativeLabelContainer?.childNodes ?? []),
+    ];
 
-    Array.from(this.childNodes).forEach((node) => {
-      if (!this.isInternalRadioNode(node)) {
+    sourceNodes.forEach((node) => {
+      if (!this.isInternalRadioNode(node) && !nextProjectedContent.includes(node)) {
         nextProjectedContent.push(node);
       }
     });
@@ -228,9 +236,16 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
   }
 
   private isInternalRadioNode(node: Node): boolean {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
+    }
+
+    const el = node as Element;
     return (
-      node.nodeType === Node.ELEMENT_NODE &&
-      (node as Element).hasAttribute('data-sp-radio-label')
+      el.hasAttribute('data-sp-radio-label') ||
+      el.hasAttribute('data-sp-radio-native') ||
+      el.hasAttribute('data-sp-radio-label-fallback') ||
+      el.hasAttribute('data-sp-radio-indicator')
     );
   }
 
@@ -256,7 +271,7 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
     const labelContent = this.hasProjectedContent
       ? this.projectedContent
       : this.label
-        ? html`<span class='sp-label'>${this.label}</span>`
+        ? html`<span class='sp-label' data-sp-radio-label-fallback>${this.label}</span>`
         : nothing;
 
     return html`
@@ -281,6 +296,7 @@ export class SpectreRadioElement extends LitElement implements SpectreRadioProps
           @change=${this.handleChange}
           @input=${this.handleInput}
         />
+        <span class="sp-radio-indicator" data-sp-radio-indicator></span>
         ${labelContent}
       </label>
     `;
