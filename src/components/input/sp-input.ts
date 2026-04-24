@@ -1,11 +1,13 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import {
-  getInputClasses,
-  type InputSize,
-} from '@phcdevworks/spectre-ui';
+import { SpectreBaseElement } from '../../utils/base';
+import { spectreInputSizes, isInputSize, type SpectreInputSize } from '../../utils/form';
+
+import { getInputClasses } from '@phcdevworks/spectre-ui';
+
+export { spectreInputSizes, isInputSize, type SpectreInputSize };
 
 export const spectreInputTypes = [
   'text',
@@ -22,10 +24,7 @@ export const spectreInputTypes = [
   'week',
 ] as const;
 
-export const spectreInputSizes = ['sm', 'md', 'lg'] as const;
-
 export type SpectreInputType = (typeof spectreInputTypes)[number];
-export type SpectreInputSize = (typeof spectreInputSizes)[number];
 
 export interface SpectreInputProps {
   ariaLabel?: string | null;
@@ -60,15 +59,8 @@ function isInputType(value: string): value is SpectreInputType {
   return (spectreInputTypes as readonly string[]).includes(value);
 }
 
-export function isInputSize(value: string): value is InputSize {
-  return (spectreInputSizes as readonly string[]).includes(value);
-}
-
-export class SpectreInputElement extends LitElement implements SpectreInputProps {
+export class SpectreInputElement extends SpectreBaseElement implements SpectreInputProps {
   static properties = {
-    ariaLabel: { attribute: 'aria-label', type: String },
-    ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
-    ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autocomplete: { type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -94,9 +86,6 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
     value: { type: String },
   };
 
-  ariaLabel: string | null = null;
-  ariaLabelledBy: string | null = null;
-  ariaDescribedBy: string | null = null;
   autocomplete?: string;
   autofocus = false;
   disabled = false;
@@ -120,76 +109,6 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
   override title = '';
   type: SpectreInputType = 'text';
   value = '';
-  private _id?: string;
-
-  override get id(): string {
-    return this._id ?? '';
-  }
-
-  override set id(value: string) {
-    if ((this._id ?? '') === value) {
-      return;
-    }
-
-    this._id = value;
-
-    const host = this as unknown as HTMLElement;
-    if (HTMLElement.prototype.hasAttribute.call(host, 'id')) {
-      HTMLElement.prototype.removeAttribute.call(host, 'id');
-    }
-
-    this.requestUpdate();
-  }
-
-  createRenderRoot(): this {
-    // Spectre components intentionally render in light DOM so the global
-    // `@phcdevworks/spectre-ui` styling contract can apply directly.
-    return this;
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    const hostId = super.getAttribute('id');
-
-    if (hostId !== null) {
-      this.id = hostId;
-    }
-  }
-
-  override getAttribute(qualifiedName: string): string | null {
-    if (qualifiedName === 'id') {
-      return this.id || null;
-    }
-
-    return super.getAttribute(qualifiedName);
-  }
-
-  override hasAttribute(qualifiedName: string): boolean {
-    if (qualifiedName === 'id') {
-      return this.id !== '';
-    }
-
-    return super.hasAttribute(qualifiedName);
-  }
-
-  override setAttribute(qualifiedName: string, value: string): void {
-    if (qualifiedName === 'id') {
-      this.id = value;
-      return;
-    }
-
-    super.setAttribute(qualifiedName, value);
-  }
-
-  override removeAttribute(qualifiedName: string): void {
-    if (qualifiedName === 'id') {
-      this.id = '';
-      return;
-    }
-
-    super.removeAttribute(qualifiedName);
-  }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
     if (changedProperties.has('size') && !isInputSize(this.size)) {
@@ -248,21 +167,6 @@ export class SpectreInputElement extends LitElement implements SpectreInputProps
 
   private get nativeInput(): HTMLInputElement | null {
     return this.querySelector('[data-sp-input-native]');
-  }
-
-  private get forwardedAriaLabel(): string | undefined {
-    const value = this.ariaLabel?.trim();
-    return value ? value : undefined;
-  }
-
-  private get forwardedAriaLabelledBy(): string | undefined {
-    const value = this.ariaLabelledBy?.trim();
-    return value ? value : undefined;
-  }
-
-  private get forwardedAriaDescribedBy(): string | undefined {
-    const value = this.ariaDescribedBy?.trim();
-    return value ? value : undefined;
   }
 
   private handleInput(event: Event): void {
