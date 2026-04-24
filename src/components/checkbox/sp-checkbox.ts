@@ -162,6 +162,11 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
     return hasMeaningfulContent(this.projectedContent);
   }
 
+  private get visibleLabelFallback(): string | undefined {
+    const trimmedLabel = this.label?.trim();
+    return trimmedLabel ? trimmedLabel : undefined;
+  }
+
   private get forwardedAriaLabel(): string | undefined {
     const value = this.ariaLabel?.trim();
     return value ? value : undefined;
@@ -270,8 +275,8 @@ export class SpectreCheckboxElement extends LitElement implements SpectreCheckbo
   override render() {
     const labelContent = this.hasProjectedContent
       ? this.projectedContent
-      : this.label
-        ? html`<span class='sp-label' data-sp-checkbox-label-fallback>${this.label}</span>`
+      : this.visibleLabelFallback
+        ? html`<span class='sp-label' data-sp-checkbox-label-fallback>${this.visibleLabelFallback}</span>`
         : nothing;
 
     return html`
