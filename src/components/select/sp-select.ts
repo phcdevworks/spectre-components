@@ -1,14 +1,11 @@
-import { LitElement, html, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { hasMeaningfulContent } from '../../utils/dom';
-import { getInputClasses } from '@phcdevworks/spectre-ui';
+import { SpectreProjectableElement } from '../../utils/projectable';
+import { isInputSize, type SpectreInputSize } from '../../utils/form';
 
-import {
-  isInputSize,
-  type SpectreInputSize,
-} from '../input/sp-input';
+import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export interface SpectreSelectProps {
   ariaLabel?: string | null;
@@ -30,11 +27,8 @@ export interface SpectreSelectProps {
   value?: string;
 }
 
-export class SpectreSelectElement extends LitElement implements SpectreSelectProps {
+export class SpectreSelectElement extends SpectreProjectableElement implements SpectreSelectProps {
   static properties = {
-    ariaLabel: { attribute: 'aria-label', type: String },
-    ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
-    ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autocomplete: { type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -51,9 +45,6 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     value: { type: String },
   };
 
-  ariaLabel: string | null = null;
-  ariaLabelledBy: string | null = null;
-  ariaDescribedBy: string | null = null;
   autocomplete?: string;
   autofocus = false;
   disabled = false;
@@ -68,85 +59,18 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   success = false;
   override title = '';
   value = '';
-  private _id?: string;
-  private projectedContent: Node[] = [];
-  private contentObserver?: MutationObserver | undefined;
 
-  override get id(): string {
-    return this._id ?? '';
+  protected override getContentContainer(): Element | null {
+    return this.querySelector('[data-sp-select-native]');
   }
 
-  override set id(value: string) {
-    if ((this._id ?? '') === value) {
-      return;
+  protected override isInternalNode(node: Node): boolean {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
     }
 
-    this._id = value;
-
-    const host = this as unknown as HTMLElement;
-    if (HTMLElement.prototype.hasAttribute.call(host, 'id')) {
-      HTMLElement.prototype.removeAttribute.call(host, 'id');
-    }
-
-    this.requestUpdate();
-  }
-
-  createRenderRoot(): this {
-    // Spectre components intentionally render in light DOM so the global
-    // Spectre UI styling contract can apply directly.
-    return this;
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    const hostId = super.getAttribute('id');
-
-    if (hostId !== null) {
-      this.id = hostId;
-    }
-
-    this.syncProjectedContent();
-    this.startContentObserver();
-  }
-
-  override disconnectedCallback(): void {
-    this.stopContentObserver();
-    super.disconnectedCallback();
-  }
-
-  override getAttribute(qualifiedName: string): string | null {
-    if (qualifiedName === 'id') {
-      return this.id || null;
-    }
-
-    return super.getAttribute(qualifiedName);
-  }
-
-  override hasAttribute(qualifiedName: string): boolean {
-    if (qualifiedName === 'id') {
-      return this.id !== '';
-    }
-
-    return super.hasAttribute(qualifiedName);
-  }
-
-  override setAttribute(qualifiedName: string, value: string): void {
-    if (qualifiedName === 'id') {
-      this.id = value;
-      return;
-    }
-
-    super.setAttribute(qualifiedName, value);
-  }
-
-  override removeAttribute(qualifiedName: string): void {
-    if (qualifiedName === 'id') {
-      this.id = '';
-      return;
-    }
-
-    super.removeAttribute(qualifiedName);
+    const el = node as Element;
+    return el.hasAttribute('data-sp-select-native');
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
@@ -159,17 +83,10 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     }
   }
 
-  protected override update(changedProperties: Map<PropertyKey, unknown>): void {
-    this.stopContentObserver();
-    super.update(changedProperties);
-    this.startContentObserver();
-  }
-
-
   protected override updated(changedProperties: Map<PropertyKey, unknown>): void {
     super.updated(changedProperties);
 
-    const nativeSelect = this.nativeSelect;
+    const nativeSelect = this.getContentContainer() as HTMLSelectElement | null;
     if (!nativeSelect) {
       return;
     }
@@ -211,98 +128,6 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
     return this.disabled || this.loading;
   }
 
-  private get nativeSelect(): HTMLSelectElement | null {
-    return this.querySelector('[data-sp-select-native]');
-  }
-
-  private get hasProjectedContent(): boolean {
-    return hasMeaningfulContent(this.projectedContent);
-  }
-
-  private get forwardedAriaLabel(): string | undefined {
-    const value = this.ariaLabel?.trim();
-    return value ? value : undefined;
-  }
-
-  private get forwardedAriaLabelledBy(): string | undefined {
-    const value = this.ariaLabelledBy?.trim();
-    return value ? value : undefined;
-  }
-
-  private get forwardedAriaDescribedBy(): string | undefined {
-    const value = this.ariaDescribedBy?.trim();
-    return value ? value : undefined;
-  }
-
-  private startContentObserver(): void {
-    if (this.contentObserver) {
-      return;
-    }
-
-    this.contentObserver = new MutationObserver((mutations) => {
-      const isInternalMovement = mutations.every((mutation) => {
-        return (
-          Array.from(mutation.removedNodes).every(
-            (node) => this.isInternalSelectNode(node) || this.contains(node),
-          ) &&
-          Array.from(mutation.addedNodes).every((node) => this.isInternalSelectNode(node))
-        );
-      });
-
-      if (isInternalMovement) {
-        return;
-      }
-
-      if (this.syncProjectedContent()) {
-        this.requestUpdate();
-      }
-    });
-
-    this.contentObserver.observe(this, {
-      childList: true,
-    });
-  }
-
-  private stopContentObserver(): void {
-    this.contentObserver?.disconnect();
-    this.contentObserver = undefined;
-  }
-
-  private syncProjectedContent(): boolean {
-    const nextProjectedContent: Node[] = [];
-    const sourceNodes = [
-      ...this.childNodes,
-      ...(this.nativeSelect?.childNodes ?? []),
-    ];
-
-    sourceNodes.forEach((node) => {
-      if (!this.isInternalSelectNode(node) && !nextProjectedContent.includes(node)) {
-        nextProjectedContent.push(node);
-      }
-    });
-
-    const hasChanged =
-      nextProjectedContent.length !== this.projectedContent.length ||
-      nextProjectedContent.some(
-        (node, index) => node !== this.projectedContent[index],
-      );
-
-    if (hasChanged) {
-      this.projectedContent = nextProjectedContent;
-    }
-
-    return hasChanged;
-  }
-
-  private isInternalSelectNode(node: Node): boolean {
-    if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
-    }
-
-    const el = node as Element;
-    return el.hasAttribute('data-sp-select-native');
-  }
-
   private handleInput(event: Event): void {
     const select = event.currentTarget as HTMLSelectElement;
     this.value = select.value;
@@ -314,13 +139,12 @@ export class SpectreSelectElement extends LitElement implements SpectreSelectPro
   }
 
   override focus(options?: FocusOptions): void {
-    this.nativeSelect?.focus(options);
+    (this.getContentContainer() as HTMLSelectElement | null)?.focus(options);
   }
 
   override blur(): void {
-    this.nativeSelect?.blur();
+    (this.getContentContainer() as HTMLSelectElement | null)?.blur();
   }
-
 
   override render() {
     return html`
