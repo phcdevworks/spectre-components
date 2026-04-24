@@ -1,7 +1,7 @@
-import { LitElement, html, nothing, type TemplateResult } from 'lit';
+import { html, nothing, type TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
-import { hasMeaningfulContent } from '../../utils/dom';
+import { SpectreProjectableElement } from '../../utils/projectable';
 
 import {
   getButtonClasses,
@@ -58,11 +58,8 @@ function isButtonType(value: string): value is SpectreButtonType {
   return (spectreButtonTypes as readonly string[]).includes(value);
 }
 
-export class SpectreButtonElement extends LitElement implements SpectreButtonProps {
+export class SpectreButtonElement extends SpectreProjectableElement implements SpectreButtonProps {
   static properties = {
-    ariaLabel: { attribute: 'aria-label', type: String },
-    ariaLabelledBy: { attribute: 'aria-labelledby', type: String },
-    ariaDescribedBy: { attribute: 'aria-describedby', type: String },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
@@ -79,9 +76,6 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     value: { type: String, reflect: true },
   };
 
-  ariaLabel: string | null = null;
-  ariaLabelledBy: string | null = null;
-  ariaDescribedBy: string | null = null;
   autofocus = false;
   disabled = false;
   form?: string;
@@ -96,88 +90,22 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   type: SpectreButtonType = 'button';
   variant: SpectreButtonVariant = 'primary';
   value = '';
-  private _id?: string;
 
-  override get id(): string {
-    return this._id ?? '';
+  protected override getContentContainer(): Element | null {
+    return this.querySelector('[data-sp-button-native]');
   }
 
-  override set id(value: string) {
-    if ((this._id ?? '') === value) {
-      return;
+  protected override isInternalNode(node: Node): boolean {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
     }
 
-    this._id = value;
-
-    const host = this as unknown as HTMLElement;
-    if (HTMLElement.prototype.hasAttribute.call(host, 'id')) {
-      HTMLElement.prototype.removeAttribute.call(host, 'id');
-    }
-
-    this.requestUpdate();
-  }
-
-  // Native slot projection is a Shadow DOM feature, so in light DOM we keep
-  // host-provided content reactive by tracking and reusing the host nodes.
-  private projectedContent: Node[] = [];
-  private contentObserver?: MutationObserver | undefined;
-
-  createRenderRoot(): this {
-    // Spectre components intentionally render in light DOM so the global
-    // `@phcdevworks/spectre-ui` styling contract can apply directly.
-    return this;
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    const hostId = super.getAttribute('id');
-
-    if (hostId !== null) {
-      this.id = hostId;
-    }
-
-    this.syncProjectedContent();
-    this.startContentObserver();
-  }
-
-  override getAttribute(qualifiedName: string): string | null {
-    if (qualifiedName === 'id') {
-      return this.id || null;
-    }
-
-    return super.getAttribute(qualifiedName);
-  }
-
-  override hasAttribute(qualifiedName: string): boolean {
-    if (qualifiedName === 'id') {
-      return this.id !== '';
-    }
-
-    return super.hasAttribute(qualifiedName);
-  }
-
-  override setAttribute(qualifiedName: string, value: string): void {
-    if (qualifiedName === 'id') {
-      this.id = value;
-      return;
-    }
-
-    super.setAttribute(qualifiedName, value);
-  }
-
-  override removeAttribute(qualifiedName: string): void {
-    if (qualifiedName === 'id') {
-      this.id = '';
-      return;
-    }
-
-    super.removeAttribute(qualifiedName);
-  }
-
-  override disconnectedCallback(): void {
-    this.stopContentObserver();
-    super.disconnectedCallback();
+    const el = node as Element;
+    return (
+      el.hasAttribute('data-sp-button-native') ||
+      el.hasAttribute('data-sp-button-loading-label') ||
+      el.hasAttribute('data-sp-button-label-fallback')
+    );
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
@@ -204,12 +132,6 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     }
   }
 
-  protected override update(changedProperties: Map<PropertyKey, unknown>): void {
-    this.stopContentObserver();
-    super.update(changedProperties);
-    this.startContentObserver();
-  }
-
   private get buttonClasses(): string {
     return getButtonClasses({
       disabled: this.isDisabled,
@@ -225,113 +147,17 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     return this.disabled || this.loading;
   }
 
-  private get hasProjectedContent(): boolean {
-    return hasMeaningfulContent(this.projectedContent);
-  }
-
   private get visibleLabelFallback(): string | undefined {
     const trimmedLabel = this.label?.trim();
     return trimmedLabel ? trimmedLabel : undefined;
   }
 
-  private get forwardedAriaLabel(): string | undefined {
-    const value = this.ariaLabel?.trim();
-    return value ? value : undefined;
-  }
-
-  private get forwardedAriaLabelledBy(): string | undefined {
-    const value = this.ariaLabelledBy?.trim();
-    return value ? value : undefined;
-  }
-
-  private get forwardedAriaDescribedBy(): string | undefined {
-    const value = this.ariaDescribedBy?.trim();
-    return value ? value : undefined;
-  }
-
-  private startContentObserver(): void {
-    if (this.contentObserver) {
-      return;
-    }
-
-    this.contentObserver = new MutationObserver((mutations) => {
-      const isInternalMovement = mutations.every((mutation) => {
-        return (
-          Array.from(mutation.removedNodes).every(
-            (node) => this.isInternalButtonNode(node) || this.contains(node),
-          ) &&
-          Array.from(mutation.addedNodes).every((node) => this.isInternalButtonNode(node))
-        );
-      });
-
-      if (isInternalMovement) {
-        return;
-      }
-
-      if (this.syncProjectedContent()) {
-        this.requestUpdate();
-      }
-    });
-
-    this.contentObserver.observe(this, {
-      childList: true,
-    });
-  }
-
-  private stopContentObserver(): void {
-    this.contentObserver?.disconnect();
-    this.contentObserver = undefined;
-  }
-
-  private syncProjectedContent(): boolean {
-    const nextProjectedContent: Node[] = [];
-    const sourceNodes = [
-      ...this.childNodes,
-      ...(this.nativeButton?.childNodes ?? []),
-    ];
-
-    sourceNodes.forEach((node) => {
-      if (!this.isInternalButtonNode(node) && !nextProjectedContent.includes(node)) {
-        nextProjectedContent.push(node);
-      }
-    });
-
-    const hasChanged =
-      nextProjectedContent.length !== this.projectedContent.length ||
-      nextProjectedContent.some(
-        (node, index) => node !== this.projectedContent[index],
-      );
-
-    if (hasChanged) {
-      this.projectedContent = nextProjectedContent;
-    }
-
-    return hasChanged;
-  }
-
-  private isInternalButtonNode(node: Node): boolean {
-    if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
-    }
-
-    const el = node as Element;
-    return (
-      el.hasAttribute('data-sp-button-native') ||
-      el.hasAttribute('data-sp-button-loading-label') ||
-      el.hasAttribute('data-sp-button-label-fallback')
-    );
-  }
-
-  private get nativeButton(): HTMLButtonElement | null {
-    return this.querySelector('[data-sp-button-native]');
-  }
-
   override focus(options?: FocusOptions): void {
-    this.nativeButton?.focus(options);
+    (this.getContentContainer() as HTMLButtonElement | null)?.focus(options);
   }
 
   override blur(): void {
-    this.nativeButton?.blur();
+    (this.getContentContainer() as HTMLButtonElement | null)?.blur();
   }
 
   private renderButtonContent(): TemplateResult | Node[] | typeof nothing {
