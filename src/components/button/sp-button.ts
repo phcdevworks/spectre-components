@@ -95,7 +95,7 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
   override title = '';
   type: SpectreButtonType = 'button';
   variant: SpectreButtonVariant = 'primary';
-  value?: string;
+  value = '';
   private _id?: string;
 
   override get id(): string {
@@ -334,18 +334,18 @@ export class SpectreButtonElement extends LitElement implements SpectreButtonPro
     this.nativeButton?.blur();
   }
 
-  private renderButtonContent(): TemplateResult | Node[] | string {
+  private renderButtonContent(): TemplateResult | Node[] | typeof nothing {
     if (this.loading) {
       return html`<span data-sp-button-loading-label>${this.loadingLabel}</span>`;
     }
 
     if (this.hasProjectedContent) {
-      return this.projectedContent;
+      return this.projectedContent as Node[];
     }
 
     return this.visibleLabelFallback
       ? html`<span data-sp-button-label-fallback>${this.visibleLabelFallback}</span>`
-      : '';
+      : nothing;
   }
 
   override render() {
