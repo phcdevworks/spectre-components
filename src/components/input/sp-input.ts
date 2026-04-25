@@ -3,28 +3,25 @@ import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectreBaseElement } from '../../utils/base';
-import { spectreInputSizes, isInputSize, type SpectreInputSize } from '../../utils/form';
+import {
+  spectreInputSizes,
+  isInputSize,
+  type SpectreInputSize,
+  spectreInputTypes,
+  isInputType,
+  type SpectreInputType,
+} from '../../utils/form';
 
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
-export { spectreInputSizes, isInputSize, type SpectreInputSize };
-
-export const spectreInputTypes = [
-  'text',
-  'email',
-  'password',
-  'search',
-  'tel',
-  'url',
-  'number',
-  'date',
-  'datetime-local',
-  'month',
-  'time',
-  'week',
-] as const;
-
-export type SpectreInputType = (typeof spectreInputTypes)[number];
+export {
+  spectreInputSizes,
+  isInputSize,
+  type SpectreInputSize,
+  spectreInputTypes,
+  isInputType,
+  type SpectreInputType,
+};
 
 export interface SpectreInputProps {
   ariaLabel?: string | null;
@@ -42,9 +39,9 @@ export interface SpectreInputProps {
   maxlength?: number | undefined;
   min?: string;
   minlength?: number | undefined;
-  name?: string;
+  name?: string | undefined;
   pill?: boolean;
-  placeholder?: string;
+  placeholder?: string | undefined;
   readonly?: boolean;
   required?: boolean;
   size?: SpectreInputSize;
@@ -55,31 +52,27 @@ export interface SpectreInputProps {
   value?: string;
 }
 
-function isInputType(value: string): value is SpectreInputType {
-  return (spectreInputTypes as readonly string[]).includes(value);
-}
-
 export class SpectreInputElement extends SpectreBaseElement implements SpectreInputProps {
   static properties = {
-    autocomplete: { type: String },
+    autocomplete: { type: String, reflect: true },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
-    inputmode: { type: String },
+    inputmode: { type: String, reflect: true },
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
-    max: { type: String },
-    maxlength: { type: Number },
-    min: { type: String },
-    minlength: { type: Number },
-    name: { type: String },
+    max: { type: String, reflect: true },
+    maxlength: { type: Number, reflect: true },
+    min: { type: String, reflect: true },
+    minlength: { type: Number, reflect: true },
+    name: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
-    placeholder: { type: String },
+    placeholder: { type: String, reflect: true },
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
-    step: { type: String },
+    step: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
     title: { type: String, reflect: true },
     type: { type: String, reflect: true },

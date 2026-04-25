@@ -10,6 +10,7 @@ export interface SpectreFieldsetProps {
   disabled?: boolean;
   form?: string;
   legend?: string;
+  name?: string;
   title?: string;
 }
 
@@ -18,12 +19,14 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     legend: { type: String, reflect: true },
+    name: { type: String, reflect: true },
     title: { type: String, reflect: true },
   };
 
   disabled = false;
   form?: string;
   legend = '';
+  name?: string;
   override title = '';
 
   protected override getContentContainer(): Element | null {
@@ -60,6 +63,7 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
         ?disabled=${this.disabled}
         form=${ifDefined(this.form)}
         id=${ifDefined(this.id || undefined)}
+        name=${ifDefined(this.name)}
         title=${ifDefined(this.title || undefined)}
       >
         ${this.legend

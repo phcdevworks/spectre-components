@@ -14,8 +14,8 @@ export interface SpectreCheckboxProps {
   form?: string;
   invalid?: boolean;
   loading?: boolean;
-  label?: string;
-  name?: string;
+  label?: string | undefined;
+  name?: string | undefined;
   required?: boolean;
   success?: boolean;
   title?: string;
@@ -31,7 +31,7 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
     label: { type: String, reflect: true },
-    name: { type: String },
+    name: { type: String, reflect: true },
     required: { type: Boolean, reflect: true },
     success: { type: Boolean, reflect: true },
     title: { type: String, reflect: true },
@@ -44,7 +44,7 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
   form?: string;
   invalid = false;
   loading = false;
-  label = '';
+  label?: string;
   name?: string;
   required = false;
   success = false;
