@@ -13,7 +13,7 @@ export interface SpectreLabelProps {
 
 export class SpectreLabelElement extends SpectreProjectableElement implements SpectreLabelProps {
   static properties = {
-    htmlFor: { attribute: 'for', type: String },
+    htmlFor: { attribute: 'for', type: String, reflect: true },
     title: { type: String, reflect: true },
   };
 
