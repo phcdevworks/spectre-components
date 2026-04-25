@@ -21,9 +21,9 @@ export interface SpectreTextareaProps {
   loading?: boolean;
   maxlength?: number | undefined;
   minlength?: number | undefined;
-  name?: string;
+  name?: string | undefined;
   pill?: boolean;
-  placeholder?: string;
+  placeholder?: string | undefined;
   readonly?: boolean;
   required?: boolean;
   rows?: number;
@@ -39,19 +39,19 @@ export class SpectreTextareaElement
   extends SpectreBaseElement
   implements SpectreTextareaProps {
   static properties = {
-    autocomplete: { type: String },
+    autocomplete: { type: String, reflect: true },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
-    inputmode: { type: String },
+    inputmode: { type: String, reflect: true },
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
-    maxlength: { type: Number },
-    minlength: { type: Number },
-    name: { type: String },
+    maxlength: { type: Number, reflect: true },
+    minlength: { type: Number, reflect: true },
+    name: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
-    placeholder: { type: String },
+    placeholder: { type: String, reflect: true },
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     rows: { type: Number },
