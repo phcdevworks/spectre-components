@@ -29,14 +29,14 @@ export interface SpectreSelectProps {
 
 export class SpectreSelectElement extends SpectreProjectableElement implements SpectreSelectProps {
   static properties = {
-    autocomplete: { type: String },
+    autocomplete: { type: String, reflect: true },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     invalid: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
-    name: { type: String },
+    name: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
