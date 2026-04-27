@@ -27,3 +27,19 @@ export type SpectreInputType = (typeof spectreInputTypes)[number];
 export function isInputType(value: string): value is SpectreInputType {
   return (spectreInputTypes as readonly string[]).includes(value);
 }
+
+export function normalizeInt(
+  value: unknown,
+  fallback: number | undefined,
+  min = 0,
+): number | undefined {
+  if (
+    value == null ||
+    typeof value !== 'number' ||
+    !Number.isInteger(value) ||
+    value < min
+  ) {
+    return fallback;
+  }
+  return value;
+}
