@@ -8,23 +8,23 @@ import { isInputSize, type SpectreInputSize } from '../../utils/form';
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export interface SpectreSelectProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autocomplete?: string;
-  autofocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  fullWidth?: boolean;
-  invalid?: boolean;
-  loading?: boolean;
-  name?: string;
-  pill?: boolean;
-  required?: boolean;
-  size?: SpectreInputSize;
-  success?: boolean;
-  title?: string;
-  value?: string;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  autocomplete?: string | undefined;
+  autofocus?: boolean | undefined;
+  disabled?: boolean | undefined;
+  form?: string | undefined;
+  fullWidth?: boolean | undefined;
+  invalid?: boolean | undefined;
+  loading?: boolean | undefined;
+  name?: string | undefined;
+  pill?: boolean | undefined;
+  required?: boolean | undefined;
+  size?: SpectreInputSize | undefined;
+  success?: boolean | undefined;
+  title?: string | undefined;
+  value?: string | undefined;
 }
 
 export class SpectreSelectElement extends SpectreProjectableElement implements SpectreSelectProps {
@@ -147,30 +147,28 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
   }
 
   override render() {
-    return html`
-      <select
-        aria-busy=${this.loading ? 'true' : 'false'}
-        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-        aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-        aria-label=${ifDefined(this.forwardedAriaLabel)}
-        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        autocomplete=${ifDefined(this.autocomplete)}
-        ?autofocus=${this.autofocus}
-        class=${this.selectClasses}
-        data-sp-select-native
-        ?disabled=${this.isDisabled}
-        form=${ifDefined(this.form)}
-        id=${ifDefined(this.id || undefined)}
-        name=${ifDefined(this.name)}
-        ?required=${this.required}
-        title=${ifDefined(this.title || undefined)}
-        .value=${live(this.value)}
-        @change=${this.handleChange}
-        @input=${this.handleInput}
-      >
-        ${this.hasProjectedContent ? this.projectedContent : nothing}
-      </select>
-    `;
+    return html`<select
+      aria-busy="${this.loading ? 'true' : 'false'}"
+      aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+      aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
+      aria-label="${ifDefined(this.forwardedAriaLabel)}"
+      aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      autocomplete="${ifDefined(this.autocomplete)}"
+      ?autofocus="${this.autofocus}"
+      class="${this.selectClasses}"
+      data-sp-select-native
+      ?disabled="${this.isDisabled}"
+      form="${ifDefined(this.form)}"
+      id="${ifDefined(this.id || undefined)}"
+      name="${ifDefined(this.name)}"
+      ?required="${this.required}"
+      title="${ifDefined(this.title || undefined)}"
+      .value="${live(this.value)}"
+      @change="${this.handleChange}"
+      @input="${this.handleInput}"
+    >
+      ${this.hasProjectedContent ? this.projectedContent : nothing}
+    </select>`;
   }
 }
 
