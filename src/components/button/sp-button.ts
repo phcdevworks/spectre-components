@@ -27,23 +27,23 @@ export type SpectreButtonSize = (typeof spectreButtonSizes)[number];
 export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 
 export interface SpectreButtonProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autofocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  fullWidth?: boolean;
-  label?: string;
-  loading?: boolean;
-  loadingLabel?: string;
-  name?: string;
-  pill?: boolean;
-  size?: SpectreButtonSize;
-  title?: string;
-  type?: SpectreButtonType;
-  variant?: SpectreButtonVariant;
-  value?: string;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  autofocus?: boolean | undefined;
+  disabled?: boolean | undefined;
+  form?: string | undefined;
+  fullWidth?: boolean | undefined;
+  label?: string | undefined;
+  loading?: boolean | undefined;
+  loadingLabel?: string | undefined;
+  name?: string | undefined;
+  pill?: boolean | undefined;
+  size?: SpectreButtonSize | undefined;
+  title?: string | undefined;
+  type?: SpectreButtonType | undefined;
+  variant?: SpectreButtonVariant | undefined;
+  value?: string | undefined;
 }
 
 function isButtonVariant(value: string): value is ButtonVariant {
@@ -175,26 +175,24 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   }
 
   override render() {
-    return html`
-      <button
-        aria-busy=${this.loading ? 'true' : 'false'}
-        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-        aria-label=${ifDefined(this.forwardedAriaLabel)}
-        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        ?autofocus=${this.autofocus}
-        class=${this.buttonClasses}
-        data-sp-button-native
-        ?disabled=${this.isDisabled}
-        form=${ifDefined(this.form)}
-        id=${ifDefined(this.id || undefined)}
-        name=${ifDefined(this.name)}
-        title=${ifDefined(this.title || undefined)}
-        type=${this.type}
-        value=${ifDefined(this.value)}
-      >
-        ${this.renderButtonContent() || nothing}
-      </button>
-    `;
+    return html`<button
+      aria-busy="${this.loading ? 'true' : 'false'}"
+      aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+      aria-label="${ifDefined(this.forwardedAriaLabel)}"
+      aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      ?autofocus="${this.autofocus}"
+      class="${this.buttonClasses}"
+      data-sp-button-native
+      ?disabled="${this.isDisabled}"
+      form="${ifDefined(this.form)}"
+      id="${ifDefined(this.id || undefined)}"
+      name="${ifDefined(this.name)}"
+      title="${ifDefined(this.title || undefined)}"
+      type="${this.type}"
+      value="${ifDefined(this.value)}"
+    >
+      ${this.renderButtonContent()}
+    </button>`;
   }
 }
 
