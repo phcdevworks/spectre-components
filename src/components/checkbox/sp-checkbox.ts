@@ -5,21 +5,21 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreCheckboxProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autofocus?: boolean;
-  checked?: boolean;
-  disabled?: boolean;
-  form?: string;
-  invalid?: boolean;
-  loading?: boolean;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  autofocus?: boolean | undefined;
+  checked?: boolean | undefined;
+  disabled?: boolean | undefined;
+  form?: string | undefined;
+  invalid?: boolean | undefined;
+  loading?: boolean | undefined;
   label?: string | undefined;
   name?: string | undefined;
-  required?: boolean;
-  success?: boolean;
-  title?: string;
-  value?: string;
+  required?: boolean | undefined;
+  success?: boolean | undefined;
+  title?: string | undefined;
+  value?: string | undefined;
 }
 
 export class SpectreCheckboxElement extends SpectreProjectableElement implements SpectreCheckboxProps {
@@ -110,35 +110,33 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
     const labelContent = this.hasProjectedContent
       ? this.projectedContent
       : this.visibleLabelFallback
-        ? html`<span class='sp-label' data-sp-checkbox-label-fallback>${this.visibleLabelFallback}</span>`
+        ? html`<span class="sp-label" data-sp-checkbox-label-fallback>${this.visibleLabelFallback}</span>`
         : nothing;
 
-    return html`
-      <label data-sp-checkbox-label>
-        <input
-          aria-busy=${this.loading ? 'true' : 'false'}
-          aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-          aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-          aria-label=${ifDefined(this.forwardedAriaLabel)}
-          aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-          ?autofocus=${this.autofocus}
-          data-sp-checkbox-native
-          .checked=${live(this.checked)}
-          ?disabled=${this.isDisabled}
-          form=${ifDefined(this.form)}
-          id=${ifDefined(this.id || undefined)}
-          name=${ifDefined(this.name)}
-          ?required=${this.required}
-          title=${ifDefined(this.title || undefined)}
-          type='checkbox'
-          value=${ifDefined(this.value || undefined)}
-          @change=${this.handleChange}
-          @input=${this.handleInput}
-        />
-        <span class="sp-checkbox-indicator" data-sp-checkbox-indicator></span>
-        ${labelContent}
-      </label>
-    `;
+    return html`<label data-sp-checkbox-label>
+      <input
+        aria-busy="${this.loading ? 'true' : 'false'}"
+        aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+        aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
+        aria-label="${ifDefined(this.forwardedAriaLabel)}"
+        aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+        ?autofocus="${this.autofocus}"
+        data-sp-checkbox-native
+        .checked="${live(this.checked)}"
+        ?disabled="${this.isDisabled}"
+        form="${ifDefined(this.form)}"
+        id="${ifDefined(this.id || undefined)}"
+        name="${ifDefined(this.name)}"
+        ?required="${this.required}"
+        title="${ifDefined(this.title || undefined)}"
+        type="checkbox"
+        value="${ifDefined(this.value || undefined)}"
+        @change="${this.handleChange}"
+        @input="${this.handleInput}"
+      />
+      <span class="sp-checkbox-indicator" data-sp-checkbox-indicator></span>
+      ${labelContent}
+    </label>`;
   }
 }
 
