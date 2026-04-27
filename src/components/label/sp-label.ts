@@ -4,11 +4,11 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreLabelProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  htmlFor?: string;
-  title?: string;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  htmlFor?: string | undefined;
+  title?: string | undefined;
 }
 
 export class SpectreLabelElement extends SpectreProjectableElement implements SpectreLabelProps {
@@ -42,21 +42,19 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
   }
 
   override render() {
-    return html`
-      <label
-        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-        aria-label=${ifDefined(this.forwardedAriaLabel)}
-        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        class='sp-label'
-        data-sp-label-native
-        for=${ifDefined(this.htmlFor)}
-        id=${ifDefined(this.id || undefined)}
-        tabindex='-1'
-        title=${ifDefined(this.title || undefined)}
-      >
-        ${this.hasProjectedContent ? this.projectedContent : nothing}
-      </label>
-    `;
+    return html`<label
+      aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+      aria-label="${ifDefined(this.forwardedAriaLabel)}"
+      aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      class="sp-label"
+      data-sp-label-native
+      for="${ifDefined(this.htmlFor)}"
+      id="${ifDefined(this.id || undefined)}"
+      tabindex="-1"
+      title="${ifDefined(this.title || undefined)}"
+    >
+      ${this.hasProjectedContent ? this.projectedContent : nothing}
+    </label>`;
   }
 }
 
