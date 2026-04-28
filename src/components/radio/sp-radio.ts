@@ -34,7 +34,6 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
     name: { type: String, reflect: true },
     required: { type: Boolean, reflect: true },
     success: { type: Boolean, reflect: true },
-    title: { type: String, reflect: true },
     value: { type: String },
   };
 
@@ -48,7 +47,6 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
   name?: string;
   required = false;
   success = false;
-  override title = '';
   value = 'on';
 
   protected override getContentContainer(): Element | null {

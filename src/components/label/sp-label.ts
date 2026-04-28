@@ -14,11 +14,9 @@ export interface SpectreLabelProps {
 export class SpectreLabelElement extends SpectreProjectableElement implements SpectreLabelProps {
   static properties = {
     htmlFor: { attribute: 'for', type: String, reflect: true },
-    title: { type: String, reflect: true },
   };
 
   htmlFor?: string;
-  override title = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-label-native]');
@@ -50,7 +48,6 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
       data-sp-label-native
       for="${ifDefined(this.htmlFor)}"
       id="${ifDefined(this.id || undefined)}"
-      tabindex="-1"
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.hasProjectedContent ? this.projectedContent : nothing}
