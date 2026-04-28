@@ -75,7 +75,6 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
     size: { type: String, reflect: true },
     step: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
-    title: { type: String, reflect: true },
     type: { type: String, reflect: true },
     value: { type: String },
   };
@@ -100,7 +99,6 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   size: SpectreInputSize = 'md';
   step?: string;
   success = false;
-  override title = '';
   type: SpectreInputType = 'text';
   value = '';
 
