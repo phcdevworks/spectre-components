@@ -61,7 +61,6 @@ export class SpectreTextareaElement
     rows: { type: Number },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
-    title: { type: String, reflect: true },
     value: { type: String },
   };
 
@@ -83,7 +82,6 @@ export class SpectreTextareaElement
   rows = DEFAULT_ROWS;
   size: SpectreInputSize = 'md';
   success = false;
-  override title = '';
   value = '';
 
   protected override willUpdate(
