@@ -27,7 +27,6 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   form?: string | undefined;
   legend?: string | undefined;
   name?: string | undefined;
-  override title = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-fieldset-native]');
