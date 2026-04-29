@@ -20,14 +20,12 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     form: { type: String },
     legend: { type: String, reflect: true },
     name: { type: String, reflect: true },
-    title: { type: String, reflect: true },
   };
 
   disabled = false;
   form?: string;
-  legend = '';
+  legend?: string;
   name?: string;
-  override title = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-fieldset-native]');

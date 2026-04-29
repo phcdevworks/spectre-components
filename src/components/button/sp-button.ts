@@ -70,10 +70,9 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     name: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
-    title: { type: String, reflect: true },
     type: { type: String, reflect: true },
     variant: { type: String, reflect: true },
-    value: { type: String, reflect: true },
+    value: { type: String },
   };
 
   autofocus = false;
@@ -86,7 +85,6 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   name?: string;
   pill = false;
   size: SpectreButtonSize = 'md';
-  override title = '';
   type: SpectreButtonType = 'button';
   variant: SpectreButtonVariant = 'primary';
   value = '';
