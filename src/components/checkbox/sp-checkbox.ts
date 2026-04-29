@@ -5,9 +5,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreCheckboxProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   autofocus?: boolean | undefined;
   checked?: boolean | undefined;
   disabled?: boolean | undefined;

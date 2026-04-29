@@ -27,9 +27,9 @@ export type SpectreButtonSize = (typeof spectreButtonSizes)[number];
 export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 
 export interface SpectreButtonProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;
