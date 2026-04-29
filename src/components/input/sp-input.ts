@@ -10,6 +10,7 @@ import {
   spectreInputTypes,
   isInputType,
   type SpectreInputType,
+  normalizeInt,
 } from '../../utils/form';
 
 import { getInputClasses } from '@phcdevworks/spectre-ui';
@@ -24,32 +25,32 @@ export {
 };
 
 export interface SpectreInputProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autocomplete?: string;
-  autofocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  fullWidth?: boolean;
-  inputmode?: string;
-  invalid?: boolean;
-  loading?: boolean;
-  max?: string;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  autocomplete?: string | undefined;
+  autofocus?: boolean | undefined;
+  disabled?: boolean | undefined;
+  form?: string | undefined;
+  fullWidth?: boolean | undefined;
+  inputmode?: string | undefined;
+  invalid?: boolean | undefined;
+  loading?: boolean | undefined;
+  max?: string | undefined;
   maxlength?: number | undefined;
-  min?: string;
+  min?: string | undefined;
   minlength?: number | undefined;
   name?: string | undefined;
-  pill?: boolean;
+  pill?: boolean | undefined;
   placeholder?: string | undefined;
-  readonly?: boolean;
-  required?: boolean;
-  size?: SpectreInputSize;
-  step?: string;
-  success?: boolean;
-  title?: string;
-  type?: SpectreInputType;
-  value?: string;
+  readonly?: boolean | undefined;
+  required?: boolean | undefined;
+  size?: SpectreInputSize | undefined;
+  step?: string | undefined;
+  success?: boolean | undefined;
+  title?: string | undefined;
+  type?: SpectreInputType | undefined;
+  value?: string | undefined;
 }
 
 export class SpectreInputElement extends SpectreBaseElement implements SpectreInputProps {
@@ -74,7 +75,6 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
     size: { type: String, reflect: true },
     step: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
-    title: { type: String, reflect: true },
     type: { type: String, reflect: true },
     value: { type: String },
   };
@@ -99,7 +99,6 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   size: SpectreInputSize = 'md';
   step?: string;
   success = false;
-  override title = '';
   type: SpectreInputType = 'text';
   value = '';
 
@@ -117,23 +116,11 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
     }
 
     if (changedProperties.has('maxlength')) {
-      if (
-        this.maxlength == null ||
-        !Number.isInteger(this.maxlength) ||
-        this.maxlength < 0
-      ) {
-        this.maxlength = undefined;
-      }
+      this.maxlength = normalizeInt(this.maxlength, undefined);
     }
 
     if (changedProperties.has('minlength')) {
-      if (
-        this.minlength == null ||
-        !Number.isInteger(this.minlength) ||
-        this.minlength < 0
-      ) {
-        this.minlength = undefined;
-      }
+      this.minlength = normalizeInt(this.minlength, undefined);
     }
   }
 
@@ -181,37 +168,35 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   }
 
   override render() {
-    return html`
-      <input
-        aria-busy=${this.loading ? 'true' : 'false'}
-        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-        aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-        aria-label=${ifDefined(this.forwardedAriaLabel)}
-        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        autocomplete=${ifDefined(this.autocomplete)}
-        ?autofocus=${this.autofocus}
-        class=${this.inputClasses}
-        data-sp-input-native
-        ?disabled=${this.isDisabled}
-        form=${ifDefined(this.form)}
-        ?readonly=${this.readonly}
-        ?required=${this.required}
-        id=${ifDefined(this.id || undefined)}
-        inputmode=${ifDefined(this.inputmode)}
-        max=${ifDefined(this.max)}
-        maxlength=${ifDefined(this.maxlength)}
-        min=${ifDefined(this.min)}
-        minlength=${ifDefined(this.minlength)}
-        name=${ifDefined(this.name)}
-        placeholder=${ifDefined(this.placeholder)}
-        step=${ifDefined(this.step)}
-        title=${ifDefined(this.title || undefined)}
-        type=${this.type}
-        .value=${live(this.value)}
-        @change=${this.handleChange}
-        @input=${this.handleInput}
-      />
-    `;
+    return html`<input
+      aria-busy="${this.loading ? 'true' : 'false'}"
+      aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+      aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
+      aria-label="${ifDefined(this.forwardedAriaLabel)}"
+      aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      autocomplete="${ifDefined(this.autocomplete)}"
+      ?autofocus="${this.autofocus}"
+      class="${this.inputClasses}"
+      data-sp-input-native
+      ?disabled="${this.isDisabled}"
+      form="${ifDefined(this.form)}"
+      ?readonly="${this.readonly}"
+      ?required="${this.required}"
+      id="${ifDefined(this.id || undefined)}"
+      inputmode="${ifDefined(this.inputmode)}"
+      max="${ifDefined(this.max)}"
+      maxlength="${ifDefined(this.maxlength)}"
+      min="${ifDefined(this.min)}"
+      minlength="${ifDefined(this.minlength)}"
+      name="${ifDefined(this.name)}"
+      placeholder="${ifDefined(this.placeholder)}"
+      step="${ifDefined(this.step)}"
+      title="${ifDefined(this.title || undefined)}"
+      type="${this.type}"
+      .value="${live(this.value)}"
+      @change="${this.handleChange}"
+      @input="${this.handleInput}"
+    />`;
   }
 }
 

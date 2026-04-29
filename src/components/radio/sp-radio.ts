@@ -5,21 +5,21 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreRadioProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autofocus?: boolean;
-  checked?: boolean;
-  disabled?: boolean;
-  form?: string;
-  invalid?: boolean;
-  loading?: boolean;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  autofocus?: boolean | undefined;
+  checked?: boolean | undefined;
+  disabled?: boolean | undefined;
+  form?: string | undefined;
+  invalid?: boolean | undefined;
+  loading?: boolean | undefined;
   label?: string | undefined;
   name?: string | undefined;
-  required?: boolean;
-  success?: boolean;
-  title?: string;
-  value?: string;
+  required?: boolean | undefined;
+  success?: boolean | undefined;
+  title?: string | undefined;
+  value?: string | undefined;
 }
 
 export class SpectreRadioElement extends SpectreProjectableElement implements SpectreRadioProps {
@@ -34,7 +34,6 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
     name: { type: String, reflect: true },
     required: { type: Boolean, reflect: true },
     success: { type: Boolean, reflect: true },
-    title: { type: String, reflect: true },
     value: { type: String },
   };
 
@@ -48,7 +47,6 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
   name?: string;
   required = false;
   success = false;
-  override title = '';
   value = 'on';
 
   protected override getContentContainer(): Element | null {
@@ -110,35 +108,33 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
     const labelContent = this.hasProjectedContent
       ? this.projectedContent
       : this.visibleLabelFallback
-        ? html`<span class='sp-label' data-sp-radio-label-fallback>${this.visibleLabelFallback}</span>`
+        ? html`<span class="sp-label" data-sp-radio-label-fallback>${this.visibleLabelFallback}</span>`
         : nothing;
 
-    return html`
-      <label data-sp-radio-label>
-        <input
-          aria-busy=${this.loading ? 'true' : 'false'}
-          aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-          aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-          aria-label=${ifDefined(this.forwardedAriaLabel)}
-          aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-          ?autofocus=${this.autofocus}
-          data-sp-radio-native
-          .checked=${live(this.checked)}
-          ?disabled=${this.isDisabled}
-          form=${ifDefined(this.form)}
-          id=${ifDefined(this.id || undefined)}
-          name=${ifDefined(this.name)}
-          ?required=${this.required}
-          title=${ifDefined(this.title || undefined)}
-          type='radio'
-          value=${ifDefined(this.value || undefined)}
-          @change=${this.handleChange}
-          @input=${this.handleInput}
-        />
-        <span class="sp-radio-indicator" data-sp-radio-indicator></span>
-        ${labelContent}
-      </label>
-    `;
+    return html`<label data-sp-radio-label>
+      <input
+        aria-busy="${this.loading ? 'true' : 'false'}"
+        aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+        aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
+        aria-label="${ifDefined(this.forwardedAriaLabel)}"
+        aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+        ?autofocus="${this.autofocus}"
+        data-sp-radio-native
+        .checked="${live(this.checked)}"
+        ?disabled="${this.isDisabled}"
+        form="${ifDefined(this.form)}"
+        id="${ifDefined(this.id || undefined)}"
+        name="${ifDefined(this.name)}"
+        ?required="${this.required}"
+        title="${ifDefined(this.title || undefined)}"
+        type="radio"
+        value="${ifDefined(this.value || undefined)}"
+        @change="${this.handleChange}"
+        @input="${this.handleInput}"
+      />
+      <span class="sp-radio-indicator" data-sp-radio-indicator></span>
+      ${labelContent}
+    </label>`;
   }
 }
 
