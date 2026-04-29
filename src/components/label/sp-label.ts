@@ -16,7 +16,7 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
     htmlFor: { attribute: 'for', type: String, reflect: true },
   };
 
-  htmlFor?: string;
+  htmlFor?: string | undefined;
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-label-native]');
