@@ -18,7 +18,6 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
   };
 
   htmlFor?: string | undefined;
-  override title = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-label-native]');

@@ -41,7 +41,6 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
-    title: { type: String, reflect: true },
     value: { type: String },
   };
 
@@ -57,7 +56,6 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
   required = false;
   size: SpectreInputSize = 'md';
   success = false;
-  override title = '';
   value = '';
 
   protected override getContentContainer(): Element | null {
