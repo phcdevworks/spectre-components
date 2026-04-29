@@ -4,9 +4,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreFieldsetProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   disabled?: boolean | undefined;
   form?: string | undefined;
   legend?: string | undefined;
@@ -24,9 +24,9 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   };
 
   disabled = false;
-  form?: string;
-  legend = '';
-  name?: string;
+  form?: string | undefined;
+  legend?: string | undefined;
+  name?: string | undefined;
   override title = '';
 
   protected override getContentContainer(): Element | null {

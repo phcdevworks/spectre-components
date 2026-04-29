@@ -12,9 +12,9 @@ import {
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export interface SpectreTextareaProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   autocomplete?: string | undefined;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
@@ -65,19 +65,19 @@ export class SpectreTextareaElement
     value: { type: String },
   };
 
-  autocomplete?: string;
+  autocomplete?: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string;
+  form?: string | undefined;
   fullWidth = false;
-  inputmode?: string;
+  inputmode?: string | undefined;
   invalid = false;
   loading = false;
   maxlength?: number | undefined;
   minlength?: number | undefined;
-  name?: string;
+  name?: string | undefined;
   pill = false;
-  placeholder?: string;
+  placeholder?: string | undefined;
   readonly = false;
   required = false;
   rows = DEFAULT_ROWS;

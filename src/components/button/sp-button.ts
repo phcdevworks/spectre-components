@@ -27,9 +27,9 @@ export type SpectreButtonSize = (typeof spectreButtonSizes)[number];
 export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 
 export interface SpectreButtonProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;
@@ -73,17 +73,17 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     title: { type: String, reflect: true },
     type: { type: String, reflect: true },
     variant: { type: String, reflect: true },
-    value: { type: String, reflect: true },
+    value: { type: String },
   };
 
   autofocus = false;
   disabled = false;
-  form?: string;
+  form?: string | undefined;
   fullWidth = false;
-  label?: string;
+  label?: string | undefined;
   loading = false;
   loadingLabel = 'Loading';
-  name?: string;
+  name?: string | undefined;
   pill = false;
   size: SpectreButtonSize = 'md';
   override title = '';
