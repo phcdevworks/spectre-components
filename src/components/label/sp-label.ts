@@ -4,9 +4,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreLabelProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   htmlFor?: string | undefined;
   title?: string | undefined;
 }
@@ -17,7 +17,7 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
     title: { type: String, reflect: true },
   };
 
-  htmlFor?: string;
+  htmlFor?: string | undefined;
   override title = '';
 
   protected override getContentContainer(): Element | null {
@@ -50,7 +50,6 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
       data-sp-label-native
       for="${ifDefined(this.htmlFor)}"
       id="${ifDefined(this.id || undefined)}"
-      tabindex="-1"
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.hasProjectedContent ? this.projectedContent : nothing}

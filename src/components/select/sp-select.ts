@@ -8,9 +8,9 @@ import { isInputSize, type SpectreInputSize } from '../../utils/form';
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export interface SpectreSelectProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   autocomplete?: string | undefined;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
@@ -45,14 +45,14 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
     value: { type: String },
   };
 
-  autocomplete?: string;
+  autocomplete?: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string;
+  form?: string | undefined;
   fullWidth = false;
   invalid = false;
   loading = false;
-  name?: string;
+  name?: string | undefined;
   pill = false;
   required = false;
   size: SpectreInputSize = 'md';
