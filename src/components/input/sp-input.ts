@@ -79,25 +79,25 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
     value: { type: String },
   };
 
-  autocomplete?: string;
+  autocomplete?: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string;
+  form?: string | undefined;
   fullWidth = false;
-  inputmode?: string;
+  inputmode?: string | undefined;
   invalid = false;
   loading = false;
-  max?: string;
+  max?: string | undefined;
   maxlength?: number | undefined;
-  min?: string;
+  min?: string | undefined;
   minlength?: number | undefined;
-  name?: string;
+  name?: string | undefined;
   pill = false;
-  placeholder?: string;
+  placeholder?: string | undefined;
   readonly = false;
   required = false;
   size: SpectreInputSize = 'md';
-  step?: string;
+  step?: string | undefined;
   success = false;
   type: SpectreInputType = 'text';
   value = '';

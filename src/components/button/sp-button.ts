@@ -77,12 +77,12 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
 
   autofocus = false;
   disabled = false;
-  form?: string;
+  form?: string | undefined;
   fullWidth = false;
-  label?: string;
+  label?: string | undefined;
   loading = false;
   loadingLabel = 'Loading';
-  name?: string;
+  name?: string | undefined;
   pill = false;
   size: SpectreButtonSize = 'md';
   type: SpectreButtonType = 'button';
