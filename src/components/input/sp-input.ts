@@ -25,9 +25,9 @@ export {
 };
 
 export interface SpectreInputProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   autocomplete?: string | undefined;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;

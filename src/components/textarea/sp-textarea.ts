@@ -12,9 +12,9 @@ import {
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export interface SpectreTextareaProps {
-  ariaLabel?: string | null | undefined;
-  ariaLabelledBy?: string | null | undefined;
-  ariaDescribedBy?: string | null | undefined;
+  ariaLabel: string | null;
+  ariaLabelledBy: string | null;
+  ariaDescribedBy: string | null;
   autocomplete?: string | undefined;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
