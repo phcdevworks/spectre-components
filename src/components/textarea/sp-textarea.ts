@@ -3,34 +3,38 @@ import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectreBaseElement } from '../../utils/base';
-import { isInputSize, type SpectreInputSize } from '../../utils/form';
+import {
+  isInputSize,
+  type SpectreInputSize,
+  normalizeInt,
+} from '../../utils/form';
 
 import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export interface SpectreTextareaProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autocomplete?: string;
-  autofocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  fullWidth?: boolean;
-  inputmode?: string;
-  invalid?: boolean;
-  loading?: boolean;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  autocomplete?: string | undefined;
+  autofocus?: boolean | undefined;
+  disabled?: boolean | undefined;
+  form?: string | undefined;
+  fullWidth?: boolean | undefined;
+  inputmode?: string | undefined;
+  invalid?: boolean | undefined;
+  loading?: boolean | undefined;
   maxlength?: number | undefined;
   minlength?: number | undefined;
   name?: string | undefined;
-  pill?: boolean;
+  pill?: boolean | undefined;
   placeholder?: string | undefined;
-  readonly?: boolean;
-  required?: boolean;
-  rows?: number;
-  size?: SpectreInputSize;
-  success?: boolean;
-  title?: string;
-  value?: string;
+  readonly?: boolean | undefined;
+  required?: boolean | undefined;
+  rows?: number | undefined;
+  size?: SpectreInputSize | undefined;
+  success?: boolean | undefined;
+  title?: string | undefined;
+  value?: string | undefined;
 }
 
 const DEFAULT_ROWS = 2;
@@ -57,7 +61,6 @@ export class SpectreTextareaElement
     rows: { type: Number },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
-    title: { type: String, reflect: true },
     value: { type: String },
   };
 
@@ -79,7 +82,6 @@ export class SpectreTextareaElement
   rows = DEFAULT_ROWS;
   size: SpectreInputSize = 'md';
   success = false;
-  override title = '';
   value = '';
 
   protected override willUpdate(
@@ -90,13 +92,7 @@ export class SpectreTextareaElement
     }
 
     if (changedProperties.has('rows')) {
-      if (
-        this.rows == null ||
-        !Number.isInteger(this.rows) ||
-        this.rows < 1
-      ) {
-        this.rows = DEFAULT_ROWS;
-      }
+      this.rows = normalizeInt(this.rows, DEFAULT_ROWS, 1) as number;
     }
 
     if (changedProperties.has('value') && this.value == null) {
@@ -104,23 +100,11 @@ export class SpectreTextareaElement
     }
 
     if (changedProperties.has('maxlength')) {
-      if (
-        this.maxlength == null ||
-        !Number.isInteger(this.maxlength) ||
-        this.maxlength < 0
-      ) {
-        this.maxlength = undefined;
-      }
+      this.maxlength = normalizeInt(this.maxlength, undefined);
     }
 
     if (changedProperties.has('minlength')) {
-      if (
-        this.minlength == null ||
-        !Number.isInteger(this.minlength) ||
-        this.minlength < 0
-      ) {
-        this.minlength = undefined;
-      }
+      this.minlength = normalizeInt(this.minlength, undefined);
     }
   }
 
@@ -168,34 +152,32 @@ export class SpectreTextareaElement
   }
 
   override render() {
-    return html`
-      <textarea
-        aria-busy=${this.loading ? 'true' : 'false'}
-        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-        aria-invalid=${ifDefined(this.invalid ? 'true' : undefined)}
-        aria-label=${ifDefined(this.forwardedAriaLabel)}
-        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        autocomplete=${ifDefined(this.autocomplete)}
-        ?autofocus=${this.autofocus}
-        class=${this.textareaClasses}
-        data-sp-textarea-native
-        ?disabled=${this.isDisabled}
-        form=${ifDefined(this.form)}
-        inputmode=${ifDefined(this.inputmode)}
-        ?readonly=${this.readonly}
-        ?required=${this.required}
-        id=${ifDefined(this.id || undefined)}
-        maxlength=${ifDefined(this.maxlength)}
-        minlength=${ifDefined(this.minlength)}
-        name=${ifDefined(this.name)}
-        placeholder=${ifDefined(this.placeholder)}
-        rows=${this.rows}
-        title=${ifDefined(this.title || undefined)}
-        .value=${live(this.value)}
-        @change=${this.handleChange}
-        @input=${this.handleInput}
-      ></textarea>
-    `;
+    return html`<textarea
+      aria-busy="${this.loading ? 'true' : 'false'}"
+      aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+      aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
+      aria-label="${ifDefined(this.forwardedAriaLabel)}"
+      aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      autocomplete="${ifDefined(this.autocomplete)}"
+      ?autofocus="${this.autofocus}"
+      class="${this.textareaClasses}"
+      data-sp-textarea-native
+      ?disabled="${this.isDisabled}"
+      form="${ifDefined(this.form)}"
+      inputmode="${ifDefined(this.inputmode)}"
+      ?readonly="${this.readonly}"
+      ?required="${this.required}"
+      id="${ifDefined(this.id || undefined)}"
+      maxlength="${ifDefined(this.maxlength)}"
+      minlength="${ifDefined(this.minlength)}"
+      name="${ifDefined(this.name)}"
+      placeholder="${ifDefined(this.placeholder)}"
+      rows="${this.rows}"
+      title="${ifDefined(this.title || undefined)}"
+      .value="${live(this.value)}"
+      @change="${this.handleChange}"
+      @input="${this.handleInput}"
+    ></textarea>`;
   }
 }
 
