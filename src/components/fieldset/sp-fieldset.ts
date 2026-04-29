@@ -4,14 +4,14 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreFieldsetProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  disabled?: boolean;
-  form?: string;
-  legend?: string;
-  name?: string;
-  title?: string;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  disabled?: boolean | undefined;
+  form?: string | undefined;
+  legend?: string | undefined;
+  name?: string | undefined;
+  title?: string | undefined;
 }
 
 export class SpectreFieldsetElement extends SpectreProjectableElement implements SpectreFieldsetProps {
@@ -20,14 +20,12 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     form: { type: String },
     legend: { type: String, reflect: true },
     name: { type: String, reflect: true },
-    title: { type: String, reflect: true },
   };
 
   disabled = false;
   form?: string;
-  legend = '';
+  legend?: string;
   name?: string;
-  override title = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-fieldset-native]');
@@ -54,24 +52,22 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   }
 
   override render() {
-    return html`
-      <fieldset
-        aria-describedby=${ifDefined(this.forwardedAriaDescribedBy)}
-        aria-label=${ifDefined(this.forwardedAriaLabel)}
-        aria-labelledby=${ifDefined(this.forwardedAriaLabelledBy)}
-        data-sp-fieldset-native
-        ?disabled=${this.disabled}
-        form=${ifDefined(this.form)}
-        id=${ifDefined(this.id || undefined)}
-        name=${ifDefined(this.name)}
-        title=${ifDefined(this.title || undefined)}
-      >
-        ${this.legend
-          ? html`<legend class='sp-label' data-sp-fieldset-legend>${this.legend}</legend>`
-          : nothing}
-        ${this.hasProjectedContent ? this.projectedContent : nothing}
-      </fieldset>
-    `;
+    return html`<fieldset
+      aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+      aria-label="${ifDefined(this.forwardedAriaLabel)}"
+      aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      data-sp-fieldset-native
+      ?disabled="${this.disabled}"
+      form="${ifDefined(this.form)}"
+      id="${ifDefined(this.id || undefined)}"
+      name="${ifDefined(this.name)}"
+      title="${ifDefined(this.title || undefined)}"
+    >
+      ${this.legend
+        ? html`<legend class="sp-label" data-sp-fieldset-legend>${this.legend}</legend>`
+        : nothing}
+      ${this.hasProjectedContent ? this.projectedContent : nothing}
+    </fieldset>`;
   }
 }
 
