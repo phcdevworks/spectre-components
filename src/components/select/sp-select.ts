@@ -44,14 +44,14 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
     value: { type: String },
   };
 
-  autocomplete?: string;
+  autocomplete?: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string;
+  form?: string | undefined;
   fullWidth = false;
   invalid = false;
   loading = false;
-  name?: string;
+  name?: string | undefined;
   pill = false;
   required = false;
   size: SpectreInputSize = 'md';

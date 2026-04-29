@@ -23,9 +23,9 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   };
 
   disabled = false;
-  form?: string;
-  legend?: string;
-  name?: string;
+  form?: string | undefined;
+  legend?: string | undefined;
+  name?: string | undefined;
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-fieldset-native]');
