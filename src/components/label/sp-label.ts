@@ -4,11 +4,11 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreLabelProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  htmlFor?: string;
-  title?: string;
+  ariaLabel?: string | null | undefined;
+  ariaLabelledBy?: string | null | undefined;
+  ariaDescribedBy?: string | null | undefined;
+  htmlFor?: string | undefined;
+  title?: string | undefined;
 }
 
 export class SpectreLabelElement extends SpectreProjectableElement implements SpectreLabelProps {
@@ -17,7 +17,7 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
     title: { type: String, reflect: true },
   };
 
-  htmlFor?: string;
+  htmlFor?: string | undefined;
   override title = '';
 
   protected override getContentContainer(): Element | null {
