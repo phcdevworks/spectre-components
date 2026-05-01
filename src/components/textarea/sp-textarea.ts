@@ -170,7 +170,7 @@ export class SpectreTextareaElement
       id="${ifDefined(this.id || undefined)}"
       maxlength="${ifDefined(this.maxlength)}"
       minlength="${ifDefined(this.minlength)}"
-      name="${ifDefined(this.name)}"
+      name="${ifDefined(this.name || undefined)}"
       placeholder="${ifDefined(this.placeholder)}"
       rows="${this.rows}"
       title="${ifDefined(this.title || undefined)}"
