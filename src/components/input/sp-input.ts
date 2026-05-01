@@ -188,7 +188,7 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
       maxlength="${ifDefined(this.maxlength)}"
       min="${ifDefined(this.min)}"
       minlength="${ifDefined(this.minlength)}"
-      name="${ifDefined(this.name)}"
+      name="${ifDefined(this.name || undefined)}"
       placeholder="${ifDefined(this.placeholder)}"
       step="${ifDefined(this.step)}"
       title="${ifDefined(this.title || undefined)}"
