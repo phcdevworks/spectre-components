@@ -60,7 +60,7 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
       ?disabled="${this.disabled}"
       form="${ifDefined(this.form)}"
       id="${ifDefined(this.id || undefined)}"
-      name="${ifDefined(this.name)}"
+      name="${ifDefined(this.name || undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.legend
