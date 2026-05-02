@@ -158,7 +158,7 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
       ?disabled="${this.isDisabled}"
       form="${ifDefined(this.form)}"
       id="${ifDefined(this.id || undefined)}"
-      name="${ifDefined(this.name)}"
+      name="${ifDefined(this.name || undefined)}"
       ?required="${this.required}"
       title="${ifDefined(this.title || undefined)}"
       .value="${live(this.value)}"
