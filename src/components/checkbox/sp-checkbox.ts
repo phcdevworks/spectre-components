@@ -122,13 +122,13 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
         data-sp-checkbox-native
         .checked="${live(this.checked)}"
         ?disabled="${this.isDisabled}"
-        form="${ifDefined(this.form)}"
+        form="${ifDefined(this.form || undefined)}"
         id="${ifDefined(this.id || undefined)}"
-        name="${ifDefined(this.name)}"
+        name="${ifDefined(this.name || undefined)}"
         ?required="${this.required}"
         title="${ifDefined(this.title || undefined)}"
         type="checkbox"
-        value="${ifDefined(this.value || undefined)}"
+        value="${ifDefined(this.value)}"
         @change="${this.handleChange}"
         @input="${this.handleInput}"
       />
