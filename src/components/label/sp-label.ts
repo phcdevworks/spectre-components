@@ -46,7 +46,7 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       class="sp-label"
       data-sp-label-native
-      for="${ifDefined(this.htmlFor)}"
+      for="${ifDefined(this.htmlFor || undefined)}"
       id="${ifDefined(this.id || undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
