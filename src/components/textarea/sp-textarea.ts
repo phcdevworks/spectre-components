@@ -64,19 +64,19 @@ export class SpectreTextareaElement
     value: { type: String },
   };
 
-  autocomplete?: string | undefined;
+  autocomplete: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string | undefined;
+  form: string | undefined;
   fullWidth = false;
-  inputmode?: string | undefined;
+  inputmode: string | undefined;
   invalid = false;
   loading = false;
-  maxlength?: number | undefined;
-  minlength?: number | undefined;
-  name?: string | undefined;
+  maxlength: number | undefined;
+  minlength: number | undefined;
+  name: string | undefined;
   pill = false;
-  placeholder?: string | undefined;
+  placeholder: string | undefined;
   readonly = false;
   required = false;
   rows = DEFAULT_ROWS;
@@ -158,20 +158,20 @@ export class SpectreTextareaElement
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
-      autocomplete="${ifDefined(this.autocomplete)}"
+      autocomplete="${ifDefined(this.autocomplete || undefined)}"
       ?autofocus="${this.autofocus}"
       class="${this.textareaClasses}"
       data-sp-textarea-native
       ?disabled="${this.isDisabled}"
-      form="${ifDefined(this.form)}"
-      inputmode="${ifDefined(this.inputmode)}"
+      form="${ifDefined(this.form || undefined)}"
+      inputmode="${ifDefined(this.inputmode || undefined)}"
       ?readonly="${this.readonly}"
       ?required="${this.required}"
       id="${ifDefined(this.id || undefined)}"
       maxlength="${ifDefined(this.maxlength)}"
       minlength="${ifDefined(this.minlength)}"
-      name="${ifDefined(this.name)}"
-      placeholder="${ifDefined(this.placeholder)}"
+      name="${ifDefined(this.name || undefined)}"
+      placeholder="${ifDefined(this.placeholder || undefined)}"
       rows="${this.rows}"
       title="${ifDefined(this.title || undefined)}"
       .value="${live(this.value)}"
