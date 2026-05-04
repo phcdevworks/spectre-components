@@ -79,25 +79,25 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
     value: { type: String },
   };
 
-  autocomplete?: string | undefined;
+  autocomplete: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string | undefined;
+  form: string | undefined;
   fullWidth = false;
-  inputmode?: string | undefined;
+  inputmode: string | undefined;
   invalid = false;
   loading = false;
-  max?: string | undefined;
-  maxlength?: number | undefined;
-  min?: string | undefined;
-  minlength?: number | undefined;
-  name?: string | undefined;
+  max: string | undefined;
+  maxlength: number | undefined;
+  min: string | undefined;
+  minlength: number | undefined;
+  name: string | undefined;
   pill = false;
-  placeholder?: string | undefined;
+  placeholder: string | undefined;
   readonly = false;
   required = false;
   size: SpectreInputSize = 'md';
-  step?: string | undefined;
+  step: string | undefined;
   success = false;
   type: SpectreInputType = 'text';
   value = '';
@@ -174,23 +174,23 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
-      autocomplete="${ifDefined(this.autocomplete)}"
+      autocomplete="${ifDefined(this.autocomplete || undefined)}"
       ?autofocus="${this.autofocus}"
       class="${this.inputClasses}"
       data-sp-input-native
       ?disabled="${this.isDisabled}"
-      form="${ifDefined(this.form)}"
+      form="${ifDefined(this.form || undefined)}"
       ?readonly="${this.readonly}"
       ?required="${this.required}"
       id="${ifDefined(this.id || undefined)}"
-      inputmode="${ifDefined(this.inputmode)}"
-      max="${ifDefined(this.max)}"
+      inputmode="${ifDefined(this.inputmode || undefined)}"
+      max="${ifDefined(this.max || undefined)}"
       maxlength="${ifDefined(this.maxlength)}"
-      min="${ifDefined(this.min)}"
+      min="${ifDefined(this.min || undefined)}"
       minlength="${ifDefined(this.minlength)}"
-      name="${ifDefined(this.name)}"
-      placeholder="${ifDefined(this.placeholder)}"
-      step="${ifDefined(this.step)}"
+      name="${ifDefined(this.name || undefined)}"
+      placeholder="${ifDefined(this.placeholder || undefined)}"
+      step="${ifDefined(this.step || undefined)}"
       title="${ifDefined(this.title || undefined)}"
       type="${this.type}"
       .value="${live(this.value)}"
