@@ -40,11 +40,11 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
   autofocus = false;
   checked = false;
   disabled = false;
-  form?: string | undefined;
+  form: string | undefined;
   invalid = false;
   loading = false;
-  label?: string | undefined;
-  name?: string | undefined;
+  label: string | undefined;
+  name: string | undefined;
   required = false;
   success = false;
   value = 'on';
@@ -122,13 +122,13 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
         data-sp-radio-native
         .checked="${live(this.checked)}"
         ?disabled="${this.isDisabled}"
-        form="${ifDefined(this.form)}"
+        form="${ifDefined(this.form || undefined)}"
         id="${ifDefined(this.id || undefined)}"
-        name="${ifDefined(this.name)}"
+        name="${ifDefined(this.name || undefined)}"
         ?required="${this.required}"
         title="${ifDefined(this.title || undefined)}"
         type="radio"
-        value="${ifDefined(this.value || undefined)}"
+        value="${ifDefined(this.value)}"
         @change="${this.handleChange}"
         @input="${this.handleInput}"
       />

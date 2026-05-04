@@ -52,11 +52,12 @@ export class SpectreBaseElement extends LitElement {
     return this._title;
   }
 
-  override set title(value: string) {
-    if (this._title === value) {
+  override set title(value: string | undefined | null) {
+    const normalizedValue = value ?? '';
+    if (this._title === normalizedValue) {
       return;
     }
-    this._title = value;
+    this._title = normalizedValue;
     this._removeHostAttribute('title');
     this.requestUpdate();
   }
@@ -65,11 +66,12 @@ export class SpectreBaseElement extends LitElement {
     return this._id;
   }
 
-  override set id(value: string) {
-    if (this._id === value) {
+  override set id(value: string | undefined | null) {
+    const normalizedValue = value ?? '';
+    if (this._id === normalizedValue) {
       return;
     }
-    this._id = value;
+    this._id = normalizedValue;
     this._removeHostAttribute('id');
     this.requestUpdate();
   }

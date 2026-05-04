@@ -16,7 +16,7 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
     htmlFor: { attribute: 'for', type: String, reflect: true },
   };
 
-  htmlFor?: string | undefined;
+  htmlFor: string | undefined;
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-label-native]');
@@ -46,7 +46,7 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       class="sp-label"
       data-sp-label-native
-      for="${ifDefined(this.htmlFor)}"
+      for="${ifDefined(this.htmlFor || undefined)}"
       id="${ifDefined(this.id || undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
