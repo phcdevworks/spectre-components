@@ -44,14 +44,14 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
     value: { type: String },
   };
 
-  autocomplete?: string | undefined;
+  autocomplete: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string | undefined;
+  form: string | undefined;
   fullWidth = false;
   invalid = false;
   loading = false;
-  name?: string | undefined;
+  name: string | undefined;
   pill = false;
   required = false;
   size: SpectreInputSize = 'md';
@@ -151,14 +151,14 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
-      autocomplete="${ifDefined(this.autocomplete)}"
+      autocomplete="${ifDefined(this.autocomplete || undefined)}"
       ?autofocus="${this.autofocus}"
       class="${this.selectClasses}"
       data-sp-select-native
       ?disabled="${this.isDisabled}"
-      form="${ifDefined(this.form)}"
+      form="${ifDefined(this.form || undefined)}"
       id="${ifDefined(this.id || undefined)}"
-      name="${ifDefined(this.name)}"
+      name="${ifDefined(this.name || undefined)}"
       ?required="${this.required}"
       title="${ifDefined(this.title || undefined)}"
       .value="${live(this.value)}"
