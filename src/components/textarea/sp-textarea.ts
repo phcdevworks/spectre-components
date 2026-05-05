@@ -64,19 +64,19 @@ export class SpectreTextareaElement
     value: { type: String },
   };
 
-  autocomplete?: string | undefined;
+  autocomplete: string | undefined;
   autofocus = false;
   disabled = false;
-  form?: string | undefined;
+  form: string | undefined;
   fullWidth = false;
-  inputmode?: string | undefined;
+  inputmode: string | undefined;
   invalid = false;
   loading = false;
-  maxlength?: number | undefined;
-  minlength?: number | undefined;
-  name?: string | undefined;
+  maxlength: number | undefined;
+  minlength: number | undefined;
+  name: string | undefined;
   pill = false;
-  placeholder?: string | undefined;
+  placeholder: string | undefined;
   readonly = false;
   required = false;
   rows = DEFAULT_ROWS;
