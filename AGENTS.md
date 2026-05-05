@@ -36,6 +36,19 @@ rules.
 - Framework adapters may wrap these components downstream, but adapters are out
   of scope in this package.
 
+## Current Components
+
+| Tag | Element class | Entry point |
+|---|---|---|
+| `sp-button` | `SpectreButtonElement` | `spectre-components/button` |
+| `sp-input` | `SpectreInputElement` | `spectre-components/input` |
+| `sp-textarea` | `SpectreTextareaElement` | `spectre-components/textarea` |
+| `sp-select` | `SpectreSelectElement` | `spectre-components/select` |
+| `sp-checkbox` | `SpectreCheckboxElement` | `spectre-components/checkbox` |
+| `sp-radio` | `SpectreRadioElement` | `spectre-components/radio` |
+| `sp-label` | `SpectreLabelElement` | `spectre-components/label` |
+| `sp-fieldset` | `SpectreFieldsetElement` | `spectre-components/fieldset` |
+
 ## Implementation Notes
 
 - Prefer consuming `@phcdevworks/spectre-ui` recipe APIs over recreating class
@@ -44,6 +57,13 @@ rules.
 - Prefer explicit registration helpers over implicit global side effects.
 - Keep component files intentional and easy to scale: one component directory
   per element, with its own types and entry point when needed.
+- All components render in light DOM so the global `@phcdevworks/spectre-ui`
+  styling contract applies directly without Shadow DOM piercing.
+- `SpectreBaseElement` handles attribute proxying for `id`, `title`, and ARIA
+  attributes so they forward to the native element rather than staying on the
+  host.
+- `SpectreProjectableElement` handles light-DOM content projection for
+  components that need to slot external markup into their native element.
 
 ## Rendering Guidance
 
