@@ -8,7 +8,7 @@ export interface SpectreLabelProps {
   ariaLabelledBy: string | null;
   ariaDescribedBy: string | null;
   htmlFor?: string | undefined;
-  title?: string | undefined;
+  title?: string | null;
 }
 
 export class SpectreLabelElement extends SpectreProjectableElement implements SpectreLabelProps {
@@ -17,6 +17,14 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
   };
 
   htmlFor: string | undefined;
+
+  override get title(): string {
+    return super.title;
+  }
+
+  override set title(value: string | null | undefined) {
+    super.title = value;
+  }
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-label-native]');

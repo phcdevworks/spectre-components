@@ -175,6 +175,18 @@ describe('sp-checkbox', () => {
     expect(input?.getAttribute('value')).toBe('on');
   });
 
+  it('preserves an empty string as a valid value', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.value = '';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.value).toBe('');
+    const input = element.querySelector('input[type=checkbox]');
+    expect(input?.getAttribute('value')).toBe('');
+  });
+
   it('does not render a label span if label is empty', async () => {
     const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
     element.label = '';
