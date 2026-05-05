@@ -161,6 +161,30 @@ describe('sp-button', () => {
     expect(button?.hasAttribute('autofocus')).toBe(true);
   });
 
+  it('correctly handles title attribute on the host element', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.setAttribute('title', 'Initial Title');
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    expect(button?.getAttribute('title')).toBe('Initial Title');
+    expect(element.getAttribute('title')).toBe('Initial Title');
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'title')).toBe(false);
+
+    element.title = 'Updated Title';
+    await element.updateComplete;
+    expect(button?.getAttribute('title')).toBe('Updated Title');
+    expect(element.getAttribute('title')).toBe('Updated Title');
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'title')).toBe(false);
+
+    element.removeAttribute('title');
+    await element.updateComplete;
+    expect(button?.hasAttribute('title')).toBe(false);
+    expect(element.title).toBe('');
+  });
+
   it('preserves content when toggling loading state', async () => {
     const element = document.createElement('sp-button') as SpectreButtonElement;
     element.append(document.createTextNode('Original Content'));

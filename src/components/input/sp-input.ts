@@ -46,7 +46,7 @@ export interface SpectreInputProps {
   size?: SpectreInputSize | undefined;
   step?: string | undefined;
   success?: boolean | undefined;
-  title?: string | undefined;
+  title?: string | null;
   type?: SpectreInputType | undefined;
   value?: string | undefined;
 }
@@ -94,18 +94,27 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   placeholder: string | undefined;
   readonly = false;
   required = false;
-  size: SpectreInputSize = 'md';
+  size: SpectreInputSize | undefined = 'md';
   step: string | undefined;
   success = false;
-  type: SpectreInputType = 'text';
-  value = '';
+
+  override get title(): string {
+    return super.title;
+  }
+
+  override set title(value: string | null | undefined) {
+    super.title = value;
+  }
+
+  type: SpectreInputType | undefined = 'text';
+  value: string | undefined = '';
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
-    if (changedProperties.has('size') && !isInputSize(this.size)) {
+    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
       this.size = 'md';
     }
 
-    if (changedProperties.has('type') && !isInputType(this.type)) {
+    if (changedProperties.has('type') && (this.type == null || !isInputType(this.type))) {
       this.type = 'text';
     }
 
@@ -124,9 +133,9 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
 
   private get inputClasses(): string {
     return getInputClasses({
-      fullWidth: this.fullWidth,
-      pill: this.pill,
-      size: this.size,
+      fullWidth: this.fullWidth ?? false,
+      pill: this.pill ?? false,
+      size: this.size as SpectreInputSize,
       state: this.isDisabled
         ? this.disabled
           ? 'disabled'
