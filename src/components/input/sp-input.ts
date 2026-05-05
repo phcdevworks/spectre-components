@@ -17,10 +17,8 @@ import { getInputClasses } from '@phcdevworks/spectre-ui';
 
 export {
   spectreInputSizes,
-  isInputSize,
   type SpectreInputSize,
   spectreInputTypes,
-  isInputType,
   type SpectreInputType,
 };
 
