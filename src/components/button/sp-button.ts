@@ -40,7 +40,7 @@ export interface SpectreButtonProps {
   name?: string | undefined;
   pill?: boolean | undefined;
   size?: SpectreButtonSize | undefined;
-  title?: string | undefined;
+  title?: string | null;
   type?: SpectreButtonType | undefined;
   variant?: SpectreButtonVariant | undefined;
   value?: string | undefined;
@@ -81,13 +81,22 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   fullWidth = false;
   label: string | undefined;
   loading = false;
-  loadingLabel = 'Loading';
+  loadingLabel: string | undefined = 'Loading';
   name: string | undefined;
   pill = false;
-  size: SpectreButtonSize = 'md';
-  type: SpectreButtonType = 'button';
-  variant: SpectreButtonVariant = 'primary';
-  value = '';
+  size: SpectreButtonSize | undefined = 'md';
+
+  override get title(): string {
+    return super.title;
+  }
+
+  override set title(value: string | null | undefined) {
+    super.title = value;
+  }
+
+  type: SpectreButtonType | undefined = 'button';
+  variant: SpectreButtonVariant | undefined = 'primary';
+  value: string | undefined = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-button-native]');
@@ -107,15 +116,15 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
-    if (changedProperties.has('variant') && !isButtonVariant(this.variant)) {
+    if (changedProperties.has('variant') && (this.variant == null || !isButtonVariant(this.variant))) {
       this.variant = 'primary';
     }
 
-    if (changedProperties.has('size') && !isButtonSize(this.size)) {
+    if (changedProperties.has('size') && (this.size == null || !isButtonSize(this.size))) {
       this.size = 'md';
     }
 
-    if (changedProperties.has('type') && !isButtonType(this.type)) {
+    if (changedProperties.has('type') && (this.type == null || !isButtonType(this.type))) {
       this.type = 'button';
     }
 
@@ -133,11 +142,11 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   private get buttonClasses(): string {
     return getButtonClasses({
       disabled: this.isDisabled,
-      fullWidth: this.fullWidth,
-      loading: this.loading,
-      pill: this.pill,
-      size: this.size,
-      variant: this.variant,
+      fullWidth: this.fullWidth ?? false,
+      loading: this.loading ?? false,
+      pill: this.pill ?? false,
+      size: this.size as ButtonSize,
+      variant: this.variant as ButtonVariant,
     });
   }
 

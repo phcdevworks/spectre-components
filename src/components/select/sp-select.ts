@@ -23,7 +23,7 @@ export interface SpectreSelectProps {
   required?: boolean | undefined;
   size?: SpectreInputSize | undefined;
   success?: boolean | undefined;
-  title?: string | undefined;
+  title?: string | null;
   value?: string | undefined;
 }
 
@@ -54,9 +54,18 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
   name: string | undefined;
   pill = false;
   required = false;
-  size: SpectreInputSize = 'md';
+  size: SpectreInputSize | undefined = 'md';
   success = false;
-  value = '';
+
+  override get title(): string {
+    return super.title;
+  }
+
+  override set title(value: string | null | undefined) {
+    super.title = value;
+  }
+
+  value: string | undefined = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-select-native]');
@@ -72,7 +81,7 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
-    if (changedProperties.has('size') && !isInputSize(this.size)) {
+    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
       this.size = 'md';
     }
 
@@ -89,7 +98,7 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
       return;
     }
 
-    if (this.value !== '' && nativeSelect.value !== this.value) {
+    if (this.value !== '' && this.value !== undefined && nativeSelect.value !== this.value) {
       nativeSelect.value = this.value;
     }
 
@@ -107,9 +116,9 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
 
   private get selectClasses(): string {
     return getInputClasses({
-      fullWidth: this.fullWidth,
-      pill: this.pill,
-      size: this.size,
+      fullWidth: this.fullWidth ?? false,
+      pill: this.pill ?? false,
+      size: this.size as SpectreInputSize,
       state: this.isDisabled
         ? this.disabled
           ? 'disabled'

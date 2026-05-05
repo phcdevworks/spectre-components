@@ -33,7 +33,7 @@ export interface SpectreTextareaProps {
   rows?: number | undefined;
   size?: SpectreInputSize | undefined;
   success?: boolean | undefined;
-  title?: string | undefined;
+  title?: string | null;
   value?: string | undefined;
 }
 
@@ -79,15 +79,24 @@ export class SpectreTextareaElement
   placeholder: string | undefined;
   readonly = false;
   required = false;
-  rows = DEFAULT_ROWS;
-  size: SpectreInputSize = 'md';
+  rows: number | undefined = DEFAULT_ROWS;
+  size: SpectreInputSize | undefined = 'md';
   success = false;
-  value = '';
+
+  override get title(): string {
+    return super.title;
+  }
+
+  override set title(value: string | null | undefined) {
+    super.title = value;
+  }
+
+  value: string | undefined = '';
 
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>,
   ): void {
-    if (changedProperties.has('size') && !isInputSize(this.size)) {
+    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
       this.size = 'md';
     }
 
@@ -110,9 +119,9 @@ export class SpectreTextareaElement
 
   private get textareaClasses(): string {
     return getInputClasses({
-      fullWidth: this.fullWidth,
-      pill: this.pill,
-      size: this.size,
+      fullWidth: this.fullWidth ?? false,
+      pill: this.pill ?? false,
+      size: this.size as SpectreInputSize,
       state: this.isDisabled
         ? this.disabled
           ? 'disabled'
