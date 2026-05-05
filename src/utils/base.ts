@@ -9,19 +9,6 @@ export class SpectreBaseElement extends LitElement {
   private _title = '';
   private _id = '';
 
-  override get title(): string {
-    return this._title;
-  }
-
-  override set title(value: string) {
-    if (this._title === value) {
-      return;
-    }
-    this._title = value;
-    this._removeHostAttribute('title');
-    this.requestUpdate();
-  }
-
   get ariaLabel(): string | null {
     return this._ariaLabel;
   }
@@ -61,16 +48,30 @@ export class SpectreBaseElement extends LitElement {
     this.requestUpdate();
   }
 
+  override get title(): string {
+    return this._title;
+  }
+
+  override set title(value: string | undefined | null) {
+    const normalizedValue = value ?? '';
+    if (this._title === normalizedValue) {
+      return;
+    }
+    this._title = normalizedValue;
+    this._removeHostAttribute('title');
+    this.requestUpdate();
+  }
 
   override get id(): string {
     return this._id;
   }
 
-  override set id(value: string) {
-    if (this._id === value) {
+  override set id(value: string | undefined | null) {
+    const normalizedValue = value ?? '';
+    if (this._id === normalizedValue) {
       return;
     }
-    this._id = value;
+    this._id = normalizedValue;
     this._removeHostAttribute('id');
     this.requestUpdate();
   }
