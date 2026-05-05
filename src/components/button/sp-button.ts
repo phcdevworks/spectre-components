@@ -77,12 +77,12 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
 
   autofocus = false;
   disabled = false;
-  form?: string | undefined;
+  form: string | undefined;
   fullWidth = false;
-  label?: string | undefined;
+  label: string | undefined;
   loading = false;
   loadingLabel = 'Loading';
-  name?: string | undefined;
+  name: string | undefined;
   pill = false;
   size: SpectreButtonSize = 'md';
   type: SpectreButtonType = 'button';
@@ -187,7 +187,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
       name="${ifDefined(this.name || undefined)}"
       title="${ifDefined(this.title || undefined)}"
       type="${this.type}"
-      value="${ifDefined(this.value)}"
+      value="${ifDefined(this.value || undefined)}"
     >
       ${this.renderButtonContent()}
     </button>`;

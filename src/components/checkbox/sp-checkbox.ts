@@ -40,11 +40,11 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
   autofocus = false;
   checked = false;
   disabled = false;
-  form?: string | undefined;
+  form: string | undefined;
   invalid = false;
   loading = false;
-  label?: string | undefined;
-  name?: string | undefined;
+  label: string | undefined;
+  name: string | undefined;
   required = false;
   success = false;
   value = 'on';
