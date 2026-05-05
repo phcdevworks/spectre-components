@@ -18,7 +18,7 @@ export interface SpectreRadioProps {
   name?: string | undefined;
   required?: boolean | undefined;
   success?: boolean | undefined;
-  title?: string | undefined;
+  title?: string | null;
   value?: string | undefined;
 }
 
@@ -47,7 +47,16 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
   name: string | undefined;
   required = false;
   success = false;
-  value = 'on';
+
+  override get title(): string {
+    return super.title;
+  }
+
+  override set title(value: string | null | undefined) {
+    super.title = value;
+  }
+
+  value: string | undefined = 'on';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-radio-label]');
