@@ -11,7 +11,7 @@ export interface SpectreFieldsetProps {
   form?: string | undefined;
   legend?: string | undefined;
   name?: string | undefined;
-  title?: string | undefined;
+  title?: string | null;
 }
 
 export class SpectreFieldsetElement extends SpectreProjectableElement implements SpectreFieldsetProps {
@@ -26,6 +26,14 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   form: string | undefined;
   legend: string | undefined;
   name: string | undefined;
+
+  override get title(): string {
+    return super.title;
+  }
+
+  override set title(value: string | null | undefined) {
+    super.title = value;
+  }
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-fieldset-native]');
