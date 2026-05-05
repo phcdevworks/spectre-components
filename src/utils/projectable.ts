@@ -65,10 +65,10 @@ export abstract class SpectreProjectableElement extends SpectreBaseElement {
 
     this.contentObserver = new MutationObserver((mutations) => {
       const isInternalMovement = mutations.every((mutation) =>
-        Array.from(mutation.removedNodes).every(
+        [...mutation.removedNodes].every(
           (node) => this.isInternalNode(node) || this.contains(node),
         ) &&
-        Array.from(mutation.addedNodes).every((node) => this.isInternalNode(node)),
+        [...mutation.addedNodes].every((node) => this.isInternalNode(node)),
       );
 
       if (isInternalMovement) {
