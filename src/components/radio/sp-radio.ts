@@ -124,11 +124,11 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
         ?disabled="${this.isDisabled}"
         form="${ifDefined(this.form)}"
         id="${ifDefined(this.id || undefined)}"
-        name="${ifDefined(this.name)}"
+        name="${ifDefined(this.name || undefined)}"
         ?required="${this.required}"
         title="${ifDefined(this.title || undefined)}"
         type="radio"
-        value="${ifDefined(this.value || undefined)}"
+        value="${ifDefined(this.value)}"
         @change="${this.handleChange}"
         @input="${this.handleInput}"
       />
