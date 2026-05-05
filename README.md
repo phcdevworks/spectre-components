@@ -48,22 +48,30 @@ Use the components in markup:
 <sp-button variant="primary" size="md">Save</sp-button>
 <sp-button variant="ghost" size="sm">Cancel</sp-button>
 <sp-input name="email" type="email" placeholder="Email address"></sp-input>
+<sp-textarea name="bio" rows="4" placeholder="Short bio"></sp-textarea>
+<sp-select name="role">
+  <option value="admin">Admin</option>
+  <option value="user">User</option>
+</sp-select>
+<sp-checkbox name="terms" value="accepted">Accept terms</sp-checkbox>
+<sp-radio name="plan" value="monthly">Monthly</sp-radio>
+<sp-label for="email">Email address</sp-label>
+<sp-fieldset legend="Contact preferences">
+  <sp-checkbox name="email-updates">Email updates</sp-checkbox>
+</sp-fieldset>
 ```
 
-Register only the button when you want a narrower entry point:
+Register only what you need using the per-component entry points:
 
 ```ts
 import { defineSpectreButton } from "@phcdevworks/spectre-components/button";
-
-defineSpectreButton();
-```
-
-Register only the input when you want the input-only entry point:
-
-```ts
 import { defineSpectreInput } from "@phcdevworks/spectre-components/input";
-
-defineSpectreInput();
+import { defineSpectreTextarea } from "@phcdevworks/spectre-components/textarea";
+import { defineSpectreSelect } from "@phcdevworks/spectre-components/select";
+import { defineSpectreCheckbox } from "@phcdevworks/spectre-components/checkbox";
+import { defineSpectreRadio } from "@phcdevworks/spectre-components/radio";
+import { defineSpectreLabel } from "@phcdevworks/spectre-components/label";
+import { defineSpectreFieldset } from "@phcdevworks/spectre-components/fieldset";
 ```
 
 ## What this package owns
@@ -91,32 +99,95 @@ contracts locally.
 
 ### Root package
 
-`@phcdevworks/spectre-components` exports:
+`@phcdevworks/spectre-components` exports everything from all component entry
+points plus the `defineSpectreComponents()` bulk registration helper.
 
-- `defineSpectreComponents()`
-- `defineSpectreButton()`
-- `defineSpectreInput()`
-- `SpectreButtonElement`
-- `SpectreInputElement`
-- `spectreButtonVariants`
-- `spectreButtonSizes`
-- `spectreButtonTypes`
-- `spectreInputTypes`
-- `spectreInputSizes`
-- `SpectreButtonProps` and related button types
-- `SpectreInputProps` and related input types
+**Registration helpers**
+
+- `defineSpectreComponents()` — registers all components at once
+- `defineSpectreButton()`, `defineSpectreInput()`, `defineSpectreTextarea()`
+- `defineSpectreSelect()`, `defineSpectreCheckbox()`, `defineSpectreRadio()`
+- `defineSpectreLabel()`, `defineSpectreFieldset()`
+
+**Element classes**
+
+- `SpectreButtonElement`, `SpectreInputElement`, `SpectreTextareaElement`
+- `SpectreSelectElement`, `SpectreCheckboxElement`, `SpectreRadioElement`
+- `SpectreLabelElement`, `SpectreFieldsetElement`
+
+**Constants and types (button)**
+
+- `spectreButtonVariants`, `spectreButtonSizes`, `spectreButtonTypes`
+- `SpectreButtonVariant`, `SpectreButtonSize`, `SpectreButtonType`
+- `SpectreButtonProps`
+
+**Constants and types (input / textarea / select)**
+
+- `spectreInputSizes`, `spectreInputTypes`
+- `SpectreInputSize`, `SpectreInputType`
+- `SpectreInputProps`, `SpectreTextareaProps`, `SpectreSelectProps`
+
+**Props interfaces (checkbox / radio / label / fieldset)**
+
+- `SpectreCheckboxProps`, `SpectreRadioProps`
+- `SpectreLabelProps`, `SpectreFieldsetProps`
 
 ### Button entry point
 
-`@phcdevworks/spectre-components/button` exports the button-only API so
-consumers can register a single component without importing the full package
-entry.
+`@phcdevworks/spectre-components/button` — registers only `sp-button`.
+
+Exports: `defineSpectreButton`, `SpectreButtonElement`, `SpectreButtonProps`,
+`spectreButtonVariants`, `spectreButtonSizes`, `spectreButtonTypes`,
+`SpectreButtonVariant`, `SpectreButtonSize`, `SpectreButtonType`.
 
 ### Input entry point
 
-`@phcdevworks/spectre-components/input` exports the input-only API so
-consumers can register just `sp-input` when they do not need the broader
-component bundle.
+`@phcdevworks/spectre-components/input` — registers only `sp-input`.
+
+Exports: `defineSpectreInput`, `SpectreInputElement`, `SpectreInputProps`,
+`spectreInputSizes`, `spectreInputTypes`, `SpectreInputSize`, `SpectreInputType`.
+
+### Textarea entry point
+
+`@phcdevworks/spectre-components/textarea` — registers only `sp-textarea`.
+
+Exports: `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`.
+
+Size constants shared with input: import `spectreInputSizes` / `SpectreInputSize`
+from `@phcdevworks/spectre-components/input`.
+
+### Select entry point
+
+`@phcdevworks/spectre-components/select` — registers only `sp-select`.
+
+Exports: `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`.
+
+Size constants shared with input: import `spectreInputSizes` / `SpectreInputSize`
+from `@phcdevworks/spectre-components/input`.
+
+### Checkbox entry point
+
+`@phcdevworks/spectre-components/checkbox` — registers only `sp-checkbox`.
+
+Exports: `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`.
+
+### Radio entry point
+
+`@phcdevworks/spectre-components/radio` — registers only `sp-radio`.
+
+Exports: `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`.
+
+### Label entry point
+
+`@phcdevworks/spectre-components/label` — registers only `sp-label`.
+
+Exports: `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`.
+
+### Fieldset entry point
+
+`@phcdevworks/spectre-components/fieldset` — registers only `sp-fieldset`.
+
+Exports: `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`.
 
 ## Relationship to the rest of Spectre
 
@@ -132,16 +203,18 @@ Spectre keeps responsibilities separate:
 That separation keeps visual meaning centralized, styling contracts stable, and
 component behavior reusable across frameworks.
 
-## Current foundation
+## Components
 
-This v0 foundation includes:
-
-- a publishable TypeScript package build
-- root and subpath exports
-- a Lit-based `sp-button` starter component
-- a Lit-based `sp-input` foundation component
-- explicit registration helpers instead of implicit global side effects
-- Vitest coverage for baseline rendering and accessibility behavior
+| Element | Tag | Description |
+|---|---|---|
+| `SpectreButtonElement` | `sp-button` | Button with variant, size, loading, and pill support |
+| `SpectreInputElement` | `sp-input` | Text input with state, size, and type support |
+| `SpectreTextareaElement` | `sp-textarea` | Multiline text input with resizable rows |
+| `SpectreSelectElement` | `sp-select` | Native select with projected option elements |
+| `SpectreCheckboxElement` | `sp-checkbox` | Checkbox with projected or property-based label |
+| `SpectreRadioElement` | `sp-radio` | Radio button with projected or property-based label |
+| `SpectreLabelElement` | `sp-label` | Accessible label with `for` forwarding |
+| `SpectreFieldsetElement` | `sp-fieldset` | Fieldset group with legend text and slot support |
 
 ## Development
 
