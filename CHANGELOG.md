@@ -44,6 +44,41 @@ reflects package releases published to npm.
   and DOM hygiene.
 - Fixed exact optional property type compliance across component classes.
 
+## [1.0.0] - 2026-04-26
+
+**Release Title:** Foundation Stabilization and Package Release
+
+### Added
+
+- `form` association support for `sp-input`, `sp-select`, and `sp-textarea`.
+- Rich label content support for checkbox and radio controls.
+- Shared base and projectable utilities for light-DOM component rendering and
+  content projection.
+- Contributor documentation and TypeScript-based ESLint configuration.
+- Focused tests for select, label, fieldset, checkbox, radio, projected content,
+  and form-control behavior.
+
+### Changed
+
+- Bumped the package release version to `1.0.0`.
+- Updated Spectre dependency ranges to `@phcdevworks/spectre-tokens` `^2.4.0`
+  and `@phcdevworks/spectre-ui` `^1.4.0`.
+- Standardized foundation component implementation patterns across the current
+  public component set.
+- Refactored components to use shared light-DOM projection and base behavior
+  instead of duplicating component plumbing.
+- Tightened label rendering, select sizing, fieldset behavior, and form
+  component APIs.
+- Updated TypeScript, ESLint, Vitest, Prettier, Rollup, and related lockfile
+  entries.
+
+### Fixed
+
+- Improved projected content synchronization in light-DOM components.
+- Improved checkbox, radio, select, label, and fieldset accessibility behavior.
+- Improved DOM hygiene for checkbox and radio label rendering.
+- Fixed linting and build issues around the tightened `sp-select` API.
+
 ## [0.0.1] - 2026-04-13
 
 **Release Title:** Initial Component Foundations
@@ -86,5 +121,7 @@ reflects package releases published to npm.
 [unreleased]:
   https://github.com/phcdevworks/spectre-components/compare/1.1.0...HEAD
 [1.1.0]:
-  https://github.com/phcdevworks/spectre-components/compare/0.0.1...1.1.0
+  https://github.com/phcdevworks/spectre-components/compare/1.0.0...1.1.0
+[1.0.0]:
+  https://github.com/phcdevworks/spectre-components/compare/0.0.1...1.0.0
 [0.0.1]: https://github.com/phcdevworks/spectre-components/tree/0.0.1
