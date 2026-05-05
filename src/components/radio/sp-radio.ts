@@ -122,7 +122,7 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
         data-sp-radio-native
         .checked="${live(this.checked)}"
         ?disabled="${this.isDisabled}"
-        form="${ifDefined(this.form)}"
+        form="${ifDefined(this.form || undefined)}"
         id="${ifDefined(this.id || undefined)}"
         name="${ifDefined(this.name || undefined)}"
         ?required="${this.required}"
