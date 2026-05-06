@@ -34,28 +34,29 @@ export interface SpectreButtonProps {
   disabled?: boolean | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
+  id?: string | null | undefined;
   label?: string | undefined;
   loading?: boolean | undefined;
   loadingLabel?: string | undefined;
   name?: string | undefined;
   pill?: boolean | undefined;
   size?: SpectreButtonSize | undefined;
-  title?: string | null;
+  title?: string | null | undefined;
   type?: SpectreButtonType | undefined;
   variant?: SpectreButtonVariant | undefined;
   value?: string | undefined;
 }
 
-function isButtonVariant(value: string): value is ButtonVariant {
-  return (spectreButtonVariants as readonly string[]).includes(value);
+function isButtonVariant(value: unknown): value is ButtonVariant {
+  return (spectreButtonVariants as readonly string[]).includes(value as string);
 }
 
-function isButtonSize(value: string): value is ButtonSize {
-  return (spectreButtonSizes as readonly string[]).includes(value);
+function isButtonSize(value: unknown): value is ButtonSize {
+  return (spectreButtonSizes as readonly string[]).includes(value as string);
 }
 
-function isButtonType(value: string): value is SpectreButtonType {
-  return (spectreButtonTypes as readonly string[]).includes(value);
+function isButtonType(value: unknown): value is SpectreButtonType {
+  return (spectreButtonTypes as readonly string[]).includes(value as string);
 }
 
 export class SpectreButtonElement extends SpectreProjectableElement implements SpectreButtonProps {
