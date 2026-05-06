@@ -12,13 +12,14 @@ export interface SpectreCheckboxProps {
   checked?: boolean | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;
+  id?: string | null | undefined;
   invalid?: boolean | undefined;
   loading?: boolean | undefined;
   label?: string | undefined;
   name?: string | undefined;
   required?: boolean | undefined;
   success?: boolean | undefined;
-  title?: string | null;
+  title?: string | null | undefined;
   value?: string | undefined;
 }
 

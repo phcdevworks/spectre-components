@@ -9,9 +9,10 @@ export interface SpectreFieldsetProps {
   ariaDescribedBy: string | null;
   disabled?: boolean | undefined;
   form?: string | undefined;
+  id?: string | null | undefined;
   legend?: string | undefined;
   name?: string | undefined;
-  title?: string | null;
+  title?: string | null | undefined;
 }
 
 export class SpectreFieldsetElement extends SpectreProjectableElement implements SpectreFieldsetProps {
