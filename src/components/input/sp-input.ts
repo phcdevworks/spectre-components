@@ -31,6 +31,7 @@ export interface SpectreInputProps {
   disabled?: boolean | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
+  id?: string | null | undefined;
   inputmode?: string | undefined;
   invalid?: boolean | undefined;
   loading?: boolean | undefined;
@@ -46,7 +47,7 @@ export interface SpectreInputProps {
   size?: SpectreInputSize | undefined;
   step?: string | undefined;
   success?: boolean | undefined;
-  title?: string | null;
+  title?: string | null | undefined;
   type?: SpectreInputType | undefined;
   value?: string | undefined;
 }

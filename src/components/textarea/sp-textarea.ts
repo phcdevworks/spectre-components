@@ -20,6 +20,7 @@ export interface SpectreTextareaProps {
   disabled?: boolean | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
+  id?: string | null | undefined;
   inputmode?: string | undefined;
   invalid?: boolean | undefined;
   loading?: boolean | undefined;
@@ -33,7 +34,7 @@ export interface SpectreTextareaProps {
   rows?: number | undefined;
   size?: SpectreInputSize | undefined;
   success?: boolean | undefined;
-  title?: string | null;
+  title?: string | null | undefined;
   value?: string | undefined;
 }
 

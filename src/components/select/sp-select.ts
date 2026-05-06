@@ -16,6 +16,7 @@ export interface SpectreSelectProps {
   disabled?: boolean | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
+  id?: string | null | undefined;
   invalid?: boolean | undefined;
   loading?: boolean | undefined;
   name?: string | undefined;
@@ -23,7 +24,7 @@ export interface SpectreSelectProps {
   required?: boolean | undefined;
   size?: SpectreInputSize | undefined;
   success?: boolean | undefined;
-  title?: string | null;
+  title?: string | null | undefined;
   value?: string | undefined;
 }
 
