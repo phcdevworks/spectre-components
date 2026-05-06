@@ -7,8 +7,9 @@ export interface SpectreLabelProps {
   ariaLabel: string | null;
   ariaLabelledBy: string | null;
   ariaDescribedBy: string | null;
+  id?: string | null | undefined;
   htmlFor?: string | undefined;
-  title?: string | null;
+  title?: string | null | undefined;
 }
 
 export class SpectreLabelElement extends SpectreProjectableElement implements SpectreLabelProps {
