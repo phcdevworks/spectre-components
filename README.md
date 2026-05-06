@@ -5,13 +5,16 @@
 [![License](https://img.shields.io/github/license/phcdevworks/spectre-components)](LICENSE)
 
 `@phcdevworks/spectre-components` is the Lit-based component layer of the
-Spectre suite.
+Spectre system for reusable, accessible, framework-agnostic web components.
 
 Maintained by PHCDevworks, it turns Spectre tokens and Spectre UI contracts
 into reusable, accessible, framework-agnostic web components. It is the
 canonical component implementation layer for Spectre, built on platform
 standards and designed to be consumed directly or wrapped later by adapter
 packages.
+
+[Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md) |
+[Security Policy](SECURITY.md)
 
 ## Key capabilities
 
@@ -86,13 +89,13 @@ contracts locally.
 
 ## What this package does not own
 
-- Design-token values or semantic visual meaning That belongs to
+- Design-token values or semantic visual meaning. That belongs to
   [`@phcdevworks/spectre-tokens`](https://github.com/phcdevworks/spectre-tokens).
-- CSS utilities, class recipes, or styling contracts That belongs to
+- CSS utilities, class recipes, or styling contracts. That belongs to
   [`@phcdevworks/spectre-ui`](https://github.com/phcdevworks/spectre-ui).
-- Framework adapters such as React, Vue, Astro, or app-specific wrappers Those
+- Framework adapters such as React, Vue, Astro, or app-specific wrappers. Those
   belong in downstream adapter packages.
-- Routing, shell logic, manifest behavior, or startup orchestration Those are
+- Routing, shell logic, manifest behavior, or startup orchestration. Those are
   outside the scope of this package.
 
 ## Package exports / API surface
@@ -205,26 +208,29 @@ component behavior reusable across frameworks.
 
 ## Components
 
-| Element | Tag | Description |
-|---|---|---|
-| `SpectreButtonElement` | `sp-button` | Button with variant, size, loading, and pill support |
-| `SpectreInputElement` | `sp-input` | Text input with state, size, and type support |
-| `SpectreTextareaElement` | `sp-textarea` | Multiline text input with resizable rows |
-| `SpectreSelectElement` | `sp-select` | Native select with projected option elements |
-| `SpectreCheckboxElement` | `sp-checkbox` | Checkbox with projected or property-based label |
-| `SpectreRadioElement` | `sp-radio` | Radio button with projected or property-based label |
-| `SpectreLabelElement` | `sp-label` | Accessible label with `for` forwarding |
-| `SpectreFieldsetElement` | `sp-fieldset` | Fieldset group with legend text and slot support |
+| Element                  | Tag           | Description                                          |
+| ------------------------ | ------------- | ---------------------------------------------------- |
+| `SpectreButtonElement`   | `sp-button`   | Button with variant, size, loading, and pill support |
+| `SpectreInputElement`    | `sp-input`    | Text input with state, size, and type support        |
+| `SpectreTextareaElement` | `sp-textarea` | Multiline text input with resizable rows             |
+| `SpectreSelectElement`   | `sp-select`   | Native select with projected option elements         |
+| `SpectreCheckboxElement` | `sp-checkbox` | Checkbox with projected or property-based label      |
+| `SpectreRadioElement`    | `sp-radio`    | Radio button with projected or property-based label  |
+| `SpectreLabelElement`    | `sp-label`    | Accessible label with `for` forwarding               |
+| `SpectreFieldsetElement` | `sp-fieldset` | Fieldset group with legend text and slot support     |
 
 ## Development
 
 Install dependencies, then run the package checks:
 
 ```bash
+npm install
 npm run build
 npm test
 npm run lint
 ```
+
+This project expects Node.js `^22.12.0 || >=24.0.0` and npm `11.13.0`.
 
 Key source areas:
 
