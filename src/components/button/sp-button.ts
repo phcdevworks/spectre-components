@@ -87,6 +87,14 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   pill = false;
   size: SpectreButtonSize | undefined = 'md';
 
+  override get id(): string {
+    return super.id;
+  }
+
+  override set id(value: string | null | undefined) {
+    super.id = value;
+  }
+
   override get title(): string {
     return super.title;
   }
@@ -197,7 +205,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
       name="${ifDefined(this.name || undefined)}"
       title="${ifDefined(this.title || undefined)}"
       type="${this.type}"
-      value="${ifDefined(this.value || undefined)}"
+      value="${ifDefined(this.value)}"
     >
       ${this.renderButtonContent()}
     </button>`;
