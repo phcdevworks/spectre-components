@@ -69,6 +69,28 @@ describe('sp-fieldset', () => {
     const fieldset = element.querySelector('fieldset');
     expect(fieldset?.getAttribute('form')).toBe('test-form');
   });
+
+  it('reflects state properties and disables when loading', async () => {
+    const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
+    element.loading = true;
+    element.invalid = true;
+    element.success = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const fieldset = element.querySelector('fieldset');
+    expect(fieldset?.disabled).toBe(true);
+    expect(fieldset?.getAttribute('aria-busy')).toBe('true');
+    expect(element.hasAttribute('loading')).toBe(true);
+    expect(element.hasAttribute('invalid')).toBe(true);
+    expect(element.hasAttribute('success')).toBe(true);
+
+    element.loading = false;
+    await element.updateComplete;
+    expect(fieldset?.disabled).toBe(false);
+    expect(fieldset?.getAttribute('aria-busy')).toBe('false');
+  });
 });
 
 function createChild(text: string): HTMLDivElement {
