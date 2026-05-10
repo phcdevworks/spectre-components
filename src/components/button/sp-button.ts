@@ -27,9 +27,9 @@ export type SpectreButtonSize = (typeof spectreButtonSizes)[number];
 export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 
 export interface SpectreButtonProps {
-  ariaLabel: string | null;
-  ariaLabelledBy: string | null;
-  ariaDescribedBy: string | null;
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;
@@ -197,7 +197,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
       name="${ifDefined(this.name || undefined)}"
       title="${ifDefined(this.title || undefined)}"
       type="${this.type}"
-      value="${ifDefined(this.value || undefined)}"
+      value="${ifDefined(this.value)}"
     >
       ${this.renderButtonContent()}
     </button>`;
