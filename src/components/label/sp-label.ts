@@ -4,9 +4,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreLabelProps {
-  ariaLabel: string | null;
-  ariaLabelledBy: string | null;
-  ariaDescribedBy: string | null;
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   id?: string | null | undefined;
   htmlFor?: string | undefined;
   title?: string | null | undefined;
