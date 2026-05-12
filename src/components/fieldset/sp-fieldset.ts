@@ -45,20 +45,16 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     super.id = value;
   }
 
-  override get id(): string {
-    return super.id;
-  }
-
-  override set id(value: string | null | undefined) {
-    super.id = value;
-  }
-
   override get title(): string {
     return super.title;
   }
 
   override set title(value: string | null | undefined) {
     super.title = value;
+  }
+
+  private get isDisabled(): boolean {
+    return this.disabled || this.loading;
   }
 
   protected override getContentContainer(): Element | null {
@@ -92,7 +88,7 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       data-sp-fieldset-native
-      ?disabled="${this.disabled || this.loading}"
+      ?disabled="${this.isDisabled}"
       form="${ifDefined(this.form || undefined)}"
       id="${ifDefined(this.id || undefined)}"
       name="${ifDefined(this.name || undefined)}"
