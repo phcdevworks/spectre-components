@@ -85,6 +85,7 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     return html`<fieldset
       aria-busy="${this.loading ? 'true' : 'false'}"
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+      aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       data-sp-fieldset-native

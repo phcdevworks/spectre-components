@@ -86,6 +86,7 @@ describe('sp-fieldset', () => {
     expect(element.hasAttribute('success')).toBe(true);
 
     expect(fieldset?.getAttribute('aria-busy')).toBe('true');
+    expect(fieldset?.getAttribute('aria-invalid')).toBe('true');
     expect(fieldset?.disabled).toBe(true);
 
     element.loading = false;
