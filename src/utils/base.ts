@@ -182,6 +182,8 @@ export class SpectreBaseElement extends LitElement {
   private _removeHostAttribute(name: string): void {
     const host = this as unknown as HTMLElement;
     if (HTMLElement.prototype.hasAttribute.call(host, name)) {
+      // Use the native removeAttribute to avoid our own overridden version
+      // which would reset the internal state.
       HTMLElement.prototype.removeAttribute.call(host, name);
     }
   }
