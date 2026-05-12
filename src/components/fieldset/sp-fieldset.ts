@@ -37,12 +37,24 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   name: string | undefined;
   success = false;
 
+  override get id(): string {
+    return super.id;
+  }
+
+  override set id(value: string | null | undefined) {
+    super.id = value;
+  }
+
   override get title(): string {
     return super.title;
   }
 
   override set title(value: string | null | undefined) {
     super.title = value;
+  }
+
+  private get isDisabled(): boolean {
+    return this.disabled || this.loading;
   }
 
   protected override getContentContainer(): Element | null {
@@ -67,10 +79,6 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
 
   override blur(): void {
     (this.getContentContainer() as HTMLFieldSetElement | null)?.blur();
-  }
-
-  private get isDisabled(): boolean {
-    return this.disabled || this.loading;
   }
 
   override render() {

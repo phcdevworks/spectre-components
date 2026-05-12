@@ -84,6 +84,14 @@ export class SpectreTextareaElement
   size: SpectreInputSize | undefined = 'md';
   success = false;
 
+  override get id(): string {
+    return super.id;
+  }
+
+  override set id(value: string | null | undefined) {
+    super.id = value;
+  }
+
   override get title(): string {
     return super.title;
   }
