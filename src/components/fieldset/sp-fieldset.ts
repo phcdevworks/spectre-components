@@ -4,9 +4,9 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { SpectreProjectableElement } from '../../utils/projectable';
 
 export interface SpectreFieldsetProps {
-  ariaLabel: string | null;
-  ariaLabelledBy: string | null;
-  ariaDescribedBy: string | null;
+  ariaLabel?: string | null;
+  ariaLabelledBy?: string | null;
+  ariaDescribedBy?: string | null;
   disabled?: boolean | undefined;
   form?: string | undefined;
   id?: string | null | undefined;
