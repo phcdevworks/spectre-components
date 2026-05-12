@@ -49,6 +49,14 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
   required = false;
   success = false;
 
+  override get id(): string {
+    return super.id;
+  }
+
+  override set id(value: string | null | undefined) {
+    super.id = value;
+  }
+
   override get title(): string {
     return super.title;
   }
