@@ -70,7 +70,7 @@ describe('sp-fieldset', () => {
     expect(fieldset?.getAttribute('form')).toBe('test-form');
   });
 
-  it('reflects state properties and disables when loading', async () => {
+  it('reflects and forwards loading, invalid, and success states', async () => {
     const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
     element.loading = true;
     element.invalid = true;
@@ -80,16 +80,18 @@ describe('sp-fieldset', () => {
     await element.updateComplete;
 
     const fieldset = element.querySelector('fieldset');
-    expect(fieldset?.disabled).toBe(true);
-    expect(fieldset?.getAttribute('aria-busy')).toBe('true');
+
     expect(element.hasAttribute('loading')).toBe(true);
     expect(element.hasAttribute('invalid')).toBe(true);
     expect(element.hasAttribute('success')).toBe(true);
 
+    expect(fieldset?.getAttribute('aria-busy')).toBe('true');
+    expect(fieldset?.disabled).toBe(true);
+
     element.loading = false;
     await element.updateComplete;
-    expect(fieldset?.disabled).toBe(false);
     expect(fieldset?.getAttribute('aria-busy')).toBe('false');
+    expect(fieldset?.disabled).toBe(false);
   });
 });
 
