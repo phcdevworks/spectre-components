@@ -28,6 +28,14 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   legend: string | undefined;
   name: string | undefined;
 
+  override get id(): string {
+    return super.id;
+  }
+
+  override set id(value: string | null | undefined) {
+    super.id = value;
+  }
+
   override get title(): string {
     return super.title;
   }
