@@ -10,8 +10,11 @@ export interface SpectreFieldsetProps {
   disabled?: boolean | undefined;
   form?: string | undefined;
   id?: string | null | undefined;
+  invalid?: boolean | undefined;
   legend?: string | undefined;
+  loading?: boolean | undefined;
   name?: string | undefined;
+  success?: boolean | undefined;
   title?: string | null | undefined;
 }
 
@@ -19,14 +22,28 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   static properties = {
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
+    invalid: { type: Boolean, reflect: true },
     legend: { type: String, reflect: true },
+    loading: { type: Boolean, reflect: true },
     name: { type: String, reflect: true },
+    success: { type: Boolean, reflect: true },
   };
 
   disabled = false;
   form: string | undefined;
+  invalid = false;
   legend: string | undefined;
+  loading = false;
   name: string | undefined;
+  success = false;
+
+  override get id(): string {
+    return super.id;
+  }
+
+  override set id(value: string | null | undefined) {
+    super.id = value;
+  }
 
   override get id(): string {
     return super.id;
@@ -70,11 +87,12 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
 
   override render() {
     return html`<fieldset
+      aria-busy="${this.loading ? 'true' : 'false'}"
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       data-sp-fieldset-native
-      ?disabled="${this.disabled}"
+      ?disabled="${this.disabled || this.loading}"
       form="${ifDefined(this.form || undefined)}"
       id="${ifDefined(this.id || undefined)}"
       name="${ifDefined(this.name || undefined)}"
