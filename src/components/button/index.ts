@@ -1,11 +1,23 @@
-export {
-  defineSpectreButton,
-  spectreButtonSizes,
+import {
+  spectreInputSizes,
   spectreButtonTypes,
   spectreButtonVariants,
-  SpectreButtonElement,
-  type SpectreButtonProps,
-  type SpectreButtonSize,
+  type SpectreInputSize,
   type SpectreButtonType,
   type SpectreButtonVariant,
+} from '../../utils/form';
+
+export {
+  defineSpectreButton,
+  SpectreButtonElement,
+  type SpectreButtonProps,
 } from './sp-button';
+
+export {
+  spectreInputSizes as spectreButtonSizes,
+  spectreButtonTypes,
+  spectreButtonVariants,
+  type SpectreInputSize as SpectreButtonSize,
+  type SpectreButtonType,
+  type SpectreButtonVariant,
+};
