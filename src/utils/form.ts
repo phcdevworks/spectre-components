@@ -1,10 +1,38 @@
-import { type InputSize } from '@phcdevworks/spectre-ui';
+import {
+  type ButtonSize,
+  type ButtonVariant,
+  type InputSize,
+} from '@phcdevworks/spectre-ui';
 
 export const spectreInputSizes = ['sm', 'md', 'lg'] as const;
 export type SpectreInputSize = (typeof spectreInputSizes)[number];
 
-export function isInputSize(value: unknown): value is InputSize {
+export function isInputSize(value: unknown): value is InputSize | ButtonSize {
   return (spectreInputSizes as readonly string[]).includes(value as string);
+}
+
+export const spectreButtonVariants = [
+  'primary',
+  'secondary',
+  'ghost',
+  'danger',
+  'success',
+  'cta',
+  'accent',
+] as const;
+
+export type SpectreButtonVariant = (typeof spectreButtonVariants)[number];
+
+export function isButtonVariant(value: unknown): value is ButtonVariant {
+  return (spectreButtonVariants as readonly string[]).includes(value as string);
+}
+
+export const spectreButtonTypes = ['button', 'submit', 'reset'] as const;
+
+export type SpectreButtonType = (typeof spectreButtonTypes)[number];
+
+export function isButtonType(value: unknown): value is SpectreButtonType {
+  return (spectreButtonTypes as readonly string[]).includes(value as string);
 }
 
 export const spectreInputTypes = [
