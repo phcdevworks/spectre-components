@@ -2,29 +2,20 @@ import { html, nothing, type TemplateResult } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectreProjectableElement } from '../../utils/projectable';
+import {
+  isButtonType,
+  isButtonVariant,
+  isInputSize,
+  type SpectreButtonType,
+  type SpectreButtonVariant,
+  type SpectreInputSize,
+} from '../../utils/form';
 
 import {
   getButtonClasses,
   type ButtonSize,
   type ButtonVariant,
 } from '@phcdevworks/spectre-ui';
-
-export const spectreButtonVariants = [
-  'primary',
-  'secondary',
-  'ghost',
-  'danger',
-  'success',
-  'cta',
-  'accent',
-] as const;
-
-export const spectreButtonSizes = ['sm', 'md', 'lg'] as const;
-export const spectreButtonTypes = ['button', 'submit', 'reset'] as const;
-
-export type SpectreButtonVariant = (typeof spectreButtonVariants)[number];
-export type SpectreButtonSize = (typeof spectreButtonSizes)[number];
-export type SpectreButtonType = (typeof spectreButtonTypes)[number];
 
 export interface SpectreButtonProps {
   ariaLabel?: string | null;
@@ -40,23 +31,11 @@ export interface SpectreButtonProps {
   loadingLabel?: string | undefined;
   name?: string | undefined;
   pill?: boolean | undefined;
-  size?: SpectreButtonSize | undefined;
+  size?: SpectreInputSize | undefined;
   title?: string | null | undefined;
   type?: SpectreButtonType | undefined;
   variant?: SpectreButtonVariant | undefined;
   value?: string | undefined;
-}
-
-function isButtonVariant(value: unknown): value is ButtonVariant {
-  return (spectreButtonVariants as readonly string[]).includes(value as string);
-}
-
-function isButtonSize(value: unknown): value is ButtonSize {
-  return (spectreButtonSizes as readonly string[]).includes(value as string);
-}
-
-function isButtonType(value: unknown): value is SpectreButtonType {
-  return (spectreButtonTypes as readonly string[]).includes(value as string);
 }
 
 export class SpectreButtonElement extends SpectreProjectableElement implements SpectreButtonProps {
@@ -85,7 +64,10 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   loadingLabel: string | undefined = 'Loading';
   name: string | undefined;
   pill = false;
-  size: SpectreButtonSize | undefined = 'md';
+  size: SpectreInputSize | undefined = 'md';
+  type: SpectreButtonType | undefined = 'button';
+  variant: SpectreButtonVariant | undefined = 'primary';
+  value: string | undefined = '';
 
   override get id(): string {
     return super.id;
@@ -102,10 +84,6 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   override set title(value: string | null | undefined) {
     super.title = value;
   }
-
-  type: SpectreButtonType | undefined = 'button';
-  variant: SpectreButtonVariant | undefined = 'primary';
-  value: string | undefined = '';
 
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-button-native]');
@@ -129,7 +107,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
       this.variant = 'primary';
     }
 
-    if (changedProperties.has('size') && (this.size == null || !isButtonSize(this.size))) {
+    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
       this.size = 'md';
     }
 
