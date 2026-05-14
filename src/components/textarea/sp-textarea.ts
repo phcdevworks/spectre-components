@@ -59,7 +59,7 @@ export class SpectreTextareaElement
     placeholder: { type: String, reflect: true },
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
-    rows: { type: Number },
+    rows: { type: Number, reflect: true },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
     value: { type: String },
