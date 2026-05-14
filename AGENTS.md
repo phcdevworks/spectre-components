@@ -1,7 +1,17 @@
 # Spectre Components — Claude Code Agent Guide
 
-This repository is maintained by **Claude Code** (primary) on behalf of
-PHCDevworks. See [CLAUDE.md](CLAUDE.md) for the full maintenance reference.
+## Primary AI Developer
+
+**Claude Code** (`claude-sonnet-4-6`) is the designated primary AI developer for
+this repository, maintained on behalf of Bradley Potts
+(brad.potts@coastdigitalgroup.com) at PHCDevworks. All development is driven
+through Claude Code operating from `CLAUDE.md` as the authoritative working
+guide. Human final review and commit authority rests with Bradley Potts.
+
+Claude Code does not create git commits. Changes are prepared and validated,
+then handed off for human review and commit.
+
+See [CLAUDE.md](CLAUDE.md) for the full maintenance reference.
 
 ## Mission
 
