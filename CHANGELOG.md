@@ -6,6 +6,20 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Changed
+
+- Bumped `lit` to `^3.3.3`.
+- Bumped dev dependency ranges and updated lockfile.
+
+### Fixed
+
+- `sp-textarea`: reflect `rows` property to the host attribute so HTML
+  serialization stays consistent with the declared value.
+- `sp-fieldset`: added missing `aria-invalid` attribute to the native
+  `<fieldset>` element.
+- Refactored form utility normalization helpers for tighter property
+  validation across `rows`, `maxlength`, and `minlength` inputs.
+
 ## [1.1.0] - 2026-05-05
 
 **Release Title:** Foundation API Tightening and Component Documentation
