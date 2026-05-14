@@ -297,6 +297,21 @@ describe('sp-textarea', () => {
     await element.updateComplete;
     expect(element.rows).toBe(2);
   });
+
+  it('reflects rows to the host attribute', async () => {
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.rows = 5;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.getAttribute('rows')).toBe('5');
+
+    const textarea = element.querySelector('textarea');
+    expect(textarea?.getAttribute('rows')).toBe('5');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
