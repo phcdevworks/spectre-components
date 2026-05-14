@@ -2,6 +2,19 @@
 
 Primary maintenance guide for Claude Code. Read this before making any change.
 
+## Project Identity
+
+**Package:** `@phcdevworks/spectre-components`
+**Layer:** L3 of the Spectre design suite — Lit-based web component delivery
+**Human owner:** Bradley Potts (brad.potts@coastdigitalgroup.com)
+**Primary AI developer:** Claude Code (claude-sonnet-4-6)
+
+## Commit Policy
+
+Claude Code does not create git commits in this repository. Prepare changes,
+run all validation, and leave staging, committing, tagging, and pushing to
+human review.
+
 ## What this repository is
 
 `@phcdevworks/spectre-components` is **Layer 3** of the Spectre design system:
@@ -72,7 +85,7 @@ npm run dev          # tsup --watch
 npm run clean        # rm -rf dist coverage
 ```
 
-Always run `npm run check` before committing.
+Always run `npm run check` before handing off for review.
 
 ## Adding a new component
 
@@ -101,7 +114,7 @@ Always run `npm run check` before committing.
 2. Bump `version` in `package.json`.
 3. Add the comparison link at the bottom of `CHANGELOG.md`.
 4. Run `npm run check`.
-5. Commit, tag, push, publish.
+5. Hand off to human for review, commit, tag, and publish.
 
 ## What not to do
 
