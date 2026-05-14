@@ -1,7 +1,7 @@
-# Spectre Components Agent Guide
+# Spectre Components — Claude Code Agent Guide
 
-This repository is maintained by PHCDevworks and is the canonical Lit-based
-component layer of the Spectre system.
+This repository is maintained by **Claude Code** (primary) on behalf of
+PHCDevworks. See [CLAUDE.md](CLAUDE.md) for the full maintenance reference.
 
 ## Mission
 
@@ -70,8 +70,7 @@ rules.
 - Default to the rendering strategy that best preserves the
   `@phcdevworks/spectre-ui` styling contract.
 - If a component renders in light DOM to consume shared Spectre styles
-  directly, treat that as an intentional architectural decision and document it
-  in code.
+  directly, treat that as an intentional architectural decision.
 - Do not switch between light DOM and Shadow DOM casually; treat rendering
   boundary changes as design-system-level decisions.
 
@@ -94,4 +93,5 @@ rules.
 2. Run `npm run build`.
 3. Run `npm test`.
 4. Run `npm run lint`.
-5. Validate example or sandbox usage if the component API changed.
+5. Update `CHANGELOG.md` under `[Unreleased]` for every non-trivial change.
+6. Validate example or sandbox usage if the component API changed.
