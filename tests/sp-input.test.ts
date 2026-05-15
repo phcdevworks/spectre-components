@@ -253,6 +253,17 @@ describe('sp-input', () => {
     await element.updateComplete;
     expect(element.maxlength).toBeUndefined();
   });
+
+  it('renders an empty value when value is explicitly an empty string', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.value = '';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.value).toBe('');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
