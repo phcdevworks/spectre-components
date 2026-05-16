@@ -156,7 +156,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
 
   private renderButtonContent(): TemplateResult | Node[] | typeof nothing {
     if (this.loading) {
-      return html`<span data-sp-button-loading-label>${this.loadingLabel}</span>`;
+      return html`<span class="sp-label" data-sp-button-loading-label>${this.loadingLabel}</span>`;
     }
 
     if (this.hasProjectedContent) {
@@ -164,7 +164,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     }
 
     return this.visibleLabelFallback
-      ? html`<span data-sp-button-label-fallback>${this.visibleLabelFallback}</span>`
+      ? html`<span class="sp-label" data-sp-button-label-fallback>${this.visibleLabelFallback}</span>`
       : nothing;
   }
 

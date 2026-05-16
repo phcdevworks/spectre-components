@@ -38,10 +38,12 @@ describe('sp-button', () => {
     await element.updateComplete;
 
     const button = element.querySelector('button');
+    const loadingLabel = button?.querySelector('[data-sp-button-loading-label]');
 
     expect(button?.disabled).toBe(true);
     expect(button?.getAttribute('aria-busy')).toBe('true');
-    expect(button?.textContent?.trim()).toBe('Submitting');
+    expect(loadingLabel?.textContent?.trim()).toBe('Submitting');
+    expect(loadingLabel?.className).toContain('sp-label');
   });
 
   it('falls back to label when no projected content exists', async () => {
@@ -52,8 +54,10 @@ describe('sp-button', () => {
     await element.updateComplete;
 
     const button = element.querySelector('button');
+    const fallbackLabel = button?.querySelector('[data-sp-button-label-fallback]');
 
-    expect(button?.textContent?.trim()).toBe('Open menu');
+    expect(fallbackLabel?.textContent?.trim()).toBe('Open menu');
+    expect(fallbackLabel?.className).toContain('sp-label');
   });
 
   it('forwards aria-label even when there is visible text', async () => {
