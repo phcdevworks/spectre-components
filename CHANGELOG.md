@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- Added Codex companion operating and release review documentation.
+- Added workspace GitHub Copilot instruction, scoped repository guidance, and a
+  reusable release-readiness prompt for standardized AI collaboration.
+
 ### Changed
 
 - Bumped `lit` to `^3.3.3`.
@@ -134,10 +140,7 @@ reflects package releases published to npm.
   in foundational controls.
 - Tightened property validation and control consistency for early public APIs.
 
-[unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/1.1.0...HEAD
-[1.1.0]:
-  https://github.com/phcdevworks/spectre-components/compare/1.0.0...1.1.0
-[1.0.0]:
-  https://github.com/phcdevworks/spectre-components/compare/0.0.1...1.0.0
+[unreleased]: https://github.com/phcdevworks/spectre-components/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/phcdevworks/spectre-components/compare/1.0.0...1.1.0
+[1.0.0]: https://github.com/phcdevworks/spectre-components/compare/0.0.1...1.0.0
 [0.0.1]: https://github.com/phcdevworks/spectre-components/tree/0.0.1

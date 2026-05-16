@@ -13,6 +13,34 @@ then handed off for human review and commit.
 
 See [CLAUDE.md](CLAUDE.md) for the full maintenance reference.
 
+## Codex Release Agent
+
+**Codex** works as a supporting code and release-readiness agent. Claude Code
+continues to lead implementation from `CLAUDE.md`; Codex keeps production
+readiness, documentation consistency, API stability, and validation in check.
+
+Codex operates from [CODEX.md](CODEX.md) and the companion review checklists:
+
+- [CODEX_REVIEW_CHECKLIST.md](CODEX_REVIEW_CHECKLIST.md)
+- [CODEX_RELEASE_CHECKLIST.md](CODEX_RELEASE_CHECKLIST.md)
+
+Codex does not create git commits unless Bradley Potts explicitly asks for a
+commit. Release handoff still requires human review.
+
+## GitHub Copilot Support Agent
+
+**GitHub Copilot** works as the repository's supporting AI pair. Claude Code
+continues to lead implementation, Codex continues to provide oversight, and
+Copilot supports day-to-day editing, GitHub-integrated review workflows,
+refactor assistance, documentation synchronization, and production-readiness
+checks.
+
+Copilot operates from `.github/copilot-instructions.md` plus any scoped files in
+`.github/instructions/` and reusable prompts in `.github/prompts/`.
+
+Copilot does not create git commits unless Bradley Potts explicitly asks for a
+commit.
+
 ## Mission
 
 Turn Spectre tokens and Spectre UI contracts into reusable, accessible,
@@ -48,15 +76,15 @@ rules.
 
 ## Current Components
 
-| Tag | Element class | Entry point |
-|---|---|---|
-| `sp-button` | `SpectreButtonElement` | `spectre-components/button` |
-| `sp-input` | `SpectreInputElement` | `spectre-components/input` |
+| Tag           | Element class            | Entry point                   |
+| ------------- | ------------------------ | ----------------------------- |
+| `sp-button`   | `SpectreButtonElement`   | `spectre-components/button`   |
+| `sp-input`    | `SpectreInputElement`    | `spectre-components/input`    |
 | `sp-textarea` | `SpectreTextareaElement` | `spectre-components/textarea` |
-| `sp-select` | `SpectreSelectElement` | `spectre-components/select` |
+| `sp-select`   | `SpectreSelectElement`   | `spectre-components/select`   |
 | `sp-checkbox` | `SpectreCheckboxElement` | `spectre-components/checkbox` |
-| `sp-radio` | `SpectreRadioElement` | `spectre-components/radio` |
-| `sp-label` | `SpectreLabelElement` | `spectre-components/label` |
+| `sp-radio`    | `SpectreRadioElement`    | `spectre-components/radio`    |
+| `sp-label`    | `SpectreLabelElement`    | `spectre-components/label`    |
 | `sp-fieldset` | `SpectreFieldsetElement` | `spectre-components/fieldset` |
 
 ## Implementation Notes
