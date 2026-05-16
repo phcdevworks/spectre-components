@@ -24,4 +24,12 @@ export default tseslint.config(
       "@typescript-eslint/no-deprecated": "off",
     },
   },
+  {
+    files: ["scripts/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
 );
