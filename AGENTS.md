@@ -135,18 +135,44 @@ rules.
 - Do not switch between light DOM and Shadow DOM casually; treat rendering
   boundary changes as design-system-level decisions.
 
-## Do Not Do
+## AI Hard Limits
 
-- Do not redefine token meaning or semantic roles in this package.
-- Do not recreate styling contracts that already exist in
+The following are unconditional — no agent may override them without explicit
+approval from Bradley Potts recorded in a commit message or PR description.
+
+**Scope limits**
+- Do not add app-specific components (page headers, sidebars, navigation
+  shells, dashboards, or any component whose purpose is tied to a specific
+  application rather than a design primitive).
+- Do not add framework-only code. No JSX files, no Vue SFCs, no Astro
+  components, no Svelte files. This package exports web components only.
+- Do not add routing, shell coordination, manifest behavior, service workers,
+  or app initialization logic.
+- Do not add speculative new components without a backing recipe in
+  `@phcdevworks/spectre-ui` and explicit approval.
+
+**Design system limits**
+- Do not hardcode colors, spacing, shadows, border-radius, or any visual
+  primitive. All visual decisions come from `@phcdevworks/spectre-tokens` and
   `@phcdevworks/spectre-ui`.
-- Do not introduce framework-specific wrappers such as Astro, React, Vue, or
-  Svelte components.
-- Do not add routing, shell coordination, manifest behavior, or app
-  initialization logic.
-- Do not hardcode visual primitives that should come from Spectre contracts.
+- Do not redefine token meaning or semantic roles locally.
+- Do not recreate CSS class recipes that already exist in
+  `@phcdevworks/spectre-ui`.
+
+**Architecture limits**
+- Do not switch any component from light DOM to Shadow DOM. Light DOM is the
+  intentional rendering contract for consuming shared Spectre styles.
 - Do not introduce speculative base classes or abstraction layers without
-  repeated proven need.
+  repeated proven need across at least three components.
+- Do not remove or weaken the `npm run check` gate (lint → test → build →
+  export validation).
+
+**Stability limits**
+- Do not change a component tag name (`sp-button`, `sp-input`, etc.) — ever.
+  Tags are stable public API.
+- Do not remove or rename a public property, event, or exported symbol without
+  a semver major version bump.
+- Do not edit `dist/` or `dist_verify/` by hand — these are build artifacts.
 
 ## Validation Flow
 
