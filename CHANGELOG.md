@@ -8,6 +8,26 @@ reflects package releases published to npm.
 
 ### Added
 
+- `scripts/check-exports.js` — post-build export resolution check that imports
+  each subpath entry point and verifies the expected registration functions and
+  element classes are present.
+- `check:exports` npm script wired into `npm run check` after the build step,
+  so CI now validates exports on every push and PR.
+- README: "Why this package exists alongside spectre-ui" architectural
+  explanation covering the L1–L4 Spectre layer model.
+- README: per-component API reference tables covering all attributes, events,
+  content projection behavior, and internal CSS targeting hooks for all eight
+  components.
+- README: Accessibility section documenting ARIA forwarding, focus delegation,
+  state-to-ARIA mapping, and label association patterns.
+- README: Light DOM rendering explanation and CSS targeting guidance
+  (`data-sp-*-native` attribute selectors as stable hooks).
+- README: Framework integration notes for React 19+, React 18, Vue 3, and
+  Astro with minimal working examples.
+- AGENTS.md: AI Hard Limits section with explicit unconditional rules covering
+  scope, design system boundaries, architecture, and API stability.
+- CLAUDE.md: "What not to do" expanded with framework-specific examples and
+  explicit component scope and stability rules.
 - Added Codex companion operating and release review documentation.
 - Added workspace GitHub Copilot instruction, scoped repository guidance, and a
   reusable release-readiness prompt for standardized AI collaboration.

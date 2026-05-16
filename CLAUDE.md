@@ -118,14 +118,33 @@ Always run `npm run check` before handing off for review.
 
 ## What not to do
 
-- Do not hardcode colors, spacing, or any visual primitive — use Spectre
-  contracts.
+**Scope**
+- Do not add app-specific components — page headers, sidebars, nav shells,
+  dashboards, or any component tied to a specific application.
+- Do not add framework-only code — no JSX files, Vue SFCs, Astro components,
+  or Svelte files. This package exports web components only.
+- Do not add routing, shell coordination, manifest behavior, or app startup.
+- Do not add a new component without a backing recipe in `@phcdevworks/spectre-ui`
+  and explicit approval.
+
+**Design system**
+- Do not hardcode colors, spacing, shadows, or any visual primitive — use
+  Spectre contracts.
+- Do not redefine token values or semantic roles locally.
+
+**Architecture**
 - Do not switch a component from light DOM to Shadow DOM without explicit
-  approval.
-- Do not add framework adapters (React, Vue, Astro) — those are downstream.
-- Do not introduce speculative abstractions without a proven repeated need.
+  design-system-level approval.
+- Do not introduce speculative abstractions without a proven repeated need
+  across at least three components.
+
+**Stability**
+- Do not rename a component tag — tags are stable public API.
+- Do not remove or rename a public property, event, or exported symbol
+  without a semver major bump.
 - Do not add `dist/` or `dist_verify/` to commits — they are gitignored.
-- Do not skip `npm run check` before committing.
+- Do not skip `npm run check` before committing — it now includes export
+  validation in addition to lint, test, and build.
 
 ## AI Collaboration
 

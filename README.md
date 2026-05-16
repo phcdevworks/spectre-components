@@ -10,39 +10,65 @@
 package of the Spectre design system. It turns Spectre tokens
 (`@phcdevworks/spectre-tokens`) and Spectre UI styling contracts
 (`@phcdevworks/spectre-ui`) into reusable, accessible, framework-agnostic
-custom elements. It is the canonical component implementation layer for
-Spectre — built on platform standards and designed to be consumed directly or
-wrapped by downstream adapter packages.
+custom elements — the canonical component implementation layer for Spectre,
+designed to be consumed directly or wrapped by downstream adapter packages.
 
 [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md) |
 [Security Policy](SECURITY.md)
 
+## Why this package exists alongside spectre-ui
+
+`@phcdevworks/spectre-ui` owns CSS: class recipes, Tailwind helpers, and the
+styling contract that maps Spectre tokens to visual output. It ships CSS rules
+and JavaScript class-name helpers — nothing more.
+
+This package sits above that. It owns **behavior**: the Lit element classes
+that apply those CSS recipes, forward ARIA attributes to native elements,
+manage focus delegation, handle content projection, validate properties, and
+expose a stable TypeScript API surface for downstream adapters.
+
+The separation keeps each layer focused:
+
+| Layer | Package | Owns |
+|-------|---------|------|
+| L1 | `@phcdevworks/spectre-tokens` | Design values and semantic meaning |
+| L2 | `@phcdevworks/spectre-ui` | CSS recipes and styling contracts |
+| **L3** | **`@phcdevworks/spectre-components`** | **Lit web component behavior and API** |
+| L4 | Downstream adapters | Framework-specific delivery |
+
+If you only need CSS class names, use `@phcdevworks/spectre-ui` directly. If
+you need ready-to-use HTML elements with behavior, accessibility, and a typed
+API, use this package.
+
 ## Key capabilities
 
-- Ships reusable web components implemented with Lit
-- Consumes `@phcdevworks/spectre-tokens` as the source of visual meaning
-- Consumes `@phcdevworks/spectre-ui` as the styling contract layer
-- Keeps component delivery framework-agnostic through custom elements
-- Builds accessibility into the initial component patterns
-- Exposes a small, explicit API surface suitable for long-term growth
+- Lit-based custom elements on the Custom Elements standard
+- Renders in **light DOM** so `@phcdevworks/spectre-ui` global styles apply
+  directly — no Shadow DOM piercing required
+- ARIA attributes (`aria-label`, `aria-labelledby`, `aria-describedby`) are
+  forwarded to the native element, not left on the host
+- Focus and blur delegate to the inner native element
+- Property validation with safe fallbacks in `willUpdate()`
+- Idempotent `defineSpectre*()` helpers — safe to call multiple times
+- ESM + CJS dual build with TypeScript declaration files
+- Tree-shakeable subpath exports per component
 
 ## When to use this package
 
-- You are building UI that consumes the Spectre design system and want
-  standards-based, framework-agnostic custom elements.
-- You want accessible, typed form controls (`sp-button`, `sp-input`,
-  `sp-select`, etc.) without coupling to a specific JavaScript framework.
-- You are building a framework adapter (React, Vue, Astro) and need a
-  reliable, stable element layer to wrap.
+- You are building UI with the Spectre design system and want standards-based
+  custom elements with baked-in behavior and accessibility.
+- You want typed form controls (`sp-button`, `sp-input`, `sp-select`, etc.)
+  that work in any framework or in plain HTML.
+- You are writing a framework adapter (React, Vue, Astro) and need a reliable,
+  stable element layer to wrap.
 
 ## When not to use this package
 
-- You only need CSS classes or design tokens — use `@phcdevworks/spectre-ui`
-  or `@phcdevworks/spectre-tokens` directly instead.
-- You need components styled outside the Spectre token/UI contract — do not
-  redefine visual primitives inside this package.
-- You need framework-specific wrappers or server-side rendering adapters —
-  those belong in a downstream adapter package, not here.
+- You only need CSS class names — use `@phcdevworks/spectre-ui` directly.
+- You are adding routing, shell logic, or app-startup orchestration — those
+  are out of scope here.
+- You need framework-specific component files (JSX, SFCs, Astro components) —
+  those belong in a downstream adapter package.
 
 ## Installation
 
@@ -52,191 +78,482 @@ npm install @phcdevworks/spectre-components @phcdevworks/spectre-ui @phcdevworks
 
 ## Quick start
 
-Import the Spectre CSS layers first, then register the custom elements you want
-to use:
+### Plain HTML
 
-```ts
-import "@phcdevworks/spectre-tokens/index.css";
-import "@phcdevworks/spectre-ui/index.css";
-
-import { defineSpectreComponents } from "@phcdevworks/spectre-components";
-
-defineSpectreComponents();
-```
-
-Use the components in markup:
+Import the CSS layers and register all components from a script tag or entry
+module. These are standard custom elements — no build step required for
+consumption.
 
 ```html
-<sp-button variant="primary" size="md">Save</sp-button>
-<sp-button variant="ghost" size="sm">Cancel</sp-button>
-<sp-input name="email" type="email" placeholder="Email address"></sp-input>
-<sp-textarea name="bio" rows="4" placeholder="Short bio"></sp-textarea>
-<sp-select name="role">
-  <option value="admin">Admin</option>
-  <option value="user">User</option>
-</sp-select>
-<sp-checkbox name="terms" value="accepted">Accept terms</sp-checkbox>
-<sp-radio name="plan" value="monthly">Monthly</sp-radio>
-<sp-label for="email">Email address</sp-label>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Spectre CSS layers must load before any markup is rendered -->
+    <link rel="stylesheet" href="/node_modules/@phcdevworks/spectre-tokens/index.css" />
+    <link rel="stylesheet" href="/node_modules/@phcdevworks/spectre-ui/index.css" />
+  </head>
+  <body>
+    <sp-label for="email">Email address</sp-label>
+    <sp-input id="email" name="email" type="email" placeholder="you@example.com"></sp-input>
+
+    <sp-button variant="primary" type="submit">Send</sp-button>
+    <sp-button variant="ghost" type="button">Cancel</sp-button>
+
+    <script type="module">
+      import { defineSpectreComponents } from '/node_modules/@phcdevworks/spectre-components/dist/index.js';
+      defineSpectreComponents();
+    </script>
+  </body>
+</html>
+```
+
+### JavaScript / TypeScript module
+
+```ts
+import '@phcdevworks/spectre-tokens/index.css';
+import '@phcdevworks/spectre-ui/index.css';
+
+// Register everything at once
+import { defineSpectreComponents } from '@phcdevworks/spectre-components';
+defineSpectreComponents();
+
+// Or register only what you use
+import { defineSpectreButton } from '@phcdevworks/spectre-components/button';
+import { defineSpectreInput } from '@phcdevworks/spectre-components/input';
+defineSpectreButton();
+defineSpectreInput();
+```
+
+### Full form example
+
+```html
 <sp-fieldset legend="Contact preferences">
-  <sp-checkbox name="email-updates">Email updates</sp-checkbox>
+  <sp-label for="email">Email address</sp-label>
+  <sp-input id="email" name="email" type="email" required></sp-input>
+
+  <sp-label for="bio">Bio</sp-label>
+  <sp-textarea id="bio" name="bio" rows="4" maxlength="500"></sp-textarea>
+
+  <sp-label for="role">Role</sp-label>
+  <sp-select id="role" name="role">
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+  </sp-select>
+
+  <sp-checkbox name="terms" value="accepted" required>
+    I accept the <a href="/terms">terms of service</a>
+  </sp-checkbox>
+
+  <sp-radio name="plan" value="monthly">Monthly billing</sp-radio>
+  <sp-radio name="plan" value="annual">Annual billing</sp-radio>
+
+  <sp-button variant="primary" type="submit">Save</sp-button>
+  <sp-button variant="ghost" type="reset">Reset</sp-button>
 </sp-fieldset>
 ```
 
-Register only what you need using the per-component entry points:
+### Framework integration note
 
-```ts
-import { defineSpectreButton } from "@phcdevworks/spectre-components/button";
-import { defineSpectreInput } from "@phcdevworks/spectre-components/input";
-import { defineSpectreTextarea } from "@phcdevworks/spectre-components/textarea";
-import { defineSpectreSelect } from "@phcdevworks/spectre-components/select";
-import { defineSpectreCheckbox } from "@phcdevworks/spectre-components/checkbox";
-import { defineSpectreRadio } from "@phcdevworks/spectre-components/radio";
-import { defineSpectreLabel } from "@phcdevworks/spectre-components/label";
-import { defineSpectreFieldset } from "@phcdevworks/spectre-components/fieldset";
+These are standard HTML custom elements. They work in every major framework
+that supports the Custom Elements standard:
+
+**React 19+** — supports custom element properties and events natively:
+```tsx
+// React 19: properties and events work directly
+<sp-input name="email" type="email" onInput={(e) => setValue(e.target.value)} />
 ```
 
-## What this package owns
+**React 18 and below** — set attributes via `ref` for properties, listen for
+native events on the element:
+```tsx
+const inputRef = useRef(null);
+useEffect(() => {
+  if (inputRef.current) inputRef.current.invalid = true;
+}, []);
+<sp-input ref={inputRef} name="email" />
+```
 
-- Lit-based web component implementation for Spectre
-- Accessible component behavior and DOM structure
-- Public custom element registration helpers
-- Component-level TypeScript APIs for future adapters to build on
+**Vue 3** — supports custom elements out of the box with `v-bind` and
+`v-on` directive compatibility. Mark the `sp-*` prefix in `compilerOptions`
+as a custom element to suppress unknown-element warnings:
+```ts
+// vite.config.ts
+plugins: [vue({ template: { compilerOptions: { isCustomElement: (tag) => tag.startsWith('sp-') } } })]
+```
+```html
+<sp-input name="email" :invalid="hasError" @change="handleChange" />
+```
 
-Golden rule: implement components from Spectre contracts, do not redefine those
-contracts locally.
+**Astro** — use components as static custom elements or with `client:load`
+when JavaScript interactivity is needed:
+```astro
+---
+import '@phcdevworks/spectre-tokens/index.css';
+import '@phcdevworks/spectre-ui/index.css';
+---
+<script>
+  import { defineSpectreComponents } from '@phcdevworks/spectre-components';
+  defineSpectreComponents();
+</script>
+<sp-button variant="primary">Click me</sp-button>
+```
 
-## What this package does not own
+> Framework adapter packages that wrap these components into idiomatic JSX or
+> SFC APIs belong in a downstream adapter — not in this package.
 
-- Design-token values or semantic visual meaning. That belongs to
-  [`@phcdevworks/spectre-tokens`](https://github.com/phcdevworks/spectre-tokens).
-- CSS utilities, class recipes, or styling contracts. That belongs to
-  [`@phcdevworks/spectre-ui`](https://github.com/phcdevworks/spectre-ui).
-- Framework adapters such as React, Vue, Astro, or app-specific wrappers. Those
-  belong in downstream adapter packages.
-- Routing, shell logic, manifest behavior, or startup orchestration. Those are
-  outside the scope of this package.
+## Accessibility
 
-## Package exports / API surface
+All components follow WCAG 2.1 AA baseline expectations by default.
 
-### Root package
+**ARIA attribute forwarding** — `aria-label`, `aria-labelledby`, and
+`aria-describedby` set on the host element are automatically forwarded to the
+inner native element so screen readers receive them on the correct target.
 
-`@phcdevworks/spectre-components` exports everything from all component entry
-points plus the `defineSpectreComponents()` bulk registration helper.
+**Native element semantics** — every component renders a real native element
+(`<button>`, `<input>`, `<textarea>`, `<select>`, `<label>`, `<fieldset>`)
+so browser accessibility APIs work without customization.
 
-**Registration helpers**
+**State communication**
 
-- `defineSpectreComponents()` — registers all components at once
-- `defineSpectreButton()`, `defineSpectreInput()`, `defineSpectreTextarea()`
-- `defineSpectreSelect()`, `defineSpectreCheckbox()`, `defineSpectreRadio()`
-- `defineSpectreLabel()`, `defineSpectreFieldset()`
+| State | ARIA effect |
+|-------|-------------|
+| `loading` | `aria-busy="true"` on the native element |
+| `invalid` | `aria-invalid="true"` on the native element |
+| `disabled` | native `disabled` attribute (removes from tab order) |
+| `required` | native `required` attribute |
 
-**Element classes**
+**Focus delegation** — `.focus()` and `.blur()` called on the host are
+delegated to the inner native element so external `focus()` calls work as
+expected.
 
-- `SpectreButtonElement`, `SpectreInputElement`, `SpectreTextareaElement`
-- `SpectreSelectElement`, `SpectreCheckboxElement`, `SpectreRadioElement`
-- `SpectreLabelElement`, `SpectreFieldsetElement`
+**Label association** — use `<sp-label for="id">` paired with `id` on the
+target control, or wrap controls inside a `<sp-fieldset>`. The `for` attribute
+forwards to the native `<label>` element.
 
-**Constants and types (button)**
+**Keyboard behavior** — provided entirely by the native element inside each
+component. No custom keyboard handling is layered on top.
 
-- `spectreButtonVariants`, `spectreButtonSizes`, `spectreButtonTypes`
-- `SpectreButtonVariant`, `SpectreButtonSize`, `SpectreButtonType`
-- `SpectreButtonProps`
+## Light DOM rendering
 
-**Constants and types (input / textarea / select)**
+All components render in **light DOM** (`createRenderRoot() { return this; }`).
+This is intentional: it allows `@phcdevworks/spectre-ui` global CSS to reach
+the native element directly without Shadow DOM piercing.
 
-- `spectreInputSizes`, `spectreInputTypes`
-- `SpectreInputSize`, `SpectreInputType`
-- `SpectreInputProps`, `SpectreTextareaProps`, `SpectreSelectProps`
+As a result, these components have no `::part()` exports — the native element
+is directly selectable using standard CSS combinators or the stable internal
+data attributes:
 
-**Props interfaces (checkbox / radio / label / fieldset)**
+```css
+/* Target the native input inside sp-input */
+sp-input input { font-size: 0.875rem; }
 
-- `SpectreCheckboxProps`, `SpectreRadioProps`
-- `SpectreLabelProps`, `SpectreFieldsetProps`
+/* Stable internal hook — won't break if markup restructures */
+sp-input [data-sp-input-native] { font-size: 0.875rem; }
+```
 
-### Button entry point
-
-`@phcdevworks/spectre-components/button` — registers only `sp-button`.
-
-Exports: `defineSpectreButton`, `SpectreButtonElement`, `SpectreButtonProps`,
-`spectreButtonVariants`, `spectreButtonSizes`, `spectreButtonTypes`,
-`SpectreButtonVariant`, `SpectreButtonSize`, `SpectreButtonType`.
-
-### Input entry point
-
-`@phcdevworks/spectre-components/input` — registers only `sp-input`.
-
-Exports: `defineSpectreInput`, `SpectreInputElement`, `SpectreInputProps`,
-`spectreInputSizes`, `spectreInputTypes`, `SpectreInputSize`, `SpectreInputType`.
-
-### Textarea entry point
-
-`@phcdevworks/spectre-components/textarea` — registers only `sp-textarea`.
-
-Exports: `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`.
-
-Size constants shared with input: import `spectreInputSizes` / `SpectreInputSize`
-from `@phcdevworks/spectre-components/input`.
-
-### Select entry point
-
-`@phcdevworks/spectre-components/select` — registers only `sp-select`.
-
-Exports: `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`.
-
-Size constants shared with input: import `spectreInputSizes` / `SpectreInputSize`
-from `@phcdevworks/spectre-components/input`.
-
-### Checkbox entry point
-
-`@phcdevworks/spectre-components/checkbox` — registers only `sp-checkbox`.
-
-Exports: `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`.
-
-### Radio entry point
-
-`@phcdevworks/spectre-components/radio` — registers only `sp-radio`.
-
-Exports: `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`.
-
-### Label entry point
-
-`@phcdevworks/spectre-components/label` — registers only `sp-label`.
-
-Exports: `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`.
-
-### Fieldset entry point
-
-`@phcdevworks/spectre-components/fieldset` — registers only `sp-fieldset`.
-
-Exports: `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`.
-
-## Relationship to the rest of Spectre
-
-Spectre keeps responsibilities separate:
-
-- [`@phcdevworks/spectre-tokens`](https://github.com/phcdevworks/spectre-tokens)
-  defines design values and semantic meaning
-- [`@phcdevworks/spectre-ui`](https://github.com/phcdevworks/spectre-ui)
-  provides CSS, Tailwind helpers, recipes, and styling contracts
-- `@phcdevworks/spectre-components` turns those layers into Lit-based reusable
-  web components
-
-That separation keeps visual meaning centralized, styling contracts stable, and
-component behavior reusable across frameworks.
+Do not switch any component from light DOM to Shadow DOM without a
+design-system-level decision.
 
 ## Components
 
-| Element                  | Tag           | Description                                          |
-| ------------------------ | ------------- | ---------------------------------------------------- |
-| `SpectreButtonElement`   | `sp-button`   | Button with variant, size, loading, and pill support |
-| `SpectreInputElement`    | `sp-input`    | Text input with state, size, and type support        |
-| `SpectreTextareaElement` | `sp-textarea` | Multiline text input with resizable rows             |
-| `SpectreSelectElement`   | `sp-select`   | Native select with projected option elements         |
-| `SpectreCheckboxElement` | `sp-checkbox` | Checkbox with projected or property-based label      |
-| `SpectreRadioElement`    | `sp-radio`    | Radio button with projected or property-based label  |
-| `SpectreLabelElement`    | `sp-label`    | Accessible label with `for` forwarding               |
-| `SpectreFieldsetElement` | `sp-fieldset` | Fieldset group with legend text and slot support     |
+### sp-button
+
+Renders a `<button>` with Spectre variant, size, loading, and pill support.
+
+**Attributes**
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `variant` | `primary \| secondary \| ghost \| danger \| success \| cta \| accent` | `primary` | Visual style |
+| `size` | `sm \| md \| lg` | `md` | Control size |
+| `type` | `button \| submit \| reset` | `button` | Native button type |
+| `label` | string | — | Text label (overridden by content projection) |
+| `loading` | boolean | `false` | Busy state — disables the button and shows loading label |
+| `loading-label` | string | `Loading` | Accessible text shown during loading |
+| `disabled` | boolean | `false` | Disables the button |
+| `full-width` | boolean | `false` | Spans full container width |
+| `pill` | boolean | `false` | Pill / fully-rounded corners |
+| `name` | string | — | Form field name |
+| `value` | string | `''` | Submitted value |
+| `form` | string | — | Associates with a form by ID |
+| `autofocus` | boolean | `false` | Autofocus on page load |
+| `id` | string | — | Forwarded to the native `<button>` |
+| `title` | string | — | Forwarded to the native `<button>` |
+| `aria-label` | string | — | Forwarded to the native `<button>` |
+| `aria-labelledby` | string | — | Forwarded to the native `<button>` |
+| `aria-describedby` | string | — | Forwarded to the native `<button>` |
+
+**Events** — native button events bubble normally (`click`, `focus`, `blur`).
+
+**Content projection** — place children inside `<sp-button>` to use them as
+button content instead of the `label` property:
+
+```html
+<sp-button variant="primary">
+  <svg aria-hidden="true">...</svg>
+  Save changes
+</sp-button>
+```
+
+**Internal target** — `[data-sp-button-native]` selects the native `<button>`.
+
+---
+
+### sp-input
+
+Renders an `<input>` with state, size, and type support.
+
+**Attributes**
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `type` | `text \| email \| password \| search \| tel \| url \| number \| date \| datetime-local \| month \| time \| week` | `text` | Native input type |
+| `size` | `sm \| md \| lg` | `md` | Control size |
+| `name` | string | — | Form field name |
+| `value` | string | `''` | Current value |
+| `placeholder` | string | — | Placeholder text |
+| `disabled` | boolean | `false` | Disables the input |
+| `loading` | boolean | `false` | Busy state |
+| `readonly` | boolean | `false` | Read-only mode |
+| `required` | boolean | `false` | Marks field as required |
+| `invalid` | boolean | `false` | Error state (`aria-invalid`) |
+| `success` | boolean | `false` | Success state |
+| `full-width` | boolean | `false` | Spans full container width |
+| `pill` | boolean | `false` | Pill / fully-rounded corners |
+| `autocomplete` | string | — | Native autocomplete hint |
+| `inputmode` | string | — | Virtual keyboard hint |
+| `min` / `max` / `step` | string | — | Numeric/date range |
+| `minlength` / `maxlength` | number | — | Character length constraints |
+| `form` | string | — | Associates with a form by ID |
+| `autofocus` | boolean | `false` | Autofocus on page load |
+| `id` / `title` / `aria-*` | string | — | Forwarded to native `<input>` |
+
+**Events** — `input` and `change` fire from the native `<input>` and bubble.
+
+**Internal target** — `[data-sp-input-native]` selects the native `<input>`.
+
+---
+
+### sp-textarea
+
+Renders a `<textarea>` with row control and resize support.
+
+**Attributes** — same as `sp-input` except no `type`, `min`, `max`, `step`, and adds:
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `rows` | number | `2` | Visible row height |
+
+**Events** — `input` and `change` fire from the native `<textarea>`.
+
+**Internal target** — `[data-sp-textarea-native]` selects the native `<textarea>`.
+
+---
+
+### sp-select
+
+Renders a `<select>`. Pass `<option>` elements as children — they are
+projected into the native select element.
+
+**Attributes** — same as `sp-input` minus `type`, `placeholder`, `readonly`,
+`inputmode`, `min`, `max`, `step`, `minlength`, `maxlength`.
+
+**Events** — `input` and `change` fire from the native `<select>`.
+
+**Content projection** — `<option>` and `<optgroup>` children are moved into
+the native `<select>`:
+
+```html
+<sp-select name="country" required>
+  <option value="">Select a country</option>
+  <optgroup label="Americas">
+    <option value="us">United States</option>
+    <option value="ca">Canada</option>
+  </optgroup>
+</sp-select>
+```
+
+**Internal target** — `[data-sp-select-native]` selects the native `<select>`.
+
+---
+
+### sp-checkbox
+
+Renders a `<label>` wrapping an `<input type="checkbox">` with indicator.
+
+**Attributes**
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `name` | string | — | Form field name |
+| `value` | string | `on` | Submitted value when checked |
+| `checked` | boolean | `false` | Checked state |
+| `label` | string | — | Text label (overridden by content projection) |
+| `disabled` | boolean | `false` | Disables the checkbox |
+| `loading` | boolean | `false` | Busy state |
+| `required` | boolean | `false` | Marks field as required |
+| `invalid` | boolean | `false` | Error state |
+| `success` | boolean | `false` | Success state |
+| `form` / `autofocus` / `id` / `title` / `aria-*` | — | — | Forwarded to native `<input>` |
+
+**Events** — `input` and `change` fire from the native checkbox input.
+
+**Content projection** — children become the label content (supports rich
+markup):
+
+```html
+<sp-checkbox name="terms" value="accepted" required>
+  I accept the <a href="/terms">terms of service</a>
+</sp-checkbox>
+```
+
+**Internal target** — `[data-sp-checkbox-native]` selects the native checkbox.
+
+---
+
+### sp-radio
+
+Renders a `<label>` wrapping an `<input type="radio">` with indicator.
+Group multiple `sp-radio` elements by giving them the same `name`.
+
+**Attributes** — same as `sp-checkbox`. `value` defaults to `on`.
+
+**Events** — `input` and `change` fire from the native radio input.
+
+**Content projection** — same as `sp-checkbox`.
+
+```html
+<sp-radio name="plan" value="monthly">Monthly — $9/mo</sp-radio>
+<sp-radio name="plan" value="annual">Annual — $90/yr</sp-radio>
+```
+
+**Internal target** — `[data-sp-radio-native]` selects the native radio input.
+
+---
+
+### sp-label
+
+Renders a `<label>` with `for` forwarding. Use to associate a visible label
+with any form control.
+
+**Attributes**
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `for` | string | — | ID of the associated control (forwarded to native `<label>`) |
+| `id` / `title` / `aria-*` | string | — | Forwarded to native `<label>` |
+
+**Content projection** — children become the label text (supports rich markup):
+
+```html
+<sp-label for="email">
+  Email address <span aria-hidden="true">*</span>
+</sp-label>
+```
+
+**Internal target** — `[data-sp-label-native]` selects the native `<label>`.
+
+---
+
+### sp-fieldset
+
+Renders a `<fieldset>` with optional legend and group-level state.
+
+**Attributes**
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `legend` | string | — | Text for the `<legend>` element |
+| `disabled` | boolean | `false` | Disables all controls in the group |
+| `loading` | boolean | `false` | Busy state |
+| `invalid` | boolean | `false` | Group-level error state |
+| `success` | boolean | `false` | Group-level success state |
+| `form` / `name` / `id` / `title` / `aria-*` | string | — | Forwarded to native `<fieldset>` |
+
+**Content projection** — children are placed inside the native `<fieldset>`
+alongside the legend:
+
+```html
+<sp-fieldset legend="Billing address" name="billing">
+  <sp-label for="city">City</sp-label>
+  <sp-input id="city" name="city" required></sp-input>
+
+  <sp-label for="zip">ZIP code</sp-label>
+  <sp-input id="zip" name="zip" type="text" maxlength="10"></sp-input>
+</sp-fieldset>
+```
+
+**Internal target** — `[data-sp-fieldset-native]` selects the native `<fieldset>`.
+
+## Package exports / API surface
+
+### Root — `@phcdevworks/spectre-components`
+
+Exports everything from all component entry points plus the bulk registration
+helper.
+
+**Bulk registration**
+
+```ts
+import { defineSpectreComponents } from '@phcdevworks/spectre-components';
+defineSpectreComponents(); // registers all sp-* elements
+```
+
+**Per-component helpers** (same as individual entry points):
+`defineSpectreButton`, `defineSpectreInput`, `defineSpectreTextarea`,
+`defineSpectreSelect`, `defineSpectreCheckbox`, `defineSpectreRadio`,
+`defineSpectreLabel`, `defineSpectreFieldset`
+
+**Element classes**:
+`SpectreButtonElement`, `SpectreInputElement`, `SpectreTextareaElement`,
+`SpectreSelectElement`, `SpectreCheckboxElement`, `SpectreRadioElement`,
+`SpectreLabelElement`, `SpectreFieldsetElement`
+
+**Button constants and types**:
+`spectreButtonVariants`, `spectreButtonSizes`, `spectreButtonTypes`,
+`SpectreButtonVariant`, `SpectreButtonSize`, `SpectreButtonType`,
+`SpectreButtonProps`
+
+**Input / textarea / select constants and types**:
+`spectreInputSizes`, `spectreInputTypes`, `SpectreInputSize`,
+`SpectreInputType`, `SpectreInputProps`, `SpectreTextareaProps`,
+`SpectreSelectProps`
+
+**Props interfaces** (checkbox / radio / label / fieldset):
+`SpectreCheckboxProps`, `SpectreRadioProps`, `SpectreLabelProps`,
+`SpectreFieldsetProps`
+
+### Subpath entry points
+
+Each entry point registers only that component and exports only its surface:
+
+| Entry point | Registers | Key exports |
+|-------------|-----------|-------------|
+| `.../button` | `sp-button` | `defineSpectreButton`, `SpectreButtonElement`, button constants and types |
+| `.../input` | `sp-input` | `defineSpectreInput`, `SpectreInputElement`, input constants and types |
+| `.../textarea` | `sp-textarea` | `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps` |
+| `.../select` | `sp-select` | `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps` |
+| `.../checkbox` | `sp-checkbox` | `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps` |
+| `.../radio` | `sp-radio` | `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps` |
+| `.../label` | `sp-label` | `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps` |
+| `.../fieldset` | `sp-fieldset` | `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps` |
+
+Size constants are shared between input, textarea, and select. Import
+`spectreInputSizes` / `SpectreInputSize` from `.../input` when needed
+alongside textarea or select.
+
+## Relationship to the rest of Spectre
+
+```
+spectre-tokens  →  design values (colors, spacing, typography)
+spectre-ui      →  CSS recipes and Tailwind helpers
+spectre-components  →  Lit web component behavior  ← you are here
+[adapters]      →  React / Vue / Astro wrappers
+```
+
+The Golden Rule: **tokens define meaning, UI defines structure, components
+define behavior, adapters define delivery.** This package only owns the
+behavior layer.
 
 ## Development
 
@@ -244,56 +561,67 @@ component behavior reusable across frameworks.
 git clone https://github.com/phcdevworks/spectre-components.git
 cd spectre-components
 npm install
-npm run check        # lint + test + build — the single full validation command
+npm run check        # lint + test + build + export validation
 ```
 
 Requires Node.js `^22.12.0 || >=24.0.0` and npm `11.14.1`.
 
 | Command | Purpose |
 |---------|---------|
-| `npm run check` | Full validation (lint + test + build) |
+| `npm run check` | Full validation (lint → test → build → export check) |
 | `npm run build` | Compile ESM + CJS with declarations into `dist/` |
-| `npm test` | Run Vitest suite (happy-dom) |
+| `npm test` | Run Vitest suite under happy-dom |
 | `npm run lint` | ESLint |
+| `npm run check:exports` | Verify built subpath exports resolve correctly |
 | `npm run dev` | tsup watch mode |
 | `npm run clean` | Remove `dist/` and `coverage/` |
 
 Key source areas:
 
 - `src/components/` — one directory per custom element
+- `src/utils/` — `base.ts`, `projectable.ts`, `form.ts`, `dom.ts`
 - `src/index.ts` — root public API and bulk registration helper
 - `tests/` — component behavior coverage (Vitest + happy-dom)
+- `scripts/check-exports.js` — post-build export resolution check
 
 ## Troubleshooting
 
 **Build fails with type errors** — TypeScript 6 is required. Run
-`npm install` to ensure dev dependencies are up to date, then `npm run build`.
+`npm install`, then `npm run build`.
 
-**Tests fail in CI but pass locally** — Tests run under happy-dom. Make sure
-you are on Node `^22.12.0 || >=24.0.0`. The CI matrix tests both versions.
+**Tests fail in CI but pass locally** — Tests run under happy-dom. Confirm you
+are on Node `^22.12.0 || >=24.0.0`. CI tests both versions.
 
 **Custom element already defined** — Each `defineSpectre*()` helper is
-idempotent; calling it twice is safe. If you see "already defined" errors,
-check that two different versions of this package are not loaded in the same
-page context.
+idempotent; calling it twice is safe. If you see conflicts, two different
+versions of this package may be loaded in the same page.
 
-**Styles are not applying** — This package renders in light DOM. The Spectre
-CSS layers must be imported before the components are registered:
-`@phcdevworks/spectre-tokens/index.css` then
-`@phcdevworks/spectre-ui/index.css`.
+**Styles are not applying** — The Spectre CSS layers must load before
+components are registered. Import `@phcdevworks/spectre-tokens/index.css` and
+`@phcdevworks/spectre-ui/index.css` at the top of your entry module.
+
+**Properties not reflecting in React 18** — React 18 sets custom element
+properties as attributes. Use a `ref` to set properties imperatively, or
+upgrade to React 19 which supports custom elements fully.
 
 ## Contributing
 
 PHCDevworks maintains this package as part of the Spectre suite.
 
-When contributing:
+Contribution boundaries:
 
-- treat `@phcdevworks/spectre-tokens` as the source of visual meaning
-- treat `@phcdevworks/spectre-ui` as the styling contract layer
-- avoid redefining visual primitives locally
-- keep components accessible by default
-- run `npm run build`, `npm test`, and `npm run lint` before opening a pull
-  request
+- Components must consume `@phcdevworks/spectre-ui` class helpers — do not
+  recreate CSS locally.
+- Design values must come from `@phcdevworks/spectre-tokens` — do not
+  hardcode colors, spacing, or other visual primitives.
+- Component tags, properties, events, slots, and ARIA behavior are stable API
+  — breaking changes require a semver major bump.
+- Render in light DOM only — Shadow DOM changes require design-system approval.
+- No framework-specific code — no JSX, SFCs, or Astro components in this
+  package.
+- Run `npm run check` before opening a pull request.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
 
 ## License
 
