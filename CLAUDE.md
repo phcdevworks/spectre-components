@@ -129,11 +129,20 @@ Always run `npm run check` before handing off for review.
 
 ## AI Collaboration
 
-Claude Code (primary) and Codex (release-readiness counterpart) work together
-on this repository. This file (`CLAUDE.md`) is the authoritative guide — when
-Codex and Claude Code disagree, follow `CLAUDE.md`. Codex handles review
-posture, API stability checks, and release handoff; implementation leads with
-Claude Code.
+This repository follows the Spectre AI factory model:
+
+| Agent | Role |
+|------|------|
+| Claude Code | Lead developer responsible for primary implementation |
+| OpenAI Codex | Documentation, releases, production stabilization, repo hygiene, and config standardization |
+| GitHub Copilot | General development assistance |
+| Google Jules | Automated maintenance for small fixes, dependency updates, and micro-updates |
+
+This file (`CLAUDE.md`) is the authoritative implementation guide. When agent
+instructions disagree on implementation, follow `CLAUDE.md` and update the
+supporting agent file that drifted. Codex handles review posture, API stability
+checks, documentation hygiene, and release handoff; Copilot assists with narrow
+development support; Jules must stay within bounded maintenance prompts.
 
 Read before handoff or release:
 - `AGENTS.md` — shared agent rules and component inventory

@@ -4,11 +4,13 @@ This repository uses a coordinated AI workflow:
 
 - Claude Code leads implementation and follows `CLAUDE.md` as the primary
   maintenance guide.
-- Codex provides release-readiness, review, and standardization oversight from
+- Codex provides documentation, releases, production stabilization, repo
+  hygiene, config standardization, review, and release-readiness oversight from
   `CODEX.md`.
-- GitHub Copilot provides supporting implementation help, GitHub-integrated
-  review support, documentation synchronization, and production-readiness
-  checks.
+- GitHub Copilot provides general development assistance, GitHub-integrated
+  review support, documentation synchronization, and targeted refactor help.
+- Google Jules, when configured, handles only automated maintenance for small
+  fixes, dependency updates, and micro-updates.
 
 Use this repository-specific guidance whenever assisting in this workspace.
 
@@ -18,6 +20,8 @@ Use this repository-specific guidance whenever assisting in this workspace.
   non-trivial changes.
 - Treat Claude Code's workflow and repository architecture guidance as the
   primary source of truth.
+- Do not take ownership of implementation direction, release decisions, or
+  final handoff authority.
 - Keep public component contracts stable: tag names, exports, public
   properties, slots, events, and accessibility behavior should not change
   casually.
@@ -45,6 +49,7 @@ Use this repository-specific guidance whenever assisting in this workspace.
 - Prefer the narrowest useful validation first, then finish with `npm run check`
   before release handoff when code or docs meaningfully change.
 - Do not create git commits unless explicitly asked.
+- Do not expand Jules tasks into feature ownership or release ownership.
 - Preserve unrelated user changes in the worktree.
 
 ## GitHub Workflow Support
