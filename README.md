@@ -1,17 +1,18 @@
 # @phcdevworks/spectre-components
 
+[![CI](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml/badge.svg)](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@phcdevworks/spectre-components)](https://www.npmjs.com/package/@phcdevworks/spectre-components)
 [![GitHub issues](https://img.shields.io/github/issues/phcdevworks/spectre-components)](https://github.com/phcdevworks/spectre-components/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/phcdevworks/spectre-components)](https://github.com/phcdevworks/spectre-components/pulls)
 [![License](https://img.shields.io/github/license/phcdevworks/spectre-components)](LICENSE)
 
-`@phcdevworks/spectre-components` is the Lit-based component layer of the
-Spectre system for reusable, accessible, framework-agnostic web components.
-
-Maintained by PHCDevworks, it turns Spectre tokens and Spectre UI contracts
-into reusable, accessible, framework-agnostic web components. It is the
-canonical component implementation layer for Spectre, built on platform
-standards and designed to be consumed directly or wrapped later by adapter
-packages.
+`@phcdevworks/spectre-components` is the **Layer 3** Lit-based web component
+package of the Spectre design system. It turns Spectre tokens
+(`@phcdevworks/spectre-tokens`) and Spectre UI styling contracts
+(`@phcdevworks/spectre-ui`) into reusable, accessible, framework-agnostic
+custom elements. It is the canonical component implementation layer for
+Spectre — built on platform standards and designed to be consumed directly or
+wrapped by downstream adapter packages.
 
 [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md) |
 [Security Policy](SECURITY.md)
@@ -24,6 +25,24 @@ packages.
 - Keeps component delivery framework-agnostic through custom elements
 - Builds accessibility into the initial component patterns
 - Exposes a small, explicit API surface suitable for long-term growth
+
+## When to use this package
+
+- You are building UI that consumes the Spectre design system and want
+  standards-based, framework-agnostic custom elements.
+- You want accessible, typed form controls (`sp-button`, `sp-input`,
+  `sp-select`, etc.) without coupling to a specific JavaScript framework.
+- You are building a framework adapter (React, Vue, Astro) and need a
+  reliable, stable element layer to wrap.
+
+## When not to use this package
+
+- You only need CSS classes or design tokens — use `@phcdevworks/spectre-ui`
+  or `@phcdevworks/spectre-tokens` directly instead.
+- You need components styled outside the Spectre token/UI contract — do not
+  redefine visual primitives inside this package.
+- You need framework-specific wrappers or server-side rendering adapters —
+  those belong in a downstream adapter package, not here.
 
 ## Installation
 
@@ -221,22 +240,47 @@ component behavior reusable across frameworks.
 
 ## Development
 
-Install dependencies, then run the package checks:
-
 ```bash
+git clone https://github.com/phcdevworks/spectre-components.git
+cd spectre-components
 npm install
-npm run build
-npm test
-npm run lint
+npm run check        # lint + test + build — the single full validation command
 ```
 
-This project expects Node.js `^22.12.0 || >=24.0.0` and npm `11.14.1`.
+Requires Node.js `^22.12.0 || >=24.0.0` and npm `11.14.1`.
+
+| Command | Purpose |
+|---------|---------|
+| `npm run check` | Full validation (lint + test + build) |
+| `npm run build` | Compile ESM + CJS with declarations into `dist/` |
+| `npm test` | Run Vitest suite (happy-dom) |
+| `npm run lint` | ESLint |
+| `npm run dev` | tsup watch mode |
+| `npm run clean` | Remove `dist/` and `coverage/` |
 
 Key source areas:
 
-- `src/components/` for custom elements
-- `src/index.ts` for the root public API
-- `tests/` for component behavior coverage
+- `src/components/` — one directory per custom element
+- `src/index.ts` — root public API and bulk registration helper
+- `tests/` — component behavior coverage (Vitest + happy-dom)
+
+## Troubleshooting
+
+**Build fails with type errors** — TypeScript 6 is required. Run
+`npm install` to ensure dev dependencies are up to date, then `npm run build`.
+
+**Tests fail in CI but pass locally** — Tests run under happy-dom. Make sure
+you are on Node `^22.12.0 || >=24.0.0`. The CI matrix tests both versions.
+
+**Custom element already defined** — Each `defineSpectre*()` helper is
+idempotent; calling it twice is safe. If you see "already defined" errors,
+check that two different versions of this package are not loaded in the same
+page context.
+
+**Styles are not applying** — This package renders in light DOM. The Spectre
+CSS layers must be imported before the components are registered:
+`@phcdevworks/spectre-tokens/index.css` then
+`@phcdevworks/spectre-ui/index.css`.
 
 ## Contributing
 
