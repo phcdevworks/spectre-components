@@ -13,6 +13,8 @@ reflects package releases published to npm.
 
 ### Fixed
 
+- `sp-button`: added missing `sp-label` class to property-based label fallbacks
+  and loading labels for typography consistency with other form controls.
 - `sp-textarea`: reflect `rows` property to the host attribute so HTML
   serialization stays consistent with the declared value.
 - `sp-fieldset`: added missing `aria-invalid` attribute to the native
