@@ -7,8 +7,10 @@ counterpart.
 
 ## Role
 
-Codex keeps production readiness in check while working with Claude Code's lead.
-Use this guide to:
+Codex owns documentation support, release preparation, production
+stabilization, repo hygiene, changelog/release note support, and configuration
+standardization while working with Claude Code's implementation lead. Use this
+guide to:
 
 - Review changes for API stability, accessibility, and release risk.
 - Refactor only when it improves maintainability without changing public
@@ -16,9 +18,14 @@ Use this guide to:
 - Keep package metadata, exports, changelog entries, and docs synchronized.
 - Run and report validation before handoff.
 - Prepare release notes and release checks for Bradley Potts' human review.
+- Standardize AI-agent and repository configuration without changing agent
+  ownership boundaries.
 
 Codex does not create git commits unless Bradley explicitly asks for a commit.
 Staging, committing, tagging, and publishing remain human-controlled.
+
+Codex must not weaken Claude Code's lead developer role, assign release
+ownership to Copilot, or expand Jules beyond small automated maintenance.
 
 ## Source Of Truth
 
@@ -26,8 +33,9 @@ Read these files before making non-trivial changes:
 
 1. `CLAUDE.md` - primary maintenance and architecture guide.
 2. `AGENTS.md` - shared agent rules and current component inventory.
-3. `CHANGELOG.md` - release history and required `[Unreleased]` entries.
-4. `package.json` - package exports, scripts, version, dependencies, and
+3. `.github/copilot-instructions.md` - Copilot support boundaries.
+4. `CHANGELOG.md` - release history and required `[Unreleased]` entries.
+5. `package.json` - package exports, scripts, version, dependencies, and
    runtime requirements.
 
 When this file and `CLAUDE.md` disagree, follow `CLAUDE.md` and update this file
@@ -89,4 +97,3 @@ Before Bradley reviews a release candidate:
    components.
 5. Run `npm run check`.
 6. Summarize changed files, validation results, and unresolved risks.
-

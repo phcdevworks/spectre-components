@@ -1,4 +1,4 @@
-# Spectre Components — Claude Code Agent Guide
+# Spectre Components Agent Guide
 
 ## Primary AI Developer
 
@@ -13,9 +13,25 @@ then handed off for human review and commit.
 
 See [CLAUDE.md](CLAUDE.md) for the full maintenance reference.
 
+## AI Operating Model
+
+This repository follows the Spectre AI factory model:
+
+| Agent | Role | Authority |
+| ----- | ---- | --------- |
+| Claude Code | Lead developer responsible for primary implementation | `CLAUDE.md` |
+| OpenAI Codex | Documentation, releases, production stabilization, repo hygiene, and config standardization | `CODEX.md` |
+| GitHub Copilot | General development assistance | `.github/copilot-instructions.md` |
+| Google Jules | Automated maintenance for small fixes, dependency updates, and micro-updates | Future `JULES.md` or task prompt |
+
+Claude Code keeps implementation leadership. Codex keeps release and
+stabilization work clean. Copilot assists without owning decisions. Jules may
+only take small, bounded maintenance tasks when configured for this repository.
+
 ## Codex Release Agent
 
-**Codex** works as a supporting code and release-readiness agent. Claude Code
+**Codex** works as the documentation, release-readiness, production
+stabilization, repo hygiene, and config standardization agent. Claude Code
 continues to lead implementation from `CLAUDE.md`; Codex keeps production
 readiness, documentation consistency, API stability, and validation in check.
 
@@ -29,17 +45,24 @@ commit. Release handoff still requires human review.
 
 ## GitHub Copilot Support Agent
 
-**GitHub Copilot** works as the repository's supporting AI pair. Claude Code
-continues to lead implementation, Codex continues to provide oversight, and
-Copilot supports day-to-day editing, GitHub-integrated review workflows,
-refactor assistance, documentation synchronization, and production-readiness
-checks.
+**GitHub Copilot** works as the repository's general development assistance
+agent. Claude Code continues to lead implementation, Codex continues to provide
+release and stabilization oversight, and Copilot supports day-to-day editing,
+GitHub-integrated review workflows, targeted refactor assistance, and
+documentation synchronization.
 
 Copilot operates from `.github/copilot-instructions.md` plus any scoped files in
 `.github/instructions/` and reusable prompts in `.github/prompts/`.
 
 Copilot does not create git commits unless Bradley Potts explicitly asks for a
 commit.
+
+## Google Jules Maintenance Agent
+
+**Google Jules** is reserved for automated maintenance: small fixes, dependency
+updates, generated-output synchronization, and micro-updates. Jules must stay
+within the task prompt, avoid feature ownership, and defer architectural or
+release decisions to Claude Code, Codex, and Bradley Potts.
 
 ## Mission
 
