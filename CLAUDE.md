@@ -127,6 +127,20 @@ Always run `npm run check` before handing off for review.
 - Do not add `dist/` or `dist_verify/` to commits — they are gitignored.
 - Do not skip `npm run check` before committing.
 
+## AI Collaboration
+
+Claude Code (primary) and Codex (release-readiness counterpart) work together
+on this repository. This file (`CLAUDE.md`) is the authoritative guide — when
+Codex and Claude Code disagree, follow `CLAUDE.md`. Codex handles review
+posture, API stability checks, and release handoff; implementation leads with
+Claude Code.
+
+Read before handoff or release:
+- `AGENTS.md` — shared agent rules and component inventory
+- `CODEX.md` — Codex operating guide and working contract
+- `CODEX_REVIEW_CHECKLIST.md` — pre-release change review checklist
+- `CODEX_RELEASE_CHECKLIST.md` — release candidate preparation checklist
+
 ## Key files
 
 | File | Purpose |
@@ -138,3 +152,7 @@ Always run `npm run check` before handing off for review.
 | `tsup.config.ts` | Build entry points |
 | `package.json` | Exports map — must stay in sync with tsup entries |
 | `CHANGELOG.md` | Keep updated with every non-trivial change |
+| `AGENTS.md` | Shared agent rules and component inventory |
+| `CODEX.md` | Codex operating guide (release and review counterpart) |
+| `CODEX_REVIEW_CHECKLIST.md` | Change review checklist |
+| `CODEX_RELEASE_CHECKLIST.md` | Release candidate checklist |
