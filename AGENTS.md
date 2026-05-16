@@ -22,7 +22,7 @@ This repository follows the Spectre AI factory model:
 | Claude Code | Lead developer responsible for primary implementation | `CLAUDE.md` |
 | OpenAI Codex | Documentation, releases, production stabilization, repo hygiene, and config standardization | `CODEX.md` |
 | GitHub Copilot | General development assistance | `.github/copilot-instructions.md` |
-| Google Jules | Automated maintenance for small fixes, dependency updates, and micro-updates | Future `JULES.md` or task prompt |
+| Google Jules | Automated maintenance for small fixes, dependency updates, and micro-updates | `JULES.md` |
 
 Claude Code keeps implementation leadership. Codex keeps release and
 stabilization work clean. Copilot assists without owning decisions. Jules may

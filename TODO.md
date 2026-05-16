@@ -17,7 +17,7 @@ This todo list is aligned to the current repository and the roadmap in
   - No local token redefinitions
   - No Shadow DOM without explicit approval recorded in the manifest
 
-- [ ] Enforce `npm run check` in CI on every push and PR to `main`.
+- [x] Enforce `npm run check` in CI on every push and PR to `main` — done via `.github/workflows/ci.yml`.
 
 ---
 
