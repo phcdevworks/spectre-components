@@ -150,6 +150,25 @@ Read before handoff or release:
 - `CODEX_REVIEW_CHECKLIST.md` — pre-release change review checklist
 - `CODEX_RELEASE_CHECKLIST.md` — release candidate preparation checklist
 
+## AI Boundaries — file status
+
+| File / path | Status | Notes |
+|-------------|--------|-------|
+| `src/` | **Source of truth** | All component implementation lives here |
+| `tests/` | **Source of truth** | Component behavior tests |
+| `src/index.ts` | **Source of truth** | Root public API; keep in sync with `tsup.config.ts` and `package.json` exports |
+| `package.json` | **Source of truth** | Exports map, engines, version, metadata |
+| `tsup.config.ts` | **Source of truth** | Must stay in sync with `package.json` exports |
+| `CLAUDE.md` | **Protected** | Authoritative implementation guide; overrides all other agent files on conflicts |
+| `AGENTS.md` | **Protected** | Shared agent rules; update when agent roles change |
+| `CHANGELOG.md` | **Protected** | Add `[Unreleased]` entries for every non-trivial change; do not rewrite released entries |
+| `dist/` | **Generated** | Output of `npm run build`; never edit by hand; gitignored |
+| `dist_verify/` | **Generated** | Verification build output; never edit by hand; gitignored |
+| `.github/workflows/ci.yml` | **Protected** | Do not weaken validation steps without explicit approval |
+| `CODEX.md` | **Codex-owned** | Codex operating guide; Claude Code should not rewrite this |
+| `.github/copilot-instructions.md` | **Copilot-owned** | Copilot support guide |
+| `JULES.md` | **Jules-owned** | Jules maintenance guide |
+
 ## Key files
 
 | File | Purpose |

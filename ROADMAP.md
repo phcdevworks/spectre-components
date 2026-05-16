@@ -36,7 +36,7 @@ Spectre contracts support it.
 - Public API surface validation is manual — no automated snapshot of exported symbols.
 - CHANGELOG compare links need to stay current on releases.
 - No display or layout components yet (progress, badge, card, alert, avatar, etc.).
-- `npm run check` does not yet have a CI enforcement path.
+- `npm run check` is enforced in CI via `.github/workflows/ci.yml` on Node 22 and 24.
 
 ---
 
@@ -50,7 +50,7 @@ expanding the component surface.
 - [ ] Add automated export-snapshot validation against the manifest.
 - [ ] Add a thin-adapter invariant check: no hardcoded hex colors, no local token
   redefinitions, no Shadow DOM without explicit approval.
-- [ ] Enforce `npm run check` in CI on every push and PR to `main`.
+- [x] Enforce `npm run check` in CI on every push and PR to `main` — done via `.github/workflows/ci.yml`.
 
 ---
 
