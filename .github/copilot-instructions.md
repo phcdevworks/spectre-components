@@ -1,61 +1,44 @@
-# Copilot Instructions For Spectre Components
+# GitHub Copilot Instructions for @phcdevworks/spectre-components
 
-This repository uses a coordinated AI workflow:
+## Role
 
-- Claude Code leads implementation and follows `CLAUDE.md` as the primary
-  maintenance guide.
-- Codex provides documentation, releases, production stabilization, repo
-  hygiene, config standardization, review, and release-readiness oversight from
-  `CODEX.md`.
-- GitHub Copilot provides general development assistance, GitHub-integrated
-  review support, documentation synchronization, and targeted refactor help.
-- Google Jules, when configured, handles only automated maintenance for small
-  fixes, dependency updates, and micro-updates.
+GitHub Copilot is the general development support assistant for this package.
 
-Use this repository-specific guidance whenever assisting in this workspace.
+- Claude Code owns implementation leadership (`CLAUDE.md`).
+- Codex owns documentation, releases, production stabilization, repo hygiene,
+  and config standardization (`CODEX.md`).
+- Jules owns only bounded automated maintenance tasks.
+- Copilot supports editing, refactors, tests, TypeScript/API hints, and
+  productivity inside the IDE.
 
-## Operating Model
+Copilot does not own architecture direction, release decisions, or final
+handoff authority.
 
-- Read `CLAUDE.md`, `AGENTS.md`, `CODEX.md`, and `CHANGELOG.md` before making
-  non-trivial changes.
-- Treat Claude Code's workflow and repository architecture guidance as the
-  primary source of truth.
-- Do not take ownership of implementation direction, release decisions, or
-  final handoff authority.
-- Keep public component contracts stable: tag names, exports, public
-  properties, slots, events, and accessibility behavior should not change
-  casually.
-- Prefer small, production-ready refactors that improve maintainability without
-  redefining Spectre token meaning, UI contracts, or rendering boundaries.
-- Keep documentation, changelog entries, exports, and tests synchronized with
-  code changes.
+## Package Conventions
 
-## Repository Rules
+- Keep components Lit-based and light DOM unless explicitly directed otherwise.
+- Preserve stable contracts: tags, exports, props, slots, events, and
+  accessibility behavior.
+- Consume upstream contracts instead of re-creating styling logic:
+  `@phcdevworks/spectre-tokens` for meaning and `@phcdevworks/spectre-ui` for
+  styling behavior.
+- Do not add framework adapter concerns in this repo.
 
-- Use Lit for component implementation.
-- Keep all components in light DOM unless a design-system-level decision says
-  otherwise.
-- Do not hardcode colors, spacing, shadows, or token-derived visual primitives.
-- Prefer `@phcdevworks/spectre-ui` contracts over recreating styling logic.
-- Do not add framework adapters, routing, app shell logic, or unrelated tooling
-  abstractions here.
+## Working Style
 
-## Copilot Support Priorities
+- Prefer small, pattern-aligned changes over broad rewrites.
+- Keep tests, docs, and exports in sync when behavior changes.
+- Preserve unrelated local changes.
+- Do not create commits unless explicitly asked.
 
-- Help keep the package production ready by checking API stability,
-  accessibility, validation status, docs consistency, and release notes.
-- When changing source, also consider whether `README.md`, `AGENTS.md`,
-  `CHANGELOG.md`, `package.json`, `tsup.config.ts`, or tests need updates.
-- Prefer the narrowest useful validation first, then finish with `npm run check`
-  before release handoff when code or docs meaningfully change.
-- Do not create git commits unless explicitly asked.
-- Do not expand Jules tasks into feature ownership or release ownership.
-- Preserve unrelated user changes in the worktree.
+## Validation
 
-## GitHub Workflow Support
+- Focused checks first, then `npm run check` for non-trivial changes.
+- Use package scripts as the source of truth for build/test/lint.
 
-- Use the existing issue templates, PR template, Dependabot setup, and CI
-  workflow instead of creating parallel processes.
-- When preparing a review or handoff, summarize changed behavior, validation
-  results, remaining risks, and any follow-up documentation needs.
-- Keep recommendations concrete and repository-specific rather than generic.
+## References
+
+- Shared boundaries: `AGENTS.md`
+- Lead implementation rules: `CLAUDE.md`
+- Release/readiness rules: `CODEX.md`
+- Scoped task instructions: `.github/instructions/`
