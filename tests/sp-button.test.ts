@@ -230,4 +230,16 @@ describe('sp-button', () => {
     button = element.querySelector('button');
     expect(button?.textContent?.trim()).toBe('Loading');
   });
+
+  it('renders an empty value attribute when value is explicitly an empty string', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.value = '';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const button = element.querySelector('button');
+    expect(button?.hasAttribute('value')).toBe(true);
+    expect(button?.getAttribute('value')).toBe('');
+  });
 });
