@@ -138,7 +138,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   }
 
   private get isDisabled(): boolean {
-    return this.disabled || this.loading;
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   private get visibleLabelFallback(): string | undefined {
@@ -160,7 +160,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     }
 
     if (this.hasProjectedContent) {
-      return this.projectedContent as Node[];
+      return this.projectedContent;
     }
 
     return this.visibleLabelFallback

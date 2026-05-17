@@ -158,7 +158,7 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   }
 
   private get isDisabled(): boolean {
-    return this.disabled || this.loading;
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   private get nativeInput(): HTMLInputElement | null {
