@@ -54,7 +54,7 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
   }
 
   private get isDisabled(): boolean {
-    return this.disabled || this.loading;
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   protected override getContentContainer(): Element | null {

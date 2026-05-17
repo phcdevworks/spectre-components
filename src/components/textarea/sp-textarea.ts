@@ -144,7 +144,7 @@ export class SpectreTextareaElement
   }
 
   private get isDisabled(): boolean {
-    return this.disabled || this.loading;
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   private get nativeTextarea(): HTMLTextAreaElement | null {

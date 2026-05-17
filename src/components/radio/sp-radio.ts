@@ -96,7 +96,7 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
   }
 
   private get isDisabled(): boolean {
-    return this.disabled || this.loading;
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   private get visibleLabelFallback(): string | undefined {
