@@ -94,6 +94,7 @@
     "build": "tsup --config tsup.config.ts",
     "clean": "rm -rf dist coverage",
     "dev": "tsup --config tsup.config.ts --watch",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",

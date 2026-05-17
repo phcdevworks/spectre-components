@@ -604,6 +604,32 @@ components are registered. Import `@phcdevworks/spectre-tokens/index.css` and
 properties as attributes. Use a `ref` to set properties imperatively, or
 upgrade to React 19 which supports custom elements fully.
 
+## Validation
+
+Run the full validation gate before any pull request:
+
+```bash
+npm run check
+```
+
+This runs: lint → typecheck → tests → build → export validation. All steps
+must pass.
+
+## AI and automation boundaries
+
+Claude Code (`claude-sonnet-4-6`) is the primary development agent for this
+repository. Codex handles releases and production stabilization. Jules handles
+small automated fixes and dependency updates. GitHub Copilot provides
+development support.
+
+No agent creates git commits. All changes are prepared and validated, then
+handed off to Bradley Potts for human review and commit.
+
+**Protected from automated change:** component public API surface (tags,
+properties, events, slots, ARIA), the light-DOM rendering model, and the
+zero-hardcode-values rule. See [AGENTS.md](AGENTS.md) for full agent governance
+and boundary rules.
+
 ## Contributing
 
 PHCDevworks maintains this package as part of the Spectre suite.
