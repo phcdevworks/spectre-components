@@ -21,7 +21,10 @@ export default tseslint.config(
       },
     },
     rules: {
+      "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-deprecated": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-console": "off",
     },
   },
   {
