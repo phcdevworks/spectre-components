@@ -213,6 +213,38 @@ describe('sp-radio', () => {
     expect(element.success).toBe(true);
     expect(element.hasAttribute('success')).toBe(true);
   });
+
+  it('coordinates checked state within a named group', async () => {
+    const radio1 = document.createElement('sp-radio') as SpectreRadioElement;
+    radio1.name = 'group1';
+    radio1.value = '1';
+    radio1.checked = true;
+
+    const radio2 = document.createElement('sp-radio') as SpectreRadioElement;
+    radio2.name = 'group1';
+    radio2.value = '2';
+
+    document.body.append(radio1, radio2);
+    await Promise.all([radio1.updateComplete, radio2.updateComplete]);
+
+    expect(radio1.checked).toBe(true);
+    expect(radio2.checked).toBe(false);
+
+    // Simulate clicking the second radio
+    const nativeRadio2 = radio2.querySelector('input');
+    if (nativeRadio2) {
+      nativeRadio2.checked = true;
+      nativeRadio2.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    await Promise.all([radio1.updateComplete, radio2.updateComplete]);
+
+    expect(radio2.checked).toBe(true);
+    // Note: In standard DOM without ElementInternals/form-associated logic
+    // in the custom element itself, radio1.checked might still be true.
+    // This test ensures that AT LEAST the clicked one becomes checked.
+    expect(radio1.checked).toBe(false);
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
