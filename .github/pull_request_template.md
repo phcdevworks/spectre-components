@@ -14,10 +14,10 @@
 
 ## Checklist
 
-- [ ] `npm run build` passes
-- [ ] `npm test` passes
+- [ ] `npm run check` passes, or blocked validation is explained below
 - [ ] No package boundary violations (tokens/styling not duplicated locally)
-- [ ] `CHANGELOG.md` updated
+- [ ] Docs are updated, or `N/A` is noted below
+- [ ] `CHANGELOG.md` updated, or `N/A` is noted below
 
 ## Screenshots (if applicable)
 

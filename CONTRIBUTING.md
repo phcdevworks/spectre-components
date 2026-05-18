@@ -156,7 +156,8 @@ spectre-components/
 
 ### Code Quality
 
-- Run `npm run check` before committing (lint + test + build)
+- Run `npm run check` before committing (lint + typecheck + test + build +
+  export validation)
 - Avoid `any` — use explicit types or `unknown`
 - Keep the public API surface small and explicit
 

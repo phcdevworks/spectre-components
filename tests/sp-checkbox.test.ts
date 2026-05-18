@@ -19,7 +19,9 @@ describe('sp-checkbox', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const input = element.querySelector('input[type=checkbox]');
+    const input = element.querySelector(
+      'input[type=checkbox]',
+    ) as HTMLInputElement | null;
     const label = element.querySelector('.sp-label');
 
     expect(input).not.toBeNull();
@@ -35,7 +37,9 @@ describe('sp-checkbox', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const input = element.querySelector('input[type=checkbox]');
+    const input = element.querySelector<HTMLInputElement>(
+      'input[type=checkbox]',
+    );
     expect(input?.getAttribute('form')).toBe('test-form');
   });
 
@@ -205,7 +209,9 @@ describe('sp-checkbox', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const input = element.querySelector('input[type=checkbox]');
+    const input = element.querySelector(
+      'input[type=checkbox]',
+    ) as HTMLInputElement | null;
     expect(input?.disabled).toBe(true);
     expect(input?.getAttribute('aria-busy')).toBe('true');
 

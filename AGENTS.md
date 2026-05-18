@@ -21,7 +21,7 @@ This repository follows the Spectre AI factory model:
 | ----- | ---- | --------- |
 | Claude Code | Lead developer responsible for primary implementation | `CLAUDE.md` |
 | OpenAI Codex | Documentation, releases, production stabilization, repo hygiene, and config standardization | `CODEX.md` |
-| GitHub Copilot | General development assistance | `.github/copilot-instructions.md` |
+| GitHub Copilot | General development assistance | `COPILOT.md` and `.github/copilot-instructions.md` |
 | Google Jules | Automated maintenance for small fixes, dependency updates, and micro-updates | `JULES.md` |
 
 Claude Code keeps implementation leadership. Codex keeps release and
@@ -51,8 +51,9 @@ release and stabilization oversight, and Copilot supports day-to-day editing,
 GitHub-integrated review workflows, targeted refactor assistance, and
 documentation synchronization.
 
-Copilot operates from `.github/copilot-instructions.md` plus any scoped files in
-`.github/instructions/` and reusable prompts in `.github/prompts/`.
+Copilot operates from `COPILOT.md`, `.github/copilot-instructions.md`, any
+scoped files in `.github/instructions/`, and reusable prompts in
+`.github/prompts/`.
 
 Copilot does not create git commits unless Bradley Potts explicitly asks for a
 commit.
@@ -101,14 +102,14 @@ rules.
 
 | Tag           | Element class            | Entry point                   |
 | ------------- | ------------------------ | ----------------------------- |
-| `sp-button`   | `SpectreButtonElement`   | `spectre-components/button`   |
-| `sp-input`    | `SpectreInputElement`    | `spectre-components/input`    |
-| `sp-textarea` | `SpectreTextareaElement` | `spectre-components/textarea` |
-| `sp-select`   | `SpectreSelectElement`   | `spectre-components/select`   |
-| `sp-checkbox` | `SpectreCheckboxElement` | `spectre-components/checkbox` |
-| `sp-radio`    | `SpectreRadioElement`    | `spectre-components/radio`    |
-| `sp-label`    | `SpectreLabelElement`    | `spectre-components/label`    |
-| `sp-fieldset` | `SpectreFieldsetElement` | `spectre-components/fieldset` |
+| `sp-button`   | `SpectreButtonElement`   | `@phcdevworks/spectre-components/button`   |
+| `sp-input`    | `SpectreInputElement`    | `@phcdevworks/spectre-components/input`    |
+| `sp-textarea` | `SpectreTextareaElement` | `@phcdevworks/spectre-components/textarea` |
+| `sp-select`   | `SpectreSelectElement`   | `@phcdevworks/spectre-components/select`   |
+| `sp-checkbox` | `SpectreCheckboxElement` | `@phcdevworks/spectre-components/checkbox` |
+| `sp-radio`    | `SpectreRadioElement`    | `@phcdevworks/spectre-components/radio`    |
+| `sp-label`    | `SpectreLabelElement`    | `@phcdevworks/spectre-components/label`    |
+| `sp-fieldset` | `SpectreFieldsetElement` | `@phcdevworks/spectre-components/fieldset` |
 
 ## Implementation Notes
 
@@ -164,8 +165,8 @@ approval from Bradley Potts recorded in a commit message or PR description.
   intentional rendering contract for consuming shared Spectre styles.
 - Do not introduce speculative base classes or abstraction layers without
   repeated proven need across at least three components.
-- Do not remove or weaken the `npm run check` gate (lint → test → build →
-  export validation).
+- Do not remove or weaken the `npm run check` gate (lint → typecheck → test →
+  build → export validation).
 
 **Stability limits**
 - Do not change a component tag name (`sp-button`, `sp-input`, etc.) — ever.
@@ -177,8 +178,8 @@ approval from Bradley Potts recorded in a commit message or PR description.
 ## Validation Flow
 
 1. Update component source, tests, and package metadata as needed.
-2. Run `npm run build`.
-3. Run `npm test`.
-4. Run `npm run lint`.
+2. Run focused checks while developing (`npm run lint`, `npm run typecheck`,
+   `npm test`, or `npm run build` as appropriate).
+3. Run `npm run check` before handoff.
 5. Update `CHANGELOG.md` under `[Unreleased]` for every non-trivial change.
 6. Validate example or sandbox usage if the component API changed.

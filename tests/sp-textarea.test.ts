@@ -276,9 +276,7 @@ describe('sp-textarea', () => {
     ) as SpectreTextareaElement;
     // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.maxlength = 'invalid';
-    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.minlength = -5;
-    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.rows = 0;
 
     document.body.append(element);
