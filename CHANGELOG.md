@@ -6,6 +6,21 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Changed
+
+- Aligned AI guidance, PR checklist language, and package validation so
+  `npm run check` consistently covers lint, typecheck, tests, build, and export
+  validation.
+- Updated contributor-facing validation notes to match the full `npm run check`
+  gate.
+- Fixed existing TypeScript test and CSS side-effect import typing drift exposed
+  by the restored typecheck gate.
+- Added root Copilot support guidance to match the Spectre AI instruction
+  structure used by `@phcdevworks/spectre-tokens`.
+- Corrected README automation wording so Jules' bounded maintenance commit
+  authority matches `JULES.md`.
+- Updated shared agent guidance to reference the root Copilot support file.
+
 ### Added
 
 - `scripts/check-exports.js` — post-build export resolution check that imports
