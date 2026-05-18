@@ -17,7 +17,7 @@ Jules does not own primary development, architecture decisions, release ownershi
 2. Defer to `CLAUDE.md` for development authority.
 3. Treat `@phcdevworks/spectre-ui` and `@phcdevworks/spectre-tokens` as primary styling sources of truth.
 4. No edits to `dist/` or other build artifacts by hand.
-5. Commit and push only when validation checks (`npm run build` and `npm run test`) pass clean.
+5. Commit and push only when the full validation gate (`npm run check`) passes clean.
 6. If a gate fails and cannot be safely resolved within scope — revert and report the blocker instead of committing a broken state.
 
 ## Commit Authority

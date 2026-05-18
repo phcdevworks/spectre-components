@@ -80,7 +80,7 @@ Every component:
 npm run build        # Compile ESM + CJS with declarations into dist/
 npm test             # Vitest run (95 tests, happy-dom)
 npm run lint         # ESLint
-npm run check        # lint + test + build in sequence
+npm run check        # lint + typecheck + test + build + export validation
 npm run dev          # tsup --watch
 npm run clean        # rm -rf dist coverage
 ```
@@ -143,8 +143,8 @@ Always run `npm run check` before handing off for review.
 - Do not remove or rename a public property, event, or exported symbol
   without a semver major bump.
 - Do not add `dist/` or `dist_verify/` to commits — they are gitignored.
-- Do not skip `npm run check` before committing — it now includes export
-  validation in addition to lint, test, and build.
+- Do not skip `npm run check` before committing — it includes lint, typecheck,
+  test, build, and export validation.
 
 ## AI Collaboration
 

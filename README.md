@@ -561,14 +561,14 @@ behavior layer.
 git clone https://github.com/phcdevworks/spectre-components.git
 cd spectre-components
 npm install
-npm run check        # lint + test + build + export validation
+npm run check        # lint + typecheck + test + build + export validation
 ```
 
 Requires Node.js `^22.12.0 || >=24.0.0` and npm `11.14.1`.
 
 | Command | Purpose |
 |---------|---------|
-| `npm run check` | Full validation (lint → test → build → export check) |
+| `npm run check` | Full validation (lint → typecheck → test → build → export check) |
 | `npm run build` | Compile ESM + CJS with declarations into `dist/` |
 | `npm test` | Run Vitest suite under happy-dom |
 | `npm run lint` | ESLint |
@@ -622,8 +622,10 @@ repository. Codex handles releases and production stabilization. Jules handles
 small automated fixes and dependency updates. GitHub Copilot provides
 development support.
 
-No agent creates git commits. All changes are prepared and validated, then
-handed off to Bradley Potts for human review and commit.
+Claude Code, Codex, and Copilot do not create git commits by default. Jules may
+commit only bounded automated maintenance when the `JULES.md` scope and
+validation gates pass. Release decisions, tags, and publishing remain with
+Bradley Potts.
 
 **Protected from automated change:** component public API surface (tags,
 properties, events, slots, ARIA), the light-DOM rendering model, and the

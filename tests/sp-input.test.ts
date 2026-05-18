@@ -235,7 +235,6 @@ describe('sp-input', () => {
     const element = document.createElement('sp-input') as SpectreInputElement;
     // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.maxlength = 'invalid';
-    // @ts-expect-error -- exercising runtime coercion for invalid consumer values
     element.minlength = -5;
 
     document.body.append(element);

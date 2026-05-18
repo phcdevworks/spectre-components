@@ -19,7 +19,9 @@ describe('sp-radio', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const input = element.querySelector('input[type=radio]');
+    const input = element.querySelector(
+      'input[type=radio]',
+    ) as HTMLInputElement | null;
     const label = element.querySelector('.sp-label');
 
     expect(input).not.toBeNull();
@@ -35,7 +37,7 @@ describe('sp-radio', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const input = element.querySelector('input[type=radio]');
+    const input = element.querySelector<HTMLInputElement>('input[type=radio]');
     expect(input?.getAttribute('form')).toBe('test-form');
   });
 
@@ -193,7 +195,9 @@ describe('sp-radio', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const input = element.querySelector('input[type=radio]');
+    const input = element.querySelector(
+      'input[type=radio]',
+    ) as HTMLInputElement | null;
     expect(input?.disabled).toBe(true);
     expect(input?.getAttribute('aria-busy')).toBe('true');
 
