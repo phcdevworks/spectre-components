@@ -107,8 +107,17 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
       return;
     }
 
-    if (this.value !== '' && this.value !== undefined && nativeSelect.value !== this.value) {
-      nativeSelect.value = this.value;
+    const valueChanged = changedProperties.has('value');
+    const oldValue = changedProperties.get('value');
+
+    if (
+      valueChanged &&
+      this.value !== undefined &&
+      (this.value !== '' || oldValue !== undefined || this.hasAttribute('value'))
+    ) {
+      if (nativeSelect.value !== this.value) {
+        nativeSelect.value = this.value;
+      }
     }
 
     if (this.value === '' && !this.hasAttribute('value')) {
