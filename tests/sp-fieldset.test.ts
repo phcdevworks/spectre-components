@@ -94,6 +94,24 @@ describe('sp-fieldset', () => {
     expect(fieldset?.getAttribute('aria-busy')).toBe('false');
     expect(fieldset?.disabled).toBe(false);
   });
+
+  it('allows rich content in the legend via light-DOM projection', async () => {
+    const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
+    const legend = document.createElement('legend');
+    legend.innerHTML = '<span>Rich</span> Legend';
+    element.append(legend);
+    element.append(createChild('Content'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const fieldset = element.querySelector('fieldset');
+    const projectedLegend = fieldset?.querySelector('legend');
+
+    expect(projectedLegend).not.toBeNull();
+    expect(projectedLegend?.innerHTML).toContain('<span>Rich</span> Legend');
+    expect(fieldset?.textContent).toContain('Content');
+  });
 });
 
 function createChild(text: string): HTMLDivElement {
