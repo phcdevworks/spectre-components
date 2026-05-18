@@ -265,6 +265,25 @@ describe('sp-select', () => {
     const select = element.querySelector('select');
     expect(select?.getAttribute('form')).toBe('test-form');
   });
+
+  it('synchronizes value correctly when resetting to an empty string', async () => {
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.append(createOption('', 'Select...'), createOption('val', 'Value'));
+    element.value = 'val';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    let select = element.querySelector('select');
+    expect(select?.value).toBe('val');
+
+    element.value = '';
+    await element.updateComplete;
+
+    select = element.querySelector('select');
+    expect(select?.value).toBe('');
+    expect(element.value).toBe('');
+  });
 });
 
 function createOption(value: string, label: string): HTMLOptionElement {
