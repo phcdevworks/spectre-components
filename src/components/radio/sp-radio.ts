@@ -112,6 +112,18 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
   private handleChange(event: Event): void {
     const input = event.currentTarget as HTMLInputElement;
     this.checked = input.checked;
+
+    if (this.checked && this.name) {
+      const root = this.getRootNode() as ShadowRoot | Document;
+      const radios = root.querySelectorAll(
+        `sp-radio[name="${this.name}"]`,
+      ) as NodeListOf<SpectreRadioElement>;
+      radios.forEach((radio) => {
+        if (radio !== this) {
+          radio.checked = false;
+        }
+      });
+    }
   }
 
   override focus(options?: FocusOptions): void {
