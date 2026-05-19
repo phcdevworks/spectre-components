@@ -249,6 +249,60 @@ describe('sp-radio', () => {
     // This test ensures that AT LEAST the clicked one becomes checked.
     expect(radio1.checked).toBe(false);
   });
+
+  describe('group synchronization', () => {
+    it('unchecks other radios in the same group when checked programmatically', async () => {
+      const radio1 = document.createElement('sp-radio') as SpectreRadioElement;
+      radio1.name = 'group_sync_1';
+      radio1.value = '1';
+
+      const radio2 = document.createElement('sp-radio') as SpectreRadioElement;
+      radio2.name = 'group_sync_1';
+      radio2.value = '2';
+      radio2.checked = true;
+
+      document.body.append(radio1, radio2);
+      await Promise.all([radio1.updateComplete, radio2.updateComplete]);
+
+      expect(radio1.checked).toBe(false);
+      expect(radio2.checked).toBe(true);
+
+      // Act: programmatically check radio1
+      radio1.checked = true;
+      await Promise.all([radio1.updateComplete, radio2.updateComplete]);
+
+      // Assert
+      expect(radio1.checked).toBe(true);
+      expect(radio2.checked).toBe(false);
+    });
+
+    it('unchecks other radios in the same group when checked via user interaction', async () => {
+      const radio1 = document.createElement('sp-radio') as SpectreRadioElement;
+      radio1.name = 'group_sync_2';
+      radio1.value = '1';
+
+      const radio2 = document.createElement('sp-radio') as SpectreRadioElement;
+      radio2.name = 'group_sync_2';
+      radio2.value = '2';
+      radio2.checked = true;
+
+      document.body.append(radio1, radio2);
+      await Promise.all([radio1.updateComplete, radio2.updateComplete]);
+
+      expect(radio1.checked).toBe(false);
+      expect(radio2.checked).toBe(true);
+
+      // Act: simulate user interaction on radio1
+      const input = radio1.querySelector('input');
+      input!.checked = true;
+      input!.dispatchEvent(new Event('change', { bubbles: true }));
+      await Promise.all([radio1.updateComplete, radio2.updateComplete]);
+
+      // Assert
+      expect(radio1.checked).toBe(true);
+      expect(radio2.checked).toBe(false);
+    });
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
