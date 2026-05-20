@@ -53,6 +53,11 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     super.title = value;
   }
 
+  private get visibleLegend(): string | undefined {
+    const trimmedLegend = this.legend?.trim();
+    return trimmedLegend ? trimmedLegend : undefined;
+  }
+
   private get isDisabled(): boolean {
     return (this.disabled ?? false) || (this.loading ?? false);
   }
@@ -95,8 +100,8 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
       name="${ifDefined(this.name || undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
-      ${this.legend
-        ? html`<legend class="sp-label" data-sp-fieldset-legend>${this.legend}</legend>`
+      ${this.visibleLegend
+        ? html`<legend class="sp-label" data-sp-fieldset-legend>${this.visibleLegend}</legend>`
         : nothing}
       ${this.hasProjectedContent ? this.projectedContent : nothing}
     </fieldset>`;
