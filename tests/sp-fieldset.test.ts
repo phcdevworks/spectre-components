@@ -112,6 +112,17 @@ describe('sp-fieldset', () => {
     expect(projectedLegend?.innerHTML).toContain('<span>Rich</span> Legend');
     expect(fieldset?.textContent).toContain('Content');
   });
+
+  it('does not render a legend tag if legend property is whitespace only', async () => {
+    const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
+    element.legend = '   ';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const legend = element.querySelector('legend');
+    expect(legend).toBeNull();
+  });
 });
 
 function createChild(text: string): HTMLDivElement {
