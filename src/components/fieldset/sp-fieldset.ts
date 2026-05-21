@@ -29,13 +29,13 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     success: { type: Boolean, reflect: true },
   };
 
-  disabled = false;
+  disabled: boolean | undefined = false;
   form: string | undefined;
-  invalid = false;
+  invalid: boolean | undefined = false;
   legend: string | undefined;
-  loading = false;
+  loading: boolean | undefined = false;
   name: string | undefined;
-  success = false;
+  success: boolean | undefined = false;
 
   override get id(): string {
     return super.id;
@@ -76,6 +76,24 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
       el.hasAttribute('data-sp-fieldset-native') ||
       el.hasAttribute('data-sp-fieldset-legend')
     );
+  }
+
+  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('disabled') && this.disabled == null) {
+      this.disabled = false;
+    }
+
+    if (changedProperties.has('invalid') && this.invalid == null) {
+      this.invalid = false;
+    }
+
+    if (changedProperties.has('loading') && this.loading == null) {
+      this.loading = false;
+    }
+
+    if (changedProperties.has('success') && this.success == null) {
+      this.success = false;
+    }
   }
 
   override focus(options?: FocusOptions): void {

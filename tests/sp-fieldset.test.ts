@@ -113,15 +113,19 @@ describe('sp-fieldset', () => {
     expect(fieldset?.textContent).toContain('Content');
   });
 
-  it('does not render a legend tag if legend property is whitespace only', async () => {
+  it('does not render a legend when property is empty or whitespace', async () => {
     const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
-    element.legend = '   ';
+    element.legend = '  ';
 
     document.body.append(element);
     await element.updateComplete;
 
     const legend = element.querySelector('legend');
     expect(legend).toBeNull();
+
+    element.legend = '';
+    await element.updateComplete;
+    expect(element.querySelector('legend')).toBeNull();
   });
 });
 
