@@ -62,11 +62,6 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     return (this.disabled ?? false) || (this.loading ?? false);
   }
 
-  private get visibleLegend(): string | undefined {
-    const trimmedLegend = this.legend?.trim();
-    return trimmedLegend ? trimmedLegend : undefined;
-  }
-
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-fieldset-native]');
   }
