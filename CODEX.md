@@ -27,6 +27,28 @@ Staging, committing, tagging, and publishing remain human-controlled.
 Codex must not weaken Claude Code's lead developer role, assign release
 ownership to Copilot, or expand Jules beyond small automated maintenance.
 
+## Operating Principles
+
+1. Defer implementation authority to Claude Code and `CLAUDE.md`.
+2. Protect component tags, public exports, properties, events, slots, and
+   accessibility behavior before optimizing internal structure.
+3. Do not hand-edit generated output in `dist/` or verification artifacts.
+4. Keep changes scoped, conservative, and aligned with existing Lit patterns.
+5. Do not create commits, tags, releases, or publishes unless Bradley
+   explicitly asks.
+6. Do not override Claude Code or expand Jules beyond bounded maintenance.
+
+## Entry Point
+
+At the start of any Codex session:
+
+1. Read `AGENTS.md` for shared repository boundaries.
+2. Read `CLAUDE.md` for development authority and package rules.
+3. Read this file for Codex-specific procedures.
+4. Read `package.json`, `src/index.ts`, and `src/components/index.ts` as the
+   current package contract authority.
+5. Check `CHANGELOG.md [Unreleased]` for pending public API classification.
+
 ## Source Of Truth
 
 Read these files before making non-trivial changes:
@@ -66,6 +88,20 @@ Lead with findings, not summaries. For every meaningful change, check:
 - Documentation consistency across `README.md`, `AGENTS.md`, and component
   entry points when the public surface changes.
 
+## PR Review Checklist
+
+- [ ] **Contract drift** — tags, exports, props, events, slots, accessibility,
+      docs, and tests agree.
+- [ ] **Locked values** — no local token values, CSS recipes, or visual
+      primitives were introduced.
+- [ ] **Changelog classification** — public API changes are classified in
+      `CHANGELOG.md [Unreleased]`.
+- [ ] **Generated output sync** — `dist/` output was regenerated, not
+      hand-edited.
+- [ ] **Validation gate** — `npm run check` passes clean.
+- [ ] **Namespace integrity** — component tags remain `sp-*`, exported classes
+      remain `Spectre*`, and subpath exports stay intentional.
+
 ## Validation
 
 Run the full check before release handoff:
@@ -97,3 +133,11 @@ Before Bradley reviews a release candidate:
    components.
 5. Run `npm run check`.
 6. Summarize changed files, validation results, and unresolved risks.
+
+## Hard Limits
+
+- Never hand-edit generated files or build artifacts.
+- Never commit, tag, publish, or release without Bradley's explicit request.
+- Never override Claude Code's implementation authority.
+- Never remove or rename public component contracts without an approved
+  breaking-change path.

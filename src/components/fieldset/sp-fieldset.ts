@@ -53,6 +53,11 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     super.title = value;
   }
 
+  private get visibleLegend(): string | undefined {
+    const trimmedLegend = this.legend?.trim();
+    return trimmedLegend ? trimmedLegend : undefined;
+  }
+
   private get isDisabled(): boolean {
     return (this.disabled ?? false) || (this.loading ?? false);
   }

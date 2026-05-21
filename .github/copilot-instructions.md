@@ -33,8 +33,25 @@ handoff authority.
 
 ## Validation
 
-- Focused checks first, then `npm run check` for non-trivial changes.
-- Use package scripts as the source of truth for build/test/lint.
+- Focused checks first: `npm run lint`, `npm run typecheck`, `npm test`, or
+  `npm run build`.
+- Use `npm run check` as the full validation gate.
+
+## Pull Request Creation
+
+When opening a PR, populate every section of
+`.github/pull_request_template.md`:
+
+- **Linked issue** — issue number (`#N`) or `N/A`.
+- **Summary of changes** — one or two bullets describing what changed.
+- **Component API change type** — exactly one of `additive`, `behavioral
+  change`, `breaking`, or `N/A`.
+- **Type of Change** — check every box that applies.
+- **Checklist** — check each completed item; leave blocked items unchecked
+  with a brief inline note.
+
+Never submit a PR with an empty body or only the template headings left
+unfilled. CodeRabbit's description check blocks such PRs.
 
 ## References
 
