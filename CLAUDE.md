@@ -15,6 +15,38 @@ Claude Code does not create git commits in this repository. Prepare changes,
 run all validation, and leave staging, committing, tagging, and pushing to
 human review.
 
+## Multi-Agent Team
+
+This repository follows the Spectre AI factory model:
+
+| Agent | Role | Guide |
+| ----- | ---- | ----- |
+| Claude Code | Lead developer responsible for primary implementation, component behavior, accessibility, and package contracts | `CLAUDE.md` |
+| OpenAI Codex | Documentation, releases, production stabilization, repo hygiene, config standardization, contract review, and validation support | `CODEX.md` |
+| ChatGPT | Strategy, coordination, prompt design, and external review — support layer only, no implementation ownership | — |
+| GitHub Copilot | General development assistance and GitHub-integrated editing support | `COPILOT.md` and `.github/copilot-instructions.md` |
+| Google Jules | Automated maintenance for small fixes, dependency updates, generated-output sync, and micro-updates | `JULES.md` |
+
+`AGENTS.md` is the shared guide read by all agents. Resolve conflicts by
+following this file and the package contract in source, tests, and
+`package.json`.
+
+## Pull Request Creation
+
+When opening a PR, populate every section of
+`.github/pull_request_template.md`:
+
+- **Linked issue** — issue number (`#N`) or `N/A`.
+- **Summary of changes** — one or two bullets describing what changed.
+- **Component API change type** — exactly one of `additive`,
+  `behavioral change`, `breaking`, or `N/A`.
+- **Type of Change** — check every box that applies.
+- **Checklist** — check each completed item; leave blocked items unchecked
+  with a brief inline note.
+
+Never submit a PR with an empty body or only the template headings left
+unfilled. CodeRabbit's description check blocks such PRs.
+
 ## What this repository is
 
 `@phcdevworks/spectre-components` is **Layer 3** of the Spectre design system:
@@ -86,6 +118,14 @@ npm run clean        # rm -rf dist coverage
 ```
 
 Always run `npm run check` before handing off for review.
+
+## Development Workflow
+
+1. Install dependencies with `npm install` or `npm ci`.
+2. Make the smallest source, test, and documentation changes needed.
+3. Run focused checks while developing.
+4. Run `npm run check` before handoff.
+5. Update `CHANGELOG.md [Unreleased]` for every non-trivial public change.
 
 ## Adding a new component
 
@@ -203,3 +243,23 @@ Read before handoff or release:
 | `CODEX.md` | Codex operating guide (release and review counterpart) |
 | `CODEX_REVIEW_CHECKLIST.md` | Change review checklist |
 | `CODEX_RELEASE_CHECKLIST.md` | Release candidate checklist |
+
+## Key Scripts Reference
+
+| Script | Purpose |
+|---|---|
+| `npm run check` | Full gate: lint, typecheck, test, build, export validation |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript no-emit check |
+| `npm test` | Vitest component tests |
+| `npm run build` | tsup package build |
+| `npm run check:exports` | Validate package export paths |
+
+## Code Style
+
+- ES modules throughout, strict TypeScript, no `any`.
+- Prettier config: single quotes, no semicolons, trailing commas off, 80-char
+  print width.
+- No comments unless the why is non-obvious. Never comment what the code does.
+- Keep Lit components small, explicit, accessible, and aligned with existing
+  component patterns.
