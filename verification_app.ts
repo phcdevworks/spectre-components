@@ -113,6 +113,10 @@ const template = html`
       </div>
       <p id='contact-help'>Choose how you would like to hear from us.</p>
     </sp-fieldset>
+
+    <sp-fieldset legend='  '>
+      <p>This fieldset has a whitespace legend and should not render a legend tag.</p>
+    </sp-fieldset>
   </section>
 `;
 
