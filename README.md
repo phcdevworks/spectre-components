@@ -1,10 +1,9 @@
 # @phcdevworks/spectre-components
 
-[![CI](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml/badge.svg)](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/@phcdevworks/spectre-components)](https://www.npmjs.com/package/@phcdevworks/spectre-components)
-[![GitHub issues](https://img.shields.io/github/issues/phcdevworks/spectre-components)](https://github.com/phcdevworks/spectre-components/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/phcdevworks/spectre-components)](https://github.com/phcdevworks/spectre-components/pulls)
-[![License](https://img.shields.io/github/license/phcdevworks/spectre-components)](LICENSE)
+[![CI](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml)
+[![License](https://img.shields.io/npm/l/@phcdevworks/spectre-components)](LICENSE)
+[![Node](https://img.shields.io/node/v/@phcdevworks/spectre-components)](https://nodejs.org)
 
 `@phcdevworks/spectre-components` is the **Layer 3** Lit-based web component
 package of the Spectre design system. It turns Spectre tokens
@@ -13,7 +12,8 @@ package of the Spectre design system. It turns Spectre tokens
 custom elements — the canonical component implementation layer for Spectre,
 designed to be consumed directly or wrapped by downstream adapter packages.
 
-[Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md) |
+[Contributing](CONTRIBUTING.md) | [Code of Conduct](CODE_OF_CONDUCT.md) |
+[Changelog](CHANGELOG.md) | [Roadmap](ROADMAP.md) |
 [Security Policy](SECURITY.md)
 
 ## Why this package exists alongside spectre-ui
