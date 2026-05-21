@@ -115,7 +115,7 @@ describe('sp-fieldset', () => {
 
   it('does not render a legend when property is empty or whitespace', async () => {
     const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
-    element.legend = '   ';
+    element.legend = '  ';
 
     document.body.append(element);
     await element.updateComplete;
