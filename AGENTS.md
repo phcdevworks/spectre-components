@@ -21,12 +21,35 @@ This repository follows the Spectre AI factory model:
 | ----- | ---- | --------- |
 | Claude Code | Lead developer responsible for primary implementation | `CLAUDE.md` |
 | OpenAI Codex | Documentation, releases, production stabilization, repo hygiene, and config standardization | `CODEX.md` |
+| ChatGPT | Strategy, coordination, prompt design, and external review — support layer only, no implementation ownership | — |
 | GitHub Copilot | General development assistance | `COPILOT.md` and `.github/copilot-instructions.md` |
 | Google Jules | Automated maintenance for small fixes, dependency updates, and micro-updates | `JULES.md` |
 
 Claude Code keeps implementation leadership. Codex keeps release and
-stabilization work clean. Copilot assists without owning decisions. Jules may
-only take small, bounded maintenance tasks when configured for this repository.
+stabilization work clean. ChatGPT provides strategy and coordination support
+only. Copilot assists without owning decisions. Jules may only take small,
+bounded maintenance tasks when configured for this repository.
+
+**Bradley Potts** holds final authority for all commits, merges, tags,
+publishing, and releases. No AI agent holds commit authority in this repository
+except Jules, which may commit bounded automated maintenance when all validation
+gates pass.
+
+## Edit Permissions
+
+These rules apply to every agent without exception.
+
+| Path | Status | Notes |
+|---|---|---|
+| `src/components/` | **May edit** | Lit custom element implementations, public props, slots, events, and accessibility behavior |
+| `src/utils/` | **May edit** | Shared component utilities; keep abstractions proven and small |
+| `src/index.ts` · `src/components/index.ts` | **May edit carefully** | Public registration and export contract |
+| `tests/` | **May edit** | Keep behavior and accessibility coverage aligned with source |
+| `scripts/` | **May edit** | Validation tooling such as export checks |
+| `README.md` · `CONTRIBUTING.md` · `CHANGELOG.md` | **May edit** | Keep public docs and release notes aligned with component contracts |
+| `package.json` · `tsup.config.ts` | **May edit carefully** | Required when public entry points change |
+| `dist/` · `dist_verify/` | **Never edit directly** | Generated build output; regenerate via `npm run build` |
+| Component tag names (`sp-*`) | **Protected** | Require explicit Bradley Potts approval and a breaking-change path |
 
 ## Codex Release Agent
 
@@ -181,5 +204,32 @@ approval from Bradley Potts recorded in a commit message or PR description.
 2. Run focused checks while developing (`npm run lint`, `npm run typecheck`,
    `npm test`, or `npm run build` as appropriate).
 3. Run `npm run check` before handoff.
-5. Update `CHANGELOG.md` under `[Unreleased]` for every non-trivial change.
-6. Validate example or sandbox usage if the component API changed.
+4. Update `CHANGELOG.md` under `[Unreleased]` for every non-trivial change.
+5. Validate example or sandbox usage if the component API changed.
+
+## Pull Request Creation
+
+Every agent that opens a PR must populate every section of the repo's PR
+template (`.github/pull_request_template.md`):
+
+- **Linked issue** — issue number (`#N`) or `N/A`.
+- **Summary of changes** — one or two bullets describing what changed.
+- **Component API change type** — exactly one of `additive`,
+  `behavioral change`, `breaking`, or `N/A`.
+- **Type of Change** — check every box that applies.
+- **Checklist** — check each completed item; leave blocked items unchecked
+  with a brief inline note.
+
+Never submit a PR with an empty body or only the template headings left
+unfilled. CodeRabbit's description check blocks such PRs.
+
+## Claude Code Maintenance Notes
+
+- Run `npm run check` before every handoff touching `src/`, `tests/`,
+  `scripts/`, package exports, or docs.
+- Never hand-edit generated build output in `dist/` or `dist_verify/`.
+- Keep component tags, public properties, events, slots, exports, and
+  accessibility behavior stable unless an intentional breaking change is
+  approved.
+- Keep visual behavior downstream of `@phcdevworks/spectre-tokens` and
+  `@phcdevworks/spectre-ui`; do not recreate token values or recipes locally.

@@ -168,6 +168,31 @@ spectre-components/
 - Document breaking changes in CHANGELOG.md
 - Keep inline comments minimal and focused on non-obvious behavior
 
+## Contract-Impacting Changes
+
+Any change that touches a public API surface requires explicit classification
+before review. Public surfaces include component tag names, public properties,
+events, slots, accessibility behavior, root exports, subpath exports,
+`package.json` exports, README examples, and generated package output.
+
+Step-by-step checklist:
+
+1. Identify the change classification: `additive`, `behavioral change`,
+   `breaking`, or `N/A`.
+2. Update source, tests, README examples, and `CHANGELOG.md [Unreleased]`
+   together.
+3. Confirm no token values, CSS recipes, or visual primitives were recreated
+   locally.
+4. Regenerate package output with `npm run build` if exports or output changed.
+5. Run the full validation command:
+
+   ```bash
+   npm run check
+   ```
+
+6. Stop for Bradley Potts approval before renaming a component tag, removing a
+   public export, or weakening accessibility behavior.
+
 ## Pull Request Process
 
 1. **Branch from `main`**
