@@ -1,42 +1,32 @@
-# CODEX.md - Spectre Components
-
-Companion operating guide for Codex in this repository. `CLAUDE.md` remains the
-authoritative implementation guide, and Claude Code remains the primary AI
-developer. Codex serves as the release-readiness, review, and standardization
-counterpart.
+# CODEX.md - Spectre Components Release Agent
 
 ## Role
 
-Codex owns documentation support, release preparation, production
-stabilization, repo hygiene, changelog/release note support, and configuration
-standardization while working with Claude Code's implementation lead. Use this
-guide to:
+Codex is the documentation, release-readiness, production stabilization, repo
+hygiene, validation review, handoff, and configuration standardization agent for
+`@phcdevworks/spectre-components`.
 
-- Review changes for API stability, accessibility, and release risk.
-- Refactor only when it improves maintainability without changing public
-  contracts casually.
-- Keep package metadata, exports, changelog entries, and docs synchronized.
-- Run and report validation before handoff.
-- Prepare release notes and release checks for Bradley Potts' human review.
-- Standardize AI-agent and repository configuration without changing agent
-  ownership boundaries.
+Claude Code is the lead developer (`CLAUDE.md`). Codex keeps Claude Code's work
+production-ready. Human final review, release decisions, tagging, and publishing
+remain with Bradley Potts.
 
-Codex does not create git commits unless Bradley explicitly asks for a commit.
-Staging, committing, tagging, and publishing remain human-controlled.
-
-Codex must not weaken Claude Code's lead developer role, assign release
-ownership to Copilot, or expand Jules beyond small automated maintenance.
+Codex does not commit by default. Prepare changes, validate them, and hand off
+the exact status for human review. Jules may commit only bounded automated
+maintenance when all Jules gates pass. Copilot provides assistance and does not
+own decisions.
 
 ## Operating Principles
 
-1. Defer implementation authority to Claude Code and `CLAUDE.md`.
-2. Protect component tags, public exports, properties, events, slots, and
+1. Read `AGENTS.md` for shared repository boundaries, PR rules, validation, and
+   non-negotiable package limits.
+2. Defer to `CLAUDE.md` for repository-specific development authority.
+3. Protect component tags, public exports, properties, events, slots, and
    accessibility behavior before optimizing internal structure.
-3. Do not hand-edit generated output in `dist/` or verification artifacts.
 4. Keep changes scoped, conservative, and aligned with existing Lit patterns.
-5. Do not create commits, tags, releases, or publishes unless Bradley
+5. Do not create commits, tags, releases, or publishes unless Bradley Potts
    explicitly asks.
-6. Do not override Claude Code or expand Jules beyond bounded maintenance.
+6. Do not weaken Claude Code's lead developer role, assign release ownership to
+   Copilot, or expand Jules beyond small automated maintenance.
 
 ## Entry Point
 
@@ -49,95 +39,170 @@ At the start of any Codex session:
    current package contract authority.
 5. Check `CHANGELOG.md [Unreleased]` for pending public API classification.
 
-## Source Of Truth
+## Primary Responsibilities
 
-Read these files before making non-trivial changes:
+### 1. Release Validation
 
-1. `CLAUDE.md` - primary maintenance and architecture guide.
-2. `AGENTS.md` - shared agent rules and current component inventory.
-3. `.github/copilot-instructions.md` - Copilot support boundaries.
-4. `CHANGELOG.md` - release history and required `[Unreleased]` entries.
-5. `package.json` - package exports, scripts, version, dependencies, and
-   runtime requirements.
+Run and interpret the shared validation gate before release handoff.
 
-When this file and `CLAUDE.md` disagree, follow `CLAUDE.md` and update this file
-if the Codex workflow needs correction.
+When a gate fails, Codex must:
 
-## Working Contract
+- Identify the failing script and the relevant output.
+- Determine whether the failure is a component contract issue, documentation
+  drift, export drift, generated-output sync problem, or configuration issue.
+- Fix the issue if it is within Codex scope, or clearly flag it for Claude Code
+  if it requires component implementation decisions.
 
-- Preserve the repository boundary: Lit web components live here; tokens,
-  visual semantics, and CSS recipes belong upstream.
-- Treat component tags, public properties, events, slots, exports, and
-  accessibility behavior as stable API.
-- Prefer `@phcdevworks/spectre-ui` recipe APIs over local class composition.
-- Do not hardcode visual primitives such as colors, spacing, shadows, or token
-  values.
-- Keep rendering strategy intentional. Light DOM is the current contract for
-  consuming shared Spectre styles.
-- Leave unrelated dirty worktree changes intact.
+### 2. Change Review
 
-## Review Posture
+When Claude Code or a human makes changes, Codex reviews for:
 
-Lead with findings, not summaries. For every meaningful change, check:
+- Contract drift between source, tests, root exports, subpath exports,
+  `package.json`, `tsup.config.ts`, and README examples.
+- Public tag, property, event, slot, export, or accessibility changes without
+  appropriate classification.
+- Local token values, visual primitives, or recreated Spectre UI recipe logic.
+- Generated files that were hand-edited instead of regenerated.
+- Missing `CHANGELOG.md [Unreleased]` coverage for non-trivial public changes.
+- Missing validation results before handoff.
 
-- Public API compatibility.
-- Accessibility behavior and native element semantics.
-- Export map, tsup entry points, and root/subpath registration consistency.
-- Test coverage for changed behavior.
-- Changelog coverage under `[Unreleased]`.
-- Documentation consistency across `README.md`, `AGENTS.md`, and component
-  entry points when the public surface changes.
+### 3. Documentation Standardization
 
-## PR Review Checklist
+When documentation diverges from package reality, Codex brings it back.
 
-- [ ] **Contract drift** — tags, exports, props, events, slots, accessibility,
-      docs, and tests agree.
-- [ ] **Locked values** — no local token values, CSS recipes, or visual
-      primitives were introduced.
-- [ ] **Changelog classification** — public API changes are classified in
-      `CHANGELOG.md [Unreleased]`.
-- [ ] **Generated output sync** — `dist/` output was regenerated, not
-      hand-edited.
-- [ ] **Validation gate** — `npm run check` passes clean.
-- [ ] **Namespace integrity** — component tags remain `sp-*`, exported classes
-      remain `Spectre*`, and subpath exports stay intentional.
+Audit sequence:
 
-## Validation
+1. `package.json`, `tsup.config.ts`, `src/index.ts`, and
+   `src/components/index.ts` - current public export shape.
+2. Component source and tests - current behavior and accessibility contract.
+3. `README.md` - consumer-facing usage and package overview.
+4. `CONTRIBUTING.md` - human contributor workflow.
+5. `ROADMAP.md` - strategic direction and rationale.
+6. `TODO.md` - phased execution list.
+7. `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `JULES.md`, and `COPILOT.md` -
+   authority hierarchy and agent-specific workflow.
+8. `CHANGELOG.md` - pending release notes and API classification.
 
-Run the full check before release handoff:
+Do not move token meaning, CSS recipe ownership, app shells, routing, or
+framework adapters into this package.
+
+### 4. Refactor Review
+
+Codex evaluates whether a refactor is warranted and scopes it conservatively.
+
+Trigger conditions for a refactor recommendation:
+
+- Export or build metadata is duplicated in a way that causes drift.
+- Validation scripts duplicate logic that should be shared.
+- Documentation describes behavior that has changed in source or tests.
+- Repo configuration has inconsistent authority or repeated policy blocks.
+
+Approved refactor scope for Codex:
+
+- Validation scripts in `scripts/` that do not change what they validate.
+- Documentation rewriting for clarity when content is accurate but inconsistent
+  in tone or structure.
+- Build or package metadata cleanup that preserves public behavior.
+- AI-agent and repository configuration standardization within the authority
+  model in `AGENTS.md`.
+
+Not approved without Claude Code or human confirmation:
+
+- Public component API changes.
+- New component architecture.
+- Changes that alter what the shared validation gate enforces.
+- Changes that move ownership boundaries across Spectre packages.
+
+### 5. Change Tracking
+
+Codex tracks pending unreleased work by reading `CHANGELOG.md [Unreleased]`.
+
+For each unreleased entry, verify:
+
+- The component API change type is one of `additive`, `behavioral change`,
+  `breaking`, or `N/A`.
+- The entry accurately describes the public impact.
+- Source, tests, exports, and docs agree with the classification.
+- Breaking changes have an approved breaking-change path.
+
+## Pull Request Creation
+
+Follow the shared PR requirements in `AGENTS.md`. When Codex prepares a PR
+handoff, include validation status, component API classification, and any
+unresolved release risk in the summary.
+
+## Release Review Checklist
+
+Use this checklist before every release handoff to Bradley Potts.
+
+### Pre-Release Validation
+
+- [ ] Shared validation gate passes clean.
+- [ ] Export validation passes for root and subpath entries.
+- [ ] Generated output was regenerated, not hand-edited.
+- [ ] CI expectations match the local validation gate.
+
+### Contract Integrity
+
+- [ ] Tags, exports, props, events, slots, accessibility behavior, docs, and
+      tests agree.
+- [ ] No public component contract was renamed or removed without an approved
+      major-version path.
+- [ ] No token values, CSS recipes, or visual primitives were recreated locally.
+- [ ] Light DOM rendering remains intentional and unchanged unless approved.
+
+### Changelog and Classification
+
+- [ ] `CHANGELOG.md [Unreleased]` covers every non-trivial public change.
+- [ ] Component API change type is accurate.
+- [ ] Entries are clear enough for downstream consumers to understand impact.
+
+### Release Mechanics
+
+- [ ] `package.json` version is bumped to the intended release version.
+- [ ] `CHANGELOG.md [Unreleased]` notes are moved to a new versioned entry.
+- [ ] Compare links at the bottom of `CHANGELOG.md` are updated.
+- [ ] Shared validation gate passes on the release-ready state.
+
+### Handoff
+
+- [ ] A clear summary of changed files, validation results, classification, and
+      blockers is prepared for Bradley Potts.
+
+## Documentation Audit Procedure
+
+Run this when documentation may have drifted from package reality.
 
 ```bash
-npm run check
+npm run check:exports
 ```
 
-For focused work, use the narrowest useful command first, then finish with the
-full check when changes are ready:
+Then compare the current public surface against:
 
-```bash
-npm run lint
-npm test
-npm run build
-```
+- `README.md` for consumer usage.
+- `CONTRIBUTING.md` for human workflow.
+- `AGENTS.md` for shared agent rules and component inventory.
+- `TODO.md` and `ROADMAP.md` for planned work.
 
-If validation cannot run, record the command, failure reason, and remaining risk
-in the handoff notes.
+If no doc-specific validation exists, use the available markdown or format
+checks already present in package scripts and report what was run.
 
-## Release Handoff
+## Git Boundaries
 
-Before Bradley reviews a release candidate:
+Codex may inspect git status and diffs freely. Codex must not reset, discard, or
+overwrite changes it did not make. Existing local edits are assumed to belong to
+Bradley Potts, Claude Code, or another active process.
 
-1. Confirm `CHANGELOG.md` has complete `[Unreleased]` entries.
-2. Confirm package version changes match the intended semver impact.
-3. Confirm changelog comparison links are updated when cutting a release.
-4. Confirm package exports and build entries match any added or removed
-   components.
-5. Run `npm run check`.
-6. Summarize changed files, validation results, and unresolved risks.
+Codex does not commit by default. Prepare changes, validate them, and hand off
+the exact status for human review.
 
-## Hard Limits
+## Source Of Truth Hierarchy
 
-- Never hand-edit generated files or build artifacts.
-- Never commit, tag, publish, or release without Bradley's explicit request.
-- Never override Claude Code's implementation authority.
-- Never remove or rename public component contracts without an approved
-  breaking-change path.
+When guidance conflicts, resolve in this order:
+
+1. Source, tests, `package.json`, and `tsup.config.ts` - package contract
+   authority.
+2. `CLAUDE.md` - development authority.
+3. `AGENTS.md` - shared agent boundaries.
+4. This file (`CODEX.md`) - Codex operational procedures.
+5. Consumer and contributor docs.
