@@ -6,8 +6,16 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `sp-button`: added `icon-only` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
+- `sp-label`: added `disabled` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
+
 ### Changed
 
+- Updated `@phcdevworks/spectre-tokens` to `^2.6.0` and `@phcdevworks/spectre-ui` to `^1.6.0`.
+- `sp-button`: updated `getButtonClasses` call to include `iconOnly` state.
+- `sp-label`, `sp-fieldset`, `sp-checkbox`, `sp-radio`: updated internal labels and legends to use `getInputLabelClasses` recipe from `@phcdevworks/spectre-ui`, ensuring consistent typography and disabled states.
 - Aligned AI guidance, PR checklist language, and package validation so
   `npm run check` consistently covers lint, typecheck, tests, build, and export
   validation.
