@@ -25,6 +25,7 @@ export interface SpectreButtonProps {
   disabled?: boolean | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
+  iconOnly?: boolean | undefined;
   id?: string | null | undefined;
   label?: string | undefined;
   loading?: boolean | undefined;
@@ -44,6 +45,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    iconOnly: { attribute: 'icon-only', type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
     loadingLabel: { attribute: 'loading-label', type: String, reflect: true },
@@ -59,6 +61,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   disabled = false;
   form: string | undefined;
   fullWidth = false;
+  iconOnly = false;
   label: string | undefined;
   loading = false;
   loadingLabel: string | undefined = 'Loading';
@@ -130,6 +133,7 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     return getButtonClasses({
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
+      iconOnly: this.iconOnly ?? false,
       loading: this.loading ?? false,
       pill: this.pill ?? false,
       size: this.size as ButtonSize,
