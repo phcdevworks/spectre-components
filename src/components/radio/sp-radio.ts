@@ -4,6 +4,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectreProjectableElement } from '../../utils/projectable';
 
+import { getInputLabelClasses } from '@phcdevworks/spectre-ui';
+
 export interface SpectreRadioProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
@@ -155,7 +157,10 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
     const labelContent = this.hasProjectedContent
       ? this.projectedContent
       : this.visibleLabelFallback
-        ? html`<span class="sp-label" data-sp-radio-label-fallback>${this.visibleLabelFallback}</span>`
+        ? html`<span
+            class="${getInputLabelClasses({ disabled: this.isDisabled })}"
+            data-sp-radio-label-fallback
+          >${this.visibleLabelFallback}</span>`
         : nothing;
 
     return html`<label data-sp-radio-label>
