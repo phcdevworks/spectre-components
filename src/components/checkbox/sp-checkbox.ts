@@ -4,6 +4,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectreProjectableElement } from '../../utils/projectable';
 
+import { getInputLabelClasses } from '@phcdevworks/spectre-ui';
+
 export interface SpectreCheckboxProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
@@ -126,7 +128,10 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
     const labelContent = this.hasProjectedContent
       ? this.projectedContent
       : this.visibleLabelFallback
-        ? html`<span class="sp-label" data-sp-checkbox-label-fallback>${this.visibleLabelFallback}</span>`
+        ? html`<span
+            class="${getInputLabelClasses({ disabled: this.isDisabled })}"
+            data-sp-checkbox-label-fallback
+          >${this.visibleLabelFallback}</span>`
         : nothing;
 
     return html`<label data-sp-checkbox-label>

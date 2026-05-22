@@ -3,6 +3,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import { SpectreProjectableElement } from '../../utils/projectable';
 
+import { getInputLabelClasses } from '@phcdevworks/spectre-ui';
+
 export interface SpectreFieldsetProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
@@ -119,7 +121,10 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.visibleLegend
-        ? html`<legend class="sp-label" data-sp-fieldset-legend>${this.visibleLegend}</legend>`
+        ? html`<legend
+            class="${getInputLabelClasses({ disabled: this.isDisabled })}"
+            data-sp-fieldset-legend
+          >${this.visibleLegend}</legend>`
         : nothing}
       ${this.hasProjectedContent ? this.projectedContent : nothing}
     </fieldset>`;

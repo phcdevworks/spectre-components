@@ -56,6 +56,9 @@ reflects package releases published to npm.
 
 - `sp-button`: added missing `sp-label` class to property-based label fallbacks
   and loading labels for typography consistency with other form controls.
+- `sp-label`, `sp-fieldset`, `sp-checkbox`, `sp-radio`: aligned label and legend
+  styling with Spectre UI `getInputLabelClasses` to ensure consistent
+  typography and disabled states.
 - `sp-textarea`: reflect `rows` property to the host attribute so HTML
   serialization stays consistent with the declared value.
 - `sp-fieldset`: added missing `aria-invalid` attribute to the native
