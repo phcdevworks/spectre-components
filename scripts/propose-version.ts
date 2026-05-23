@@ -8,7 +8,8 @@ const changelogPath = join(repoRoot, 'CHANGELOG.md')
 const packagePath = join(repoRoot, 'package.json')
 
 const CLASSIFICATION_PREFIX = 'Contract change type:'
-const ALLOWED = ['additive', 'semantic change', 'breaking']
+const ALLOWED = ['additive', 'semantic change', 'breaking'] as const
+type Classification = (typeof ALLOWED)[number]
 
 const changelog = readFileSync(changelogPath, 'utf8')
 const unreleasedSection = changelog.split('## [Unreleased]')[1]?.split('\n## [')[0] ?? ''
@@ -34,15 +35,27 @@ if (!match) {
   )
 }
 
-const classification = match[1].toLowerCase()
-const pkg = JSON.parse(readFileSync(packagePath, 'utf8'))
+const classification = match[1].toLowerCase() as Classification
+const pkg = JSON.parse(readFileSync(packagePath, 'utf8')) as {
+  version?: string
+}
 const current = pkg.version
+
+if (!current) {
+  throw new Error('package.json is missing a version field.')
+}
+
 const [majorStr, minorStr, patchStr] = current.split('.')
 const major = parseInt(majorStr, 10)
 const minor = parseInt(minorStr, 10)
 const patch = parseInt(patchStr, 10)
 
-let proposed, bumpType
+if ([major, minor, patch].some((value) => Number.isNaN(value))) {
+  throw new Error(`Invalid package.json version: ${current}`)
+}
+
+let proposed: string
+let bumpType: 'major' | 'minor' | 'patch'
 
 if (classification === 'breaking') {
   proposed = `${major + 1}.0.0`
