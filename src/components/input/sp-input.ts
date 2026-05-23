@@ -26,25 +26,30 @@ export interface SpectreInputProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
+  autocapitalize?: string | undefined;
   autocomplete?: string | undefined;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
+  enterkeyhint?: string | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
   id?: string | null | undefined;
   inputmode?: string | undefined;
   invalid?: boolean | undefined;
+  list?: string | undefined;
   loading?: boolean | undefined;
   max?: string | undefined;
   maxlength?: number | undefined;
   min?: string | undefined;
   minlength?: number | undefined;
   name?: string | undefined;
+  pattern?: string | undefined;
   pill?: boolean | undefined;
   placeholder?: string | undefined;
   readonly?: boolean | undefined;
   required?: boolean | undefined;
   size?: SpectreInputSize | undefined;
+  spellcheck?: boolean | undefined;
   step?: string | undefined;
   success?: boolean | undefined;
   title?: string | null | undefined;
@@ -54,50 +59,49 @@ export interface SpectreInputProps {
 
 export class SpectreInputElement extends SpectreBaseElement implements SpectreInputProps {
   static properties = {
+    autocapitalize: { type: String, reflect: true },
     autocomplete: { type: String, reflect: true },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
+    enterkeyhint: { type: String, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     inputmode: { type: String, reflect: true },
     invalid: { type: Boolean, reflect: true },
+    list: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
     max: { type: String, reflect: true },
     maxlength: { type: Number, reflect: true },
     min: { type: String, reflect: true },
     minlength: { type: Number, reflect: true },
     name: { type: String, reflect: true },
+    pattern: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
     placeholder: { type: String, reflect: true },
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
+    spellcheck: { type: Boolean, reflect: true },
     step: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
     type: { type: String, reflect: true },
     value: { type: String },
   };
 
+  override get autocapitalize(): string {
+    return super.autocapitalize;
+  }
+
+  override set autocapitalize(value: string | null | undefined) {
+    super.autocapitalize = value;
+  }
+
   autocomplete: string | undefined;
   autofocus = false;
   disabled = false;
+  enterkeyhint: string | undefined;
   form: string | undefined;
   fullWidth = false;
-  inputmode: string | undefined;
-  invalid = false;
-  loading = false;
-  max: string | undefined;
-  maxlength: number | undefined;
-  min: string | undefined;
-  minlength: number | undefined;
-  name: string | undefined;
-  pill = false;
-  placeholder: string | undefined;
-  readonly = false;
-  required = false;
-  size: SpectreInputSize | undefined = 'md';
-  step: string | undefined;
-  success = false;
 
   override get id(): string {
     return super.id;
@@ -106,6 +110,33 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   override set id(value: string | null | undefined) {
     super.id = value;
   }
+
+  inputmode: string | undefined;
+  invalid = false;
+  list: string | undefined;
+  loading = false;
+  max: string | undefined;
+  maxlength: number | undefined;
+  min: string | undefined;
+  minlength: number | undefined;
+  name: string | undefined;
+  pattern: string | undefined;
+  pill = false;
+  placeholder: string | undefined;
+  readonly = false;
+  required = false;
+  size: SpectreInputSize | undefined = 'md';
+
+  override get spellcheck(): boolean {
+    return super.spellcheck;
+  }
+
+  override set spellcheck(value: boolean | null | undefined) {
+    super.spellcheck = value;
+  }
+
+  step: string | undefined;
+  success = false;
 
   override get title(): string {
     return super.title;
@@ -190,22 +221,29 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      autocapitalize="${ifDefined(this.autocapitalize || undefined)}"
       autocomplete="${ifDefined(this.autocomplete || undefined)}"
       ?autofocus="${this.autofocus}"
       class="${this.inputClasses}"
       data-sp-input-native
       ?disabled="${this.isDisabled}"
+      enterkeyhint="${ifDefined(this.enterkeyhint || undefined)}"
       form="${ifDefined(this.form || undefined)}"
       ?readonly="${this.readonly}"
       ?required="${this.required}"
       id="${ifDefined(this.id || undefined)}"
       inputmode="${ifDefined(this.inputmode || undefined)}"
+      list="${ifDefined(this.list || undefined)}"
       max="${ifDefined(this.max || undefined)}"
       maxlength="${ifDefined(this.maxlength)}"
       min="${ifDefined(this.min || undefined)}"
       minlength="${ifDefined(this.minlength)}"
       name="${ifDefined(this.name || undefined)}"
+      pattern="${ifDefined(this.pattern || undefined)}"
       placeholder="${ifDefined(this.placeholder || undefined)}"
+      spellcheck="${ifDefined(
+        this.spellcheck === undefined ? undefined : String(this.spellcheck),
+      )}"
       step="${ifDefined(this.step || undefined)}"
       title="${ifDefined(this.title || undefined)}"
       type="${this.type}"
