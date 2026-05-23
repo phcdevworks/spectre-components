@@ -65,6 +65,12 @@ When Claude Code or a human makes changes, Codex reviews for:
 - Generated files that were hand-edited instead of regenerated.
 - Missing `CHANGELOG.md [Unreleased]` coverage for non-trivial public changes.
 - Missing validation results before handoff.
+- Accessibility behavior: labels, ARIA attributes, invalid/required/disabled
+  states, keyboard and focus behavior, and projected content must not break
+  native element semantics.
+- Test coverage: changed behavior has focused tests; regression cases cover
+  previously broken behavior; shared utility changes have cross-component
+  coverage where appropriate.
 
 ### 3. Documentation Standardization
 
@@ -142,6 +148,13 @@ Use this checklist before every release handoff to Bradley Potts.
 - [ ] Generated output was regenerated, not hand-edited.
 - [ ] CI expectations match the local validation gate.
 
+### Release Scope
+
+- [ ] Release contains only component-library work; no framework adapters, app
+      shell behavior, routing, or startup orchestration changes.
+- [ ] Any refactor preserves public component contracts unless the release is
+      intentionally breaking.
+
 ### Contract Integrity
 
 - [ ] Tags, exports, props, events, slots, accessibility behavior, docs, and
@@ -150,6 +163,10 @@ Use this checklist before every release handoff to Bradley Potts.
       major-version path.
 - [ ] No token values, CSS recipes, or visual primitives were recreated locally.
 - [ ] Light DOM rendering remains intentional and unchanged unless approved.
+- [ ] Root export (`src/index.ts`), component re-exports
+      (`src/components/index.ts`), and subpath exports (`package.json`) match
+      `tsup.config.ts` build entries.
+- [ ] Registration helpers remain explicit and idempotent.
 
 ### Changelog and Classification
 

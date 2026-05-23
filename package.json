@@ -95,6 +95,7 @@
     "clean": "rm -rf dist coverage",
     "dev": "tsup --config tsup.config.ts --watch",
     "typecheck": "tsc --noEmit",
+    "release:propose": "node scripts/propose-version.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
