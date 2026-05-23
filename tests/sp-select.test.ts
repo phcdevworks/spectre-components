@@ -31,7 +31,7 @@ describe('sp-select', () => {
     expect(options?.[1]?.textContent).toBe('Medium');
   });
 
-  it('reflects disabled, required, and name to the native select', async () => {
+  it('reflects disabled, required, and name to the native select and handles dynamic updates', async () => {
     const element = document.createElement('sp-select') as SpectreSelectElement;
     element.disabled = true;
     element.required = true;
@@ -41,12 +41,21 @@ describe('sp-select', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const select = element.querySelector('select');
+    let select = element.querySelector('select');
 
     expect(select?.disabled).toBe(true);
     expect(select?.required).toBe(true);
     expect(select?.getAttribute('name')).toBe('size');
     expect(select?.className).toContain('sp-input--disabled');
+
+    element.disabled = false;
+    element.required = false;
+    await element.updateComplete;
+
+    select = element.querySelector('select');
+    expect(select?.disabled).toBe(false);
+    expect(select?.required).toBe(false);
+    expect(select?.className).not.toContain('sp-input--disabled');
   });
 
   it('applies invalid semantics without overriding forwarded labeling', async () => {
