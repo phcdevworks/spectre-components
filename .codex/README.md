@@ -15,6 +15,5 @@ note support, and config standardization.
 
 ## Related Root Files
 
-- `CODEX.md` - Codex operating guide.
-- `CODEX_REVIEW_CHECKLIST.md` - component change review checklist.
-- `CODEX_RELEASE_CHECKLIST.md` - release candidate checklist.
+- `CODEX.md` - Codex operating guide, including the release review checklist
+  and change review procedure.

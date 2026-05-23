@@ -1,5 +1,5 @@
 ---
-applyTo: "CHANGELOG.md,README.md,AGENTS.md,CODEX.md,CODEX_REVIEW_CHECKLIST.md,CODEX_RELEASE_CHECKLIST.md,package.json,tsup.config.ts,.github/**"
+applyTo: "CHANGELOG.md,README.md,AGENTS.md,CODEX.md,package.json,tsup.config.ts,.github/**"
 description: "Use when updating release-readiness docs, GitHub metadata, exports, changelog entries, or repository-standardization files. Keeps handoff artifacts aligned with the current package contract."
 ---
 
