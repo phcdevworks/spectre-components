@@ -14,7 +14,7 @@ reflects package releases published to npm.
 
 - `sp-button`: added `icon-only` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
 - `sp-label`: added `disabled` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
-- `scripts/check-exports.js` — post-build export resolution check that imports
+- `scripts/check-exports.ts` — post-build export resolution check that imports
   each subpath entry point and verifies the expected registration functions and
   element classes are present.
 - `check:exports` npm script wired into `npm run check` after the build step,
@@ -42,6 +42,8 @@ reflects package releases published to npm.
 
 - Updated `@phcdevworks/spectre-tokens` to `^2.6.0` and `@phcdevworks/spectre-ui` to `^1.6.0`.
 - `sp-button`: updated `getButtonClasses` call to include `iconOnly` state.
+- `sp-input` and `sp-textarea`: expanded native attribute support and reinforced
+  coverage for standard form-control attributes.
 - `sp-label`, `sp-fieldset`, `sp-checkbox`, `sp-radio`: updated internal labels and legends to use `getInputLabelClasses` recipe from `@phcdevworks/spectre-ui`, ensuring consistent typography and disabled states.
 - Bumped `lit` to `^3.3.3`.
 - Bumped dev dependency ranges and updated lockfile.
@@ -66,6 +68,9 @@ reflects package releases published to npm.
   serialization stays consistent with the declared value.
 - `sp-fieldset`: added missing `aria-invalid` attribute to the native
   `<fieldset>` element.
+- `sp-fieldset`: tightened legend rendering to avoid empty legend output.
+- `sp-radio`: synchronized programmatic checked-state changes across radio
+  groups.
 - Refactored form utility normalization helpers for tighter property
   validation across `rows`, `maxlength`, and `minlength` inputs.
 
