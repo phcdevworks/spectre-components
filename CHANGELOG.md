@@ -12,13 +12,15 @@ reflects package releases published to npm.
 
 ### Added
 
-- `sp-button`: added `icon-only` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
-- `sp-label`: added `disabled` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
+- `sp-button`: added `icon-only` property to align with updated styling contract
+  in `@phcdevworks/spectre-ui`.
+- `sp-label`: added `disabled` property to align with updated styling contract
+  in `@phcdevworks/spectre-ui`.
 - `scripts/check-exports.ts` — post-build export resolution check that imports
   each subpath entry point and verifies the expected registration functions and
   element classes are present.
-- `check:exports` npm script wired into `npm run check` after the build step,
-  so CI now validates exports on every push and PR.
+- `check:exports` npm script wired into `npm run check` after the build step, so
+  CI now validates exports on every push and PR.
 - README: "Why this package exists alongside spectre-ui" architectural
   explanation covering the L1–L4 Spectre layer model.
 - README: per-component API reference tables covering all attributes, events,
@@ -28,8 +30,8 @@ reflects package releases published to npm.
   state-to-ARIA mapping, and label association patterns.
 - README: Light DOM rendering explanation and CSS targeting guidance
   (`data-sp-*-native` attribute selectors as stable hooks).
-- README: Framework integration notes for React 19+, React 18, Vue 3, and
-  Astro with minimal working examples.
+- README: Framework integration notes for React 19+, React 18, Vue 3, and Astro
+  with minimal working examples.
 - AGENTS.md: AI Hard Limits section with explicit unconditional rules covering
   scope, design system boundaries, architecture, and API stability.
 - CLAUDE.md: "What not to do" expanded with framework-specific examples and
@@ -40,11 +42,14 @@ reflects package releases published to npm.
 
 ### Changed
 
-- Updated `@phcdevworks/spectre-tokens` to `^2.6.0` and `@phcdevworks/spectre-ui` to `^1.6.0`.
+- Updated `@phcdevworks/spectre-tokens` to `^2.6.0` and
+  `@phcdevworks/spectre-ui` to `^1.6.0`.
 - `sp-button`: updated `getButtonClasses` call to include `iconOnly` state.
 - `sp-input` and `sp-textarea`: expanded native attribute support and reinforced
   coverage for standard form-control attributes.
-- `sp-label`, `sp-fieldset`, `sp-checkbox`, `sp-radio`: updated internal labels and legends to use `getInputLabelClasses` recipe from `@phcdevworks/spectre-ui`, ensuring consistent typography and disabled states.
+- `sp-label`, `sp-fieldset`, `sp-checkbox`, `sp-radio`: updated internal labels
+  and legends to use `getInputLabelClasses` recipe from
+  `@phcdevworks/spectre-ui`, ensuring consistent typography and disabled states.
 - Bumped `lit` to `^3.3.3`.
 - Bumped dev dependency ranges and updated lockfile.
 - Aligned AI guidance, PR checklist language, and package validation so
@@ -59,6 +64,8 @@ reflects package releases published to npm.
 - Corrected README automation wording so Jules' bounded maintenance commit
   authority matches `JULES.md`.
 - Updated shared agent guidance to reference the root Copilot support file.
+- Migrated `scripts/check-exports` and `scripts/propose-version` to TypeScript
+  and updated npm script invocations to run the `.ts` files directly.
 
 ### Fixed
 
@@ -71,8 +78,8 @@ reflects package releases published to npm.
 - `sp-fieldset`: tightened legend rendering to avoid empty legend output.
 - `sp-radio`: synchronized programmatic checked-state changes across radio
   groups.
-- Refactored form utility normalization helpers for tighter property
-  validation across `rows`, `maxlength`, and `minlength` inputs.
+- Refactored form utility normalization helpers for tighter property validation
+  across `rows`, `maxlength`, and `minlength` inputs.
 
 ## [1.1.0] - 2026-05-05
 
@@ -186,7 +193,8 @@ reflects package releases published to npm.
   in foundational controls.
 - Tightened property validation and control consistency for early public APIs.
 
-[unreleased]: https://github.com/phcdevworks/spectre-components/compare/1.2.0...HEAD
+[unreleased]:
+  https://github.com/phcdevworks/spectre-components/compare/1.2.0...HEAD
 [1.2.0]: https://github.com/phcdevworks/spectre-components/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/phcdevworks/spectre-components/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/phcdevworks/spectre-components/compare/0.0.1...1.0.0
