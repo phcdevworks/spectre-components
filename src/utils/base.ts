@@ -6,6 +6,8 @@ export class SpectreBaseElement extends LitElement {
   private _ariaLabel: string | null = null;
   private _ariaLabelledBy: string | null = null;
   private _ariaDescribedBy: string | null = null;
+  private _autocapitalize = '';
+  private _spellcheck: boolean | null = null;
   private _title = '';
   private _id = '';
 
@@ -45,6 +47,33 @@ export class SpectreBaseElement extends LitElement {
     }
     this._ariaDescribedBy = value;
     this._removeHostAttribute('aria-describedby');
+    this.requestUpdate();
+  }
+
+  override get autocapitalize(): string {
+    return this._autocapitalize;
+  }
+
+  override set autocapitalize(value: string | undefined | null) {
+    const normalizedValue = value ?? '';
+    if (this._autocapitalize === normalizedValue) {
+      return;
+    }
+    this._autocapitalize = normalizedValue;
+    this._removeHostAttribute('autocapitalize');
+    this.requestUpdate();
+  }
+
+  override get spellcheck(): boolean {
+    return this._spellcheck ?? super.spellcheck;
+  }
+
+  override set spellcheck(value: boolean | undefined | null) {
+    if (this._spellcheck === value) {
+      return;
+    }
+    this._spellcheck = value ?? null;
+    this._removeHostAttribute('spellcheck');
     this.requestUpdate();
   }
 
@@ -88,6 +117,8 @@ export class SpectreBaseElement extends LitElement {
     const proxiedAttributes = [
       'id',
       'title',
+      'autocapitalize',
+      'spellcheck',
       'aria-label',
       'aria-labelledby',
       'aria-describedby',
@@ -107,6 +138,10 @@ export class SpectreBaseElement extends LitElement {
         return this.id || null;
       case 'title':
         return this.title || null;
+      case 'autocapitalize':
+        return this.autocapitalize || null;
+      case 'spellcheck':
+        return this._spellcheck !== null ? String(this._spellcheck) : null;
       case 'aria-label':
         return this.ariaLabel;
       case 'aria-labelledby':
@@ -124,6 +159,10 @@ export class SpectreBaseElement extends LitElement {
         return this.id !== '';
       case 'title':
         return this.title !== '';
+      case 'autocapitalize':
+        return this.autocapitalize !== '';
+      case 'spellcheck':
+        return this._spellcheck !== null;
       case 'aria-label':
         return this.ariaLabel !== null;
       case 'aria-labelledby':
@@ -142,6 +181,12 @@ export class SpectreBaseElement extends LitElement {
         break;
       case 'title':
         this.title = value;
+        break;
+      case 'autocapitalize':
+        this.autocapitalize = value;
+        break;
+      case 'spellcheck':
+        this.spellcheck = value !== 'false';
         break;
       case 'aria-label':
         this.ariaLabel = value;
@@ -164,6 +209,12 @@ export class SpectreBaseElement extends LitElement {
         break;
       case 'title':
         this.title = '';
+        break;
+      case 'autocapitalize':
+        this.autocapitalize = '';
+        break;
+      case 'spellcheck':
+        this.spellcheck = null;
         break;
       case 'aria-label':
         this.ariaLabel = null;

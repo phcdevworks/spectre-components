@@ -15,9 +15,11 @@ export interface SpectreTextareaProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
+  autocapitalize?: string | undefined;
   autocomplete?: string | undefined;
   autofocus?: boolean | undefined;
   disabled?: boolean | undefined;
+  enterkeyhint?: string | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
   id?: string | null | undefined;
@@ -33,6 +35,7 @@ export interface SpectreTextareaProps {
   required?: boolean | undefined;
   rows?: number | undefined;
   size?: SpectreInputSize | undefined;
+  spellcheck?: boolean | undefined;
   success?: boolean | undefined;
   title?: string | null | undefined;
   value?: string | undefined;
@@ -44,9 +47,11 @@ export class SpectreTextareaElement
   extends SpectreBaseElement
   implements SpectreTextareaProps {
   static properties = {
+    autocapitalize: { type: String, reflect: true },
     autocomplete: { type: String, reflect: true },
     autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
+    enterkeyhint: { type: String, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     inputmode: { type: String, reflect: true },
@@ -61,15 +66,34 @@ export class SpectreTextareaElement
     required: { type: Boolean, reflect: true },
     rows: { type: Number, reflect: true },
     size: { type: String, reflect: true },
+    spellcheck: { type: Boolean, reflect: true },
     success: { type: Boolean, reflect: true },
     value: { type: String },
   };
 
+  override get autocapitalize(): string {
+    return super.autocapitalize;
+  }
+
+  override set autocapitalize(value: string | null | undefined) {
+    super.autocapitalize = value;
+  }
+
   autocomplete: string | undefined;
   autofocus = false;
   disabled = false;
+  enterkeyhint: string | undefined;
   form: string | undefined;
   fullWidth = false;
+
+  override get id(): string {
+    return super.id;
+  }
+
+  override set id(value: string | null | undefined) {
+    super.id = value;
+  }
+
   inputmode: string | undefined;
   invalid = false;
   loading = false;
@@ -82,15 +106,16 @@ export class SpectreTextareaElement
   required = false;
   rows: number | undefined = DEFAULT_ROWS;
   size: SpectreInputSize | undefined = 'md';
+
+  override get spellcheck(): boolean {
+    return super.spellcheck;
+  }
+
+  override set spellcheck(value: boolean | null | undefined) {
+    super.spellcheck = value;
+  }
+
   success = false;
-
-  override get id(): string {
-    return super.id;
-  }
-
-  override set id(value: string | null | undefined) {
-    super.id = value;
-  }
 
   override get title(): string {
     return super.title;
@@ -176,11 +201,13 @@ export class SpectreTextareaElement
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      autocapitalize="${ifDefined(this.autocapitalize || undefined)}"
       autocomplete="${ifDefined(this.autocomplete || undefined)}"
       ?autofocus="${this.autofocus}"
       class="${this.textareaClasses}"
       data-sp-textarea-native
       ?disabled="${this.isDisabled}"
+      enterkeyhint="${ifDefined(this.enterkeyhint || undefined)}"
       form="${ifDefined(this.form || undefined)}"
       inputmode="${ifDefined(this.inputmode || undefined)}"
       ?readonly="${this.readonly}"
@@ -191,6 +218,9 @@ export class SpectreTextareaElement
       name="${ifDefined(this.name || undefined)}"
       placeholder="${ifDefined(this.placeholder || undefined)}"
       rows="${this.rows}"
+      spellcheck="${ifDefined(
+        this.spellcheck === undefined ? undefined : String(this.spellcheck),
+      )}"
       title="${ifDefined(this.title || undefined)}"
       .value="${live(this.value)}"
       @change="${this.handleChange}"
