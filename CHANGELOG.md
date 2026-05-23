@@ -6,31 +6,14 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-05-23
+
+**Release Title:** Styling Contract Alignment and Export Validation
+
 ### Added
 
 - `sp-button`: added `icon-only` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
 - `sp-label`: added `disabled` property to align with updated styling contract in `@phcdevworks/spectre-ui`.
-
-### Changed
-
-- Updated `@phcdevworks/spectre-tokens` to `^2.6.0` and `@phcdevworks/spectre-ui` to `^1.6.0`.
-- `sp-button`: updated `getButtonClasses` call to include `iconOnly` state.
-- `sp-label`, `sp-fieldset`, `sp-checkbox`, `sp-radio`: updated internal labels and legends to use `getInputLabelClasses` recipe from `@phcdevworks/spectre-ui`, ensuring consistent typography and disabled states.
-- Aligned AI guidance, PR checklist language, and package validation so
-  `npm run check` consistently covers lint, typecheck, tests, build, and export
-  validation.
-- Updated contributor-facing validation notes to match the full `npm run check`
-  gate.
-- Fixed existing TypeScript test and CSS side-effect import typing drift exposed
-  by the restored typecheck gate.
-- Added root Copilot support guidance to match the Spectre AI instruction
-  structure used by `@phcdevworks/spectre-tokens`.
-- Corrected README automation wording so Jules' bounded maintenance commit
-  authority matches `JULES.md`.
-- Updated shared agent guidance to reference the root Copilot support file.
-
-### Added
-
 - `scripts/check-exports.js` — post-build export resolution check that imports
   each subpath entry point and verifies the expected registration functions and
   element classes are present.
@@ -57,8 +40,23 @@ reflects package releases published to npm.
 
 ### Changed
 
+- Updated `@phcdevworks/spectre-tokens` to `^2.6.0` and `@phcdevworks/spectre-ui` to `^1.6.0`.
+- `sp-button`: updated `getButtonClasses` call to include `iconOnly` state.
+- `sp-label`, `sp-fieldset`, `sp-checkbox`, `sp-radio`: updated internal labels and legends to use `getInputLabelClasses` recipe from `@phcdevworks/spectre-ui`, ensuring consistent typography and disabled states.
 - Bumped `lit` to `^3.3.3`.
 - Bumped dev dependency ranges and updated lockfile.
+- Aligned AI guidance, PR checklist language, and package validation so
+  `npm run check` consistently covers lint, typecheck, tests, build, and export
+  validation.
+- Updated contributor-facing validation notes to match the full `npm run check`
+  gate.
+- Fixed existing TypeScript test and CSS side-effect import typing drift exposed
+  by the restored typecheck gate.
+- Added root Copilot support guidance to match the Spectre AI instruction
+  structure used by `@phcdevworks/spectre-tokens`.
+- Corrected README automation wording so Jules' bounded maintenance commit
+  authority matches `JULES.md`.
+- Updated shared agent guidance to reference the root Copilot support file.
 
 ### Fixed
 
@@ -183,7 +181,8 @@ reflects package releases published to npm.
   in foundational controls.
 - Tightened property validation and control consistency for early public APIs.
 
-[unreleased]: https://github.com/phcdevworks/spectre-components/compare/1.1.0...HEAD
+[unreleased]: https://github.com/phcdevworks/spectre-components/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/phcdevworks/spectre-components/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/phcdevworks/spectre-components/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/phcdevworks/spectre-components/compare/0.0.1...1.0.0
 [0.0.1]: https://github.com/phcdevworks/spectre-components/tree/0.0.1

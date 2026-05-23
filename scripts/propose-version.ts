@@ -35,7 +35,13 @@ if (!match) {
   )
 }
 
-const classification = match[1].toLowerCase() as Classification
+const rawClassification = match[1]
+
+if (!rawClassification) {
+  throw new Error('Could not read contract change classification from CHANGELOG.md.')
+}
+
+const classification = rawClassification.toLowerCase() as Classification
 const pkg = JSON.parse(readFileSync(packagePath, 'utf8')) as {
   version?: string
 }
@@ -45,7 +51,13 @@ if (!current) {
   throw new Error('package.json is missing a version field.')
 }
 
-const [majorStr, minorStr, patchStr] = current.split('.')
+const versionParts = current.split('.')
+
+if (versionParts.length !== 3) {
+  throw new Error(`Invalid package.json version: ${current}`)
+}
+
+const [majorStr, minorStr, patchStr] = versionParts as [string, string, string]
 const major = parseInt(majorStr, 10)
 const minor = parseInt(minorStr, 10)
 const patch = parseInt(patchStr, 10)

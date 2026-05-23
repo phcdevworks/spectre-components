@@ -23,6 +23,7 @@
   "include": [
     "src",
     "tests",
+    "scripts",
     "vitest.config.ts",
     "tsup.config.ts",
     "eslint.config.ts",

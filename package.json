@@ -95,13 +95,13 @@
     "clean": "rm -rf dist coverage",
     "dev": "tsup --config tsup.config.ts --watch",
     "typecheck": "tsc --noEmit",
-    "release:propose": "node scripts/propose-version.js",
+    "release:propose": "node --experimental-strip-types scripts/propose-version.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports",
-    "check:exports": "node scripts/check-exports.js"
+    "check:exports": "node --experimental-strip-types scripts/check-exports.ts"
   },
   "publishConfig": {
     "access": "public"
