@@ -30,7 +30,7 @@ describe('sp-input', () => {
     expect(input?.getAttribute('aria-invalid')).toBeNull();
   });
 
-  it('reflects disabled, readonly, and required state to the native input', async () => {
+  it('reflects disabled, readonly, and required state to the native input and handles dynamic updates', async () => {
     const element = document.createElement('sp-input') as SpectreInputElement;
     element.disabled = true;
     element.readonly = true;
@@ -39,12 +39,23 @@ describe('sp-input', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const input = element.querySelector('input');
+    let input = element.querySelector('input');
 
     expect(input?.disabled).toBe(true);
     expect(input?.readOnly).toBe(true);
     expect(input?.required).toBe(true);
     expect(input?.className).toContain('sp-input--disabled');
+
+    element.disabled = false;
+    element.readonly = false;
+    element.required = false;
+    await element.updateComplete;
+
+    input = element.querySelector('input');
+    expect(input?.disabled).toBe(false);
+    expect(input?.readOnly).toBe(false);
+    expect(input?.required).toBe(false);
+    expect(input?.className).not.toContain('sp-input--disabled');
   });
 
   it('applies invalid semantics without overriding the accessible name', async () => {
@@ -262,6 +273,29 @@ describe('sp-input', () => {
 
     const input = element.querySelector('input');
     expect(input?.value).toBe('');
+  });
+
+  it('forwards autocapitalize, spellcheck, enterkeyhint, pattern, and list', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.autocapitalize = 'words';
+    element.spellcheck = true;
+    element.enterkeyhint = 'next';
+    element.pattern = '[a-z]*';
+    element.list = 'options-list';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.getAttribute('autocapitalize')).toBe('words');
+    expect(input?.getAttribute('spellcheck')).toBe('true');
+    expect(input?.getAttribute('enterkeyhint')).toBe('next');
+    expect(input?.getAttribute('pattern')).toBe('[a-z]*');
+    expect(input?.getAttribute('list')).toBe('options-list');
+
+    element.spellcheck = false;
+    await element.updateComplete;
+    expect(input?.getAttribute('spellcheck')).toBe('false');
   });
 });
 

@@ -34,7 +34,7 @@ describe('sp-textarea', () => {
     expect(textarea?.getAttribute('aria-invalid')).toBeNull();
   });
 
-  it('reflects disabled, readonly, required, and name to the native textarea', async () => {
+  it('reflects disabled, readonly, required, and name to the native textarea and handles dynamic updates', async () => {
     const element = document.createElement(
       'sp-textarea',
     ) as SpectreTextareaElement;
@@ -46,13 +46,24 @@ describe('sp-textarea', () => {
     document.body.append(element);
     await element.updateComplete;
 
-    const textarea = element.querySelector('textarea');
+    let textarea = element.querySelector('textarea');
 
     expect(textarea?.disabled).toBe(true);
     expect(textarea?.readOnly).toBe(true);
     expect(textarea?.required).toBe(true);
     expect(textarea?.getAttribute('name')).toBe('notes');
     expect(textarea?.className).toContain('sp-input--disabled');
+
+    element.disabled = false;
+    element.readonly = false;
+    element.required = false;
+    await element.updateComplete;
+
+    textarea = element.querySelector('textarea');
+    expect(textarea?.disabled).toBe(false);
+    expect(textarea?.readOnly).toBe(false);
+    expect(textarea?.required).toBe(false);
+    expect(textarea?.className).not.toContain('sp-input--disabled');
   });
 
   it('applies invalid semantics without overriding forwarded labeling', async () => {
@@ -309,6 +320,27 @@ describe('sp-textarea', () => {
 
     const textarea = element.querySelector('textarea');
     expect(textarea?.getAttribute('rows')).toBe('5');
+  });
+
+  it('forwards autocapitalize, spellcheck, and enterkeyhint', async () => {
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.autocapitalize = 'sentences';
+    element.spellcheck = true;
+    element.enterkeyhint = 'send';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const textarea = element.querySelector('textarea');
+    expect(textarea?.getAttribute('autocapitalize')).toBe('sentences');
+    expect(textarea?.getAttribute('spellcheck')).toBe('true');
+    expect(textarea?.getAttribute('enterkeyhint')).toBe('send');
+
+    element.spellcheck = false;
+    await element.updateComplete;
+    expect(textarea?.getAttribute('spellcheck')).toBe('false');
   });
 });
 
