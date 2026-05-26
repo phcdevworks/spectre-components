@@ -31,7 +31,6 @@ export interface SpectreSelectProps {
 export class SpectreSelectElement extends SpectreProjectableElement implements SpectreSelectProps {
   static properties = {
     autocomplete: { type: String, reflect: true },
-    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
@@ -46,7 +45,6 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
   };
 
   autocomplete: string | undefined;
-  autofocus = false;
   disabled = false;
   form: string | undefined;
   fullWidth = false;
@@ -72,6 +70,14 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
 
   override set title(value: string | null | undefined) {
     super.title = value;
+  }
+
+  override get autofocus(): boolean {
+    return super.autofocus;
+  }
+
+  override set autofocus(value: boolean | undefined | null) {
+    super.autofocus = value;
   }
 
   value: string | undefined = '';

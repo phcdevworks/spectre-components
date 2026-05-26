@@ -41,7 +41,6 @@ export interface SpectreButtonProps {
 
 export class SpectreButtonElement extends SpectreProjectableElement implements SpectreButtonProps {
   static properties = {
-    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
@@ -57,7 +56,6 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     value: { type: String },
   };
 
-  autofocus = false;
   disabled = false;
   form: string | undefined;
   fullWidth = false;
@@ -86,6 +84,14 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
 
   override set title(value: string | null | undefined) {
     super.title = value;
+  }
+
+  override get autofocus(): boolean {
+    return super.autofocus;
+  }
+
+  override set autofocus(value: boolean | undefined | null) {
+    super.autofocus = value;
   }
 
   protected override getContentContainer(): Element | null {
