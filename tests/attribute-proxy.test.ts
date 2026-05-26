@@ -104,4 +104,17 @@ describe('attribute proxying', () => {
     expect(HTMLElement.prototype.hasAttribute.call(element, 'title')).toBe(false);
     expect(HTMLElement.prototype.hasAttribute.call(element, 'aria-label')).toBe(false);
   });
+
+  it('proxies autofocus from host to native control and removes it from host', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.setAttribute('autofocus', '');
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.hasAttribute('autofocus')).toBe(true);
+    expect(element.autofocus).toBe(true);
+    expect(element.getAttribute('autofocus')).toBe('');
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'autofocus')).toBe(false);
+  });
 });
