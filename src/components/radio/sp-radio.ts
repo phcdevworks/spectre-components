@@ -27,7 +27,6 @@ export interface SpectreRadioProps {
 
 export class SpectreRadioElement extends SpectreProjectableElement implements SpectreRadioProps {
   static properties = {
-    autofocus: { type: Boolean, reflect: true },
     checked: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
@@ -40,7 +39,6 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
     value: { type: String },
   };
 
-  autofocus = false;
   checked = false;
   disabled = false;
   form: string | undefined;
@@ -65,6 +63,14 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
 
   override set title(value: string | null | undefined) {
     super.title = value;
+  }
+
+  override get autofocus(): boolean {
+    return super.autofocus;
+  }
+
+  override set autofocus(value: boolean | undefined | null) {
+    super.autofocus = value;
   }
 
   value: string | undefined = 'on';

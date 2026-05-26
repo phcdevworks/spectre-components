@@ -59,9 +59,7 @@ export interface SpectreInputProps {
 
 export class SpectreInputElement extends SpectreBaseElement implements SpectreInputProps {
   static properties = {
-    autocapitalize: { type: String, reflect: true },
     autocomplete: { type: String, reflect: true },
-    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     enterkeyhint: { type: String, reflect: true },
     form: { type: String },
@@ -81,7 +79,6 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
     readonly: { type: Boolean, reflect: true },
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
-    spellcheck: { type: Boolean, reflect: true },
     step: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
     type: { type: String, reflect: true },
@@ -96,8 +93,15 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
     super.autocapitalize = value;
   }
 
+  override get autofocus(): boolean {
+    return super.autofocus;
+  }
+
+  override set autofocus(value: boolean | undefined | null) {
+    super.autofocus = value;
+  }
+
   autocomplete: string | undefined;
-  autofocus = false;
   disabled = false;
   enterkeyhint: string | undefined;
   form: string | undefined;

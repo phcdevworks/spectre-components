@@ -47,9 +47,7 @@ export class SpectreTextareaElement
   extends SpectreBaseElement
   implements SpectreTextareaProps {
   static properties = {
-    autocapitalize: { type: String, reflect: true },
     autocomplete: { type: String, reflect: true },
-    autofocus: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     enterkeyhint: { type: String, reflect: true },
     form: { type: String },
@@ -66,7 +64,6 @@ export class SpectreTextareaElement
     required: { type: Boolean, reflect: true },
     rows: { type: Number, reflect: true },
     size: { type: String, reflect: true },
-    spellcheck: { type: Boolean, reflect: true },
     success: { type: Boolean, reflect: true },
     value: { type: String },
   };
@@ -79,8 +76,15 @@ export class SpectreTextareaElement
     super.autocapitalize = value;
   }
 
+  override get autofocus(): boolean {
+    return super.autofocus;
+  }
+
+  override set autofocus(value: boolean | undefined | null) {
+    super.autofocus = value;
+  }
+
   autocomplete: string | undefined;
-  autofocus = false;
   disabled = false;
   enterkeyhint: string | undefined;
   form: string | undefined;
