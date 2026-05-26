@@ -7,6 +7,7 @@ export class SpectreBaseElement extends LitElement {
   private _ariaLabelledBy: string | null = null;
   private _ariaDescribedBy: string | null = null;
   private _autocapitalize = '';
+  private _autofocus = false;
   private _spellcheck: boolean | null = null;
   private _title = '';
   private _id = '';
@@ -105,6 +106,20 @@ export class SpectreBaseElement extends LitElement {
     this.requestUpdate();
   }
 
+  override get autofocus(): boolean {
+    return this._autofocus;
+  }
+
+  override set autofocus(value: boolean | undefined | null) {
+    const normalizedValue = !!value;
+    if (this._autofocus === normalizedValue) {
+      return;
+    }
+    this._autofocus = normalizedValue;
+    this._removeHostAttribute('autofocus');
+    this.requestUpdate();
+  }
+
   // Spectre components intentionally render in light DOM so the global
   // `@phcdevworks/spectre-ui` styling contract can apply directly.
   createRenderRoot(): this {
@@ -118,6 +133,7 @@ export class SpectreBaseElement extends LitElement {
       'id',
       'title',
       'autocapitalize',
+      'autofocus',
       'spellcheck',
       'aria-label',
       'aria-labelledby',
@@ -140,6 +156,8 @@ export class SpectreBaseElement extends LitElement {
         return this.title || null;
       case 'autocapitalize':
         return this.autocapitalize || null;
+      case 'autofocus':
+        return this.autofocus ? '' : null;
       case 'spellcheck':
         return this._spellcheck !== null ? String(this._spellcheck) : null;
       case 'aria-label':
@@ -161,6 +179,8 @@ export class SpectreBaseElement extends LitElement {
         return this.title !== '';
       case 'autocapitalize':
         return this.autocapitalize !== '';
+      case 'autofocus':
+        return this.autofocus;
       case 'spellcheck':
         return this._spellcheck !== null;
       case 'aria-label':
@@ -184,6 +204,9 @@ export class SpectreBaseElement extends LitElement {
         break;
       case 'autocapitalize':
         this.autocapitalize = value;
+        break;
+      case 'autofocus':
+        this.autofocus = true;
         break;
       case 'spellcheck':
         this.spellcheck = value !== 'false';
@@ -212,6 +235,9 @@ export class SpectreBaseElement extends LitElement {
         break;
       case 'autocapitalize':
         this.autocapitalize = '';
+        break;
+      case 'autofocus':
+        this.autofocus = false;
         break;
       case 'spellcheck':
         this.spellcheck = null;
