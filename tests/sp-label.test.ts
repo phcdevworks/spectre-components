@@ -56,6 +56,29 @@ describe('sp-label', () => {
     expect(label?.getAttribute('aria-labelledby')).toBe('label-id');
     expect(label?.getAttribute('aria-describedby')).toBe('description-id');
   });
+
+  it('falls back to disabled=false when null or undefined is assigned', async () => {
+    const element = document.createElement('sp-label') as SpectreLabelElement;
+    element.disabled = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.disabled).toBe(true);
+
+    // @ts-expect-error - testing fallback
+    element.disabled = null;
+    await element.updateComplete;
+    expect(element.disabled).toBe(false);
+
+    element.disabled = true;
+    await element.updateComplete;
+    expect(element.disabled).toBe(true);
+
+    element.disabled = undefined;
+    await element.updateComplete;
+    expect(element.disabled).toBe(false);
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
