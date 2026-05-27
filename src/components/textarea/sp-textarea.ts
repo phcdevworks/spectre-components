@@ -85,10 +85,10 @@ export class SpectreTextareaElement
   }
 
   autocomplete: string | undefined;
-  disabled = false;
+  disabled: boolean | undefined = false;
   enterkeyhint: string | undefined;
   form: string | undefined;
-  fullWidth = false;
+  fullWidth: boolean | undefined = false;
 
   override get id(): string {
     return super.id;
@@ -99,15 +99,15 @@ export class SpectreTextareaElement
   }
 
   inputmode: string | undefined;
-  invalid = false;
-  loading = false;
+  invalid: boolean | undefined = false;
+  loading: boolean | undefined = false;
   maxlength: number | undefined;
   minlength: number | undefined;
   name: string | undefined;
-  pill = false;
+  pill: boolean | undefined = false;
   placeholder: string | undefined;
-  readonly = false;
-  required = false;
+  readonly: boolean | undefined = false;
+  required: boolean | undefined = false;
   rows: number | undefined = DEFAULT_ROWS;
   size: SpectreInputSize | undefined = 'md';
 
@@ -119,7 +119,7 @@ export class SpectreTextareaElement
     super.spellcheck = value;
   }
 
-  success = false;
+  success: boolean | undefined = false;
 
   override get title(): string {
     return super.title;
@@ -134,6 +134,38 @@ export class SpectreTextareaElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>,
   ): void {
+    if (changedProperties.has('disabled') && this.disabled == null) {
+      this.disabled = false;
+    }
+
+    if (changedProperties.has('fullWidth') && this.fullWidth == null) {
+      this.fullWidth = false;
+    }
+
+    if (changedProperties.has('invalid') && this.invalid == null) {
+      this.invalid = false;
+    }
+
+    if (changedProperties.has('loading') && this.loading == null) {
+      this.loading = false;
+    }
+
+    if (changedProperties.has('pill') && this.pill == null) {
+      this.pill = false;
+    }
+
+    if (changedProperties.has('readonly') && this.readonly == null) {
+      this.readonly = false;
+    }
+
+    if (changedProperties.has('required') && this.required == null) {
+      this.required = false;
+    }
+
+    if (changedProperties.has('success') && this.success == null) {
+      this.success = false;
+    }
+
     if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
       this.size = 'md';
     }

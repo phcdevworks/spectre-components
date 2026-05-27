@@ -39,15 +39,15 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
     value: { type: String },
   };
 
-  checked = false;
-  disabled = false;
+  checked: boolean | undefined = false;
+  disabled: boolean | undefined = false;
   form: string | undefined;
-  invalid = false;
-  loading = false;
+  invalid: boolean | undefined = false;
+  loading: boolean | undefined = false;
   label: string | undefined;
   name: string | undefined;
-  required = false;
-  success = false;
+  required: boolean | undefined = false;
+  success: boolean | undefined = false;
 
   override get id(): string {
     return super.id;
@@ -94,6 +94,30 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('checked') && this.checked == null) {
+      this.checked = false;
+    }
+
+    if (changedProperties.has('disabled') && this.disabled == null) {
+      this.disabled = false;
+    }
+
+    if (changedProperties.has('invalid') && this.invalid == null) {
+      this.invalid = false;
+    }
+
+    if (changedProperties.has('loading') && this.loading == null) {
+      this.loading = false;
+    }
+
+    if (changedProperties.has('required') && this.required == null) {
+      this.required = false;
+    }
+
+    if (changedProperties.has('success') && this.success == null) {
+      this.success = false;
+    }
+
     if (changedProperties.has('value') && this.value == null) {
       this.value = 'on';
     }

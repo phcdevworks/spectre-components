@@ -21,8 +21,14 @@ export class SpectreLabelElement extends SpectreProjectableElement implements Sp
     htmlFor: { attribute: 'for', type: String, reflect: true },
   };
 
-  disabled = false;
+  disabled: boolean | undefined = false;
   htmlFor: string | undefined;
+
+  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('disabled') && this.disabled == null) {
+      this.disabled = false;
+    }
+  }
 
   private get isDisabled(): boolean {
     return this.disabled ?? false;
