@@ -56,15 +56,15 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     value: { type: String },
   };
 
-  disabled = false;
+  disabled: boolean | undefined = false;
   form: string | undefined;
-  fullWidth = false;
-  iconOnly = false;
+  fullWidth: boolean | undefined = false;
+  iconOnly: boolean | undefined = false;
   label: string | undefined;
-  loading = false;
+  loading: boolean | undefined = false;
   loadingLabel: string | undefined = 'Loading';
   name: string | undefined;
-  pill = false;
+  pill: boolean | undefined = false;
   size: SpectreInputSize | undefined = 'md';
   type: SpectreButtonType | undefined = 'button';
   variant: SpectreButtonVariant | undefined = 'primary';
@@ -112,6 +112,26 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('disabled') && this.disabled == null) {
+      this.disabled = false;
+    }
+
+    if (changedProperties.has('fullWidth') && this.fullWidth == null) {
+      this.fullWidth = false;
+    }
+
+    if (changedProperties.has('iconOnly') && this.iconOnly == null) {
+      this.iconOnly = false;
+    }
+
+    if (changedProperties.has('loading') && this.loading == null) {
+      this.loading = false;
+    }
+
+    if (changedProperties.has('pill') && this.pill == null) {
+      this.pill = false;
+    }
+
     if (changedProperties.has('variant') && (this.variant == null || !isButtonVariant(this.variant))) {
       this.variant = 'primary';
     }
