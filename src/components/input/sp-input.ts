@@ -102,10 +102,10 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   }
 
   autocomplete: string | undefined;
-  disabled = false;
+  disabled: boolean | undefined = false;
   enterkeyhint: string | undefined;
   form: string | undefined;
-  fullWidth = false;
+  fullWidth: boolean | undefined = false;
 
   override get id(): string {
     return super.id;
@@ -116,19 +116,19 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   }
 
   inputmode: string | undefined;
-  invalid = false;
+  invalid: boolean | undefined = false;
   list: string | undefined;
-  loading = false;
+  loading: boolean | undefined = false;
   max: string | undefined;
   maxlength: number | undefined;
   min: string | undefined;
   minlength: number | undefined;
   name: string | undefined;
   pattern: string | undefined;
-  pill = false;
+  pill: boolean | undefined = false;
   placeholder: string | undefined;
-  readonly = false;
-  required = false;
+  readonly: boolean | undefined = false;
+  required: boolean | undefined = false;
   size: SpectreInputSize | undefined = 'md';
 
   override get spellcheck(): boolean {
@@ -140,7 +140,7 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   }
 
   step: string | undefined;
-  success = false;
+  success: boolean | undefined = false;
 
   override get title(): string {
     return super.title;
@@ -154,6 +154,38 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
   value: string | undefined = '';
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('disabled') && this.disabled == null) {
+      this.disabled = false;
+    }
+
+    if (changedProperties.has('fullWidth') && this.fullWidth == null) {
+      this.fullWidth = false;
+    }
+
+    if (changedProperties.has('invalid') && this.invalid == null) {
+      this.invalid = false;
+    }
+
+    if (changedProperties.has('loading') && this.loading == null) {
+      this.loading = false;
+    }
+
+    if (changedProperties.has('pill') && this.pill == null) {
+      this.pill = false;
+    }
+
+    if (changedProperties.has('readonly') && this.readonly == null) {
+      this.readonly = false;
+    }
+
+    if (changedProperties.has('required') && this.required == null) {
+      this.required = false;
+    }
+
+    if (changedProperties.has('success') && this.success == null) {
+      this.success = false;
+    }
+
     if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
       this.size = 'md';
     }
