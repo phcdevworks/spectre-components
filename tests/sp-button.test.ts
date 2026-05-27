@@ -42,6 +42,7 @@ describe('sp-button', () => {
 
     expect(button?.disabled).toBe(true);
     expect(button?.getAttribute('aria-busy')).toBe('true');
+    expect(button?.className).toContain('sp-btn--loading');
     expect(loadingLabel?.textContent?.trim()).toBe('Submitting');
     expect(loadingLabel?.className).toContain('sp-label');
   });
@@ -204,12 +205,14 @@ describe('sp-button', () => {
     await element.updateComplete;
     button = element.querySelector('button');
     expect(button?.textContent?.trim()).toBe('Loading'); // Default loading label
+    expect(button?.className).toContain('sp-btn--loading');
 
     // Toggle back
     element.loading = false;
     await element.updateComplete;
     button = element.querySelector('button');
     expect(button?.textContent?.trim()).toBe('Original Content');
+    expect(button?.className).not.toContain('sp-btn--loading');
   });
 
   it('tightens loadingLabel fallback', async () => {
