@@ -231,6 +231,23 @@ describe('sp-checkbox', () => {
     expect(element.success).toBe(true);
     expect(element.hasAttribute('success')).toBe(true);
   });
+
+  it('forwards required to the native checkbox and handles dynamic updates', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.required = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    let input = element.querySelector<HTMLInputElement>('input[type=checkbox]');
+    expect(input?.required).toBe(true);
+
+    element.required = false;
+    await element.updateComplete;
+
+    input = element.querySelector<HTMLInputElement>('input[type=checkbox]');
+    expect(input?.required).toBe(false);
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
