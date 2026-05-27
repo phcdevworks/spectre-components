@@ -45,16 +45,16 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
   };
 
   autocomplete: string | undefined;
-  disabled = false;
+  disabled: boolean | undefined = false;
   form: string | undefined;
-  fullWidth = false;
-  invalid = false;
-  loading = false;
+  fullWidth: boolean | undefined = false;
+  invalid: boolean | undefined = false;
+  loading: boolean | undefined = false;
   name: string | undefined;
-  pill = false;
-  required = false;
+  pill: boolean | undefined = false;
+  required: boolean | undefined = false;
   size: SpectreInputSize | undefined = 'md';
-  success = false;
+  success: boolean | undefined = false;
 
   override get id(): string {
     return super.id;
@@ -96,6 +96,34 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
   }
 
   protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has('disabled') && this.disabled == null) {
+      this.disabled = false;
+    }
+
+    if (changedProperties.has('fullWidth') && this.fullWidth == null) {
+      this.fullWidth = false;
+    }
+
+    if (changedProperties.has('invalid') && this.invalid == null) {
+      this.invalid = false;
+    }
+
+    if (changedProperties.has('loading') && this.loading == null) {
+      this.loading = false;
+    }
+
+    if (changedProperties.has('pill') && this.pill == null) {
+      this.pill = false;
+    }
+
+    if (changedProperties.has('required') && this.required == null) {
+      this.required = false;
+    }
+
+    if (changedProperties.has('success') && this.success == null) {
+      this.success = false;
+    }
+
     if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
       this.size = 'md';
     }
