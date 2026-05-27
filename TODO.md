@@ -66,23 +66,23 @@ accessibility coverage, safe expansion, and release consistency.
 
 ### P1: Component Hardening
 
-- [ ] Audit `sp-button` for missing `loading` state behavior, class mapping, and
+- [x] Audit `sp-button` for missing `loading` state behavior, class mapping, and
       ARIA pattern.
 
-- [ ] Audit `sp-input` for `readonly` and `required` forwarding completeness.
+- [x] Audit `sp-input` for `readonly` and `required` forwarding completeness.
 
-- [ ] Audit `sp-textarea` for `readonly` and `required` forwarding completeness.
+- [x] Audit `sp-textarea` for `readonly` and `required` forwarding completeness.
 
-- [ ] Audit `sp-select` for `disabled` and `required` forwarding completeness.
+- [x] Audit `sp-select` for `disabled` and `required` forwarding completeness.
 
-- [ ] Audit `sp-checkbox` for `required` forwarding completeness.
+- [x] Audit `sp-checkbox` for `required` forwarding completeness.
 
 - [ ] Verify ARIA attribute proxy coverage is consistent across all eight
       components.
 
-- [ ] Add `sp-fieldset` legend slot test coverage.
+- [x] Add `sp-fieldset` legend slot test coverage.
 
-- [ ] Add `sp-radio` group coordination test coverage.
+- [x] Add `sp-radio` group coordination test coverage.
 
 - [ ] Add an accessibility audit step to the validation flow.
 
