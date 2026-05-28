@@ -165,11 +165,11 @@ export class SpectreRadioElement extends SpectreProjectableElement implements Sp
 
     const root = this.getRootNode() as ShadowRoot | Document;
     const radios = root.querySelectorAll(
-      `sp-radio[name="${this.name}"]`,
+      'sp-radio',
     ) as NodeListOf<SpectreRadioElement>;
 
     radios.forEach((radio) => {
-      if (radio !== this && radio.checked) {
+      if (radio !== this && radio.name === this.name && radio.checked) {
         radio.checked = false;
       }
     });
