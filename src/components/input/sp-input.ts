@@ -277,9 +277,7 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
       name="${ifDefined(this.name || undefined)}"
       pattern="${ifDefined(this.pattern || undefined)}"
       placeholder="${ifDefined(this.placeholder || undefined)}"
-      spellcheck="${ifDefined(
-        this.spellcheck === undefined ? undefined : String(this.spellcheck),
-      )}"
+      spellcheck="${ifDefined(this.getAttribute('spellcheck') ?? undefined)}"
       step="${ifDefined(this.step || undefined)}"
       title="${ifDefined(this.title || undefined)}"
       type="${this.type}"
