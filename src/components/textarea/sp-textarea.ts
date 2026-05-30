@@ -254,9 +254,7 @@ export class SpectreTextareaElement
       name="${ifDefined(this.name || undefined)}"
       placeholder="${ifDefined(this.placeholder || undefined)}"
       rows="${this.rows}"
-      spellcheck="${ifDefined(
-        this.spellcheck === undefined ? undefined : String(this.spellcheck),
-      )}"
+      spellcheck="${ifDefined(this.getAttribute('spellcheck') ?? undefined)}"
       title="${ifDefined(this.title || undefined)}"
       .value="${live(this.value)}"
       @change="${this.handleChange}"
