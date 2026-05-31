@@ -117,4 +117,28 @@ describe('attribute proxying', () => {
     expect(element.getAttribute('autofocus')).toBe('');
     expect(HTMLElement.prototype.hasAttribute.call(element, 'autofocus')).toBe(false);
   });
+
+  it('proxies spellcheck from host to native control and removes it from host', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.setAttribute('spellcheck', 'true');
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.getAttribute('spellcheck')).toBe('true');
+    expect(element.spellcheck).toBe(true);
+    expect(element.getAttribute('spellcheck')).toBe('true');
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'spellcheck')).toBe(false);
+
+    element.spellcheck = false;
+    await element.updateComplete;
+    expect(input?.getAttribute('spellcheck')).toBe('false');
+    expect(element.spellcheck).toBe(false);
+    expect(element.getAttribute('spellcheck')).toBe('false');
+
+    element.removeAttribute('spellcheck');
+    await element.updateComplete;
+    expect(input?.hasAttribute('spellcheck')).toBe(false);
+    expect(element.getAttribute('spellcheck')).toBeNull();
+  });
 });
