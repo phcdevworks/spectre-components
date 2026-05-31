@@ -12,7 +12,7 @@ export interface SpectreSelectProps {
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
   autocomplete?: string | undefined;
-  autofocus?: boolean | undefined;
+  autofocus?: boolean | null | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;
   fullWidth?: boolean | undefined;
