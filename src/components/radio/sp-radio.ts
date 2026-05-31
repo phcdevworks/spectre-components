@@ -10,7 +10,7 @@ export interface SpectreRadioProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
-  autofocus?: boolean | undefined;
+  autofocus?: boolean | null | undefined;
   checked?: boolean | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;

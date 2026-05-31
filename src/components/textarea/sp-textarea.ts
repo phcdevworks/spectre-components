@@ -15,9 +15,9 @@ export interface SpectreTextareaProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
-  autocapitalize?: string | undefined;
+  autocapitalize?: string | null | undefined;
   autocomplete?: string | undefined;
-  autofocus?: boolean | undefined;
+  autofocus?: boolean | null | undefined;
   disabled?: boolean | undefined;
   enterkeyhint?: string | undefined;
   form?: string | undefined;
@@ -35,7 +35,7 @@ export interface SpectreTextareaProps {
   required?: boolean | undefined;
   rows?: number | undefined;
   size?: SpectreInputSize | undefined;
-  spellcheck?: boolean | undefined;
+  spellcheck?: boolean | null | undefined;
   success?: boolean | undefined;
   title?: string | null | undefined;
   value?: string | undefined;
@@ -254,9 +254,7 @@ export class SpectreTextareaElement
       name="${ifDefined(this.name || undefined)}"
       placeholder="${ifDefined(this.placeholder || undefined)}"
       rows="${this.rows}"
-      spellcheck="${ifDefined(
-        this.spellcheck === undefined ? undefined : String(this.spellcheck),
-      )}"
+      spellcheck="${ifDefined(this.getAttribute('spellcheck') ?? undefined)}"
       title="${ifDefined(this.title || undefined)}"
       .value="${live(this.value)}"
       @change="${this.handleChange}"
