@@ -26,9 +26,9 @@ export interface SpectreInputProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
-  autocapitalize?: string | undefined;
+  autocapitalize?: string | null | undefined;
   autocomplete?: string | undefined;
-  autofocus?: boolean | undefined;
+  autofocus?: boolean | null | undefined;
   disabled?: boolean | undefined;
   enterkeyhint?: string | undefined;
   form?: string | undefined;
@@ -49,7 +49,7 @@ export interface SpectreInputProps {
   readonly?: boolean | undefined;
   required?: boolean | undefined;
   size?: SpectreInputSize | undefined;
-  spellcheck?: boolean | undefined;
+  spellcheck?: boolean | null | undefined;
   step?: string | undefined;
   success?: boolean | undefined;
   title?: string | null | undefined;
@@ -277,9 +277,7 @@ export class SpectreInputElement extends SpectreBaseElement implements SpectreIn
       name="${ifDefined(this.name || undefined)}"
       pattern="${ifDefined(this.pattern || undefined)}"
       placeholder="${ifDefined(this.placeholder || undefined)}"
-      spellcheck="${ifDefined(
-        this.spellcheck === undefined ? undefined : String(this.spellcheck),
-      )}"
+      spellcheck="${ifDefined(this.getAttribute('spellcheck') ?? undefined)}"
       step="${ifDefined(this.step || undefined)}"
       title="${ifDefined(this.title || undefined)}"
       type="${this.type}"
