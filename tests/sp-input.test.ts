@@ -297,6 +297,16 @@ describe('sp-input', () => {
     await element.updateComplete;
     expect(input?.getAttribute('spellcheck')).toBe('false');
   });
+
+  it('does not render a spellcheck attribute when not explicitly set', async () => {
+    const element = document.createElement('sp-input') as SpectreInputElement;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector('input');
+    expect(input?.hasAttribute('spellcheck')).toBe(false);
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {
