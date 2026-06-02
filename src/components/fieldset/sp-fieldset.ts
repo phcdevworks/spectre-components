@@ -9,6 +9,7 @@ export interface SpectreFieldsetProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
+  autofocus?: boolean | null | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;
   id?: string | null | undefined;
@@ -53,6 +54,14 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
 
   override set title(value: string | null | undefined) {
     super.title = value;
+  }
+
+  override get autofocus(): boolean {
+    return super.autofocus;
+  }
+
+  override set autofocus(value: boolean | undefined | null) {
+    super.autofocus = value;
   }
 
   private get visibleLegend(): string | undefined {
@@ -113,6 +122,7 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      ?autofocus="${this.autofocus}"
       data-sp-fieldset-native
       ?disabled="${this.isDisabled}"
       form="${ifDefined(this.form || undefined)}"
