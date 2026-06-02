@@ -6,6 +6,16 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `axe-core` devDependency added to support runtime ARIA and accessibility
+  validation in tests.
+- `tests/accessibility.test.ts` — axe-core audit tests for all eight
+  components (`sp-button`, `sp-input`, `sp-textarea`, `sp-select`,
+  `sp-checkbox`, `sp-radio`, `sp-label`, `sp-fieldset`). Covers default,
+  invalid, loading, and aria-label/legend scenarios. Runs as part of
+  `npm test` and the full `npm run check` gate.
+
 ## [1.2.0] - 2026-05-23
 
 **Release Title:** Styling Contract Alignment and Export Validation

@@ -77,14 +77,14 @@ accessibility coverage, safe expansion, and release consistency.
 
 - [x] Audit `sp-checkbox` for `required` forwarding completeness.
 
-- [ ] Verify ARIA attribute proxy coverage is consistent across all eight
+- [x] Verify ARIA attribute proxy coverage is consistent across all eight
       components.
 
 - [x] Add `sp-fieldset` legend slot test coverage.
 
 - [x] Add `sp-radio` group coordination test coverage.
 
-- [ ] Add an accessibility audit step to the validation flow.
+- [x] Add an accessibility audit step to the validation flow.
 
 ### P2: Component Surface Expansion
 
