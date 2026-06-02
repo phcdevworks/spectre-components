@@ -70,6 +70,19 @@ describe('sp-fieldset', () => {
     expect(fieldset?.getAttribute('form')).toBe('test-form');
   });
 
+  it('forwards autofocus to the native fieldset and removes it from the host', async () => {
+    const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
+    element.autofocus = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const fieldset = element.querySelector('fieldset');
+    expect(fieldset?.hasAttribute('autofocus')).toBe(true);
+    expect(element.autofocus).toBe(true);
+    expect(superHasAttribute(element, 'autofocus')).toBe(false);
+  });
+
   it('reflects and forwards loading, invalid, and success states', async () => {
     const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
     element.loading = true;
@@ -137,4 +150,8 @@ function createChild(text: string): HTMLDivElement {
 
 function superHasIdAttribute(element: HTMLElement): boolean {
   return HTMLElement.prototype.hasAttribute.call(element, 'id');
+}
+
+function superHasAttribute(element: HTMLElement, attr: string): boolean {
+  return HTMLElement.prototype.hasAttribute.call(element, attr);
 }

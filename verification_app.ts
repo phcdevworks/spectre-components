@@ -117,6 +117,10 @@ const template = html`
     <sp-fieldset legend='  '>
       <p>This fieldset has a whitespace legend and should not render a legend tag.</p>
     </sp-fieldset>
+
+    <sp-fieldset legend='Autofocus Fieldset' autofocus>
+      <p>This fieldset should have autofocus.</p>
+    </sp-fieldset>
   </section>
 `;
 
