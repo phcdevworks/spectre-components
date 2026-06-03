@@ -13,6 +13,7 @@ import {
 
 import {
   getButtonClasses,
+  getInputLabelClasses,
   type ButtonSize,
   type ButtonVariant,
 } from '@phcdevworks/spectre-ui';
@@ -186,7 +187,10 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
 
   private renderButtonContent(): TemplateResult | Node[] | typeof nothing {
     if (this.loading) {
-      return html`<span class="sp-label" data-sp-button-loading-label>${this.loadingLabel}</span>`;
+      return html`<span
+        class="${getInputLabelClasses({ disabled: this.isDisabled })}"
+        data-sp-button-loading-label
+      >${this.loadingLabel}</span>`;
     }
 
     if (this.hasProjectedContent) {
@@ -194,7 +198,10 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     }
 
     return this.visibleLabelFallback
-      ? html`<span class="sp-label" data-sp-button-label-fallback>${this.visibleLabelFallback}</span>`
+      ? html`<span
+          class="${getInputLabelClasses({ disabled: this.isDisabled })}"
+          data-sp-button-label-fallback
+        >${this.visibleLabelFallback}</span>`
       : nothing;
   }
 
