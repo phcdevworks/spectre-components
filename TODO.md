@@ -47,7 +47,7 @@ accessibility coverage, safe expansion, and release consistency.
 
 ### P0: Contract Integrity
 
-- [ ] Add `components.contract.json` as a machine-readable manifest anchoring
+- [x] Add `components.contract.json` as a machine-readable manifest anchoring
       the public component surface:
   - tags
   - element classes
@@ -55,10 +55,10 @@ accessibility coverage, safe expansion, and release consistency.
   - exported types
   - protected accessibility and rendering contracts
 
-- [ ] Add automated export-snapshot validation that reads from the manifest and
+- [x] Add automated export-snapshot validation that reads from the manifest and
       fails if actual exported symbols drift from the declared contract.
 
-- [ ] Add a thin-adapter invariant check to `npm run check`:
+- [x] Add a thin-adapter invariant check to `npm run check`:
   - no hardcoded hex colors or spacing values in component source
   - no local token redefinitions
   - no recreated `@phcdevworks/spectre-ui` recipes
