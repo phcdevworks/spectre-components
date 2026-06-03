@@ -99,6 +99,7 @@ for (const file of files) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
+    if (line === undefined) continue
     const lineNum = i + 1
 
     // Skip pure comment lines
