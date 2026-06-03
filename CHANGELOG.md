@@ -8,6 +8,20 @@ reflects package releases published to npm.
 
 ### Added
 
+- `components.contract.json` — machine-readable manifest anchoring the public
+  component surface: tags, element classes, entry points, exported value
+  symbols, exported types, and per-component rendering contracts
+  (`renderMode`, `shadowDomApproved`).
+- `scripts/check-contract.ts` — export-snapshot validator that reads
+  `components.contract.json` and fails if actual dist exports drift from the
+  declared contract. Runs as `npm run check:contract`.
+- `scripts/check-invariants.ts` — thin-adapter invariant checker that fails
+  on hardcoded hex colors, hardcoded spacing values in template literals,
+  local Spectre CSS custom property redefinitions, and Shadow DOM usage
+  without explicit approval in the manifest. Runs as
+  `npm run check:invariants`.
+- Both new checks are wired into `npm run check` after the build step.
+
 - `axe-core` devDependency added to support runtime ARIA and accessibility
   validation in tests.
 - `tests/accessibility.test.ts` — axe-core audit tests for all eight

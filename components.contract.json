@@ -1,0 +1,182 @@
+{
+  "$schema": "./components.contract.schema.json",
+  "version": "1.1.0",
+  "components": [
+    {
+      "tag": "sp-button",
+      "elementClass": "SpectreButtonElement",
+      "entryPoint": "./button",
+      "distFile": "dist/button.js",
+      "exports": {
+        "values": [
+          "defineSpectreButton",
+          "SpectreButtonElement",
+          "spectreButtonSizes",
+          "spectreButtonTypes",
+          "spectreButtonVariants"
+        ],
+        "types": [
+          "SpectreButtonProps",
+          "SpectreButtonSize",
+          "SpectreButtonType",
+          "SpectreButtonVariant"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-input",
+      "elementClass": "SpectreInputElement",
+      "entryPoint": "./input",
+      "distFile": "dist/input.js",
+      "exports": {
+        "values": [
+          "defineSpectreInput",
+          "SpectreInputElement",
+          "spectreInputSizes",
+          "spectreInputTypes"
+        ],
+        "types": [
+          "SpectreInputProps",
+          "SpectreInputSize",
+          "SpectreInputType"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-textarea",
+      "elementClass": "SpectreTextareaElement",
+      "entryPoint": "./textarea",
+      "distFile": "dist/textarea.js",
+      "exports": {
+        "values": [
+          "defineSpectreTextarea",
+          "SpectreTextareaElement"
+        ],
+        "types": [
+          "SpectreTextareaProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-select",
+      "elementClass": "SpectreSelectElement",
+      "entryPoint": "./select",
+      "distFile": "dist/select.js",
+      "exports": {
+        "values": [
+          "defineSpectreSelect",
+          "SpectreSelectElement"
+        ],
+        "types": [
+          "SpectreSelectProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-checkbox",
+      "elementClass": "SpectreCheckboxElement",
+      "entryPoint": "./checkbox",
+      "distFile": "dist/checkbox.js",
+      "exports": {
+        "values": [
+          "defineSpectreCheckbox",
+          "SpectreCheckboxElement"
+        ],
+        "types": [
+          "SpectreCheckboxProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-radio",
+      "elementClass": "SpectreRadioElement",
+      "entryPoint": "./radio",
+      "distFile": "dist/radio.js",
+      "exports": {
+        "values": [
+          "defineSpectreRadio",
+          "SpectreRadioElement"
+        ],
+        "types": [
+          "SpectreRadioProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-label",
+      "elementClass": "SpectreLabelElement",
+      "entryPoint": "./label",
+      "distFile": "dist/label.js",
+      "exports": {
+        "values": [
+          "defineSpectreLabel",
+          "SpectreLabelElement"
+        ],
+        "types": [
+          "SpectreLabelProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-fieldset",
+      "elementClass": "SpectreFieldsetElement",
+      "entryPoint": "./fieldset",
+      "distFile": "dist/fieldset.js",
+      "exports": {
+        "values": [
+          "defineSpectreFieldset",
+          "SpectreFieldsetElement"
+        ],
+        "types": [
+          "SpectreFieldsetProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    }
+  ],
+  "rootEntry": {
+    "entryPoint": ".",
+    "distFile": "dist/index.js",
+    "exports": {
+      "values": ["defineSpectreComponents"]
+    }
+  },
+  "globalContracts": {
+    "renderMode": "light-dom",
+    "noHardcodedColors": true,
+    "noHardcodedSpacing": true,
+    "noLocalTokenRedefinitions": true,
+    "noReimplementedSpectreUiRecipes": true
+  }
+}

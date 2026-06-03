@@ -100,8 +100,10 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports",
-    "check:exports": "node --experimental-strip-types scripts/check-exports.ts"
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports && npm run check:contract && npm run check:invariants",
+    "check:exports": "node --experimental-strip-types scripts/check-exports.ts",
+    "check:contract": "node --experimental-strip-types scripts/check-contract.ts",
+    "check:invariants": "node --experimental-strip-types scripts/check-invariants.ts"
   },
   "publishConfig": {
     "access": "public"
