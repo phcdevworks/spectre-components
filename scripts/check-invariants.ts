@@ -39,8 +39,6 @@ const shadowDomApproved = new Set(
 )
 
 // Patterns that violate the thin-adapter contract
-const HARDCODED_COLOR =
-  /(?<!\/\/.*)(?:['"`])(?:[^'"`]*)(#[0-9a-fA-F]{3,8})\b(?:[^'"`]*)(?:['"`])/
 const HARDCODED_HEX_BARE = /#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b/
 const HARDCODED_SPACING = /\b\d+(?:\.\d+)?(?:px|rem|em)\b/
 const LOCAL_TOKEN_REDEF =
