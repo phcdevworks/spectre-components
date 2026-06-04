@@ -40,6 +40,8 @@ Contract change type: additive
 
 **Release Title:** Styling Contract Alignment and Export Validation
 
+Contract change type: additive
+
 ### Added
 
 - `sp-button`: added `icon-only` property to align with updated styling contract
@@ -115,6 +117,8 @@ Contract change type: additive
 
 **Release Title:** Foundation API Tightening and Component Documentation
 
+Contract change type: additive
+
 ### Added
 
 - `form` association support for `sp-input`, `sp-select`, and `sp-textarea`.
@@ -153,6 +157,8 @@ Contract change type: additive
 
 **Release Title:** Foundation Stabilization and Package Release
 
+Contract change type: N/A
+
 ### Added
 
 - `form` association support for `sp-input`, `sp-select`, and `sp-textarea`.
@@ -187,6 +193,8 @@ Contract change type: additive
 ## [0.0.1] - 2026-04-13
 
 **Release Title:** Initial Component Foundations
+
+Contract change type: N/A
 
 ### Added
 

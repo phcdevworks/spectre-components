@@ -4,7 +4,7 @@
 
 We aim to support the latest published version of the project. Security updates are applied to the current major version only.
 
-**Please ensure you are using the most recent versions** of the Spectre Arsenal packages. Older releases may not receive security fixes.
+**Please ensure you are using the most recent versions** of the Spectre suite packages. Older releases may not receive security fixes.
 
 ## Reporting a Vulnerability
 
@@ -14,10 +14,9 @@ If you discover a security vulnerability, please **DO NOT** open a public issue.
 
 **Preferred method**: Use GitHub Security Advisories to privately report vulnerabilities on the specific repository.
 
-**Alternative methods**:
+**Alternative method**:
 
 - Direct message maintainers through GitHub
-- Email the maintainers if provided in the repository
 
 ### What to Include
 
@@ -50,7 +49,7 @@ We appreciate responsible disclosure and will work with you to:
 
 ## Security Best Practices
 
-When using the Spectre Arsenal:
+When using Spectre Components:
 
 1. **Keep dependencies updated** to the latest versions.
 2. **Monitor dependencies** for known vulnerabilities (`npm audit`).
