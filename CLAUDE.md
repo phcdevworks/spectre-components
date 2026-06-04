@@ -7,7 +7,7 @@ changes.
 
 - **Package:** `@phcdevworks/spectre-components`
 - **Layer:** L3 of the Spectre design suite - Lit-based web component delivery
-- **Human owner:** Bradley Potts (brad.potts@coastdigitalgroup.com)
+- **Human owner:** Bradley Potts
 - **Primary AI developer:** Claude Code (`claude-sonnet-4-6`)
 
 `AGENTS.md` is the shared guide for agent roles, edit boundaries, validation, PR
