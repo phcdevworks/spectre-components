@@ -11,6 +11,7 @@ export interface SpectreSelectProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
+  autocapitalize?: string | null | undefined;
   autocomplete?: string | undefined;
   autofocus?: boolean | null | undefined;
   disabled?: boolean | undefined;
@@ -23,6 +24,7 @@ export interface SpectreSelectProps {
   pill?: boolean | undefined;
   required?: boolean | undefined;
   size?: SpectreInputSize | undefined;
+  spellcheck?: boolean | null | undefined;
   success?: boolean | undefined;
   title?: string | null | undefined;
   value?: string | undefined;
@@ -72,12 +74,28 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
     super.title = value;
   }
 
+  override get autocapitalize(): string {
+    return super.autocapitalize;
+  }
+
+  override set autocapitalize(value: string | null | undefined) {
+    super.autocapitalize = value;
+  }
+
   override get autofocus(): boolean {
     return super.autofocus;
   }
 
   override set autofocus(value: boolean | undefined | null) {
     super.autofocus = value;
+  }
+
+  override get spellcheck(): boolean {
+    return super.spellcheck;
+  }
+
+  override set spellcheck(value: boolean | null | undefined) {
+    super.spellcheck = value;
   }
 
   value: string | undefined = '';
@@ -212,6 +230,7 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      autocapitalize="${ifDefined(this.autocapitalize || undefined)}"
       autocomplete="${ifDefined(this.autocomplete || undefined)}"
       ?autofocus="${this.autofocus}"
       class="${this.selectClasses}"
@@ -221,6 +240,7 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
       id="${ifDefined(this.id || undefined)}"
       name="${ifDefined(this.name || undefined)}"
       ?required="${this.required}"
+      spellcheck="${ifDefined(this.getAttribute('spellcheck') ?? undefined)}"
       title="${ifDefined(this.title || undefined)}"
       .value="${live(this.value)}"
       @change="${this.handleChange}"

@@ -275,6 +275,26 @@ describe('sp-select', () => {
     expect(select?.getAttribute('form')).toBe('test-form');
   });
 
+  it('forwards autocapitalize and spellcheck to the native select', async () => {
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.autocapitalize = 'words';
+    element.spellcheck = true;
+    element.append(createOption('free', 'Free'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const select = element.querySelector('select');
+    expect(select?.getAttribute('autocapitalize')).toBe('words');
+    expect(select?.getAttribute('spellcheck')).toBe('true');
+
+    element.autocapitalize = 'none';
+    element.spellcheck = false;
+    await element.updateComplete;
+    expect(select?.getAttribute('autocapitalize')).toBe('none');
+    expect(select?.getAttribute('spellcheck')).toBe('false');
+  });
+
   it('synchronizes value correctly when resetting to an empty string', async () => {
     const element = document.createElement('sp-select') as SpectreSelectElement;
     element.append(createOption('', 'Select...'), createOption('val', 'Value'));
