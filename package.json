@@ -100,10 +100,11 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports && npm run check:contract && npm run check:invariants",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports && npm run check:contract && npm run check:invariants && npm run check:ecosystem",
     "check:exports": "node --experimental-strip-types scripts/check-exports.ts",
     "check:contract": "node --experimental-strip-types scripts/check-contract.ts",
-    "check:invariants": "node --experimental-strip-types scripts/check-invariants.ts"
+    "check:invariants": "node --experimental-strip-types scripts/check-invariants.ts",
+    "check:ecosystem": "spectre-manifest-validate spectre.manifest.json && spectre-manifest-check spectre.manifest.json ."
   },
   "publishConfig": {
     "access": "public"
@@ -118,6 +119,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@phcdevworks/spectre-manifest": "^1.0.0",
     "@types/node": "^25.9.1",
     "@typescript-eslint/eslint-plugin": "^8.60.1",
     "@typescript-eslint/parser": "^8.60.1",

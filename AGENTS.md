@@ -51,6 +51,7 @@ These rules apply to every agent without exception.
 | `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md` | **May edit**            | Keep public docs and release notes aligned with component contracts                         |
 | `package.json`, `tsup.config.ts`               | **May edit carefully**  | Required when public entry points change                                                    |
 | `dist/`, `dist_verify/`                        | **Never edit directly** | Generated build output; regenerate via `npm run build`                                      |
+| `spectre.manifest.json`                        | **May edit**            | Update when exports, Spectre dependencies, or stability change                              |
 | Component tag names (`sp-*`)                   | **Protected**           | Require explicit Bradley Potts approval and a breaking-change path                          |
 
 Full validation command: `npm run check`.
@@ -186,3 +187,18 @@ approval from Bradley Potts recorded in a commit message or PR description.
 4. Update `CHANGELOG.md` under `[Unreleased]` for every non-trivial public
    change.
 5. Validate example or sandbox usage if the component API changed.
+
+## Ecosystem Manifest
+
+`spectre.manifest.json` at the root is this package's declaration in the Spectre
+ecosystem contract, validated by `@phcdevworks/spectre-manifest`. It records role,
+layer, exports, and allowed Spectre dependency targets. `check:ecosystem` validates
+it as part of `npm run check`.
+
+Keep `spectre.manifest.json` in sync when:
+- Package exports in `package.json` are added or removed
+- A Spectre package dependency is added or removed
+- The package stability changes
+
+Do not add a `consumers` field — that belongs in the central
+`@phcdevworks/spectre-manifest` registry.
