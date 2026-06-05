@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `@phcdevworks/spectre-tokens` to `^2.7.0` and
+  `@phcdevworks/spectre-ui` to `^1.7.0`.
+- Aligned `engines.node` requirement with upstream styling contract.
+
 ## [1.3.0] - 2026-06-04
 
 **Release Title:** Contract Validation and Accessibility Audit Gate
