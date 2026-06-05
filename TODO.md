@@ -5,11 +5,11 @@ This todo list is aligned to the current repository and the roadmap in
 existing component hardening, safe component expansion, and release
 infrastructure.
 
-## Phase 1 - Foundation: Completed
+---
 
-The initial component foundation is in place as of v1.1.0. The package has a
-stable Layer 3 shape for reusable Lit web components backed by Spectre tokens
-and Spectre UI styling contracts.
+## Phase 1 — Foundation: Completed
+
+The initial component foundation is in place as of v1.1.0.
 
 ### P0: Core Component Surface
 
@@ -39,39 +39,40 @@ and Spectre UI styling contracts.
 
 - [x] Run CI on every push and PR to `main` through `.github/workflows/ci.yml`.
 
-## Phase 2 - Mature Component Operations
+---
 
-All items below are forward-looking. This phase starts from the stable v1.1.0
-component foundation and focuses on machine-readable contracts, stronger
-accessibility coverage, safe expansion, and release consistency.
+## Phase 2 — Contract Integrity and Component Hardening: Completed
+
+All Phase 2 items are delivered as of v1.3.0.
 
 ### P0: Contract Integrity
 
 - [x] Add `components.contract.json` as a machine-readable manifest anchoring
-      the public component surface:
-  - tags
-  - element classes
-  - entry points
-  - exported types
-  - protected accessibility and rendering contracts
+      the public component surface: tags, element classes, entry points,
+      exported value symbols, exported types, and per-component rendering
+      contracts (`renderMode`, `shadowDomApproved`).
 
-- [x] Add automated export-snapshot validation that reads from the manifest and
-      fails if actual exported symbols drift from the declared contract.
+- [x] Add `scripts/check-contract.ts` — export-snapshot validator that reads
+      `components.contract.json` and fails if actual dist exports drift from
+      the declared contract. Runs as `npm run check:contract`.
 
-- [x] Add a thin-adapter invariant check to `npm run check`:
-  - no hardcoded hex colors or spacing values in component source
-  - no local token redefinitions
-  - no recreated `@phcdevworks/spectre-ui` recipes
-  - no Shadow DOM without explicit approval recorded in the manifest
+- [x] Add `scripts/check-invariants.ts` — thin-adapter invariant checker that
+      fails on hardcoded hex colors, hardcoded spacing values in template
+      literals, local Spectre CSS custom property redefinitions, and Shadow DOM
+      usage without explicit manifest approval. Runs as
+      `npm run check:invariants`.
+
+- [x] Wire both new checks into `npm run check` after the build step.
 
 ### P1: Component Hardening
 
-- [x] Audit `sp-button` for missing `loading` state behavior, class mapping, and
-      ARIA pattern.
+- [x] Audit `sp-button` for missing `loading` state behavior, class mapping,
+      and ARIA pattern.
 
 - [x] Audit `sp-input` for `readonly` and `required` forwarding completeness.
 
-- [x] Audit `sp-textarea` for `readonly` and `required` forwarding completeness.
+- [x] Audit `sp-textarea` for `readonly` and `required` forwarding
+      completeness.
 
 - [x] Audit `sp-select` for `disabled` and `required` forwarding completeness.
 
@@ -84,34 +85,51 @@ accessibility coverage, safe expansion, and release consistency.
 
 - [x] Add `sp-radio` group coordination test coverage.
 
-- [x] Add an accessibility audit step to the validation flow.
+- [x] Add `tests/accessibility.test.ts` — axe-core audit tests for all eight
+      components covering default, invalid, loading, and `aria-label`/legend
+      scenarios. Runs as part of `npm test` and the full `npm run check` gate.
 
-### P2: Component Surface Expansion
+---
 
-New components should only be added when upstream Spectre UI tokens and CSS
-recipes exist to back them. Do not add components that require local visual
-decisions.
+## Phase 3 — Component Surface Expansion
 
-- [ ] `sp-badge` - requires `getBadgeClasses` in `@phcdevworks/spectre-ui` as
+New components should only be added when upstream Spectre UI recipes exist to
+back them. Do not add components that require local visual decisions.
+
+### P0: New Display and Layout Components
+
+- [ ] `sp-badge` — requires `getBadgeClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
-- [ ] `sp-card` - requires `getCardClasses` in `@phcdevworks/spectre-ui` as
+
+- [ ] `sp-card` — requires `getCardClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
-- [ ] `sp-icon-box` - requires `getIconBoxClasses` in `@phcdevworks/spectre-ui`
-      as backing recipe.
-- [ ] `sp-rating` - requires `getRatingClasses` in `@phcdevworks/spectre-ui` as
-      backing recipe.
-- [ ] `sp-testimonial` - requires `getTestimonialClasses` in
+
+- [ ] `sp-icon-box` — requires `getIconBoxClasses` in
       `@phcdevworks/spectre-ui` as backing recipe.
 
-Each new component requires source, tests, exports, docs, component inventory,
-and changelog updates.
+- [ ] `sp-rating` — requires `getRatingClasses` in `@phcdevworks/spectre-ui`
+      as backing recipe.
 
-### P3: Release Infrastructure
+- [ ] `sp-testimonial` — requires `getTestimonialClasses` in
+      `@phcdevworks/spectre-ui` as backing recipe.
 
-- [ ] Keep `CHANGELOG.md` compare links current on every release.
+Each new component requires source, tests, exports, docs, `AGENTS.md`
+component inventory update, and `CHANGELOG.md [Unreleased]` entry.
+
+---
+
+## Phase 4 — Release Infrastructure
+
+### P0: Semver Automation
 
 - [ ] Add a semver proposal helper that reads `CHANGELOG.md [Unreleased]`
-      component API classification and proposes the release bump.
+      component API classification and proposes the release bump: `additive` →
+      minor, `behavioral change` → minor or patch, `breaking` → major.
+
+- [ ] Wire the helper into the release procedure in `CLAUDE.md` and `CODEX.md`.
+      Bradley Potts retains final version authority.
+
+### P1: Publish Metadata and Dist Hygiene
 
 - [ ] Verify npm publish metadata stays complete: `keywords`, `homepage`,
       `bugs`, and `repository`.
@@ -119,14 +137,21 @@ and changelog updates.
 - [ ] Confirm `dist/` and `dist_verify/` remain generated-only and are never
       committed.
 
+- [ ] Keep `CHANGELOG.md` compare links current on every release.
+
+---
+
 ## Recommended Execution Order
 
-1. Add the component contract manifest.
-2. Add export-snapshot and thin-adapter invariant validation.
-3. Harden existing component states and accessibility coverage.
-4. Add the accessibility audit step.
-5. Expand the component surface only after upstream Spectre UI recipes exist.
-6. Add release automation helpers after the contract manifest is stable.
+1. Phase 1 — done.
+2. Phase 2 — done.
+3. Phase 3 P0 — add new display and layout components when upstream
+   `@phcdevworks/spectre-ui` recipes exist and have explicit approval.
+4. Phase 4 P0 — add semver proposal helper; can run in parallel with Phase 3.
+5. Phase 4 P1 — publish metadata and dist hygiene; can run in parallel with
+   any Phase 3 work.
+
+---
 
 ## Explicitly Out of Scope
 
