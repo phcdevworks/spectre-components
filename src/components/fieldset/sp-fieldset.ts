@@ -9,6 +9,7 @@ export interface SpectreFieldsetProps {
   ariaLabel?: string | null;
   ariaLabelledBy?: string | null;
   ariaDescribedBy?: string | null;
+  autocapitalize?: string | null | undefined;
   autofocus?: boolean | null | undefined;
   disabled?: boolean | undefined;
   form?: string | undefined;
@@ -17,6 +18,7 @@ export interface SpectreFieldsetProps {
   legend?: string | undefined;
   loading?: boolean | undefined;
   name?: string | undefined;
+  spellcheck?: boolean | null | undefined;
   success?: boolean | undefined;
   title?: string | null | undefined;
 }
@@ -56,12 +58,28 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
     super.title = value;
   }
 
+  override get autocapitalize(): string {
+    return super.autocapitalize;
+  }
+
+  override set autocapitalize(value: string | null | undefined) {
+    super.autocapitalize = value;
+  }
+
   override get autofocus(): boolean {
     return super.autofocus;
   }
 
   override set autofocus(value: boolean | undefined | null) {
     super.autofocus = value;
+  }
+
+  override get spellcheck(): boolean {
+    return super.spellcheck;
+  }
+
+  override set spellcheck(value: boolean | null | undefined) {
+    super.spellcheck = value;
   }
 
   private get visibleLegend(): string | undefined {
@@ -122,12 +140,14 @@ export class SpectreFieldsetElement extends SpectreProjectableElement implements
       aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+      autocapitalize="${ifDefined(this.autocapitalize || undefined)}"
       ?autofocus="${this.autofocus}"
       data-sp-fieldset-native
       ?disabled="${this.isDisabled}"
       form="${ifDefined(this.form || undefined)}"
       id="${ifDefined(this.id || undefined)}"
       name="${ifDefined(this.name || undefined)}"
+      spellcheck="${ifDefined(this.getAttribute('spellcheck') ?? undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.visibleLegend
