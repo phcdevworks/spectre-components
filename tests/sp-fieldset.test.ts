@@ -140,6 +140,27 @@ describe('sp-fieldset', () => {
     await element.updateComplete;
     expect(element.querySelector('legend')).toBeNull();
   });
+
+  it('forwards autocapitalize and spellcheck to the native fieldset', async () => {
+    const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
+    element.autocapitalize = 'words';
+    element.spellcheck = false;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const fieldset = element.querySelector('fieldset');
+
+    expect(fieldset?.getAttribute('autocapitalize')).toBe('words');
+    expect(fieldset?.getAttribute('spellcheck')).toBe('false');
+
+    element.autocapitalize = '';
+    element.spellcheck = null;
+    await element.updateComplete;
+
+    expect(fieldset?.hasAttribute('autocapitalize')).toBe(false);
+    expect(fieldset?.hasAttribute('spellcheck')).toBe(false);
+  });
 });
 
 function createChild(text: string): HTMLDivElement {
