@@ -120,4 +120,19 @@ describe('sp-badge', () => {
     await element.updateComplete;
     expect(element.loading).toBe(false);
   });
+
+  it('reflects the loading state to the aria-busy attribute', async () => {
+    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    element.loading = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const span = element.querySelector('[data-sp-badge-native]');
+    expect(span?.getAttribute('aria-busy')).toBe('true');
+
+    element.loading = false;
+    await element.updateComplete;
+    expect(span?.getAttribute('aria-busy')).toBe('false');
+  });
 });

@@ -109,4 +109,19 @@ describe('sp-icon-box', () => {
     await element.updateComplete;
     expect(element.disabled).toBe(false);
   });
+
+  it('reflects the loading state to the aria-busy attribute', async () => {
+    const element = document.createElement('sp-icon-box') as SpectreIconBoxElement;
+    element.loading = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('[data-sp-icon-box-native]');
+    expect(div?.getAttribute('aria-busy')).toBe('true');
+
+    element.loading = false;
+    await element.updateComplete;
+    expect(div?.getAttribute('aria-busy')).toBe('false');
+  });
 });
