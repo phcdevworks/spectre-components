@@ -98,6 +98,7 @@ export class SpectreTestimonialElement
 
   override render() {
     return html`<div
+      aria-busy="${this.loading ? 'true' : 'false'}"
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
