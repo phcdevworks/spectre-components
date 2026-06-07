@@ -56,6 +56,62 @@ export function isInputType(value: unknown): value is SpectreInputType {
   return (spectreInputTypes as readonly string[]).includes(value as string);
 }
 
+export const spectreBadgeVariants = [
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+  'neutral',
+  'info',
+  'ghost',
+  'outline',
+  'accent',
+  'cta',
+] as const;
+
+export type SpectreBadgeVariant = (typeof spectreBadgeVariants)[number];
+
+export function isBadgeVariant(value: unknown): value is SpectreBadgeVariant {
+  return (spectreBadgeVariants as readonly string[]).includes(value as string);
+}
+
+export const spectreCardVariants = ['elevated', 'flat', 'outline', 'ghost'] as const;
+
+export type SpectreCardVariant = (typeof spectreCardVariants)[number];
+
+export function isCardVariant(value: unknown): value is SpectreCardVariant {
+  return (spectreCardVariants as readonly string[]).includes(value as string);
+}
+
+export const spectreIconBoxVariants = [
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+  'info',
+  'neutral',
+  'ghost',
+  'accent',
+  'cta',
+  'outline',
+] as const;
+
+export type SpectreIconBoxVariant = (typeof spectreIconBoxVariants)[number];
+
+export function isIconBoxVariant(value: unknown): value is SpectreIconBoxVariant {
+  return (spectreIconBoxVariants as readonly string[]).includes(value as string);
+}
+
+export const spectreTestimonialVariants = ['elevated', 'flat', 'outline', 'ghost'] as const;
+
+export type SpectreTestimonialVariant = (typeof spectreTestimonialVariants)[number];
+
+export function isTestimonialVariant(value: unknown): value is SpectreTestimonialVariant {
+  return (spectreTestimonialVariants as readonly string[]).includes(value as string);
+}
+
 export function normalizeInt(
   value: unknown,
   fallback: number | undefined,
