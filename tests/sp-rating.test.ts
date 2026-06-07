@@ -138,4 +138,43 @@ describe('sp-rating', () => {
     expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false);
     expect(div?.id).toBe('rating-1');
   });
+
+  it('reflects the loading state to the aria-busy attribute', async () => {
+    const element = document.createElement('sp-rating') as SpectreRatingElement;
+    element.loading = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('[data-sp-rating-native]');
+    expect(div?.getAttribute('aria-busy')).toBe('true');
+
+    element.loading = false;
+    await element.updateComplete;
+    expect(div?.getAttribute('aria-busy')).toBe('false');
+  });
+
+  it('reflects the disabled state in the label classes when disabled', async () => {
+    const element = document.createElement('sp-rating') as SpectreRatingElement;
+    element.label = 'Rate me';
+    element.disabled = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('.sp-rating-text');
+    expect(label?.className).toContain('disabled');
+  });
+
+  it('reflects the disabled state in the label classes when loading', async () => {
+    const element = document.createElement('sp-rating') as SpectreRatingElement;
+    element.label = 'Rate me';
+    element.loading = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('.sp-rating-text');
+    expect(label?.className).toContain('disabled');
+  });
 });

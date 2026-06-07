@@ -87,6 +87,10 @@ export class SpectreRatingElement extends SpectreBaseElement implements SpectreR
     });
   }
 
+  private get isDisabled(): boolean {
+    return (this.disabled ?? false) || (this.loading ?? false);
+  }
+
   private get effectiveMax(): number {
     return this.max ?? 5;
   }
@@ -113,6 +117,7 @@ export class SpectreRatingElement extends SpectreBaseElement implements SpectreR
     const trimmedLabel = this.label?.trim();
 
     return html`<div
+      aria-busy="${this.loading ? 'true' : 'false'}"
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
       aria-label="${this.computedAriaLabel}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
@@ -124,7 +129,7 @@ export class SpectreRatingElement extends SpectreBaseElement implements SpectreR
     >
       <div class="${getRatingStarsClasses()}">${this.renderStars()}</div>
       ${trimmedLabel
-        ? html`<span class="${getRatingTextClasses({ disabled: this.disabled ?? false })}">${trimmedLabel}</span>`
+        ? html`<span class="${getRatingTextClasses({ disabled: this.isDisabled })}">${trimmedLabel}</span>`
         : nothing}
     </div>`;
   }
