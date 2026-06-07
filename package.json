@@ -113,20 +113,20 @@
     "typescript": "^5.9 || ^6.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^2.7.0",
-    "@phcdevworks/spectre-ui": "^1.7.0",
+    "@phcdevworks/spectre-tokens": "^2.8.0",
+    "@phcdevworks/spectre-ui": "^1.8.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@phcdevworks/spectre-manifest": "^1.0.0",
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.2",
     "@typescript-eslint/eslint-plugin": "^8.60.1",
     "@typescript-eslint/parser": "^8.60.1",
     "axe-core": "^4.12.0",
     "eslint": "^10.4.1",
     "globals": "^17.6.0",
-    "happy-dom": "^20.10.1",
+    "happy-dom": "^20.10.2",
     "jiti": "^2.7.0",
     "prettier": "^3.8.3",
     "tailwindcss": "^4.3.0",
