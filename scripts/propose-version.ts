@@ -8,11 +8,12 @@ const changelogPath = join(repoRoot, 'CHANGELOG.md')
 const packagePath = join(repoRoot, 'package.json')
 
 const CLASSIFICATION_PREFIX = 'Contract change type:'
-const ALLOWED = ['additive', 'semantic change', 'breaking'] as const
+const ALLOWED = ['additive', 'behavioral change', 'breaking'] as const
 type Classification = (typeof ALLOWED)[number]
 
 const changelog = readFileSync(changelogPath, 'utf8')
-const unreleasedSection = changelog.split('## [Unreleased]')[1]?.split('\n## [')[0] ?? ''
+const unreleasedSection =
+  changelog.split('## [Unreleased]')[1]?.split('\n## [')[0] ?? ''
 
 const classificationPattern = new RegExp(
   `${CLASSIFICATION_PREFIX}\\s*(${ALLOWED.join('|')})`,
@@ -38,7 +39,9 @@ if (!match) {
 const rawClassification = match[1]
 
 if (!rawClassification) {
-  throw new Error('Could not read contract change classification from CHANGELOG.md.')
+  throw new Error(
+    'Could not read contract change classification from CHANGELOG.md.'
+  )
 }
 
 const classification = rawClassification.toLowerCase() as Classification
@@ -72,7 +75,10 @@ let bumpType: 'major' | 'minor' | 'patch'
 if (classification === 'breaking') {
   proposed = `${major + 1}.0.0`
   bumpType = 'major'
-} else if (classification === 'additive' || classification === 'semantic change') {
+} else if (
+  classification === 'additive' ||
+  classification === 'behavioral change'
+) {
   proposed = `${major}.${minor + 1}.0`
   bumpType = 'minor'
 } else {

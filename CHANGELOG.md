@@ -6,32 +6,41 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-06-07
+
+**Release Title:** Display Component Expansion and Ecosystem Manifest Gate
+
+Contract change type: additive
+
 ### Added
 
-- Added `@phcdevworks/spectre-manifest` as a devDependency. `spectre.manifest.json`
-  at the repo root declares this package's ecosystem role, layer, exports, and
-  allowed dependency targets. `check:ecosystem` validates it in the check pipeline.
+- Added `@phcdevworks/spectre-manifest` as a devDependency.
+  `spectre.manifest.json` at the repo root declares this package's ecosystem
+  role, layer, exports, and allowed dependency targets. `check:ecosystem`
+  validates it in the check pipeline.
 - `sp-badge` — display component backed by `getBadgeClasses`. Supports `variant`
   (11 values), `size` (sm/md/lg), `disabled`, `loading`, and `full-width`.
   Exports `spectreBadgeVariants`, `spectreBadgeSizes`, `SpectreBadgeVariant`,
   `SpectreBadgeSize`, and `SpectreBadgeProps`.
 - `sp-card` — display container backed by `getCardClasses`. Supports `variant`
   (elevated/flat/outline/ghost), `padded`, `full-height`, `interactive`,
-  `disabled`, and `loading`. Exports `spectreCardVariants`, `SpectreCardVariant`,
-  and `SpectreCardProps`.
+  `disabled`, and `loading`. Exports `spectreCardVariants`,
+  `SpectreCardVariant`, and `SpectreCardProps`.
 - `sp-icon-box` — display component backed by `getIconBoxClasses`. Supports
-  `variant` (11 values), `size` (sm/md/lg), `disabled`, `loading`, `interactive`,
-  `pill`, and `full-width`. Exports `spectreIconBoxVariants`, `spectreIconBoxSizes`,
-  `SpectreIconBoxVariant`, `SpectreIconBoxSize`, and `SpectreIconBoxProps`.
-- `sp-rating` — display component backed by `getRatingClasses`. Renders star spans
-  programmatically from `value` and `max` with a `role="img"` container and a
-  computed accessible label. Supports `size` (sm/md/lg), `disabled`, `loading`,
-  and a `label` text property. Exports `spectreRatingSizes`, `SpectreRatingSize`,
-  and `SpectreRatingProps`.
-- `sp-testimonial` — display container backed by `getTestimonialClasses`. Supports
-  `variant` (elevated/flat/outline/ghost), `full-height`, `interactive`,
-  `disabled`, and `loading`. Exports `spectreTestimonialVariants`,
-  `SpectreTestimonialVariant`, and `SpectreTestimonialProps`.
+  `variant` (11 values), `size` (sm/md/lg), `disabled`, `loading`,
+  `interactive`, `pill`, and `full-width`. Exports `spectreIconBoxVariants`,
+  `spectreIconBoxSizes`, `SpectreIconBoxVariant`, `SpectreIconBoxSize`, and
+  `SpectreIconBoxProps`.
+- `sp-rating` — display component backed by `getRatingClasses`. Renders star
+  spans programmatically from `value` and `max` with a `role="img"` container
+  and a computed accessible label. Supports `size` (sm/md/lg), `disabled`,
+  `loading`, and a `label` text property. Exports `spectreRatingSizes`,
+  `SpectreRatingSize`, and `SpectreRatingProps`.
+- `sp-testimonial` — display container backed by `getTestimonialClasses`.
+  Supports `variant` (elevated/flat/outline/ghost), `full-height`,
+  `interactive`, `disabled`, and `loading`. Exports
+  `spectreTestimonialVariants`, `SpectreTestimonialVariant`, and
+  `SpectreTestimonialProps`.
 - Added subpath exports for all five new components in `package.json` and
   `tsup.config.ts`.
 - Extended `components.contract.json` with entries for all five new components.
@@ -41,8 +50,8 @@ reflects package releases published to npm.
 
 ### Changed
 
-- Updated `@phcdevworks/spectre-tokens` to `^2.7.0` and
-  `@phcdevworks/spectre-ui` to `^1.7.0`.
+- Updated `@phcdevworks/spectre-tokens` to `^2.8.0` and
+  `@phcdevworks/spectre-ui` to `^1.8.0`.
 - Aligned `engines.node` requirement with upstream styling contract.
 
 ## [1.3.0] - 2026-06-04
@@ -55,25 +64,24 @@ Contract change type: additive
 
 - `components.contract.json` — machine-readable manifest anchoring the public
   component surface: tags, element classes, entry points, exported value
-  symbols, exported types, and per-component rendering contracts
-  (`renderMode`, `shadowDomApproved`).
+  symbols, exported types, and per-component rendering contracts (`renderMode`,
+  `shadowDomApproved`).
 - `scripts/check-contract.ts` — export-snapshot validator that reads
   `components.contract.json` and fails if actual dist exports drift from the
   declared contract. Runs as `npm run check:contract`.
-- `scripts/check-invariants.ts` — thin-adapter invariant checker that fails
-  on hardcoded hex colors, hardcoded spacing values in template literals,
-  local Spectre CSS custom property redefinitions, and Shadow DOM usage
-  without explicit approval in the manifest. Runs as
-  `npm run check:invariants`.
+- `scripts/check-invariants.ts` — thin-adapter invariant checker that fails on
+  hardcoded hex colors, hardcoded spacing values in template literals, local
+  Spectre CSS custom property redefinitions, and Shadow DOM usage without
+  explicit approval in the manifest. Runs as `npm run check:invariants`.
 - Both new checks are wired into `npm run check` after the build step.
 
 - `axe-core` devDependency added to support runtime ARIA and accessibility
   validation in tests.
-- `tests/accessibility.test.ts` — axe-core audit tests for all eight
-  components (`sp-button`, `sp-input`, `sp-textarea`, `sp-select`,
-  `sp-checkbox`, `sp-radio`, `sp-label`, `sp-fieldset`). Covers default,
-  invalid, loading, and aria-label/legend scenarios. Runs as part of
-  `npm test` and the full `npm run check` gate.
+- `tests/accessibility.test.ts` — axe-core audit tests for all eight components
+  (`sp-button`, `sp-input`, `sp-textarea`, `sp-select`, `sp-checkbox`,
+  `sp-radio`, `sp-label`, `sp-fieldset`). Covers default, invalid, loading, and
+  aria-label/legend scenarios. Runs as part of `npm test` and the full
+  `npm run check` gate.
 
 ## [1.2.0] - 2026-05-23
 
@@ -271,7 +279,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/1.3.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/phcdevworks/spectre-components/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/phcdevworks/spectre-components/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/phcdevworks/spectre-components/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/phcdevworks/spectre-components/compare/1.0.0...1.1.0

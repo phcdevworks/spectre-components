@@ -53,8 +53,8 @@ All Phase 2 items are delivered as of v1.3.0.
       contracts (`renderMode`, `shadowDomApproved`).
 
 - [x] Add `scripts/check-contract.ts` — export-snapshot validator that reads
-      `components.contract.json` and fails if actual dist exports drift from
-      the declared contract. Runs as `npm run check:contract`.
+      `components.contract.json` and fails if actual dist exports drift from the
+      declared contract. Runs as `npm run check:contract`.
 
 - [x] Add `scripts/check-invariants.ts` — thin-adapter invariant checker that
       fails on hardcoded hex colors, hardcoded spacing values in template
@@ -66,13 +66,12 @@ All Phase 2 items are delivered as of v1.3.0.
 
 ### P1: Component Hardening
 
-- [x] Audit `sp-button` for missing `loading` state behavior, class mapping,
-      and ARIA pattern.
+- [x] Audit `sp-button` for missing `loading` state behavior, class mapping, and
+      ARIA pattern.
 
 - [x] Audit `sp-input` for `readonly` and `required` forwarding completeness.
 
-- [x] Audit `sp-textarea` for `readonly` and `required` forwarding
-      completeness.
+- [x] Audit `sp-textarea` for `readonly` and `required` forwarding completeness.
 
 - [x] Audit `sp-select` for `disabled` and `required` forwarding completeness.
 
@@ -103,40 +102,43 @@ All Phase 3 items are delivered. Full validation gate passes.
 - [x] `sp-card` — requires `getCardClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
-- [x] `sp-icon-box` — requires `getIconBoxClasses` in
-      `@phcdevworks/spectre-ui` as backing recipe.
-
-- [x] `sp-rating` — requires `getRatingClasses` in `@phcdevworks/spectre-ui`
+- [x] `sp-icon-box` — requires `getIconBoxClasses` in `@phcdevworks/spectre-ui`
       as backing recipe.
+
+- [x] `sp-rating` — requires `getRatingClasses` in `@phcdevworks/spectre-ui` as
+      backing recipe.
 
 - [x] `sp-testimonial` — requires `getTestimonialClasses` in
       `@phcdevworks/spectre-ui` as backing recipe.
 
-Each new component requires source, tests, exports, docs, `AGENTS.md`
-component inventory update, and `CHANGELOG.md [Unreleased]` entry.
+Each new component requires source, tests, exports, docs, `AGENTS.md` component
+inventory update, and `CHANGELOG.md [Unreleased]` entry.
 
 ---
 
 ## Phase 4 — Release Infrastructure
 
+Semver proposal and release metadata checks are in place for the v1.4.0 release
+prep.
+
 ### P0: Semver Automation
 
-- [ ] Add a semver proposal helper that reads `CHANGELOG.md [Unreleased]`
+- [x] Add a semver proposal helper that reads `CHANGELOG.md [Unreleased]`
       component API classification and proposes the release bump: `additive` →
       minor, `behavioral change` → minor or patch, `breaking` → major.
 
-- [ ] Wire the helper into the release procedure in `CLAUDE.md` and `CODEX.md`.
+- [x] Wire the helper into the release procedure in `CLAUDE.md` and `CODEX.md`.
       Bradley Potts retains final version authority.
 
 ### P1: Publish Metadata and Dist Hygiene
 
-- [ ] Verify npm publish metadata stays complete: `keywords`, `homepage`,
+- [x] Verify npm publish metadata stays complete: `keywords`, `homepage`,
       `bugs`, and `repository`.
 
-- [ ] Confirm `dist/` and `dist_verify/` remain generated-only and are never
+- [x] Confirm `dist/` and `dist_verify/` remain generated-only and are never
       committed.
 
-- [ ] Keep `CHANGELOG.md` compare links current on every release.
+- [x] Keep `CHANGELOG.md` compare links current on every release.
 
 ---
 
@@ -144,11 +146,9 @@ component inventory update, and `CHANGELOG.md [Unreleased]` entry.
 
 1. Phase 1 — done.
 2. Phase 2 — done.
-3. Phase 3 P0 — add new display and layout components when upstream
-   `@phcdevworks/spectre-ui` recipes exist and have explicit approval.
-4. Phase 4 P0 — add semver proposal helper; can run in parallel with Phase 3.
-5. Phase 4 P1 — publish metadata and dist hygiene; can run in parallel with
-   any Phase 3 work.
+3. Phase 3 P0 — done.
+4. Phase 4 P0 — done.
+5. Phase 4 P1 — done.
 
 ---
 

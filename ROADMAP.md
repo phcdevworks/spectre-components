@@ -16,10 +16,10 @@ shape with the core form primitive set shipped, validated, and CI-enforced.
 ### What is in place
 
 - Eight production components covering core form primitives: `sp-button`,
-  `sp-input`, `sp-textarea`, `sp-select`, `sp-checkbox`, `sp-radio`,
-  `sp-label`, `sp-fieldset`.
-- All components render in light DOM to consume `@phcdevworks/spectre-ui`
-  styles directly without Shadow DOM piercing.
+  `sp-input`, `sp-textarea`, `sp-select`, `sp-checkbox`, `sp-radio`, `sp-label`,
+  `sp-fieldset`.
+- All components render in light DOM to consume `@phcdevworks/spectre-ui` styles
+  directly without Shadow DOM piercing.
 - `SpectreBaseElement` provides attribute proxying for `id`, `title`, and all
   ARIA attributes so they forward to the native element rather than the host.
 - `SpectreProjectableElement` provides light-DOM content projection via
@@ -28,10 +28,10 @@ shape with the core form primitive set shipped, validated, and CI-enforced.
 - Shared form validation utilities (`form.ts`) centralize allowlists and type
   guards.
 - 95 tests across happy-dom with Vitest.
-- ESM + CJS dual build via tsup with declaration files, root export, and
-  subpath exports per component.
-- Full validation gate via `npm run check`, enforced in CI on Node 22 and 24
-  for every push and pull request.
+- ESM + CJS dual build via tsup with declaration files, root export, and subpath
+  exports per component.
+- Full validation gate via `npm run check`, enforced in CI on Node 22 and 24 for
+  every push and pull request.
 - Multi-agent team (Claude Code, Codex, Copilot, Jules) with documented
   authority boundaries, PR creation requirements, and CodeRabbit review
   integration.
@@ -44,8 +44,8 @@ shape with the core form primitive set shipped, validated, and CI-enforced.
   Rename requires a semver major bump and explicit approval.
 - Public properties, events, slots, exports, and ARIA behavior are stable
   contracts.
-- The `npm run check` gate is not optional. No gate may be removed or
-  weakened without explicit approval.
+- The `npm run check` gate is not optional. No gate may be removed or weakened
+  without explicit approval.
 - This package does not own token meaning, CSS recipe ownership, or framework
   adapter behavior.
 
@@ -53,24 +53,23 @@ shape with the core form primitive set shipped, validated, and CI-enforced.
 
 ## 2. Phase 2 — Contract Integrity and Component Hardening — Delivered
 
-All Phase 2 work is complete as of v1.3.0. Machine-readable contract
-validation, thin-adapter invariant checks, accessibility testing, and component
-state and ARIA audits were delivered across the v1.2.0 and v1.3.0 release
-cycle.
+All Phase 2 work is complete as of v1.3.0. Machine-readable contract validation,
+thin-adapter invariant checks, accessibility testing, and component state and
+ARIA audits were delivered across the v1.2.0 and v1.3.0 release cycle.
 
 ### P0: Contract Integrity — Delivered
 
 - `components.contract.json` anchors the public component surface as a
-  machine-readable manifest: tags, element classes, entry points, exported
-  value symbols, exported types, and per-component rendering contracts
-  (`renderMode`, `shadowDomApproved`).
+  machine-readable manifest: tags, element classes, entry points, exported value
+  symbols, exported types, and per-component rendering contracts (`renderMode`,
+  `shadowDomApproved`).
 - `scripts/check-contract.ts` validates that actual dist exports match the
   declared contract. Runs as `npm run check:contract` and is wired into
   `npm run check`.
 - `scripts/check-invariants.ts` enforces thin-adapter rules: no hardcoded hex
-  colors, no hardcoded spacing values in template literals, no local Spectre
-  CSS custom property redefinitions, no Shadow DOM without manifest approval.
-  Runs as `npm run check:invariants` and is wired into `npm run check`.
+  colors, no hardcoded spacing values in template literals, no local Spectre CSS
+  custom property redefinitions, no Shadow DOM without manifest approval. Runs
+  as `npm run check:invariants` and is wired into `npm run check`.
 
 ### P1: Component Hardening — Delivered
 
@@ -88,11 +87,11 @@ cycle.
 
 ---
 
-## 3. Phase 3 — Component Surface Expansion
+## 3. Phase 3 — Component Surface Expansion — Delivered
 
-The core form primitive set and contract infrastructure are stable. This phase
-expands the component surface to cover display and layout primitives already
-defined as CSS recipes in `@phcdevworks/spectre-ui`.
+The core form primitive set and contract infrastructure are stable. Phase 3
+delivered display and layout primitives already defined as CSS recipes in
+`@phcdevworks/spectre-ui` for the v1.4.0 release.
 
 ### P0: New Display and Layout Components
 
@@ -104,13 +103,12 @@ Add display and layout components backed by upstream Spectre UI recipes.
 
 Consumer applications currently have no web component wrappers for display
 primitives like badges, cards, and icon boxes. These exist as CSS recipes in
-`spectre-ui` but are not yet exposed as custom elements. Without them,
-consumers fill the gap with local implementations that diverge from the Spectre
-contract.
+`spectre-ui` but are not yet exposed as custom elements. Without them, consumers
+fill the gap with local implementations that diverge from the Spectre contract.
 
 #### Deliverables
 
-New components pending upstream recipe support:
+Delivered components:
 
 - `sp-badge` — backed by `getBadgeClasses` in `@phcdevworks/spectre-ui`
 - `sp-card` — backed by `getCardClasses` in `@phcdevworks/spectre-ui`
@@ -119,21 +117,20 @@ New components pending upstream recipe support:
 - `sp-testimonial` — backed by `getTestimonialClasses` in
   `@phcdevworks/spectre-ui`
 
-Each new component requires: source, tests, exports, `AGENTS.md` component
-table update, and `CHANGELOG.md [Unreleased]` entry.
+Each component includes source, tests, exports, `AGENTS.md` component table
+coverage, and release notes.
 
 #### Dependency notes
 
-- Requires upstream recipe support in `@phcdevworks/spectre-ui` and explicit
-  Bradley Potts approval before any component is added.
+- Upstream recipe support in `@phcdevworks/spectre-ui` is present for the
+  delivered components.
 - Phase 2 hardening is complete, so the contract foundation is solid for
   expansion.
 
 #### Risk if skipped
 
-Consumer applications implement display primitives locally, diverging from the
-Spectre contract and creating long-term maintenance surface in the wrong
-package.
+Delivered components reduce the need for consumer applications to implement
+display primitives locally and diverge from the Spectre contract.
 
 ---
 
@@ -181,9 +178,6 @@ release decisions. Metadata gaps reduce package discoverability.
 
 1. **Phase 1** — done.
 2. **Phase 2** — done.
-3. **Phase 3 P0** — add display and layout components once upstream
-   `@phcdevworks/spectre-ui` recipes exist and have explicit approval.
-4. **Phase 4 P0** — add semver proposal helper; low effort, high release
-   consistency payoff; can run in parallel with Phase 3.
-5. **Phase 4 P1** — publish metadata and dist hygiene audit; can run in
-   parallel with any Phase 3 work.
+3. **Phase 3 P0** — done.
+4. **Phase 4 P0** — done.
+5. **Phase 4 P1** — done.
