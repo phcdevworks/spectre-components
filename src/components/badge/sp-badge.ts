@@ -97,6 +97,7 @@ export class SpectreBadgeElement extends SpectreProjectableElement implements Sp
 
   override render() {
     return html`<span
+      aria-busy="${this.loading ? 'true' : 'false'}"
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
