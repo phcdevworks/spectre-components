@@ -91,26 +91,25 @@ All Phase 2 items are delivered as of v1.3.0.
 
 ---
 
-## Phase 3 — Component Surface Expansion
+## Phase 3 — Component Surface Expansion: Completed
 
-New components should only be added when upstream Spectre UI recipes exist to
-back them. Do not add components that require local visual decisions.
+All Phase 3 items are delivered. Full validation gate passes.
 
 ### P0: New Display and Layout Components
 
-- [ ] `sp-badge` — requires `getBadgeClasses` in `@phcdevworks/spectre-ui` as
+- [x] `sp-badge` — requires `getBadgeClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
-- [ ] `sp-card` — requires `getCardClasses` in `@phcdevworks/spectre-ui` as
+- [x] `sp-card` — requires `getCardClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
-- [ ] `sp-icon-box` — requires `getIconBoxClasses` in
+- [x] `sp-icon-box` — requires `getIconBoxClasses` in
       `@phcdevworks/spectre-ui` as backing recipe.
 
-- [ ] `sp-rating` — requires `getRatingClasses` in `@phcdevworks/spectre-ui`
+- [x] `sp-rating` — requires `getRatingClasses` in `@phcdevworks/spectre-ui`
       as backing recipe.
 
-- [ ] `sp-testimonial` — requires `getTestimonialClasses` in
+- [x] `sp-testimonial` — requires `getTestimonialClasses` in
       `@phcdevworks/spectre-ui` as backing recipe.
 
 Each new component requires source, tests, exports, docs, `AGENTS.md`
