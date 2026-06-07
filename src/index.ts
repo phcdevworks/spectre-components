@@ -8,6 +8,11 @@ import { defineSpectreCheckbox } from './components/checkbox';
 import { defineSpectreRadio } from './components/radio';
 import { defineSpectreLabel } from './components/label';
 import { defineSpectreFieldset } from './components/fieldset';
+import { defineSpectreBadge } from './components/badge';
+import { defineSpectreCard } from './components/card';
+import { defineSpectreIconBox } from './components/icon-box';
+import { defineSpectreRating } from './components/rating';
+import { defineSpectreTestimonial } from './components/testimonial';
 
 export function defineSpectreComponents(): void {
   defineSpectreButton();
@@ -18,4 +23,9 @@ export function defineSpectreComponents(): void {
   defineSpectreRadio();
   defineSpectreLabel();
   defineSpectreFieldset();
+  defineSpectreBadge();
+  defineSpectreCard();
+  defineSpectreIconBox();
+  defineSpectreRating();
+  defineSpectreTestimonial();
 }

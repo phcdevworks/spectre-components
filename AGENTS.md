@@ -121,16 +121,21 @@ rules.
 
 ## Current Components
 
-| Tag           | Element class            | Entry point                                |
-| ------------- | ------------------------ | ------------------------------------------ |
-| `sp-button`   | `SpectreButtonElement`   | `@phcdevworks/spectre-components/button`   |
-| `sp-input`    | `SpectreInputElement`    | `@phcdevworks/spectre-components/input`    |
-| `sp-textarea` | `SpectreTextareaElement` | `@phcdevworks/spectre-components/textarea` |
-| `sp-select`   | `SpectreSelectElement`   | `@phcdevworks/spectre-components/select`   |
-| `sp-checkbox` | `SpectreCheckboxElement` | `@phcdevworks/spectre-components/checkbox` |
-| `sp-radio`    | `SpectreRadioElement`    | `@phcdevworks/spectre-components/radio`    |
-| `sp-label`    | `SpectreLabelElement`    | `@phcdevworks/spectre-components/label`    |
-| `sp-fieldset` | `SpectreFieldsetElement` | `@phcdevworks/spectre-components/fieldset` |
+| Tag              | Element class               | Entry point                                   |
+| ---------------- | --------------------------- | --------------------------------------------- |
+| `sp-button`      | `SpectreButtonElement`      | `@phcdevworks/spectre-components/button`      |
+| `sp-input`       | `SpectreInputElement`       | `@phcdevworks/spectre-components/input`       |
+| `sp-textarea`    | `SpectreTextareaElement`    | `@phcdevworks/spectre-components/textarea`    |
+| `sp-select`      | `SpectreSelectElement`      | `@phcdevworks/spectre-components/select`      |
+| `sp-checkbox`    | `SpectreCheckboxElement`    | `@phcdevworks/spectre-components/checkbox`    |
+| `sp-radio`       | `SpectreRadioElement`       | `@phcdevworks/spectre-components/radio`       |
+| `sp-label`       | `SpectreLabelElement`       | `@phcdevworks/spectre-components/label`       |
+| `sp-fieldset`    | `SpectreFieldsetElement`    | `@phcdevworks/spectre-components/fieldset`    |
+| `sp-badge`       | `SpectreBadgeElement`       | `@phcdevworks/spectre-components/badge`       |
+| `sp-card`        | `SpectreCardElement`        | `@phcdevworks/spectre-components/card`        |
+| `sp-icon-box`    | `SpectreIconBoxElement`     | `@phcdevworks/spectre-components/icon-box`    |
+| `sp-rating`      | `SpectreRatingElement`      | `@phcdevworks/spectre-components/rating`      |
+| `sp-testimonial` | `SpectreTestimonialElement` | `@phcdevworks/spectre-components/testimonial` |
 
 ## Core Component Contract
 

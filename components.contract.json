@@ -163,6 +163,115 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-badge",
+      "elementClass": "SpectreBadgeElement",
+      "entryPoint": "./badge",
+      "distFile": "dist/badge.js",
+      "exports": {
+        "values": [
+          "defineSpectreBadge",
+          "SpectreBadgeElement",
+          "spectreBadgeVariants",
+          "spectreBadgeSizes"
+        ],
+        "types": [
+          "SpectreBadgeProps",
+          "SpectreBadgeVariant",
+          "SpectreBadgeSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-card",
+      "elementClass": "SpectreCardElement",
+      "entryPoint": "./card",
+      "distFile": "dist/card.js",
+      "exports": {
+        "values": [
+          "defineSpectreCard",
+          "SpectreCardElement",
+          "spectreCardVariants"
+        ],
+        "types": [
+          "SpectreCardProps",
+          "SpectreCardVariant"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-icon-box",
+      "elementClass": "SpectreIconBoxElement",
+      "entryPoint": "./icon-box",
+      "distFile": "dist/icon-box.js",
+      "exports": {
+        "values": [
+          "defineSpectreIconBox",
+          "SpectreIconBoxElement",
+          "spectreIconBoxVariants",
+          "spectreIconBoxSizes"
+        ],
+        "types": [
+          "SpectreIconBoxProps",
+          "SpectreIconBoxVariant",
+          "SpectreIconBoxSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-rating",
+      "elementClass": "SpectreRatingElement",
+      "entryPoint": "./rating",
+      "distFile": "dist/rating.js",
+      "exports": {
+        "values": [
+          "defineSpectreRating",
+          "SpectreRatingElement",
+          "spectreRatingSizes"
+        ],
+        "types": [
+          "SpectreRatingProps",
+          "SpectreRatingSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-testimonial",
+      "elementClass": "SpectreTestimonialElement",
+      "entryPoint": "./testimonial",
+      "distFile": "dist/testimonial.js",
+      "exports": {
+        "values": [
+          "defineSpectreTestimonial",
+          "SpectreTestimonialElement",
+          "spectreTestimonialVariants"
+        ],
+        "types": [
+          "SpectreTestimonialProps",
+          "SpectreTestimonialVariant"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {

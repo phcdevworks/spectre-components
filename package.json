@@ -82,6 +82,31 @@
       "types": "./dist/fieldset.d.ts",
       "import": "./dist/fieldset.js",
       "require": "./dist/fieldset.cjs"
+    },
+    "./badge": {
+      "types": "./dist/badge.d.ts",
+      "import": "./dist/badge.js",
+      "require": "./dist/badge.cjs"
+    },
+    "./card": {
+      "types": "./dist/card.d.ts",
+      "import": "./dist/card.js",
+      "require": "./dist/card.cjs"
+    },
+    "./icon-box": {
+      "types": "./dist/icon-box.d.ts",
+      "import": "./dist/icon-box.js",
+      "require": "./dist/icon-box.cjs"
+    },
+    "./rating": {
+      "types": "./dist/rating.d.ts",
+      "import": "./dist/rating.js",
+      "require": "./dist/rating.cjs"
+    },
+    "./testimonial": {
+      "types": "./dist/testimonial.d.ts",
+      "import": "./dist/testimonial.js",
+      "require": "./dist/testimonial.cjs"
     }
   },
   "files": [

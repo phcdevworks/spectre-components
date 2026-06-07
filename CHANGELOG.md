@@ -11,6 +11,33 @@ reflects package releases published to npm.
 - Added `@phcdevworks/spectre-manifest` as a devDependency. `spectre.manifest.json`
   at the repo root declares this package's ecosystem role, layer, exports, and
   allowed dependency targets. `check:ecosystem` validates it in the check pipeline.
+- `sp-badge` — display component backed by `getBadgeClasses`. Supports `variant`
+  (11 values), `size` (sm/md/lg), `disabled`, `loading`, and `full-width`.
+  Exports `spectreBadgeVariants`, `spectreBadgeSizes`, `SpectreBadgeVariant`,
+  `SpectreBadgeSize`, and `SpectreBadgeProps`.
+- `sp-card` — display container backed by `getCardClasses`. Supports `variant`
+  (elevated/flat/outline/ghost), `padded`, `full-height`, `interactive`,
+  `disabled`, and `loading`. Exports `spectreCardVariants`, `SpectreCardVariant`,
+  and `SpectreCardProps`.
+- `sp-icon-box` — display component backed by `getIconBoxClasses`. Supports
+  `variant` (11 values), `size` (sm/md/lg), `disabled`, `loading`, `interactive`,
+  `pill`, and `full-width`. Exports `spectreIconBoxVariants`, `spectreIconBoxSizes`,
+  `SpectreIconBoxVariant`, `SpectreIconBoxSize`, and `SpectreIconBoxProps`.
+- `sp-rating` — display component backed by `getRatingClasses`. Renders star spans
+  programmatically from `value` and `max` with a `role="img"` container and a
+  computed accessible label. Supports `size` (sm/md/lg), `disabled`, `loading`,
+  and a `label` text property. Exports `spectreRatingSizes`, `SpectreRatingSize`,
+  and `SpectreRatingProps`.
+- `sp-testimonial` — display container backed by `getTestimonialClasses`. Supports
+  `variant` (elevated/flat/outline/ghost), `full-height`, `interactive`,
+  `disabled`, and `loading`. Exports `spectreTestimonialVariants`,
+  `SpectreTestimonialVariant`, and `SpectreTestimonialProps`.
+- Added subpath exports for all five new components in `package.json` and
+  `tsup.config.ts`.
+- Extended `components.contract.json` with entries for all five new components.
+- Added new variant and type-guard helpers to `src/utils/form.ts`:
+  `spectreBadgeVariants`, `spectreCardVariants`, `spectreIconBoxVariants`, and
+  `spectreTestimonialVariants`.
 
 ### Changed
 

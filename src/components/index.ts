@@ -6,3 +6,8 @@ export * from './checkbox';
 export * from './radio';
 export * from './label';
 export * from './fieldset';
+export * from './badge';
+export * from './card';
+export * from './icon-box';
+export * from './rating';
+export * from './testimonial';
