@@ -21,9 +21,7 @@
       "title": "Build",
       "description": "Composition and application-facing packages built on the foundation.",
       "order": 20,
-      "dependsOn": [
-        "foundation"
-      ]
+      "dependsOn": ["foundation"]
     }
   },
   "packages": {
@@ -41,16 +39,18 @@
         "./checkbox",
         "./radio",
         "./label",
-        "./fieldset"
+        "./fieldset",
+        "./badge",
+        "./card",
+        "./icon-box",
+        "./rating",
+        "./testimonial"
       ],
       "dependencies": [
         "@phcdevworks/spectre-tokens",
         "@phcdevworks/spectre-ui"
       ],
-      "allowedTargets": [
-        "layer:foundation",
-        "external"
-      ],
+      "allowedTargets": ["layer:foundation", "external"],
       "notes": [
         "Layer 2 (build) of the Spectre system. Requires spectre-tokens CSS variables loaded in the consuming page.",
         "Import individual components via sub-path exports — never from internal paths.",
@@ -62,10 +62,7 @@
       "layer": "foundation",
       "stability": "stable",
       "description": "Design-token source for the Spectre system.",
-      "exports": [
-        ".",
-        "./index.css"
-      ]
+      "exports": [".", "./index.css"]
     },
     "@phcdevworks/spectre-ui": {
       "role": "styling-contract",
@@ -86,16 +83,11 @@
     "dependencyDirection": [
       {
         "fromLayer": "build",
-        "allowedLayers": [
-          "foundation",
-          "build"
-        ]
+        "allowedLayers": ["foundation", "build"]
       },
       {
         "fromLayer": "foundation",
-        "allowedLayers": [
-          "foundation"
-        ]
+        "allowedLayers": ["foundation"]
       }
     ],
     "forbiddenImports": [],

@@ -11,13 +11,55 @@ const root = join(__dirname, '..')
 const CHECKS = [
   ['dist/index.js', ['defineSpectreComponents']],
   ['dist/button.js', ['defineSpectreButton', 'SpectreButtonElement']],
-  ['dist/input.js', ['defineSpectreInput', 'SpectreInputElement', 'spectreInputSizes', 'spectreInputTypes']],
+  [
+    'dist/input.js',
+    [
+      'defineSpectreInput',
+      'SpectreInputElement',
+      'spectreInputSizes',
+      'spectreInputTypes'
+    ]
+  ],
   ['dist/textarea.js', ['defineSpectreTextarea', 'SpectreTextareaElement']],
   ['dist/select.js', ['defineSpectreSelect', 'SpectreSelectElement']],
   ['dist/checkbox.js', ['defineSpectreCheckbox', 'SpectreCheckboxElement']],
   ['dist/radio.js', ['defineSpectreRadio', 'SpectreRadioElement']],
   ['dist/label.js', ['defineSpectreLabel', 'SpectreLabelElement']],
-  ['dist/fieldset.js', ['defineSpectreFieldset', 'SpectreFieldsetElement']]
+  ['dist/fieldset.js', ['defineSpectreFieldset', 'SpectreFieldsetElement']],
+  [
+    'dist/badge.js',
+    [
+      'defineSpectreBadge',
+      'SpectreBadgeElement',
+      'spectreBadgeVariants',
+      'spectreBadgeSizes'
+    ]
+  ],
+  [
+    'dist/card.js',
+    ['defineSpectreCard', 'SpectreCardElement', 'spectreCardVariants']
+  ],
+  [
+    'dist/icon-box.js',
+    [
+      'defineSpectreIconBox',
+      'SpectreIconBoxElement',
+      'spectreIconBoxVariants',
+      'spectreIconBoxSizes'
+    ]
+  ],
+  [
+    'dist/rating.js',
+    ['defineSpectreRating', 'SpectreRatingElement', 'spectreRatingSizes']
+  ],
+  [
+    'dist/testimonial.js',
+    [
+      'defineSpectreTestimonial',
+      'SpectreTestimonialElement',
+      'spectreTestimonialVariants'
+    ]
+  ]
 ] as const satisfies ReadonlyArray<readonly [string, readonly string[]]>
 
 let passed = 0
