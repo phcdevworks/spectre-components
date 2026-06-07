@@ -111,4 +111,19 @@ describe('sp-card', () => {
     await element.updateComplete;
     expect(element.disabled).toBe(false);
   });
+
+  it('reflects the loading state to the aria-busy attribute', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement;
+    element.loading = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('[data-sp-card-native]');
+    expect(div?.getAttribute('aria-busy')).toBe('true');
+
+    element.loading = false;
+    await element.updateComplete;
+    expect(div?.getAttribute('aria-busy')).toBe('false');
+  });
 });
