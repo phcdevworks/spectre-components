@@ -142,6 +142,71 @@ prep.
 
 ---
 
+## Phase 5 — Surface Growth, Hardening, and DX
+
+`@phcdevworks/spectre-ui` already ships recipes for several primitives that have
+no `sp-*` wrapper yet. This phase expands the surface to cover them, deepens
+test coverage on the existing thirteen components, and improves contributor
+tooling.
+
+### P0: New Components with Existing Backing Recipes
+
+- [ ] `sp-alert` — requires `getAlertClasses` in `@phcdevworks/spectre-ui` as
+      backing recipe.
+
+- [ ] `sp-avatar` — requires `getAvatarClasses` in `@phcdevworks/spectre-ui` as
+      backing recipe.
+
+- [ ] `sp-spinner` — requires `getSpinnerClasses` in `@phcdevworks/spectre-ui`
+      as backing recipe.
+
+- [ ] `sp-tag` — requires `getTagClasses` in `@phcdevworks/spectre-ui` as
+      backing recipe.
+
+- [ ] `sp-pricing-card` — requires `getPricingCardClasses` and the related
+      `getPricingCardBadgeClasses`, `getPricingCardPriceContainerClasses`,
+      `getPricingCardPriceClasses`, and `getPricingCardDescriptionClasses`
+      helpers in `@phcdevworks/spectre-ui` as backing recipes.
+
+Each new component requires source, tests, exports, docs, `AGENTS.md` component
+inventory update, and `CHANGELOG.md [Unreleased]` entry, plus explicit approval
+per `AGENTS.md` before work begins.
+
+### P1: Deeper Hardening and Coverage
+
+- [ ] Audit keyboard interaction coverage for `sp-select`, `sp-radio`, and
+      `sp-checkbox` (arrow-key navigation, space/enter activation, focus order).
+
+- [ ] Audit form-association behavior (`formAssociated`, `ElementInternals`,
+      validity state reporting) across `sp-input`, `sp-textarea`, `sp-select`,
+      `sp-checkbox`, and `sp-radio`.
+
+- [ ] Extend `tests/accessibility.test.ts` with axe-core scenarios for the five
+      Phase 3 display components (`sp-badge`, `sp-card`, `sp-icon-box`,
+      `sp-rating`, `sp-testimonial`) covering populated, empty, and
+      slot-projection states.
+
+- [ ] Audit `sp-card` and `sp-testimonial` for slotted-content edge cases
+      (empty slots, nested interactive elements, long-text overflow).
+
+### P2: Tooling and Contributor DX
+
+- [ ] Evaluate adding visual regression testing (e.g. Playwright snapshot tests
+      against `@phcdevworks/spectre-ui` styling) to catch unintended rendering
+      drift across releases.
+
+- [ ] Evaluate a lightweight component preview/docs harness (e.g. a local
+      Storybook-style page) so contributors can visually verify components
+      without a consumer app.
+
+- [ ] Extend `scripts/check-invariants.ts` to flag duplicated class-mapping
+      logic across components that could be centralized in `src/utils/`.
+
+Each item in this phase requires explicit approval from Bradley Potts before
+implementation begins, per the package boundaries in `AGENTS.md`.
+
+---
+
 ## Recommended Execution Order
 
 1. Phase 1 — done.
@@ -149,6 +214,7 @@ prep.
 3. Phase 3 P0 — done.
 4. Phase 4 P0 — done.
 5. Phase 4 P1 — done.
+6. Phase 5 — pending approval.
 
 ---
 
