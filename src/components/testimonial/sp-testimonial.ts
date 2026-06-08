@@ -88,12 +88,16 @@ export class SpectreTestimonialElement
 
   private get testimonialClasses(): string {
     return getTestimonialClasses({
-      disabled: this.disabled ?? false,
+      disabled: this.isDisabled,
       fullHeight: this.fullHeight ?? false,
       interactive: this.interactive ?? false,
       loading: this.loading ?? false,
       variant: this.variant as NonNullable<TestimonialRecipeOptions['variant']>,
     });
+  }
+
+  private get isDisabled(): boolean {
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   override render() {

@@ -99,7 +99,7 @@ export class SpectreIconBoxElement extends SpectreProjectableElement implements 
 
   private get iconBoxClasses(): string {
     return getIconBoxClasses({
-      disabled: this.disabled ?? false,
+      disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
       interactive: this.interactive ?? false,
       loading: this.loading ?? false,
@@ -107,6 +107,10 @@ export class SpectreIconBoxElement extends SpectreProjectableElement implements 
       size: this.size as IconBoxSize,
       variant: this.variant as IconBoxVariant,
     });
+  }
+
+  private get isDisabled(): boolean {
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   override render() {
