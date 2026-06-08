@@ -272,6 +272,29 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-alert",
+      "elementClass": "SpectreAlertElement",
+      "entryPoint": "./alert",
+      "distFile": "dist/alert.js",
+      "exports": {
+        "values": [
+          "defineSpectreAlert",
+          "SpectreAlertElement",
+          "spectreAlertVariants",
+          "spectreAlertSizes"
+        ],
+        "types": [
+          "SpectreAlertProps",
+          "SpectreAlertVariant",
+          "SpectreAlertSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {
