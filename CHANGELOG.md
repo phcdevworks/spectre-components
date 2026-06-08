@@ -6,6 +6,17 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+Contract change type: additive
+
+### Added
+
+- `sp-alert` — display component backed by `getAlertClasses`. Supports
+  `variant` (info/success/warning/danger/neutral), `size` (sm/md/lg),
+  `dismissed`, `disabled`, `loading`, and `full-width`. Renders with
+  `role="alert"` and `aria-busy` reflecting the loading state. Exports
+  `spectreAlertVariants`, `spectreAlertSizes`, `SpectreAlertVariant`,
+  `SpectreAlertSize`, and `SpectreAlertProps`.
+
 ## [1.4.0] - 2026-06-07
 
 **Release Title:** Display Component Expansion and Ecosystem Manifest Gate

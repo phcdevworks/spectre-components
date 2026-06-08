@@ -18,6 +18,7 @@ export default defineConfig({
     'icon-box': 'src/components/icon-box/index.ts',
     rating: 'src/components/rating/index.ts',
     testimonial: 'src/components/testimonial/index.ts',
+    alert: 'src/components/alert/index.ts',
   },
   format: ['esm', 'cjs'],
   sourcemap: true,

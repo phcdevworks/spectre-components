@@ -107,6 +107,11 @@
       "types": "./dist/testimonial.d.ts",
       "import": "./dist/testimonial.js",
       "require": "./dist/testimonial.cjs"
+    },
+    "./alert": {
+      "types": "./dist/alert.d.ts",
+      "import": "./dist/alert.js",
+      "require": "./dist/alert.cjs"
     }
   },
   "files": [

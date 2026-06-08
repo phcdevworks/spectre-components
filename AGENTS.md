@@ -136,6 +136,7 @@ rules.
 | `sp-icon-box`    | `SpectreIconBoxElement`     | `@phcdevworks/spectre-components/icon-box`    |
 | `sp-rating`      | `SpectreRatingElement`      | `@phcdevworks/spectre-components/rating`      |
 | `sp-testimonial` | `SpectreTestimonialElement` | `@phcdevworks/spectre-components/testimonial` |
+| `sp-alert`       | `SpectreAlertElement`       | `@phcdevworks/spectre-components/alert`       |
 
 ## Core Component Contract
 

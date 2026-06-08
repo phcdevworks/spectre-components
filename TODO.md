@@ -151,7 +151,7 @@ tooling.
 
 ### P0: New Components with Existing Backing Recipes
 
-- [ ] `sp-alert` — requires `getAlertClasses` in `@phcdevworks/spectre-ui` as
+- [x] `sp-alert` — requires `getAlertClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
 - [ ] `sp-avatar` — requires `getAvatarClasses` in `@phcdevworks/spectre-ui` as

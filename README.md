@@ -627,6 +627,32 @@ recipe.
 
 **Internal target** — `[data-sp-testimonial-native]` selects the native `<div>`.
 
+---
+
+### sp-alert
+
+Renders a `<div role="alert">` display primitive backed by the Spectre alert
+recipe.
+
+**Attributes**
+
+| Attribute                 | Type                                                | Default | Description                     |
+| ------------------------- | --------------------------------------------------- | ------- | ------------------------------- |
+| `variant`                 | `info \| success \| warning \| danger \| neutral`   | `info`  | Visual style                    |
+| `size`                    | `sm \| md \| lg`                                    | `md`    | Alert size                      |
+| `dismissed`               | boolean                                             | `false` | Dismissed visual state          |
+| `disabled`                | boolean                                             | `false` | Disabled visual state           |
+| `loading`                 | boolean                                             | `false` | Busy visual state               |
+| `full-width`              | boolean                                             | `false` | Spans full container width      |
+| `id` / `title` / `aria-*` | string                                              | —       | Forwarded to the native `<div>` |
+
+**Content projection** — children become the alert content.
+
+**Accessibility** — renders `role="alert"` and reflects the `loading` state to
+`aria-busy`.
+
+**Internal target** — `[data-sp-alert-native]` selects the native `<div>`.
+
 ## Package exports / API surface
 
 ### Root — `@phcdevworks/spectre-components`
@@ -668,11 +694,13 @@ defineSpectreComponents() // registers all sp-* elements
 
 **Display constants and types**: `spectreBadgeVariants`, `spectreBadgeSizes`,
 `spectreCardVariants`, `spectreIconBoxVariants`, `spectreIconBoxSizes`,
-`spectreRatingSizes`, `spectreTestimonialVariants`, `SpectreBadgeVariant`,
-`SpectreBadgeSize`, `SpectreCardVariant`, `SpectreIconBoxVariant`,
-`SpectreIconBoxSize`, `SpectreRatingSize`, `SpectreTestimonialVariant`,
-`SpectreBadgeProps`, `SpectreCardProps`, `SpectreIconBoxProps`,
-`SpectreRatingProps`, `SpectreTestimonialProps`
+`spectreRatingSizes`, `spectreTestimonialVariants`, `spectreAlertVariants`,
+`spectreAlertSizes`, `SpectreBadgeVariant`, `SpectreBadgeSize`,
+`SpectreCardVariant`, `SpectreIconBoxVariant`, `SpectreIconBoxSize`,
+`SpectreRatingSize`, `SpectreTestimonialVariant`, `SpectreAlertVariant`,
+`SpectreAlertSize`, `SpectreBadgeProps`, `SpectreCardProps`,
+`SpectreIconBoxProps`, `SpectreRatingProps`, `SpectreTestimonialProps`,
+`SpectreAlertProps`
 
 ### Subpath entry points
 
@@ -693,6 +721,7 @@ Each entry point registers only that component and exports only its surface:
 | `.../icon-box`    | `sp-icon-box`    | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types            |
 | `.../rating`      | `sp-rating`      | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                |
 | `.../testimonial` | `sp-testimonial` | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
+| `.../alert`       | `sp-alert`       | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside
