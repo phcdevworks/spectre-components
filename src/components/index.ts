@@ -11,3 +11,4 @@ export * from './card';
 export * from './icon-box';
 export * from './rating';
 export * from './testimonial';
+export * from './alert';

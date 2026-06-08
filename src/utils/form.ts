@@ -76,6 +76,20 @@ export function isBadgeVariant(value: unknown): value is SpectreBadgeVariant {
   return (spectreBadgeVariants as readonly string[]).includes(value as string);
 }
 
+export const spectreAlertVariants = [
+  'info',
+  'success',
+  'warning',
+  'danger',
+  'neutral',
+] as const;
+
+export type SpectreAlertVariant = (typeof spectreAlertVariants)[number];
+
+export function isAlertVariant(value: unknown): value is SpectreAlertVariant {
+  return (spectreAlertVariants as readonly string[]).includes(value as string);
+}
+
 export const spectreCardVariants = ['elevated', 'flat', 'outline', 'ghost'] as const;
 
 export type SpectreCardVariant = (typeof spectreCardVariants)[number];
