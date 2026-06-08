@@ -81,7 +81,7 @@ export class SpectreRatingElement extends SpectreBaseElement implements SpectreR
 
   private get ratingClasses(): string {
     return getRatingClasses({
-      disabled: this.disabled ?? false,
+      disabled: this.isDisabled,
       loading: this.loading ?? false,
       size: this.size as RatingSize,
     });

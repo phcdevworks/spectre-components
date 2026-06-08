@@ -87,12 +87,16 @@ export class SpectreBadgeElement extends SpectreProjectableElement implements Sp
 
   private get badgeClasses(): string {
     return getBadgeClasses({
-      disabled: this.disabled ?? false,
+      disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
       loading: this.loading ?? false,
       size: this.size as BadgeSize,
       variant: this.variant as BadgeVariant,
     });
+  }
+
+  private get isDisabled(): boolean {
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   override render() {
