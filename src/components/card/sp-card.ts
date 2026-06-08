@@ -88,13 +88,17 @@ export class SpectreCardElement extends SpectreProjectableElement implements Spe
 
   private get cardClasses(): string {
     return getCardClasses({
-      disabled: this.disabled ?? false,
+      disabled: this.isDisabled,
       fullHeight: this.fullHeight ?? false,
       interactive: this.interactive ?? false,
       loading: this.loading ?? false,
       padded: this.padded ?? true,
       variant: this.variant as CardVariant,
     });
+  }
+
+  private get isDisabled(): boolean {
+    return (this.disabled ?? false) || (this.loading ?? false);
   }
 
   override render() {
