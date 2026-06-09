@@ -160,7 +160,52 @@ release decisions. Metadata gaps reduce package discoverability.
 
 ---
 
-## 5. Explicitly Out of Scope
+## 5. Phase 5 — Surface Growth, Hardening, and DX
+
+`@phcdevworks/spectre-ui` ships backing recipes for all four remaining
+component families. This work is unblocked.
+
+### P0: New Components with Existing Backing Recipes — Active
+
+All four recipes are present in `@phcdevworks/spectre-ui@1.8.0`.
+
+- `sp-avatar` — backed by `getAvatarClasses`.
+- `sp-spinner` — backed by `getSpinnerClasses`.
+- `sp-tag` — backed by `getTagClasses`.
+- `sp-pricing-card` — backed by `getPricingCardClasses` and related helpers
+  (`getPricingCardBadgeClasses`, `getPricingCardPriceContainerClasses`,
+  `getPricingCardPriceClasses`, `getPricingCardDescriptionClasses`).
+
+Each component requires source, tests, exports, `AGENTS.md` component
+inventory update, and `CHANGELOG.md [Unreleased]` entry, plus explicit
+approval per `AGENTS.md` before work begins.
+
+### P1: Deeper Hardening and Coverage
+
+- Audit keyboard interaction for `sp-select`, `sp-radio`, `sp-checkbox`
+  (arrow-key navigation, space/enter activation, focus order).
+- Audit form-association behavior (`formAssociated`, `ElementInternals`,
+  validity state) across `sp-input`, `sp-textarea`, `sp-select`,
+  `sp-checkbox`, `sp-radio`.
+- Extend `tests/accessibility.test.ts` with axe-core scenarios for the five
+  Phase 3 display components covering populated, empty, and slot-projection
+  states.
+- Audit `sp-card` and `sp-testimonial` for slotted-content edge cases.
+
+### P2: Tooling and Contributor DX
+
+- Evaluate visual regression testing (Playwright snapshots against
+  `@phcdevworks/spectre-ui` styling) to catch unintended rendering drift.
+- Evaluate a lightweight component preview harness so contributors can
+  visually verify components without a consumer app.
+- Extend `scripts/check-invariants.ts` to flag duplicated class-mapping
+  logic that could be centralized in `src/utils/`.
+
+Each item requires explicit approval before implementation begins.
+
+---
+
+## 6. Explicitly Out of Scope
 
 - Token meaning and semantic design values — belong in
   `@phcdevworks/spectre-tokens`.
@@ -174,10 +219,14 @@ release decisions. Metadata gaps reduce package discoverability.
 
 ---
 
-## 6. Recommended Execution Order
+## 7. Recommended Execution Order
 
 1. **Phase 1** — done.
 2. **Phase 2** — done.
 3. **Phase 3 P0** — done.
 4. **Phase 4 P0** — done.
 5. **Phase 4 P1** — done.
+6. **Phase 5 P0** — active. Add sp-avatar, sp-spinner, sp-tag, sp-pricing-card.
+   All backing recipes available in `@phcdevworks/spectre-ui@1.8.0`.
+7. **Phase 5 P1** — hardening; start after P0 ships.
+8. **Phase 5 P2** — tooling/DX; requires explicit approval.
