@@ -31,6 +31,13 @@ Contract change type: additive
   `spectreSpinnerSizes`, `SpectreSpinnerVariant`, `SpectreSpinnerSize`, and
   `SpectreSpinnerProps`.
 
+- `sp-tag` — display component backed by `getTagClasses`. Supports `variant`
+  (default/primary/secondary/success/warning/danger/info/neutral/accent/cta/outline/ghost),
+  `size` (sm/md/lg), `interactive`, `selected`, `dismissible`, `disabled`,
+  `loading`, and `full-width`. Reflects the `loading` state to `aria-busy`.
+  Exports `spectreTagVariants`, `spectreTagSizes`, `SpectreTagVariant`,
+  `SpectreTagSize`, and `SpectreTagProps`.
+
 ## [1.4.0] - 2026-06-07
 
 **Release Title:** Display Component Expansion and Ecosystem Manifest Gate

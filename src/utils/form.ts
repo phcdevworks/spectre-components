@@ -163,6 +163,27 @@ export function isSpinnerVariant(
   return (spectreSpinnerVariants as readonly string[]).includes(value as string)
 }
 
+export const spectreTagVariants = [
+  'default',
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+  'info',
+  'neutral',
+  'accent',
+  'cta',
+  'outline',
+  'ghost'
+] as const
+
+export type SpectreTagVariant = (typeof spectreTagVariants)[number]
+
+export function isTagVariant(value: unknown): value is SpectreTagVariant {
+  return (spectreTagVariants as readonly string[]).includes(value as string)
+}
+
 export const spectreAvatarSizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 
 export type SpectreAvatarSize = (typeof spectreAvatarSizes)[number]

@@ -160,7 +160,7 @@ tooling.
 - [x] `sp-spinner` — requires `getSpinnerClasses` in `@phcdevworks/spectre-ui`
       as backing recipe.
 
-- [ ] `sp-tag` — requires `getTagClasses` in `@phcdevworks/spectre-ui` as
+- [x] `sp-tag` — requires `getTagClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
 - [ ] `sp-pricing-card` — backed by `getPricingCardClasses` and related helpers
