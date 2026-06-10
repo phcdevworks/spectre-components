@@ -127,6 +127,11 @@
       "types": "./dist/tag.d.ts",
       "import": "./dist/tag.js",
       "require": "./dist/tag.cjs"
+    },
+    "./pricing-card": {
+      "types": "./dist/pricing-card.d.ts",
+      "import": "./dist/pricing-card.js",
+      "require": "./dist/pricing-card.cjs"
     }
   },
   "files": [
