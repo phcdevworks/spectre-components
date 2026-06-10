@@ -138,6 +138,7 @@ rules.
 | `sp-testimonial` | `SpectreTestimonialElement` | `@phcdevworks/spectre-components/testimonial` |
 | `sp-alert`       | `SpectreAlertElement`       | `@phcdevworks/spectre-components/alert`       |
 | `sp-avatar`      | `SpectreAvatarElement`      | `@phcdevworks/spectre-components/avatar`      |
+| `sp-spinner`     | `SpectreSpinnerElement`     | `@phcdevworks/spectre-components/spinner`     |
 
 ## Core Component Contract
 
