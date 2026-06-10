@@ -143,6 +143,26 @@ export function isTestimonialVariant(
   )
 }
 
+export const spectreSpinnerVariants = [
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+  'info',
+  'neutral',
+  'accent',
+  'cta'
+] as const
+
+export type SpectreSpinnerVariant = (typeof spectreSpinnerVariants)[number]
+
+export function isSpinnerVariant(
+  value: unknown
+): value is SpectreSpinnerVariant {
+  return (spectreSpinnerVariants as readonly string[]).includes(value as string)
+}
+
 export const spectreAvatarSizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const
 
 export type SpectreAvatarSize = (typeof spectreAvatarSizes)[number]

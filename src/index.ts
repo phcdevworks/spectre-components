@@ -15,6 +15,7 @@ import { defineSpectreRating } from './components/rating'
 import { defineSpectreTestimonial } from './components/testimonial'
 import { defineSpectreAlert } from './components/alert'
 import { defineSpectreAvatar } from './components/avatar'
+import { defineSpectreSpinner } from './components/spinner'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -32,4 +33,5 @@ export function defineSpectreComponents(): void {
   defineSpectreTestimonial()
   defineSpectreAlert()
   defineSpectreAvatar()
+  defineSpectreSpinner()
 }

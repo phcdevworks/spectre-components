@@ -19,7 +19,8 @@ export default defineConfig({
     rating: 'src/components/rating/index.ts',
     testimonial: 'src/components/testimonial/index.ts',
     alert: 'src/components/alert/index.ts',
-    avatar: 'src/components/avatar/index.ts'
+    avatar: 'src/components/avatar/index.ts',
+    spinner: 'src/components/spinner/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,

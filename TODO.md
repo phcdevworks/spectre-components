@@ -157,7 +157,7 @@ tooling.
 - [x] `sp-avatar` — requires `getAvatarClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
-- [ ] `sp-spinner` — requires `getSpinnerClasses` in `@phcdevworks/spectre-ui`
+- [x] `sp-spinner` — requires `getSpinnerClasses` in `@phcdevworks/spectre-ui`
       as backing recipe.
 
 - [ ] `sp-tag` — requires `getTagClasses` in `@phcdevworks/spectre-ui` as

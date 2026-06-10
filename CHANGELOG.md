@@ -23,6 +23,14 @@ Contract change type: additive
   `aria-busy`. Exports `spectreAvatarShapes`, `spectreAvatarSizes`,
   `SpectreAvatarShape`, `SpectreAvatarSize`, and `SpectreAvatarProps`.
 
+- `sp-spinner` — loading indicator backed by `getSpinnerClasses`. Supports
+  `variant` (primary/secondary/success/warning/danger/info/neutral/accent/cta),
+  `size` (sm/md/lg), `disabled`, and `loading` (defaults to `true`). Renders
+  with `role="status"`, reflects the `loading` state to `aria-busy`, and
+  defaults `aria-label` to `Loading`. Exports `spectreSpinnerVariants`,
+  `spectreSpinnerSizes`, `SpectreSpinnerVariant`, `SpectreSpinnerSize`, and
+  `SpectreSpinnerProps`.
+
 ## [1.4.0] - 2026-06-07
 
 **Release Title:** Display Component Expansion and Ecosystem Manifest Gate

@@ -679,6 +679,28 @@ initials, or an icon).
 
 **Internal target** — `[data-sp-avatar-native]` selects the native `<div>`.
 
+---
+
+### sp-spinner
+
+Renders a `<div role="status">` loading indicator backed by the Spectre spinner
+recipe.
+
+**Attributes**
+
+| Attribute                 | Type                                                                                       | Default | Description                     |
+| ------------------------- | ------------------------------------------------------------------------------------------ | ------- | ------------------------------- |
+| `variant`                 | `primary \| secondary \| success \| warning \| danger \| info \| neutral \| accent \| cta` | —       | Arc color                       |
+| `size`                    | `sm \| md \| lg`                                                                           | `md`    | Spinner size                    |
+| `disabled`                | boolean                                                                                    | `false` | Disabled visual state           |
+| `loading`                 | boolean                                                                                    | `true`  | Busy visual state               |
+| `id` / `title` / `aria-*` | string                                                                                     | —       | Forwarded to the native `<div>` |
+
+**Accessibility** — renders `role="status"` and reflects the `loading` state to
+`aria-busy`. Defaults `aria-label` to `Loading` unless `aria-label` is provided.
+
+**Internal target** — `[data-sp-spinner-native]` selects the native `<div>`.
+
 ## Package exports / API surface
 
 ### Root — `@phcdevworks/spectre-components`
@@ -698,14 +720,15 @@ defineSpectreComponents() // registers all sp-* elements
 `defineSpectreSelect`, `defineSpectreCheckbox`, `defineSpectreRadio`,
 `defineSpectreLabel`, `defineSpectreFieldset`, `defineSpectreBadge`,
 `defineSpectreCard`, `defineSpectreIconBox`, `defineSpectreRating`,
-`defineSpectreTestimonial`, `defineSpectreAlert`, `defineSpectreAvatar`
+`defineSpectreTestimonial`, `defineSpectreAlert`, `defineSpectreAvatar`,
+`defineSpectreSpinner`
 
 **Element classes**: `SpectreButtonElement`, `SpectreInputElement`,
 `SpectreTextareaElement`, `SpectreSelectElement`, `SpectreCheckboxElement`,
 `SpectreRadioElement`, `SpectreLabelElement`, `SpectreFieldsetElement`,
 `SpectreBadgeElement`, `SpectreCardElement`, `SpectreIconBoxElement`,
 `SpectreRatingElement`, `SpectreTestimonialElement`, `SpectreAlertElement`,
-`SpectreAvatarElement`
+`SpectreAvatarElement`, `SpectreSpinnerElement`
 
 **Button constants and types**: `spectreButtonVariants`, `spectreButtonSizes`,
 `spectreButtonTypes`, `SpectreButtonVariant`, `SpectreButtonSize`,
@@ -723,12 +746,14 @@ defineSpectreComponents() // registers all sp-* elements
 `spectreCardVariants`, `spectreIconBoxVariants`, `spectreIconBoxSizes`,
 `spectreRatingSizes`, `spectreTestimonialVariants`, `spectreAlertVariants`,
 `spectreAlertSizes`, `spectreAvatarShapes`, `spectreAvatarSizes`,
-`SpectreBadgeVariant`, `SpectreBadgeSize`, `SpectreCardVariant`,
-`SpectreIconBoxVariant`, `SpectreIconBoxSize`, `SpectreRatingSize`,
-`SpectreTestimonialVariant`, `SpectreAlertVariant`, `SpectreAlertSize`,
-`SpectreAvatarShape`, `SpectreAvatarSize`, `SpectreBadgeProps`,
-`SpectreCardProps`, `SpectreIconBoxProps`, `SpectreRatingProps`,
-`SpectreTestimonialProps`, `SpectreAlertProps`, `SpectreAvatarProps`
+`spectreSpinnerVariants`, `spectreSpinnerSizes`, `SpectreBadgeVariant`,
+`SpectreBadgeSize`, `SpectreCardVariant`, `SpectreIconBoxVariant`,
+`SpectreIconBoxSize`, `SpectreRatingSize`, `SpectreTestimonialVariant`,
+`SpectreAlertVariant`, `SpectreAlertSize`, `SpectreAvatarShape`,
+`SpectreAvatarSize`, `SpectreSpinnerVariant`, `SpectreSpinnerSize`,
+`SpectreBadgeProps`, `SpectreCardProps`, `SpectreIconBoxProps`,
+`SpectreRatingProps`, `SpectreTestimonialProps`, `SpectreAlertProps`,
+`SpectreAvatarProps`, `SpectreSpinnerProps`
 
 ### Subpath entry points
 
@@ -751,6 +776,7 @@ Each entry point registers only that component and exports only its surface:
 | `.../testimonial` | `sp-testimonial` | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
 | `.../alert`       | `sp-alert`       | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
 | `.../avatar`      | `sp-avatar`      | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                |
+| `.../spinner`     | `sp-spinner`     | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types             |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside

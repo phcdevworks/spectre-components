@@ -117,6 +117,11 @@
       "types": "./dist/avatar.d.ts",
       "import": "./dist/avatar.js",
       "require": "./dist/avatar.cjs"
+    },
+    "./spinner": {
+      "types": "./dist/spinner.d.ts",
+      "import": "./dist/spinner.js",
+      "require": "./dist/spinner.cjs"
     }
   },
   "files": [

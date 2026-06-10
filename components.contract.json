@@ -275,6 +275,29 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-spinner",
+      "elementClass": "SpectreSpinnerElement",
+      "entryPoint": "./spinner",
+      "distFile": "dist/spinner.js",
+      "exports": {
+        "values": [
+          "defineSpectreSpinner",
+          "SpectreSpinnerElement",
+          "spectreSpinnerSizes",
+          "spectreSpinnerVariants"
+        ],
+        "types": [
+          "SpectreSpinnerProps",
+          "SpectreSpinnerSize",
+          "SpectreSpinnerVariant"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {
