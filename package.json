@@ -122,6 +122,11 @@
       "types": "./dist/spinner.d.ts",
       "import": "./dist/spinner.js",
       "require": "./dist/spinner.cjs"
+    },
+    "./tag": {
+      "types": "./dist/tag.d.ts",
+      "import": "./dist/tag.js",
+      "require": "./dist/tag.cjs"
     }
   },
   "files": [
