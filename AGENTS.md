@@ -139,6 +139,7 @@ rules.
 | `sp-alert`       | `SpectreAlertElement`       | `@phcdevworks/spectre-components/alert`       |
 | `sp-avatar`      | `SpectreAvatarElement`      | `@phcdevworks/spectre-components/avatar`      |
 | `sp-spinner`     | `SpectreSpinnerElement`     | `@phcdevworks/spectre-components/spinner`     |
+| `sp-tag`         | `SpectreTagElement`         | `@phcdevworks/spectre-components/tag`         |
 
 ## Core Component Contract
 

@@ -298,6 +298,29 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-tag",
+      "elementClass": "SpectreTagElement",
+      "entryPoint": "./tag",
+      "distFile": "dist/tag.js",
+      "exports": {
+        "values": [
+          "defineSpectreTag",
+          "SpectreTagElement",
+          "spectreTagSizes",
+          "spectreTagVariants"
+        ],
+        "types": [
+          "SpectreTagProps",
+          "SpectreTagSize",
+          "SpectreTagVariant"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {
