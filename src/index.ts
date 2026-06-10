@@ -17,6 +17,7 @@ import { defineSpectreAlert } from './components/alert'
 import { defineSpectreAvatar } from './components/avatar'
 import { defineSpectreSpinner } from './components/spinner'
 import { defineSpectreTag } from './components/tag'
+import { defineSpectrePricingCard } from './components/pricing-card'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -36,4 +37,5 @@ export function defineSpectreComponents(): void {
   defineSpectreAvatar()
   defineSpectreSpinner()
   defineSpectreTag()
+  defineSpectrePricingCard()
 }

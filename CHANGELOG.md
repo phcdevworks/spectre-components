@@ -38,6 +38,11 @@ Contract change type: additive
   Exports `spectreTagVariants`, `spectreTagSizes`, `SpectreTagVariant`,
   `SpectreTagSize`, and `SpectreTagProps`.
 
+- `sp-pricing-card` — display container backed by `getPricingCardClasses`.
+  Supports `featured`, `interactive`, `disabled`, `loading`, and
+  `full-height`. Reflects the `loading` state to `aria-busy`. Exports
+  `SpectrePricingCardProps`.
+
 ## [1.4.0] - 2026-06-07
 
 **Release Title:** Display Component Expansion and Ecosystem Manifest Gate

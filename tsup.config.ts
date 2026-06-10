@@ -21,7 +21,8 @@ export default defineConfig({
     alert: 'src/components/alert/index.ts',
     avatar: 'src/components/avatar/index.ts',
     spinner: 'src/components/spinner/index.ts',
-    tag: 'src/components/tag/index.ts'
+    tag: 'src/components/tag/index.ts',
+    'pricing-card': 'src/components/pricing-card/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,

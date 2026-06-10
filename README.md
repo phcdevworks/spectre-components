@@ -728,6 +728,32 @@ dismiss icon).
 
 **Internal target** — `[data-sp-tag-native]` selects the native `<span>`.
 
+---
+
+### sp-pricing-card
+
+Renders a `<div>` pricing card container backed by the Spectre pricing-card
+recipe.
+
+**Attributes**
+
+| Attribute                 | Type    | Default | Description                     |
+| ------------------------- | ------- | ------- | ------------------------------- |
+| `featured`                | boolean | `false` | Highlights the card as featured |
+| `interactive`             | boolean | `false` | Applies interactive styling     |
+| `disabled`                | boolean | `false` | Disabled visual state           |
+| `loading`                 | boolean | `false` | Busy visual state               |
+| `full-height`             | boolean | `false` | Spans full container height     |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<div>` |
+
+**Content projection** — children become the pricing card content (heading,
+price, feature list, call-to-action, etc.).
+
+**Accessibility** — reflects the `loading` state to `aria-busy`.
+
+**Internal target** — `[data-sp-pricing-card-native]` selects the native
+`<div>`.
+
 ## Package exports / API surface
 
 ### Root — `@phcdevworks/spectre-components`
@@ -748,14 +774,15 @@ defineSpectreComponents() // registers all sp-* elements
 `defineSpectreLabel`, `defineSpectreFieldset`, `defineSpectreBadge`,
 `defineSpectreCard`, `defineSpectreIconBox`, `defineSpectreRating`,
 `defineSpectreTestimonial`, `defineSpectreAlert`, `defineSpectreAvatar`,
-`defineSpectreSpinner`, `defineSpectreTag`
+`defineSpectreSpinner`, `defineSpectreTag`, `defineSpectrePricingCard`
 
 **Element classes**: `SpectreButtonElement`, `SpectreInputElement`,
 `SpectreTextareaElement`, `SpectreSelectElement`, `SpectreCheckboxElement`,
 `SpectreRadioElement`, `SpectreLabelElement`, `SpectreFieldsetElement`,
 `SpectreBadgeElement`, `SpectreCardElement`, `SpectreIconBoxElement`,
 `SpectreRatingElement`, `SpectreTestimonialElement`, `SpectreAlertElement`,
-`SpectreAvatarElement`, `SpectreSpinnerElement`, `SpectreTagElement`
+`SpectreAvatarElement`, `SpectreSpinnerElement`, `SpectreTagElement`,
+`SpectrePricingCardElement`
 
 **Button constants and types**: `spectreButtonVariants`, `spectreButtonSizes`,
 `spectreButtonTypes`, `SpectreButtonVariant`, `SpectreButtonSize`,
@@ -782,31 +809,32 @@ defineSpectreComponents() // registers all sp-* elements
 `SpectreTagSize`, `SpectreBadgeProps`, `SpectreCardProps`,
 `SpectreIconBoxProps`, `SpectreRatingProps`, `SpectreTestimonialProps`,
 `SpectreAlertProps`, `SpectreAvatarProps`, `SpectreSpinnerProps`,
-`SpectreTagProps`
+`SpectreTagProps`, `SpectrePricingCardProps`
 
 ### Subpath entry points
 
 Each entry point registers only that component and exports only its surface:
 
-| Entry point       | Registers        | Key exports                                                                              |
-| ----------------- | ---------------- | ---------------------------------------------------------------------------------------- |
-| `.../button`      | `sp-button`      | `defineSpectreButton`, `SpectreButtonElement`, button constants and types                |
-| `.../input`       | `sp-input`       | `defineSpectreInput`, `SpectreInputElement`, input constants and types                   |
-| `.../textarea`    | `sp-textarea`    | `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`                |
-| `.../select`      | `sp-select`      | `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`                      |
-| `.../checkbox`    | `sp-checkbox`    | `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`                |
-| `.../radio`       | `sp-radio`       | `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`                         |
-| `.../label`       | `sp-label`       | `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`                         |
-| `.../fieldset`    | `sp-fieldset`    | `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`                |
-| `.../badge`       | `sp-badge`       | `defineSpectreBadge`, `SpectreBadgeElement`, badge constants and types                   |
-| `.../card`        | `sp-card`        | `defineSpectreCard`, `SpectreCardElement`, card constants and types                      |
-| `.../icon-box`    | `sp-icon-box`    | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types            |
-| `.../rating`      | `sp-rating`      | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                |
-| `.../testimonial` | `sp-testimonial` | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
-| `.../alert`       | `sp-alert`       | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
-| `.../avatar`      | `sp-avatar`      | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                |
-| `.../spinner`     | `sp-spinner`     | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types             |
-| `.../tag`         | `sp-tag`         | `defineSpectreTag`, `SpectreTagElement`, tag constants and types                         |
+| Entry point        | Registers         | Key exports                                                                              |
+| ------------------ | ----------------- | ---------------------------------------------------------------------------------------- |
+| `.../button`       | `sp-button`       | `defineSpectreButton`, `SpectreButtonElement`, button constants and types                |
+| `.../input`        | `sp-input`        | `defineSpectreInput`, `SpectreInputElement`, input constants and types                   |
+| `.../textarea`     | `sp-textarea`     | `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`                |
+| `.../select`       | `sp-select`       | `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`                      |
+| `.../checkbox`     | `sp-checkbox`     | `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`                |
+| `.../radio`        | `sp-radio`        | `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`                         |
+| `.../label`        | `sp-label`        | `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`                         |
+| `.../fieldset`     | `sp-fieldset`     | `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`                |
+| `.../badge`        | `sp-badge`        | `defineSpectreBadge`, `SpectreBadgeElement`, badge constants and types                   |
+| `.../card`         | `sp-card`         | `defineSpectreCard`, `SpectreCardElement`, card constants and types                      |
+| `.../icon-box`     | `sp-icon-box`     | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types            |
+| `.../rating`       | `sp-rating`       | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                |
+| `.../testimonial`  | `sp-testimonial`  | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
+| `.../alert`        | `sp-alert`        | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
+| `.../avatar`       | `sp-avatar`       | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                |
+| `.../spinner`      | `sp-spinner`      | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types             |
+| `.../tag`          | `sp-tag`          | `defineSpectreTag`, `SpectreTagElement`, tag constants and types                         |
+| `.../pricing-card` | `sp-pricing-card` | `defineSpectrePricingCard`, `SpectrePricingCardElement`, `SpectrePricingCardProps`       |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside
