@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsup'
 
 export default defineConfig({
   clean: true,
@@ -19,10 +19,11 @@ export default defineConfig({
     rating: 'src/components/rating/index.ts',
     testimonial: 'src/components/testimonial/index.ts',
     alert: 'src/components/alert/index.ts',
+    avatar: 'src/components/avatar/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,
   splitting: false,
   target: 'es2020',
-  treeshake: true,
-});
+  treeshake: true
+})

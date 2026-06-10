@@ -10,12 +10,18 @@ Contract change type: additive
 
 ### Added
 
-- `sp-alert` — display component backed by `getAlertClasses`. Supports
-  `variant` (info/success/warning/danger/neutral), `size` (sm/md/lg),
-  `dismissed`, `disabled`, `loading`, and `full-width`. Renders with
-  `role="alert"` and `aria-busy` reflecting the loading state. Exports
-  `spectreAlertVariants`, `spectreAlertSizes`, `SpectreAlertVariant`,
-  `SpectreAlertSize`, and `SpectreAlertProps`.
+- `sp-alert` — display component backed by `getAlertClasses`. Supports `variant`
+  (info/success/warning/danger/neutral), `size` (sm/md/lg), `dismissed`,
+  `disabled`, `loading`, and `full-width`. Renders with `role="alert"` and
+  `aria-busy` reflecting the loading state. Exports `spectreAlertVariants`,
+  `spectreAlertSizes`, `SpectreAlertVariant`, `SpectreAlertSize`, and
+  `SpectreAlertProps`.
+
+- `sp-avatar` — display component backed by `getAvatarClasses`. Supports `size`
+  (xs/sm/md/lg/xl), `shape` (circle/square), `interactive`, `disabled`,
+  `loading`, `full-width`, and `placeholder`. Reflects the `loading` state to
+  `aria-busy`. Exports `spectreAvatarShapes`, `spectreAvatarSizes`,
+  `SpectreAvatarShape`, `SpectreAvatarSize`, and `SpectreAvatarProps`.
 
 ## [1.4.0] - 2026-06-07
 
