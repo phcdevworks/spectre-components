@@ -39,11 +39,7 @@
           "spectreInputSizes",
           "spectreInputTypes"
         ],
-        "types": [
-          "SpectreInputProps",
-          "SpectreInputSize",
-          "SpectreInputType"
-        ]
+        "types": ["SpectreInputProps", "SpectreInputSize", "SpectreInputType"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -56,13 +52,8 @@
       "entryPoint": "./textarea",
       "distFile": "dist/textarea.js",
       "exports": {
-        "values": [
-          "defineSpectreTextarea",
-          "SpectreTextareaElement"
-        ],
-        "types": [
-          "SpectreTextareaProps"
-        ]
+        "values": ["defineSpectreTextarea", "SpectreTextareaElement"],
+        "types": ["SpectreTextareaProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -75,13 +66,8 @@
       "entryPoint": "./select",
       "distFile": "dist/select.js",
       "exports": {
-        "values": [
-          "defineSpectreSelect",
-          "SpectreSelectElement"
-        ],
-        "types": [
-          "SpectreSelectProps"
-        ]
+        "values": ["defineSpectreSelect", "SpectreSelectElement"],
+        "types": ["SpectreSelectProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -94,13 +80,8 @@
       "entryPoint": "./checkbox",
       "distFile": "dist/checkbox.js",
       "exports": {
-        "values": [
-          "defineSpectreCheckbox",
-          "SpectreCheckboxElement"
-        ],
-        "types": [
-          "SpectreCheckboxProps"
-        ]
+        "values": ["defineSpectreCheckbox", "SpectreCheckboxElement"],
+        "types": ["SpectreCheckboxProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -113,13 +94,8 @@
       "entryPoint": "./radio",
       "distFile": "dist/radio.js",
       "exports": {
-        "values": [
-          "defineSpectreRadio",
-          "SpectreRadioElement"
-        ],
-        "types": [
-          "SpectreRadioProps"
-        ]
+        "values": ["defineSpectreRadio", "SpectreRadioElement"],
+        "types": ["SpectreRadioProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -132,13 +108,8 @@
       "entryPoint": "./label",
       "distFile": "dist/label.js",
       "exports": {
-        "values": [
-          "defineSpectreLabel",
-          "SpectreLabelElement"
-        ],
-        "types": [
-          "SpectreLabelProps"
-        ]
+        "values": ["defineSpectreLabel", "SpectreLabelElement"],
+        "types": ["SpectreLabelProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -151,13 +122,8 @@
       "entryPoint": "./fieldset",
       "distFile": "dist/fieldset.js",
       "exports": {
-        "values": [
-          "defineSpectreFieldset",
-          "SpectreFieldsetElement"
-        ],
-        "types": [
-          "SpectreFieldsetProps"
-        ]
+        "values": ["defineSpectreFieldset", "SpectreFieldsetElement"],
+        "types": ["SpectreFieldsetProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -198,10 +164,7 @@
           "SpectreCardElement",
           "spectreCardVariants"
         ],
-        "types": [
-          "SpectreCardProps",
-          "SpectreCardVariant"
-        ]
+        "types": ["SpectreCardProps", "SpectreCardVariant"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -242,10 +205,7 @@
           "SpectreRatingElement",
           "spectreRatingSizes"
         ],
-        "types": [
-          "SpectreRatingProps",
-          "SpectreRatingSize"
-        ]
+        "types": ["SpectreRatingProps", "SpectreRatingSize"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -263,10 +223,7 @@
           "SpectreTestimonialElement",
           "spectreTestimonialVariants"
         ],
-        "types": [
-          "SpectreTestimonialProps",
-          "SpectreTestimonialVariant"
-        ]
+        "types": ["SpectreTestimonialProps", "SpectreTestimonialVariant"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -289,6 +246,29 @@
           "SpectreAlertProps",
           "SpectreAlertVariant",
           "SpectreAlertSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-avatar",
+      "elementClass": "SpectreAvatarElement",
+      "entryPoint": "./avatar",
+      "distFile": "dist/avatar.js",
+      "exports": {
+        "values": [
+          "defineSpectreAvatar",
+          "SpectreAvatarElement",
+          "spectreAvatarShapes",
+          "spectreAvatarSizes"
+        ],
+        "types": [
+          "SpectreAvatarProps",
+          "SpectreAvatarShape",
+          "SpectreAvatarSize"
         ]
       },
       "contracts": {
