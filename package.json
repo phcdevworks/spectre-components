@@ -112,6 +112,11 @@
       "types": "./dist/alert.d.ts",
       "import": "./dist/alert.js",
       "require": "./dist/alert.cjs"
+    },
+    "./avatar": {
+      "types": "./dist/avatar.d.ts",
+      "import": "./dist/avatar.js",
+      "require": "./dist/avatar.cjs"
     }
   },
   "files": [

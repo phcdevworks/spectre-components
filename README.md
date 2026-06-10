@@ -636,15 +636,15 @@ recipe.
 
 **Attributes**
 
-| Attribute                 | Type                                                | Default | Description                     |
-| ------------------------- | --------------------------------------------------- | ------- | ------------------------------- |
-| `variant`                 | `info \| success \| warning \| danger \| neutral`   | `info`  | Visual style                    |
-| `size`                    | `sm \| md \| lg`                                    | `md`    | Alert size                      |
-| `dismissed`               | boolean                                             | `false` | Dismissed visual state          |
-| `disabled`                | boolean                                             | `false` | Disabled visual state           |
-| `loading`                 | boolean                                             | `false` | Busy visual state               |
-| `full-width`              | boolean                                             | `false` | Spans full container width      |
-| `id` / `title` / `aria-*` | string                                              | —       | Forwarded to the native `<div>` |
+| Attribute                 | Type                                              | Default | Description                     |
+| ------------------------- | ------------------------------------------------- | ------- | ------------------------------- |
+| `variant`                 | `info \| success \| warning \| danger \| neutral` | `info`  | Visual style                    |
+| `size`                    | `sm \| md \| lg`                                  | `md`    | Alert size                      |
+| `dismissed`               | boolean                                           | `false` | Dismissed visual state          |
+| `disabled`                | boolean                                           | `false` | Disabled visual state           |
+| `loading`                 | boolean                                           | `false` | Busy visual state               |
+| `full-width`              | boolean                                           | `false` | Spans full container width      |
+| `id` / `title` / `aria-*` | string                                            | —       | Forwarded to the native `<div>` |
 
 **Content projection** — children become the alert content.
 
@@ -652,6 +652,32 @@ recipe.
 `aria-busy`.
 
 **Internal target** — `[data-sp-alert-native]` selects the native `<div>`.
+
+---
+
+### sp-avatar
+
+Renders a `<div>` avatar container backed by the Spectre avatar recipe.
+
+**Attributes**
+
+| Attribute                 | Type                         | Default  | Description                      |
+| ------------------------- | ---------------------------- | -------- | -------------------------------- |
+| `size`                    | `xs \| sm \| md \| lg \| xl` | `md`     | Avatar size                      |
+| `shape`                   | `circle \| square`           | `circle` | Avatar shape                     |
+| `interactive`             | boolean                      | `false`  | Applies interactive styling      |
+| `disabled`                | boolean                      | `false`  | Disabled visual state            |
+| `loading`                 | boolean                      | `false`  | Busy visual state                |
+| `full-width`              | boolean                      | `false`  | Spans full container width       |
+| `placeholder`             | boolean                      | `false`  | Placeholder background and color |
+| `id` / `title` / `aria-*` | string                       | —        | Forwarded to the native `<div>`  |
+
+**Content projection** — children become the avatar content (an `<img>`,
+initials, or an icon).
+
+**Accessibility** — reflects the `loading` state to `aria-busy`.
+
+**Internal target** — `[data-sp-avatar-native]` selects the native `<div>`.
 
 ## Package exports / API surface
 
@@ -672,13 +698,14 @@ defineSpectreComponents() // registers all sp-* elements
 `defineSpectreSelect`, `defineSpectreCheckbox`, `defineSpectreRadio`,
 `defineSpectreLabel`, `defineSpectreFieldset`, `defineSpectreBadge`,
 `defineSpectreCard`, `defineSpectreIconBox`, `defineSpectreRating`,
-`defineSpectreTestimonial`
+`defineSpectreTestimonial`, `defineSpectreAlert`, `defineSpectreAvatar`
 
 **Element classes**: `SpectreButtonElement`, `SpectreInputElement`,
 `SpectreTextareaElement`, `SpectreSelectElement`, `SpectreCheckboxElement`,
 `SpectreRadioElement`, `SpectreLabelElement`, `SpectreFieldsetElement`,
 `SpectreBadgeElement`, `SpectreCardElement`, `SpectreIconBoxElement`,
-`SpectreRatingElement`, `SpectreTestimonialElement`
+`SpectreRatingElement`, `SpectreTestimonialElement`, `SpectreAlertElement`,
+`SpectreAvatarElement`
 
 **Button constants and types**: `spectreButtonVariants`, `spectreButtonSizes`,
 `spectreButtonTypes`, `SpectreButtonVariant`, `SpectreButtonSize`,
@@ -695,12 +722,13 @@ defineSpectreComponents() // registers all sp-* elements
 **Display constants and types**: `spectreBadgeVariants`, `spectreBadgeSizes`,
 `spectreCardVariants`, `spectreIconBoxVariants`, `spectreIconBoxSizes`,
 `spectreRatingSizes`, `spectreTestimonialVariants`, `spectreAlertVariants`,
-`spectreAlertSizes`, `SpectreBadgeVariant`, `SpectreBadgeSize`,
-`SpectreCardVariant`, `SpectreIconBoxVariant`, `SpectreIconBoxSize`,
-`SpectreRatingSize`, `SpectreTestimonialVariant`, `SpectreAlertVariant`,
-`SpectreAlertSize`, `SpectreBadgeProps`, `SpectreCardProps`,
-`SpectreIconBoxProps`, `SpectreRatingProps`, `SpectreTestimonialProps`,
-`SpectreAlertProps`
+`spectreAlertSizes`, `spectreAvatarShapes`, `spectreAvatarSizes`,
+`SpectreBadgeVariant`, `SpectreBadgeSize`, `SpectreCardVariant`,
+`SpectreIconBoxVariant`, `SpectreIconBoxSize`, `SpectreRatingSize`,
+`SpectreTestimonialVariant`, `SpectreAlertVariant`, `SpectreAlertSize`,
+`SpectreAvatarShape`, `SpectreAvatarSize`, `SpectreBadgeProps`,
+`SpectreCardProps`, `SpectreIconBoxProps`, `SpectreRatingProps`,
+`SpectreTestimonialProps`, `SpectreAlertProps`, `SpectreAvatarProps`
 
 ### Subpath entry points
 
@@ -722,6 +750,7 @@ Each entry point registers only that component and exports only its surface:
 | `.../rating`      | `sp-rating`      | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                |
 | `.../testimonial` | `sp-testimonial` | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
 | `.../alert`       | `sp-alert`       | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
+| `.../avatar`      | `sp-avatar`      | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside

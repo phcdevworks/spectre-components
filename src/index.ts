@@ -1,33 +1,35 @@
-export * from './components';
+export * from './components'
 
-import { defineSpectreButton } from './components/button';
-import { defineSpectreInput } from './components/input';
-import { defineSpectreTextarea } from './components/textarea';
-import { defineSpectreSelect } from './components/select';
-import { defineSpectreCheckbox } from './components/checkbox';
-import { defineSpectreRadio } from './components/radio';
-import { defineSpectreLabel } from './components/label';
-import { defineSpectreFieldset } from './components/fieldset';
-import { defineSpectreBadge } from './components/badge';
-import { defineSpectreCard } from './components/card';
-import { defineSpectreIconBox } from './components/icon-box';
-import { defineSpectreRating } from './components/rating';
-import { defineSpectreTestimonial } from './components/testimonial';
-import { defineSpectreAlert } from './components/alert';
+import { defineSpectreButton } from './components/button'
+import { defineSpectreInput } from './components/input'
+import { defineSpectreTextarea } from './components/textarea'
+import { defineSpectreSelect } from './components/select'
+import { defineSpectreCheckbox } from './components/checkbox'
+import { defineSpectreRadio } from './components/radio'
+import { defineSpectreLabel } from './components/label'
+import { defineSpectreFieldset } from './components/fieldset'
+import { defineSpectreBadge } from './components/badge'
+import { defineSpectreCard } from './components/card'
+import { defineSpectreIconBox } from './components/icon-box'
+import { defineSpectreRating } from './components/rating'
+import { defineSpectreTestimonial } from './components/testimonial'
+import { defineSpectreAlert } from './components/alert'
+import { defineSpectreAvatar } from './components/avatar'
 
 export function defineSpectreComponents(): void {
-  defineSpectreButton();
-  defineSpectreInput();
-  defineSpectreTextarea();
-  defineSpectreSelect();
-  defineSpectreCheckbox();
-  defineSpectreRadio();
-  defineSpectreLabel();
-  defineSpectreFieldset();
-  defineSpectreBadge();
-  defineSpectreCard();
-  defineSpectreIconBox();
-  defineSpectreRating();
-  defineSpectreTestimonial();
-  defineSpectreAlert();
+  defineSpectreButton()
+  defineSpectreInput()
+  defineSpectreTextarea()
+  defineSpectreSelect()
+  defineSpectreCheckbox()
+  defineSpectreRadio()
+  defineSpectreLabel()
+  defineSpectreFieldset()
+  defineSpectreBadge()
+  defineSpectreCard()
+  defineSpectreIconBox()
+  defineSpectreRating()
+  defineSpectreTestimonial()
+  defineSpectreAlert()
+  defineSpectreAvatar()
 }

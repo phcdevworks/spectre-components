@@ -154,7 +154,7 @@ tooling.
 - [x] `sp-alert` — requires `getAlertClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
-- [ ] `sp-avatar` — requires `getAvatarClasses` in `@phcdevworks/spectre-ui` as
+- [x] `sp-avatar` — requires `getAvatarClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
 - [ ] `sp-spinner` — requires `getSpinnerClasses` in `@phcdevworks/spectre-ui`

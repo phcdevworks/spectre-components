@@ -137,6 +137,7 @@ rules.
 | `sp-rating`      | `SpectreRatingElement`      | `@phcdevworks/spectre-components/rating`      |
 | `sp-testimonial` | `SpectreTestimonialElement` | `@phcdevworks/spectre-components/testimonial` |
 | `sp-alert`       | `SpectreAlertElement`       | `@phcdevworks/spectre-components/alert`       |
+| `sp-avatar`      | `SpectreAvatarElement`      | `@phcdevworks/spectre-components/avatar`      |
 
 ## Core Component Contract
 
