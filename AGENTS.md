@@ -140,6 +140,7 @@ rules.
 | `sp-avatar`      | `SpectreAvatarElement`      | `@phcdevworks/spectre-components/avatar`      |
 | `sp-spinner`     | `SpectreSpinnerElement`     | `@phcdevworks/spectre-components/spinner`     |
 | `sp-tag`         | `SpectreTagElement`         | `@phcdevworks/spectre-components/tag`         |
+| `sp-pricing-card` | `SpectrePricingCardElement` | `@phcdevworks/spectre-components/pricing-card` |
 
 ## Core Component Contract
 

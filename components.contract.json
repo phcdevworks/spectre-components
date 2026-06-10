@@ -321,6 +321,25 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-pricing-card",
+      "elementClass": "SpectrePricingCardElement",
+      "entryPoint": "./pricing-card",
+      "distFile": "dist/pricing-card.js",
+      "exports": {
+        "values": [
+          "defineSpectrePricingCard",
+          "SpectrePricingCardElement"
+        ],
+        "types": [
+          "SpectrePricingCardProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {

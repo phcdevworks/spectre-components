@@ -163,7 +163,7 @@ tooling.
 - [x] `sp-tag` — requires `getTagClasses` in `@phcdevworks/spectre-ui` as
       backing recipe.
 
-- [ ] `sp-pricing-card` — backed by `getPricingCardClasses` and related helpers
+- [x] `sp-pricing-card` — backed by `getPricingCardClasses` and related helpers
       in `@phcdevworks/spectre-ui@1.8.0`. Recipe is available.
 
 Each new component requires source, tests, exports, docs, `AGENTS.md` component
@@ -212,9 +212,9 @@ implementation begins, per the package boundaries in `AGENTS.md`.
 3. Phase 3 P0 — done.
 4. Phase 4 P0 — done.
 5. Phase 4 P1 — done.
-6. **Phase 5 P0 — active.** Add sp-avatar, sp-spinner, sp-tag, sp-pricing-card.
-   All backing recipes available in `@phcdevworks/spectre-ui@1.8.0`.
-7. Phase 5 P1 — hardening; start after P0 ships.
+6. Phase 5 P0 — done. Added sp-alert, sp-avatar, sp-spinner, sp-tag, and
+   sp-pricing-card.
+7. **Phase 5 P1 — active.** Hardening and coverage.
 8. Phase 5 P2 — tooling/DX; requires explicit approval.
 
 ---
