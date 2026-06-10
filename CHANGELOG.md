@@ -6,6 +6,10 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-06-11
+
+**Release Title:** Phase 5 Display Surface Expansion
+
 Contract change type: additive
 
 ### Added
@@ -316,7 +320,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/1.4.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/phcdevworks/spectre-components/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/phcdevworks/spectre-components/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/phcdevworks/spectre-components/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/phcdevworks/spectre-components/compare/1.1.0...1.2.0
