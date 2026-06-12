@@ -32,41 +32,16 @@ is release-relevant.
 This repository is maintained by PHCDevworks and contains the Lit-based web
 component package of the Spectre system.
 
-## Primary AI Developer
+## Human Approval Boundaries
 
-**Claude Code** (`claude-sonnet-4-6`) is the designated primary AI developer for
-this repository, maintained on behalf of Bradley Potts at PHCDevworks. All
-development is driven through Claude Code operating from `CLAUDE.md` as the
-authoritative working guide. Human final review and commit authority rests with
-Bradley Potts.
+Component tag names (`sp-*`), public properties, events, slots, exports, and
+accessibility behavior are protected contracts. Removing or renaming any of
+these, switching a component from light DOM to Shadow DOM, or adding a
+speculative component without a backing `@phcdevworks/spectre-ui` recipe
+requires explicit approval from Bradley Potts before merge. See
+[Non-Negotiable Limits](#non-negotiable-limits) for the full list.
 
-Claude Code does not create git commits. Changes are prepared and validated,
-then handed off for human review and commit.
-
-## AI Operating Model
-
-This repository follows the Spectre AI factory model:
-
-| Agent          | Role                                                                                                         | Authority                                          |
-| -------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
-| Claude Code    | Lead developer responsible for primary implementation                                                        | `CLAUDE.md`                                        |
-| OpenAI Codex   | Documentation, releases, production stabilization, repo hygiene, and config standardization                  | `CODEX.md`                                         |
-| ChatGPT        | Strategy, coordination, prompt design, and external review - support layer only, no implementation ownership | -                                                  |
-| GitHub Copilot | General development assistance                                                                               | `COPILOT.md` and `.github/copilot-instructions.md` |
-| Google Jules   | Automated maintenance for small fixes, dependency updates, and micro-updates                                 | `JULES.md`                                         |
-
-Claude Code keeps implementation leadership. Codex keeps release and
-stabilization work clean. ChatGPT provides strategy and coordination support
-only. Copilot assists without owning decisions. Jules may commit bounded
-automated maintenance when configured for this repository and when all
-validation gates pass.
-
-**Bradley Potts** holds final authority for all commits, merges, tags,
-publishing, and releases. No AI agent holds commit authority in this repository
-except Jules, which may commit bounded automated maintenance when all Jules
-rules pass.
-
-## Shared Edit Boundaries
+## Shared Source Rules
 
 These rules apply to every agent without exception.
 
