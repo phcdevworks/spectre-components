@@ -223,7 +223,8 @@ Please open an issue or discussion on GitHub if you're unsure about the best app
 
 ## Code of Conduct
 
-This project adheres to the [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to the project maintainers.
+By participating in this project, you agree to follow the
+[Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
