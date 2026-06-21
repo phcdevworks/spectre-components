@@ -164,7 +164,7 @@
   },
   "dependencies": {
     "@phcdevworks/spectre-tokens": "^2.9.0",
-    "@phcdevworks/spectre-ui": "^1.9.0",
+    "@phcdevworks/spectre-ui": "^2.3.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
