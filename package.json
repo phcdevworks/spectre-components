@@ -150,10 +150,11 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports && npm run check:contract && npm run check:invariants && npm run check:ecosystem",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports && npm run check:contract && npm run check:invariants && npm run check:version-sync && npm run check:ecosystem",
     "check:exports": "node --experimental-strip-types scripts/check-exports.ts",
     "check:contract": "node --experimental-strip-types scripts/check-contract.ts",
     "check:invariants": "node --experimental-strip-types scripts/check-invariants.ts",
+    "check:version-sync": "node scripts/check-readme-version.mjs",
     "check:ecosystem": "spectre-manifest-validate spectre.manifest.json && spectre-manifest-check spectre.manifest.json ."
   },
   "publishConfig": {
