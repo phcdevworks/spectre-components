@@ -205,6 +205,55 @@ implementation begins, per the package boundaries in `AGENTS.md`.
 
 ---
 
+## Phase 6 — Cross-Repo Parity Gaps (spectre-ui-astro)
+
+Audit against `@phcdevworks/spectre-ui-astro` (the L3b sibling) found gaps in
+both directions. None of these are approved for implementation yet — see
+`AGENTS.md` package-boundary approval requirement.
+
+### P0: Recipe Backing Gap on Existing Components
+
+- [ ] `sp-checkbox`, `sp-fieldset`, `sp-label`, `sp-radio`, `sp-select`, and
+      `sp-textarea` have shipped since Phase 1 with no backing recipe in
+      `@phcdevworks/spectre-ui`, unlike every other component in this
+      package. Blocked on `@phcdevworks/spectre-tokens` Phase 7
+      (`component.checkbox`/`radio`/`select`/`textarea`/`fieldset`/`label`)
+      and `@phcdevworks/spectre-ui` Phase 4e publishing first.
+
+### P1: Components Present in spectre-ui-astro but Missing Here
+
+`spectre-ui-astro` ships `SpDropdown`, `SpModal`, `SpNav`, `SpSidebar`,
+`SpToast`, and `SpTooltip` on top of recipes that already exist in
+`@phcdevworks/spectre-ui` (Phase 4, delivered v2.9.0-aligned). No Lit
+equivalents exist here yet.
+
+- [ ] Evaluate `sp-dropdown` — backing recipes `getDropdownClasses`,
+      `getDropdownMenuClasses`, `getDropdownItemClasses` already published.
+
+- [ ] Evaluate `sp-modal` — backing recipes `getModalClasses`,
+      `getModalOverlayClasses` already published. Needs focus-trap and
+      `Esc`-to-close behavior considerations beyond what a thin Astro
+      wrapper provides.
+
+- [ ] Evaluate `sp-nav` — backing recipes `getNavClasses`,
+      `getNavLinksClasses`, `getNavLinkClasses` already published.
+
+- [ ] Evaluate `sp-sidebar` — backing recipe `getSidebarClasses` already
+      published.
+
+- [ ] Evaluate `sp-toast` — backing recipes `getToastClasses`,
+      `getToastIconClasses` already published. Likely needs an imperative
+      show/dismiss API, which is a meaningfully different contract from the
+      other display components.
+
+- [ ] Evaluate `sp-tooltip` — backing recipe `getTooltipClasses` already
+      published. Needs positioning/hover-trigger behavior considerations.
+
+Each item requires explicit approval from Bradley Potts before implementation
+begins, per `AGENTS.md`.
+
+---
+
 ## Recommended Execution Order
 
 1. Phase 1 — done.
