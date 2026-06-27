@@ -154,7 +154,7 @@
     "check:exports": "node --experimental-strip-types scripts/check-exports.ts",
     "check:contract": "node --experimental-strip-types scripts/check-contract.ts",
     "check:invariants": "node --experimental-strip-types scripts/check-invariants.ts",
-    "check:version-sync": "node scripts/check-readme-version.mjs",
+    "check:version-sync": "node --experimental-strip-types scripts/check-readme-version.ts",
     "check:ecosystem": "spectre-manifest-validate spectre.manifest.json && spectre-manifest-check spectre.manifest.json ."
   },
   "publishConfig": {
@@ -164,7 +164,7 @@
     "typescript": "^5.9 || ^6.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^3.1.0",
+    "@phcdevworks/spectre-tokens": "^3.2.0",
     "@phcdevworks/spectre-ui": "^2.5.0",
     "lit": "^3.3.3"
   },
@@ -175,11 +175,11 @@
     "@typescript-eslint/eslint-plugin": "^8.62.0",
     "@typescript-eslint/parser": "^8.62.0",
     "axe-core": "^4.12.1",
-    "eslint": "^10.5.0",
+    "eslint": "^10.6.0",
     "globals": "^17.7.0",
     "happy-dom": "^20.10.6",
     "jiti": "^2.7.0",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.0",
     "tailwindcss": "^4.3.1",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",

@@ -41,6 +41,28 @@ speculative component without a backing `@phcdevworks/spectre-ui` recipe
 requires explicit approval from Bradley Potts before merge. See
 [Non-Negotiable Limits](#non-negotiable-limits) for the full list.
 
+## Upstream Requests and Roadmap Self-Expansion
+
+Full directive: project-team [AGENTS.md](../AGENTS.md) "Upstream Requests and
+Roadmap Self-Expansion." Applied to this repo:
+
+- This repo is L3a — its upstream is `spectre-ui` (and transitively
+  `spectre-tokens`). If a component needs a recipe, class, or token value that
+  doesn't exist upstream, append the request to `spectre-ui/TODO.md` under
+  `## Requested by Downstream`, dated, with the reason and a link back to this
+  repo's own TODO.md/ROADMAP.md. Never recreate the recipe locally instead.
+- There is no known downstream consumer of this repo within the workspace yet.
+  If one appears, it should append requests to this repo's own `TODO.md` under
+  `## Requested by Downstream`, kept visible and separate from self-planned
+  component work.
+- This repo's own [ROADMAP.md](ROADMAP.md) may be proactively expanded with new
+  or reordered phases by the agent's own analysis — but never mark a phase
+  delivered without `npm run check` passing, and never add a speculative new
+  component without a backing recipe already published in `spectre-ui`.
+- Surface any new TODO request or roadmap expansion in the handoff for Bradley
+  Potts in the same change it was made, and reflect cross-repo-relevant
+  changes in the project-team's own ROADMAP.md/TODO.md.
+
 ## Shared Source Rules
 
 These rules apply to every agent without exception.
@@ -111,6 +133,8 @@ rules.
    framework adapters in this repository.
 10. Treat component tags, public properties, events, slots, exports, and
     accessibility behavior as stable contracts that should not change casually.
+11. All `scripts/` tooling is TypeScript (`.ts`); never add a new `.js`/`.mjs`
+    script. Run via `node --experimental-strip-types scripts/<name>.ts`.
 
 ## Working Boundaries
 
