@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Changed
+
+- Bumped `@phcdevworks/spectre-tokens` to `^3.2.0`, closing dependency drift
+  against the current published `project-design` version. The upstream
+  release was additive only — no source changes required here.
+
 ## [1.5.0] - 2026-06-11
 
 **Release Title:** Phase 5 Display Surface Expansion
