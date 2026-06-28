@@ -6,6 +6,32 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `sp-container` — layout component backed by `getContainerClasses`. Supports
+  `max-width` (`prose`). Exports `spectreContainerMaxWidths` and
+  `SpectreContainerMaxWidth`.
+
+- `sp-grid` — layout component backed by `getGridClasses`. Supports `columns`
+  (1/2/3/4/6/12, default `1`) and `gap` (sm/md/lg, default `md`). Exports
+  `spectreGridColumns`, `spectreGridGaps`, `SpectreGridColumns`, and
+  `SpectreGridGap`.
+
+- `sp-section` — layout wrapper backed by `getSectionClasses`. Renders a
+  `<section>` with no additional variant props.
+
+- `sp-stack` — layout component backed by `getStackClasses`. Supports
+  `direction` (vertical/horizontal, default `vertical`), `basis` (`sidebar`),
+  and `align` (center/stretch, default `center`). Exports
+  `spectreStackAligns`, `spectreStackBases`, `spectreStackDirections`,
+  `SpectreStackAlign`, `SpectreStackBasis`, and `SpectreStackDirection`.
+
+  These four close part of the component-coverage gap against
+  `@phcdevworks/spectre-ui-astro`, using its `.astro` adapters as the
+  reference for recipe options and markup structure (interactivity, where
+  applicable in later additions, is implemented as native Lit element state
+  rather than ported scripts).
+
 ### Changed
 
 - Bumped `@phcdevworks/spectre-tokens` to `^3.2.0`, closing dependency drift

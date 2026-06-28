@@ -18,6 +18,10 @@ import { defineSpectreAvatar } from './components/avatar'
 import { defineSpectreSpinner } from './components/spinner'
 import { defineSpectreTag } from './components/tag'
 import { defineSpectrePricingCard } from './components/pricing-card'
+import { defineSpectreContainer } from './components/container'
+import { defineSpectreGrid } from './components/grid'
+import { defineSpectreSection } from './components/section'
+import { defineSpectreStack } from './components/stack'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -38,4 +42,8 @@ export function defineSpectreComponents(): void {
   defineSpectreSpinner()
   defineSpectreTag()
   defineSpectrePricingCard()
+  defineSpectreContainer()
+  defineSpectreGrid()
+  defineSpectreSection()
+  defineSpectreStack()
 }
