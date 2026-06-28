@@ -95,6 +95,17 @@ describe('sp-badge', () => {
 
     expect(span?.getAttribute('aria-label')).toBe('Status badge');
     expect(span?.getAttribute('aria-describedby')).toBe('desc-1');
+    expect(span?.getAttribute('role')).toBe('group');
+  });
+
+  it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
+    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const span = element.querySelector('span');
+
+    expect(span?.hasAttribute('role')).toBe(false);
   });
 
   it('falls back to disabled=false and loading=false when null is assigned', async () => {

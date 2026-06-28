@@ -170,22 +170,34 @@ Each new component requires source, tests, exports, docs, `AGENTS.md` component
 inventory update, and `CHANGELOG.md [Unreleased]` entry, plus explicit approval
 per `AGENTS.md` before work begins.
 
-### P1: Deeper Hardening and Coverage
+### P1: Deeper Hardening and Coverage — Completed
 
-- [ ] Audit keyboard interaction coverage for `sp-select`, `sp-radio`, and
+- [x] Audit keyboard interaction coverage for `sp-select`, `sp-radio`, and
       `sp-checkbox` (arrow-key navigation, space/enter activation, focus order).
+      No custom `keydown` handling exists anywhere in the package — native
+      browser keyboard semantics pass through untouched. Added tests proving
+      native keydown events are never intercepted.
 
-- [ ] Audit form-association behavior (`formAssociated`, `ElementInternals`,
+- [x] Audit form-association behavior (`formAssociated`, `ElementInternals`,
       validity state reporting) across `sp-input`, `sp-textarea`, `sp-select`,
-      `sp-checkbox`, and `sp-radio`.
+      `sp-checkbox`, and `sp-radio`. Native form participation already works
+      via light-DOM native controls — no `ElementInternals` shim needed.
+      Added end-to-end `FormData`/`checkValidity()` tests submitting through
+      an ancestor `<form>`.
 
-- [ ] Extend `tests/accessibility.test.ts` with axe-core scenarios for the five
+- [x] Extend `tests/accessibility.test.ts` with axe-core scenarios for the five
       Phase 3 display components (`sp-badge`, `sp-card`, `sp-icon-box`,
       `sp-rating`, `sp-testimonial`) covering populated, empty, and
-      slot-projection states.
+      slot-projection states. Surfaced a real `aria-prohibited-attr` violation
+      (forwarded `aria-label`/`aria-labelledby` on a roleless `<div>`/`<span>`)
+      across `sp-badge`, `sp-card`, `sp-icon-box`, `sp-testimonial`,
+      `sp-avatar`, `sp-pricing-card`, and `sp-tag`; fixed by rendering
+      `role="group"` whenever a label is forwarded.
 
-- [ ] Audit `sp-card` and `sp-testimonial` for slotted-content edge cases
+- [x] Audit `sp-card` and `sp-testimonial` for slotted-content edge cases
       (empty slots, nested interactive elements, long-text overflow).
+      Confirmed `hasMeaningfulContent()` and `SpectreProjectableElement`
+      already handle all four correctly; added regression tests.
 
 ### P2: Tooling and Contributor DX
 
@@ -263,8 +275,9 @@ begins, per `AGENTS.md`.
 5. Phase 4 P1 — done.
 6. Phase 5 P0 — done. Added sp-alert, sp-avatar, sp-spinner, sp-tag, and
    sp-pricing-card.
-7. **Phase 5 P1 — active.** Hardening and coverage.
-8. Phase 5 P2 — tooling/DX; requires explicit approval.
+7. Phase 5 P1 — done. Hardening and coverage audits; fixed an
+   `aria-prohibited-attr` violation found across seven display components.
+8. **Phase 5 P2 — next up.** Tooling/DX; requires explicit approval.
 
 ---
 
