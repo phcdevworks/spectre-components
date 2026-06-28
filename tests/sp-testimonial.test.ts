@@ -26,6 +26,60 @@ describe('sp-testimonial', () => {
     expect(div?.textContent).toContain('Great product!');
   });
 
+  it('renders nothing when given only whitespace text content', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    element.append(document.createTextNode('   \n   '));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.textContent?.trim()).toBe('');
+    expect(div?.querySelector('*')).toBeNull();
+  });
+
+  it('treats an empty slotted element as meaningful content', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    const emptyCite = document.createElement('cite');
+    element.append(emptyCite);
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.querySelector('cite')).not.toBeNull();
+  });
+
+  it('preserves nested interactive elements in projected content', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    element.innerHTML =
+      '<blockquote>Great product.</blockquote><a href="/reviews/1">Read full review</a>';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.querySelector('a[href="/reviews/1"]')).not.toBeNull();
+  });
+
+  it('preserves long quote content without truncation', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    const longText = 'Lorem ipsum '.repeat(200).trim();
+    const quote = document.createElement('blockquote');
+    quote.textContent = longText;
+    element.append(quote);
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.querySelector('blockquote')?.textContent).toBe(longText);
+  });
+
   it('defaults to variant=elevated', async () => {
     const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
     document.body.append(element);
@@ -83,6 +137,17 @@ describe('sp-testimonial', () => {
 
     expect(div?.getAttribute('aria-label')).toBe('Customer testimonial');
     expect(div?.getAttribute('aria-describedby')).toBe('author-bio');
+    expect(div?.getAttribute('role')).toBe('group');
+  });
+
+  it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.hasAttribute('role')).toBe(false);
   });
 
   it('falls back to disabled=false and loading=false when null is assigned', async () => {

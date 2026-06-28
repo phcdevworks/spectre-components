@@ -31,6 +31,45 @@ describe('sp-select', () => {
     expect(options?.[1]?.textContent).toBe('Medium');
   });
 
+  it('reflects a native arrow-key-driven option change to the host value', async () => {
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.append(createOption('small', 'Small'), createOption('medium', 'Medium'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const select = element.querySelector('select') as HTMLSelectElement;
+
+    // Browsers cycle the selected option on ArrowDown/ArrowUp and fire
+    // `input`/`change` on the native select — simulate that native
+    // sequence directly to verify our `value` property tracks it.
+    select.value = 'medium';
+    select.dispatchEvent(new Event('input', { bubbles: true }));
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    await element.updateComplete;
+
+    expect(element.value).toBe('medium');
+  });
+
+  it('does not intercept or preventDefault native keydown events', async () => {
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.append(createOption('small', 'Small'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const select = element.querySelector('select');
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowDown',
+      bubbles: true,
+      cancelable: true,
+    });
+
+    select?.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(false);
+  });
+
   it('reflects disabled, required, and name to the native select and handles dynamic updates', async () => {
     const element = document.createElement('sp-select') as SpectreSelectElement;
     element.disabled = true;
@@ -273,6 +312,47 @@ describe('sp-select', () => {
 
     const select = element.querySelector('select');
     expect(select?.getAttribute('form')).toBe('test-form');
+  });
+
+  it('participates in ancestor form submission via FormData', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.name = 'plan';
+    element.append(createOption('free', 'Free'), createOption('pro', 'Pro'));
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    element.value = 'pro';
+    await element.updateComplete;
+
+    const formData = new FormData(form);
+    expect(formData.get('plan')).toBe('pro');
+  });
+
+  it('reports native required validity through the wrapper', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement('sp-select') as SpectreSelectElement;
+    element.name = 'plan';
+    element.required = true;
+    element.append(
+      createOption('', ''),
+      createOption('free', 'Free'),
+    );
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    const select = element.querySelector('select') as HTMLSelectElement;
+
+    expect(select.checkValidity()).toBe(false);
+    expect(form.checkValidity()).toBe(false);
+
+    element.value = 'free';
+    await element.updateComplete;
+
+    expect(select.checkValidity()).toBe(true);
+    expect(form.checkValidity()).toBe(true);
   });
 
   it('forwards autocapitalize and spellcheck to the native select', async () => {

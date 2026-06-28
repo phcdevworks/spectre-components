@@ -238,6 +238,44 @@ describe('sp-textarea', () => {
     expect(textarea?.getAttribute('form')).toBe('test-form');
   });
 
+  it('participates in ancestor form submission via FormData', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.name = 'bio';
+    element.value = 'Hello world';
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    const formData = new FormData(form);
+    expect(formData.get('bio')).toBe('Hello world');
+  });
+
+  it('reports native required validity through the wrapper', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement(
+      'sp-textarea',
+    ) as SpectreTextareaElement;
+    element.name = 'bio';
+    element.required = true;
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
+
+    expect(textarea.checkValidity()).toBe(false);
+    expect(form.checkValidity()).toBe(false);
+
+    element.value = 'Hello world';
+    await element.updateComplete;
+
+    expect(textarea.checkValidity()).toBe(true);
+    expect(form.checkValidity()).toBe(true);
+  });
+
   it('applies classes for size, loading, and success states', async () => {
     const element = document.createElement(
       'sp-textarea',

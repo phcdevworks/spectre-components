@@ -26,6 +26,60 @@ describe('sp-card', () => {
     expect(div?.textContent).toContain('Card Title');
   });
 
+  it('renders nothing when given only whitespace text content', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement;
+    element.append(document.createTextNode('   \n   '));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.textContent?.trim()).toBe('');
+    expect(div?.querySelector('*')).toBeNull();
+  });
+
+  it('treats an empty slotted element as meaningful content', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement;
+    const emptySpan = document.createElement('span');
+    element.append(emptySpan);
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.querySelector('span')).not.toBeNull();
+  });
+
+  it('preserves nested interactive elements in projected content', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement;
+    element.innerHTML = '<h2>Plan</h2><a href="/plan">View details</a><button type="button">Select</button>';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.querySelector('a[href="/plan"]')).not.toBeNull();
+    expect(div?.querySelector('button')).not.toBeNull();
+  });
+
+  it('preserves long text content without truncation', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement;
+    const longText = 'Lorem ipsum '.repeat(200).trim();
+    const paragraph = document.createElement('p');
+    paragraph.textContent = longText;
+    element.append(paragraph);
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.querySelector('p')?.textContent).toBe(longText);
+  });
+
   it('defaults to variant=elevated and padded=true', async () => {
     const element = document.createElement('sp-card') as SpectreCardElement;
     document.body.append(element);
@@ -84,6 +138,17 @@ describe('sp-card', () => {
 
     expect(div?.getAttribute('aria-label')).toBe('Product card');
     expect(div?.getAttribute('aria-labelledby')).toBe('card-heading');
+    expect(div?.getAttribute('role')).toBe('group');
+  });
+
+  it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.hasAttribute('role')).toBe(false);
   });
 
   it('falls back to padded=true when null is assigned', async () => {

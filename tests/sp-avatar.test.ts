@@ -93,6 +93,17 @@ describe('sp-avatar', () => {
     const div = element.querySelector('div')
 
     expect(div?.getAttribute('aria-label')).toBe('Bradley Potts')
+    expect(div?.getAttribute('role')).toBe('group')
+  })
+
+  it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
+    const element = document.createElement('sp-avatar') as SpectreAvatarElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div')
+
+    expect(div?.hasAttribute('role')).toBe(false)
   })
 
   it('falls back to disabled=false, loading=false, interactive=false, full-width=false, and placeholder=false when null is assigned', async () => {

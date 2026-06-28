@@ -93,6 +93,17 @@ describe('sp-icon-box', () => {
     const div = element.querySelector('div');
 
     expect(div?.getAttribute('aria-label')).toBe('Feature icon');
+    expect(div?.getAttribute('role')).toBe('group');
+  });
+
+  it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
+    const element = document.createElement('sp-icon-box') as SpectreIconBoxElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.hasAttribute('role')).toBe(false);
   });
 
   it('falls back to disabled=false and loading=false when null is assigned', async () => {

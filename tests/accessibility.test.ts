@@ -2,21 +2,31 @@ import { afterEach, beforeAll, describe, expect, it } from 'vitest'
 import axe from 'axe-core'
 
 import {
+  defineSpectreBadge,
   defineSpectreButton,
+  defineSpectreCard,
   defineSpectreCheckbox,
   defineSpectreFieldset,
+  defineSpectreIconBox,
   defineSpectreInput,
   defineSpectreLabel,
   defineSpectreRadio,
+  defineSpectreRating,
   defineSpectreSelect,
+  defineSpectreTestimonial,
   defineSpectreTextarea,
+  SpectreBadgeElement,
   SpectreButtonElement,
+  SpectreCardElement,
   SpectreCheckboxElement,
   SpectreFieldsetElement,
+  SpectreIconBoxElement,
   SpectreInputElement,
   SpectreLabelElement,
   SpectreRadioElement,
+  SpectreRatingElement,
   SpectreSelectElement,
+  SpectreTestimonialElement,
   SpectreTextareaElement,
 } from '../src'
 
@@ -38,13 +48,18 @@ async function audit(el: HTMLElement): Promise<axe.Result[]> {
 
 describe('accessibility audit', () => {
   beforeAll(() => {
+    defineSpectreBadge()
     defineSpectreButton()
+    defineSpectreCard()
     defineSpectreCheckbox()
     defineSpectreFieldset()
+    defineSpectreIconBox()
     defineSpectreInput()
     defineSpectreLabel()
     defineSpectreRadio()
+    defineSpectreRating()
     defineSpectreSelect()
+    defineSpectreTestimonial()
     defineSpectreTextarea()
   })
 
@@ -172,6 +187,106 @@ describe('accessibility audit', () => {
     const el = document.createElement('sp-fieldset') as SpectreFieldsetElement
     el.setAttribute('aria-label', 'Payment details')
     el.invalid = true
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-badge has no violations with populated text content', async () => {
+    const el = document.createElement('sp-badge') as SpectreBadgeElement
+    el.textContent = 'New'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-badge has no violations when empty with an aria-label', async () => {
+    const el = document.createElement('sp-badge') as SpectreBadgeElement
+    el.setAttribute('aria-label', 'Unread notifications')
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-badge has no violations with slotted markup', async () => {
+    const el = document.createElement('sp-badge') as SpectreBadgeElement
+    el.innerHTML = '<svg aria-hidden="true"></svg><span>3 new</span>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-card has no violations with populated heading content', async () => {
+    const el = document.createElement('sp-card') as SpectreCardElement
+    el.innerHTML = '<h2>Card title</h2><p>Card body</p>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-card has no violations when empty with an aria-label', async () => {
+    const el = document.createElement('sp-card') as SpectreCardElement
+    el.setAttribute('aria-label', 'Empty placeholder card')
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-card interactive state has no violations with slotted content', async () => {
+    const el = document.createElement('sp-card') as SpectreCardElement
+    el.interactive = true
+    el.innerHTML = '<h2>Plan</h2><a href="/plan">View details</a>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-icon-box has no violations with a projected icon and aria-label', async () => {
+    const el = document.createElement('sp-icon-box') as SpectreIconBoxElement
+    el.setAttribute('aria-label', 'Security feature')
+    el.innerHTML = '<svg aria-hidden="true"></svg>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-icon-box has no violations when empty with an aria-label', async () => {
+    const el = document.createElement('sp-icon-box') as SpectreIconBoxElement
+    el.setAttribute('aria-label', 'Placeholder icon')
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-rating has no violations with the default self-generated label', async () => {
+    const el = document.createElement('sp-rating') as SpectreRatingElement
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-rating has no violations with an explicit aria-label override', async () => {
+    const el = document.createElement('sp-rating') as SpectreRatingElement
+    el.setAttribute('aria-label', 'Average customer rating')
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-rating has no violations with a visible text label', async () => {
+    const el = document.createElement('sp-rating') as SpectreRatingElement
+    el.label = '4.5 out of 5 stars'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-testimonial has no violations with populated quote content', async () => {
+    const el = document.createElement('sp-testimonial') as SpectreTestimonialElement
+    el.innerHTML = '<blockquote>Great product.</blockquote><cite>Jane Doe</cite>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-testimonial has no violations when empty with an aria-label', async () => {
+    const el = document.createElement('sp-testimonial') as SpectreTestimonialElement
+    el.setAttribute('aria-label', 'Empty testimonial placeholder')
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-testimonial has no violations with slotted nested interactive content', async () => {
+    const el = document.createElement('sp-testimonial') as SpectreTestimonialElement
+    el.innerHTML =
+      '<blockquote>Great product.</blockquote><a href="/reviews/1">Read full review</a>'
     const violations = await audit(el)
     expect(violations).toEqual([])
   })

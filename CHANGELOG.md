@@ -32,11 +32,47 @@ reflects package releases published to npm.
   applicable in later additions, is implemented as native Lit element state
   rather than ported scripts).
 
+### Fixed
+
+- `sp-badge`, `sp-card`, `sp-icon-box`, `sp-testimonial`, `sp-avatar`,
+  `sp-pricing-card`, and `sp-tag` now render `role="group"` on their native
+  element whenever an `aria-label` or `aria-labelledby` is forwarded. These
+  components wrap a roleless `<div>`/`<span>`, and ARIA forbids `aria-label`/
+  `aria-labelledby` on an element with no role — axe-core's
+  `aria-prohibited-attr` rule flagged this as a violation. The role is
+  omitted when no label is forwarded, so unlabeled instances are unaffected.
+  Found while extending `tests/accessibility.test.ts` coverage (Phase 5 P1).
+
 ### Changed
 
 - Bumped `@phcdevworks/spectre-tokens` to `^3.2.0`, closing dependency drift
   against the current published `project-design` version. The upstream
   release was additive only — no source changes required here.
+
+### Testing
+
+- Phase 5 P1 hardening pass (no other source changes required):
+  - Keyboard interaction audit for `sp-select`, `sp-radio`, and `sp-checkbox`
+    confirmed no custom `keydown` handling exists anywhere in the package —
+    native browser keyboard semantics (space/enter activation, native radio
+    group navigation) pass through untouched. Added tests asserting native
+    keydown events are never intercepted or `preventDefault()`-ed, and that
+    native input/change events correctly update host properties.
+  - Form-association audit for `sp-input`, `sp-textarea`, `sp-select`,
+    `sp-checkbox`, and `sp-radio` confirmed native form participation
+    (`FormData`, `checkValidity()`, ancestor `form.checkValidity()`) works
+    correctly without `ElementInternals`/`formAssociated`, since each
+    component renders a real native form control as a light-DOM descendant.
+    Added end-to-end tests submitting through an ancestor `<form>`.
+  - Extended `tests/accessibility.test.ts` with axe-core scenarios covering
+    populated, empty, and slot-projection states for `sp-badge`, `sp-card`,
+    `sp-icon-box`, `sp-rating`, and `sp-testimonial` — this surfaced the
+    `role="group"` fix above.
+  - Audited `sp-card` and `sp-testimonial` for slotted-content edge cases
+    (whitespace-only text, empty slotted elements, nested interactive
+    elements, long-text overflow). Confirmed `hasMeaningfulContent()` and
+    `SpectreProjectableElement` already handle all four correctly; added
+    regression tests locking in the behavior.
 
 ## [1.5.0] - 2026-06-11
 
