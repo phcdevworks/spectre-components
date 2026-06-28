@@ -340,6 +340,94 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-container",
+      "elementClass": "SpectreContainerElement",
+      "entryPoint": "./container",
+      "distFile": "dist/container.js",
+      "exports": {
+        "values": [
+          "defineSpectreContainer",
+          "SpectreContainerElement",
+          "spectreContainerMaxWidths"
+        ],
+        "types": [
+          "SpectreContainerProps",
+          "SpectreContainerMaxWidth"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-grid",
+      "elementClass": "SpectreGridElement",
+      "entryPoint": "./grid",
+      "distFile": "dist/grid.js",
+      "exports": {
+        "values": [
+          "defineSpectreGrid",
+          "SpectreGridElement",
+          "spectreGridColumns",
+          "spectreGridGaps"
+        ],
+        "types": [
+          "SpectreGridProps",
+          "SpectreGridColumns",
+          "SpectreGridGap"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-section",
+      "elementClass": "SpectreSectionElement",
+      "entryPoint": "./section",
+      "distFile": "dist/section.js",
+      "exports": {
+        "values": [
+          "defineSpectreSection",
+          "SpectreSectionElement"
+        ],
+        "types": [
+          "SpectreSectionProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-stack",
+      "elementClass": "SpectreStackElement",
+      "entryPoint": "./stack",
+      "distFile": "dist/stack.js",
+      "exports": {
+        "values": [
+          "defineSpectreStack",
+          "SpectreStackElement",
+          "spectreStackAligns",
+          "spectreStackBases",
+          "spectreStackDirections"
+        ],
+        "types": [
+          "SpectreStackProps",
+          "SpectreStackAlign",
+          "SpectreStackBasis",
+          "SpectreStackDirection"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {

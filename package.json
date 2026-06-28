@@ -132,6 +132,26 @@
       "types": "./dist/pricing-card.d.ts",
       "import": "./dist/pricing-card.js",
       "require": "./dist/pricing-card.cjs"
+    },
+    "./container": {
+      "types": "./dist/container.d.ts",
+      "import": "./dist/container.js",
+      "require": "./dist/container.cjs"
+    },
+    "./grid": {
+      "types": "./dist/grid.d.ts",
+      "import": "./dist/grid.js",
+      "require": "./dist/grid.cjs"
+    },
+    "./section": {
+      "types": "./dist/section.d.ts",
+      "import": "./dist/section.js",
+      "require": "./dist/section.cjs"
+    },
+    "./stack": {
+      "types": "./dist/stack.d.ts",
+      "import": "./dist/stack.js",
+      "require": "./dist/stack.cjs"
     }
   },
   "files": [
@@ -165,7 +185,7 @@
   },
   "dependencies": {
     "@phcdevworks/spectre-tokens": "^3.2.0",
-    "@phcdevworks/spectre-ui": "^2.5.0",
+    "@phcdevworks/spectre-ui": "^2.6.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
@@ -179,7 +199,7 @@
     "globals": "^17.7.0",
     "happy-dom": "^20.10.6",
     "jiti": "^2.7.0",
-    "prettier": "^3.9.0",
+    "prettier": "^3.9.1",
     "tailwindcss": "^4.3.1",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",

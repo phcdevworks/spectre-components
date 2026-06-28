@@ -2,12 +2,12 @@
 
 ## Repository Snapshot
 
-| Field | Value |
-|-------|-------|
-| Project team | `project-design` |
-| Repository role | Spectre L3a Lit web component layer |
-| Package/artifact | `@phcdevworks/spectre-components` |
-| Current version/status | 1.5.0 |
+| Field                  | Value                               |
+| ---------------------- | ----------------------------------- |
+| Project team           | `project-design`                    |
+| Repository role        | Spectre L3a Lit web component layer |
+| Package/artifact       | `@phcdevworks/spectre-components`   |
+| Current version/status | 1.5.0                               |
 
 ## Standard Workflow
 
@@ -20,17 +20,17 @@
 
 ## Documentation Map
 
-| Guide | Path |
-|-------|------|
-| Agent rules | [AGENTS.md](AGENTS.md) |
-| Claude Code | [CLAUDE.md](CLAUDE.md) |
-| Codex | [CODEX.md](CODEX.md) |
-| Copilot | [COPILOT.md](COPILOT.md) |
-| Jules | [JULES.md](JULES.md) |
-| Roadmap | [ROADMAP.md](ROADMAP.md) |
-| Todo | [TODO.md](TODO.md) |
-| Changelog | [CHANGELOG.md](CHANGELOG.md) |
-| Security | [SECURITY.md](SECURITY.md) |
+| Guide       | Path                         |
+| ----------- | ---------------------------- |
+| Agent rules | [AGENTS.md](AGENTS.md)       |
+| Claude Code | [CLAUDE.md](CLAUDE.md)       |
+| Codex       | [CODEX.md](CODEX.md)         |
+| Copilot     | [COPILOT.md](COPILOT.md)     |
+| Jules       | [JULES.md](JULES.md)         |
+| Roadmap     | [ROADMAP.md](ROADMAP.md)     |
+| Todo        | [TODO.md](TODO.md)           |
+| Changelog   | [CHANGELOG.md](CHANGELOG.md) |
+| Security    | [SECURITY.md](SECURITY.md)   |
 
 [![npm version](https://img.shields.io/npm/v/@phcdevworks/spectre-components)](https://www.npmjs.com/package/@phcdevworks/spectre-components)
 [![CI](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/phcdevworks/spectre-components/actions/workflows/ci.yml)
@@ -786,6 +786,76 @@ price, feature list, call-to-action, etc.).
 **Internal target** — `[data-sp-pricing-card-native]` selects the native
 `<div>`.
 
+---
+
+### sp-container
+
+Renders a `<div>` layout container backed by the Spectre container recipe.
+
+**Attributes**
+
+| Attribute                 | Type    | Default | Description                       |
+| ------------------------- | ------- | ------- | --------------------------------- |
+| `max-width`               | `prose` | —       | Constrains content to a max width |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<div>`   |
+
+**Content projection** — children become the container content.
+
+**Internal target** — `[data-sp-container-native]` selects the native `<div>`.
+
+---
+
+### sp-grid
+
+Renders a `<div>` grid layout backed by the Spectre grid recipe.
+
+**Attributes**
+
+| Attribute                 | Type                          | Default | Description                     |
+| ------------------------- | ----------------------------- | ------- | ------------------------------- |
+| `columns`                 | `1 \| 2 \| 3 \| 4 \| 6 \| 12` | `1`     | Number of grid columns          |
+| `gap`                     | `sm \| md \| lg`              | `md`    | Gap between grid items          |
+| `id` / `title` / `aria-*` | string                        | —       | Forwarded to the native `<div>` |
+
+**Content projection** — children become grid items.
+
+**Internal target** — `[data-sp-grid-native]` selects the native `<div>`.
+
+---
+
+### sp-section
+
+Renders a `<section>` layout wrapper backed by the Spectre section recipe.
+
+**Attributes**
+
+| Attribute                 | Type   | Default | Description                         |
+| ------------------------- | ------ | ------- | ----------------------------------- |
+| `id` / `title` / `aria-*` | string | —       | Forwarded to the native `<section>` |
+
+**Content projection** — children become the section content.
+
+**Internal target** — `[data-sp-section-native]` selects the native `<section>`.
+
+---
+
+### sp-stack
+
+Renders a `<div>` flex stack backed by the Spectre stack recipe.
+
+**Attributes**
+
+| Attribute                 | Type                     | Default    | Description                           |
+| ------------------------- | ------------------------ | ---------- | ------------------------------------- |
+| `direction`               | `vertical \| horizontal` | `vertical` | Stack axis                            |
+| `basis`                   | `sidebar`                | —          | Reserves sidebar-sized basis on items |
+| `align`                   | `center \| stretch`      | `center`   | Cross-axis alignment                  |
+| `id` / `title` / `aria-*` | string                   | —          | Forwarded to the native `<div>`       |
+
+**Content projection** — children become stack items.
+
+**Internal target** — `[data-sp-stack-native]` selects the native `<div>`.
+
 ## Package exports / API surface
 
 ### Root — `@phcdevworks/spectre-components`
@@ -806,7 +876,9 @@ defineSpectreComponents() // registers all sp-* elements
 `defineSpectreLabel`, `defineSpectreFieldset`, `defineSpectreBadge`,
 `defineSpectreCard`, `defineSpectreIconBox`, `defineSpectreRating`,
 `defineSpectreTestimonial`, `defineSpectreAlert`, `defineSpectreAvatar`,
-`defineSpectreSpinner`, `defineSpectreTag`, `defineSpectrePricingCard`
+`defineSpectreSpinner`, `defineSpectreTag`, `defineSpectrePricingCard`,
+`defineSpectreContainer`, `defineSpectreGrid`, `defineSpectreSection`,
+`defineSpectreStack`
 
 **Element classes**: `SpectreButtonElement`, `SpectreInputElement`,
 `SpectreTextareaElement`, `SpectreSelectElement`, `SpectreCheckboxElement`,
@@ -814,7 +886,8 @@ defineSpectreComponents() // registers all sp-* elements
 `SpectreBadgeElement`, `SpectreCardElement`, `SpectreIconBoxElement`,
 `SpectreRatingElement`, `SpectreTestimonialElement`, `SpectreAlertElement`,
 `SpectreAvatarElement`, `SpectreSpinnerElement`, `SpectreTagElement`,
-`SpectrePricingCardElement`
+`SpectrePricingCardElement`, `SpectreContainerElement`, `SpectreGridElement`,
+`SpectreSectionElement`, `SpectreStackElement`
 
 **Button constants and types**: `spectreButtonVariants`, `spectreButtonSizes`,
 `spectreButtonTypes`, `SpectreButtonVariant`, `SpectreButtonSize`,
@@ -843,6 +916,13 @@ defineSpectreComponents() // registers all sp-* elements
 `SpectreAlertProps`, `SpectreAvatarProps`, `SpectreSpinnerProps`,
 `SpectreTagProps`, `SpectrePricingCardProps`
 
+**Layout constants and types**: `spectreContainerMaxWidths`,
+`spectreGridColumns`, `spectreGridGaps`, `spectreStackAligns`,
+`spectreStackBases`, `spectreStackDirections`, `SpectreContainerMaxWidth`,
+`SpectreGridColumns`, `SpectreGridGap`, `SpectreStackAlign`,
+`SpectreStackBasis`, `SpectreStackDirection`, `SpectreContainerProps`,
+`SpectreGridProps`, `SpectreSectionProps`, `SpectreStackProps`
+
 ### Subpath entry points
 
 Each entry point registers only that component and exports only its surface:
@@ -867,6 +947,10 @@ Each entry point registers only that component and exports only its surface:
 | `.../spinner`      | `sp-spinner`      | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types             |
 | `.../tag`          | `sp-tag`          | `defineSpectreTag`, `SpectreTagElement`, tag constants and types                         |
 | `.../pricing-card` | `sp-pricing-card` | `defineSpectrePricingCard`, `SpectrePricingCardElement`, `SpectrePricingCardProps`       |
+| `.../container`    | `sp-container`    | `defineSpectreContainer`, `SpectreContainerElement`, container constants and types       |
+| `.../grid`         | `sp-grid`         | `defineSpectreGrid`, `SpectreGridElement`, grid constants and types                      |
+| `.../section`      | `sp-section`      | `defineSpectreSection`, `SpectreSectionElement`, `SpectreSectionProps`                   |
+| `.../stack`        | `sp-stack`        | `defineSpectreStack`, `SpectreStackElement`, stack constants and types                   |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside
