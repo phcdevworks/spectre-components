@@ -30,6 +30,44 @@ describe('sp-radio', () => {
     expect(label?.textContent).toBe('Pro plan');
   });
 
+  it('checks via native space-key activation on the native radio', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector<HTMLInputElement>('input[type=radio]');
+    expect(input).not.toBeNull();
+
+    // Browsers check a radio's `checked` state on Space/arrow-key selection
+    // before firing `click`/`change` — simulate that native sequence
+    // directly on the native input to verify our `checked` property
+    // tracks it. Real arrow-key group navigation is native UA behavior
+    // for same-`name` radios and isn't exercised by a DOM test environment.
+    input!.checked = true;
+    input!.dispatchEvent(new Event('input', { bubbles: true }));
+    input!.dispatchEvent(new Event('change', { bubbles: true }));
+    await element.updateComplete;
+
+    expect(element.checked).toBe(true);
+  });
+
+  it('does not intercept or preventDefault native keydown events', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector<HTMLInputElement>('input[type=radio]');
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowDown',
+      bubbles: true,
+      cancelable: true,
+    });
+
+    input?.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(false);
+  });
+
   it('forwards the form attribute to the native radio', async () => {
     const element = document.createElement('sp-radio') as SpectreRadioElement;
     element.form = 'test-form';
@@ -39,6 +77,48 @@ describe('sp-radio', () => {
 
     const input = element.querySelector<HTMLInputElement>('input[type=radio]');
     expect(input?.getAttribute('form')).toBe('test-form');
+  });
+
+  it('participates in ancestor form submission via FormData only when checked', async () => {
+    const form = document.createElement('form');
+    const radio1 = document.createElement('sp-radio') as SpectreRadioElement;
+    radio1.name = 'plan';
+    radio1.value = 'free';
+    const radio2 = document.createElement('sp-radio') as SpectreRadioElement;
+    radio2.name = 'plan';
+    radio2.value = 'pro';
+    form.append(radio1, radio2);
+    document.body.append(form);
+    await radio1.updateComplete;
+    await radio2.updateComplete;
+
+    expect(new FormData(form).get('plan')).toBeNull();
+
+    radio2.checked = true;
+    await radio2.updateComplete;
+
+    expect(new FormData(form).get('plan')).toBe('pro');
+  });
+
+  it('reports native required validity as satisfied when any radio in the group is checked', async () => {
+    const form = document.createElement('form');
+    const radio1 = document.createElement('sp-radio') as SpectreRadioElement;
+    radio1.name = 'plan';
+    radio1.required = true;
+    const radio2 = document.createElement('sp-radio') as SpectreRadioElement;
+    radio2.name = 'plan';
+    radio2.required = true;
+    form.append(radio1, radio2);
+    document.body.append(form);
+    await radio1.updateComplete;
+    await radio2.updateComplete;
+
+    expect(form.checkValidity()).toBe(false);
+
+    radio2.checked = true;
+    await radio2.updateComplete;
+
+    expect(form.checkValidity()).toBe(true);
   });
 
   it('supports rich content labels via projection', async () => {

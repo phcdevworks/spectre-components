@@ -215,6 +215,40 @@ describe('sp-input', () => {
     expect(input?.getAttribute('form')).toBe('test-form');
   });
 
+  it('participates in ancestor form submission via FormData', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.name = 'email';
+    element.value = 'user@example.com';
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    const formData = new FormData(form);
+    expect(formData.get('email')).toBe('user@example.com');
+  });
+
+  it('reports native required validity through the wrapper', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement('sp-input') as SpectreInputElement;
+    element.name = 'email';
+    element.required = true;
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    const input = element.querySelector('input') as HTMLInputElement;
+
+    expect(input.checkValidity()).toBe(false);
+    expect(form.checkValidity()).toBe(false);
+
+    element.value = 'user@example.com';
+    await element.updateComplete;
+
+    expect(input.checkValidity()).toBe(true);
+    expect(form.checkValidity()).toBe(true);
+  });
+
   it('applies success, loading, and pill classes correctly', async () => {
     const element = document.createElement('sp-input') as SpectreInputElement;
     element.success = true;

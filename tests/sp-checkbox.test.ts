@@ -30,6 +30,46 @@ describe('sp-checkbox', () => {
     expect(label?.textContent).toBe('Accept terms');
   });
 
+  it('toggles via native space-key activation on the native checkbox', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector<HTMLInputElement>(
+      'input[type=checkbox]',
+    );
+    expect(input).not.toBeNull();
+
+    // Browsers toggle a checkbox's `checked` state on Space before firing
+    // `click`/`change` — simulate that native sequence directly on the
+    // native input to verify our `checked` property tracks it.
+    input!.checked = true;
+    input!.dispatchEvent(new Event('input', { bubbles: true }));
+    input!.dispatchEvent(new Event('change', { bubbles: true }));
+    await element.updateComplete;
+
+    expect(element.checked).toBe(true);
+  });
+
+  it('does not intercept or preventDefault native keydown events', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const input = element.querySelector<HTMLInputElement>(
+      'input[type=checkbox]',
+    );
+    const event = new KeyboardEvent('keydown', {
+      key: ' ',
+      bubbles: true,
+      cancelable: true,
+    });
+
+    input?.dispatchEvent(event);
+
+    expect(event.defaultPrevented).toBe(false);
+  });
+
   it('forwards the form attribute to the native checkbox', async () => {
     const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
     element.form = 'test-form';
@@ -41,6 +81,46 @@ describe('sp-checkbox', () => {
       'input[type=checkbox]',
     );
     expect(input?.getAttribute('form')).toBe('test-form');
+  });
+
+  it('participates in ancestor form submission via FormData only when checked', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.name = 'terms';
+    element.value = 'accepted';
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    expect(new FormData(form).get('terms')).toBeNull();
+
+    element.checked = true;
+    await element.updateComplete;
+
+    expect(new FormData(form).get('terms')).toBe('accepted');
+  });
+
+  it('reports native required validity through the wrapper', async () => {
+    const form = document.createElement('form');
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    element.name = 'terms';
+    element.required = true;
+    form.append(element);
+    document.body.append(form);
+    await element.updateComplete;
+
+    const input = element.querySelector<HTMLInputElement>(
+      'input[type=checkbox]',
+    )!;
+
+    expect(input.checkValidity()).toBe(false);
+    expect(form.checkValidity()).toBe(false);
+
+    element.checked = true;
+    await element.updateComplete;
+
+    expect(input.checkValidity()).toBe(true);
+    expect(form.checkValidity()).toBe(true);
   });
 
   it('supports rich content labels via projection', async () => {

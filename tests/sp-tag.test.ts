@@ -93,6 +93,17 @@ describe('sp-tag', () => {
     const span = element.querySelector('[data-sp-tag-native]')
 
     expect(span?.getAttribute('aria-label')).toBe('Featured')
+    expect(span?.getAttribute('role')).toBe('group')
+  })
+
+  it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
+    const element = document.createElement('sp-tag') as SpectreTagElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const span = element.querySelector('[data-sp-tag-native]')
+
+    expect(span?.hasAttribute('role')).toBe(false)
   })
 
   it('falls back to disabled=false, loading=false, interactive=false, selected=false, dismissible=false, and full-width=false when null is assigned', async () => {

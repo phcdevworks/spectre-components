@@ -98,6 +98,10 @@ export class SpectrePricingCardElement
     return (this.disabled ?? false) || (this.loading ?? false)
   }
 
+  private get hasForwardedLabel(): boolean {
+    return Boolean(this.forwardedAriaLabel || this.forwardedAriaLabelledBy)
+  }
+
   override render() {
     return html`<div
       aria-busy="${this.loading ? 'true' : 'false'}"
@@ -107,6 +111,7 @@ export class SpectrePricingCardElement
       class="${this.pricingCardClasses}"
       data-sp-pricing-card-native
       id="${ifDefined(this.id || undefined)}"
+      role="${ifDefined(this.hasForwardedLabel ? 'group' : undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.hasProjectedContent ? this.projectedContent : nothing}

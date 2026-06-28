@@ -70,6 +70,19 @@ describe('sp-pricing-card', () => {
     const div = element.querySelector('[data-sp-pricing-card-native]')
 
     expect(div?.getAttribute('aria-label')).toBe('Pro plan pricing')
+    expect(div?.getAttribute('role')).toBe('group')
+  })
+
+  it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
+    const element = document.createElement(
+      'sp-pricing-card'
+    ) as SpectrePricingCardElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('[data-sp-pricing-card-native]')
+
+    expect(div?.hasAttribute('role')).toBe(false)
   })
 
   it('falls back to disabled=false, loading=false, interactive=false, featured=false, and full-height=false when null is assigned', async () => {
