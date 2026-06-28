@@ -200,6 +200,63 @@ export function isAvatarShape(value: unknown): value is SpectreAvatarShape {
   return (spectreAvatarShapes as readonly string[]).includes(value as string)
 }
 
+export const spectreContainerMaxWidths = ['prose'] as const
+
+export type SpectreContainerMaxWidth =
+  (typeof spectreContainerMaxWidths)[number]
+
+export function isContainerMaxWidth(
+  value: unknown
+): value is SpectreContainerMaxWidth {
+  return (spectreContainerMaxWidths as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreGridColumns = [1, 2, 3, 4, 6, 12] as const
+
+export type SpectreGridColumns = (typeof spectreGridColumns)[number]
+
+export function isGridColumns(value: unknown): value is SpectreGridColumns {
+  return (spectreGridColumns as readonly number[]).includes(value as number)
+}
+
+export const spectreGridGaps = ['sm', 'md', 'lg'] as const
+
+export type SpectreGridGap = (typeof spectreGridGaps)[number]
+
+export function isGridGap(value: unknown): value is SpectreGridGap {
+  return (spectreGridGaps as readonly string[]).includes(value as string)
+}
+
+export const spectreStackDirections = ['vertical', 'horizontal'] as const
+
+export type SpectreStackDirection = (typeof spectreStackDirections)[number]
+
+export function isStackDirection(
+  value: unknown
+): value is SpectreStackDirection {
+  return (spectreStackDirections as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreStackBases = ['sidebar'] as const
+
+export type SpectreStackBasis = (typeof spectreStackBases)[number]
+
+export function isStackBasis(value: unknown): value is SpectreStackBasis {
+  return (spectreStackBases as readonly string[]).includes(value as string)
+}
+
+export const spectreStackAligns = ['center', 'stretch'] as const
+
+export type SpectreStackAlign = (typeof spectreStackAligns)[number]
+
+export function isStackAlign(value: unknown): value is SpectreStackAlign {
+  return (spectreStackAligns as readonly string[]).includes(value as string)
+}
+
 export function normalizeInt(
   value: unknown,
   fallback: number | undefined,

@@ -22,7 +22,11 @@ export default defineConfig({
     avatar: 'src/components/avatar/index.ts',
     spinner: 'src/components/spinner/index.ts',
     tag: 'src/components/tag/index.ts',
-    'pricing-card': 'src/components/pricing-card/index.ts'
+    'pricing-card': 'src/components/pricing-card/index.ts',
+    container: 'src/components/container/index.ts',
+    grid: 'src/components/grid/index.ts',
+    section: 'src/components/section/index.ts',
+    stack: 'src/components/stack/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,
