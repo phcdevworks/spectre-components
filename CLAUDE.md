@@ -94,9 +94,14 @@ npm run lint
 npm run typecheck
 npm run check
 npm run check:exports
+npm run verify:app          # local Vite preview of every component (verification_app.ts)
+npm run test:visual         # Playwright visual regression, local opt-in (not part of npm run check)
+npm run test:visual:update  # regenerate visual baselines after an intentional visual change
 ```
 
 Use the shared validation policy in `AGENTS.md` for when to run the full gate.
+`npm run test:visual` is not part of `npm run check` or CI — run it manually
+when touching anything that affects rendered output.
 
 ## Development Workflow
 
