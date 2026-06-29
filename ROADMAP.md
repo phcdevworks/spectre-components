@@ -160,14 +160,12 @@ release decisions. Metadata gaps reduce package discoverability.
 
 ---
 
-## 5. Phase 5 — Surface Growth, Hardening, and DX
+## 5. Phase 5 — Surface Growth, Hardening, and DX: Completed
 
-`@phcdevworks/spectre-ui` ships backing recipes for all four remaining
-component families. This work is unblocked.
+`@phcdevworks/spectre-ui` shipped backing recipes for all four remaining
+component families. All three sub-phases are delivered.
 
-### P0: New Components with Existing Backing Recipes — Active
-
-All four recipes are present in `@phcdevworks/spectre-ui@1.8.0`.
+### P0: New Components with Existing Backing Recipes — Delivered
 
 - `sp-avatar` — backed by `getAvatarClasses`.
 - `sp-spinner` — backed by `getSpinnerClasses`.
@@ -176,32 +174,30 @@ All four recipes are present in `@phcdevworks/spectre-ui@1.8.0`.
   (`getPricingCardBadgeClasses`, `getPricingCardPriceContainerClasses`,
   `getPricingCardPriceClasses`, `getPricingCardDescriptionClasses`).
 
-Each component requires source, tests, exports, `AGENTS.md` component
-inventory update, and `CHANGELOG.md [Unreleased]` entry, plus explicit
-approval per `AGENTS.md` before work begins.
+### P1: Deeper Hardening and Coverage — Delivered
 
-### P1: Deeper Hardening and Coverage
+- Audited keyboard interaction for `sp-select`, `sp-radio`, `sp-checkbox` —
+  confirmed native browser semantics pass through untouched.
+- Audited form-association behavior across `sp-input`, `sp-textarea`,
+  `sp-select`, `sp-checkbox`, `sp-radio` — confirmed native form
+  participation works without `ElementInternals`.
+- Extended `tests/accessibility.test.ts` with axe-core scenarios for the
+  five Phase 3 display components — surfaced and fixed an
+  `aria-prohibited-attr` violation across seven components.
+- Audited `sp-card` and `sp-testimonial` for slotted-content edge cases.
 
-- Audit keyboard interaction for `sp-select`, `sp-radio`, `sp-checkbox`
-  (arrow-key navigation, space/enter activation, focus order).
-- Audit form-association behavior (`formAssociated`, `ElementInternals`,
-  validity state) across `sp-input`, `sp-textarea`, `sp-select`,
-  `sp-checkbox`, `sp-radio`.
-- Extend `tests/accessibility.test.ts` with axe-core scenarios for the five
-  Phase 3 display components covering populated, empty, and slot-projection
-  states.
-- Audit `sp-card` and `sp-testimonial` for slotted-content edge cases.
+### P2: Tooling and Contributor DX — Delivered
 
-### P2: Tooling and Contributor DX
-
-- Evaluate visual regression testing (Playwright snapshots against
-  `@phcdevworks/spectre-ui` styling) to catch unintended rendering drift.
-- Evaluate a lightweight component preview harness so contributors can
-  visually verify components without a consumer app.
-- Extend `scripts/check-invariants.ts` to flag duplicated class-mapping
-  logic that could be centralized in `src/utils/`.
-
-Each item requires explicit approval before implementation begins.
+- Extended `scripts/check-invariants.ts` with a cross-file duplication check
+  that fails when an identical private getter body repeats across 3+
+  component files; paired with centralizing `isDisabled`/`hasForwardedLabel`
+  into `SpectreBaseElement`.
+- Added Playwright visual regression coverage
+  (`visual-tests/components.visual.spec.ts`) snapshotting all 21 components
+  via `verification_app.ts`. Local opt-in (`npm run test:visual`), not wired
+  into `npm run check` or CI.
+- Evaluated a lightweight component preview harness — closed as already
+  satisfied by the existing `verification_app.ts` / `npm run verify:app`.
 
 ---
 
@@ -226,7 +222,8 @@ Each item requires explicit approval before implementation begins.
 3. **Phase 3 P0** — done.
 4. **Phase 4 P0** — done.
 5. **Phase 4 P1** — done.
-6. **Phase 5 P0** — active. Add sp-avatar, sp-spinner, sp-tag, sp-pricing-card.
-   All backing recipes available in `@phcdevworks/spectre-ui@1.8.0`.
-7. **Phase 5 P1** — hardening; start after P0 ships.
-8. **Phase 5 P2** — tooling/DX; requires explicit approval.
+6. **Phase 5 P0** — done. Added sp-avatar, sp-spinner, sp-tag, sp-pricing-card.
+7. **Phase 5 P1** — done. Hardening and coverage audits.
+8. **Phase 5 P2** — done. Invariant-duplication tooling and visual
+   regression testing delivered; preview harness closed as already
+   satisfied.
