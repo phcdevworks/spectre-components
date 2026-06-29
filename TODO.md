@@ -201,19 +201,33 @@ per `AGENTS.md` before work begins.
 
 ### P2: Tooling and Contributor DX
 
+- [x] Extend `scripts/check-invariants.ts` to flag duplicated class-mapping
+      logic across components that could be centralized in `src/utils/`.
+      Delivered: a cross-file duplication check fails the gate when an
+      identical private getter body is repeated across 3+ component files
+      (`DUPLICATION_THRESHOLD`). Paired with this, `isDisabled` and
+      `hasForwardedLabel` were centralized into `SpectreBaseElement`,
+      removing the duplication across every affected component.
+
 - [ ] Evaluate adding visual regression testing (e.g. Playwright snapshot tests
       against `@phcdevworks/spectre-ui` styling) to catch unintended rendering
-      drift across releases.
+      drift across releases. Partially scaffolded: `@playwright/test` is
+      installed and `playwright.config.ts` points at `./visual-tests`, but
+      that directory does not exist yet and no snapshot tests or
+      `npm run test:visual`-style script have been added. Treat this as still
+      open — scaffolding is not the same as shipped coverage.
 
 - [ ] Evaluate a lightweight component preview/docs harness (e.g. a local
       Storybook-style page) so contributors can visually verify components
-      without a consumer app.
+      without a consumer app. `verification_app.ts` plus `npm run verify:app`
+      (Vite dev server) already exercises every component via
+      `defineSpectreComponents()`, which may already satisfy this need —
+      assess whether a dedicated Storybook-style harness adds value beyond
+      the existing verification app before building one.
 
-- [ ] Extend `scripts/check-invariants.ts` to flag duplicated class-mapping
-      logic across components that could be centralized in `src/utils/`.
-
-Each item in this phase requires explicit approval from Bradley Potts before
-implementation begins, per the package boundaries in `AGENTS.md`.
+Each remaining item in this phase requires explicit approval from Bradley
+Potts before implementation begins, per the package boundaries in
+`AGENTS.md`.
 
 ---
 
@@ -277,7 +291,10 @@ begins, per `AGENTS.md`.
    sp-pricing-card.
 7. Phase 5 P1 — done. Hardening and coverage audits; fixed an
    `aria-prohibited-attr` violation found across seven display components.
-8. **Phase 5 P2 — next up.** Tooling/DX; requires explicit approval.
+8. **Phase 5 P2 — in progress.** Invariant-check duplication detection
+   delivered. Visual regression testing (Playwright) and a component
+   preview/docs harness remain open and require explicit approval before
+   implementation begins.
 
 ---
 
