@@ -4,7 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getInputLabelClasses } from '@phcdevworks/spectre-ui'
+import { getInputLabelClasses, getRadioClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreRadioProps {
   ariaLabel?: string | null
@@ -218,7 +218,10 @@ export class SpectreRadioElement
         @change="${this.handleChange}"
         @input="${this.handleInput}"
       />
-      <span class="sp-radio-indicator" data-sp-radio-indicator></span>
+      <span
+        class="${getRadioClasses({ checked: this.checked ?? false, disabled: this.isDisabled })}"
+        data-sp-radio-indicator
+      ></span>
       ${labelContent}
     </label>`
   }

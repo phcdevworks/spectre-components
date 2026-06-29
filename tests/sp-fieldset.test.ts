@@ -23,8 +23,21 @@ describe('sp-fieldset', () => {
 
     expect(fieldset).not.toBeNull();
     expect(legend?.textContent?.trim()).toBe('Contact preferences');
-    expect(legend?.className).toContain('sp-label');
+    expect(legend?.className).toContain('sp-fieldset__legend');
+    expect(fieldset?.className).toContain('sp-fieldset');
     expect(fieldset?.textContent).toContain('Email updates');
+  });
+
+  it('applies the disabled modifier class to the native fieldset', async () => {
+    const element = document.createElement('sp-fieldset') as SpectreFieldsetElement;
+    element.disabled = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const fieldset = element.querySelector('fieldset');
+
+    expect(fieldset?.className).toContain('sp-fieldset--disabled');
   });
 
   it('forwards aria attributes and disabled state to the native fieldset', async () => {
