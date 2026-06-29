@@ -246,17 +246,50 @@ package boundaries in
 ## Phase 6 — Cross-Repo Parity Gaps (spectre-ui-astro)
 
 Audit against `@phcdevworks/spectre-ui-astro` (the L3b sibling) found gaps in
-both directions. None of these are approved for implementation yet — see
-`AGENTS.md` package-boundary approval requirement.
+both directions. P1 items are not approved for implementation yet — see
+`AGENTS.md` package-boundary approval requirement. P0 is approved and
+partially delivered.
 
-### P0: Recipe Backing Gap on Existing Components
+### P0: Recipe Backing Gap on Existing Components — Partially delivered
 
-- [ ] `sp-checkbox`, `sp-fieldset`, `sp-label`, `sp-radio`, `sp-select`, and
-      `sp-textarea` have shipped since Phase 1 with no backing recipe in
-      `@phcdevworks/spectre-ui`, unlike every other component in this
-      package. Blocked on `@phcdevworks/spectre-tokens` Phase 7
-      (`component.checkbox`/`radio`/`select`/`textarea`/`fieldset`/`label`)
-      and `@phcdevworks/spectre-ui` Phase 4e publishing first.
+`sp-checkbox`, `sp-fieldset`, `sp-label`, `sp-radio`, `sp-select`, and
+`sp-textarea` shipped since Phase 1 with no backing recipe in
+`@phcdevworks/spectre-ui`, unlike every other component in this package. The
+gate (`@phcdevworks/spectre-tokens` Phase 7 / `@phcdevworks/spectre-ui`
+Phase 4e publishing) cleared in `@phcdevworks/spectre-ui@2.6.0`. Investigation
+found three distinct situations, not one uniform gap — see per-item detail
+below.
+
+- [x] `sp-checkbox`, `sp-radio` — fixed a real bug: the indicator `<span>`
+      hardcoded a literal class string with no `--checked`/`--disabled`
+      modifier ever applied. Now calls `getCheckboxClasses`/`getRadioClasses`.
+      Added indicator-class test coverage (previously untested).
+
+- [x] `sp-fieldset` — fixed a real bug: the root `<fieldset>` had no `class`
+      attribute at all, so `.sp-fieldset` border/padding styling never
+      applied. Now calls `getFieldsetClasses`. Legend switched from the
+      generic `getInputLabelClasses` to the purpose-built
+      `getFieldsetLegendClasses` (`.sp-fieldset__legend`, not `.sp-label`).
+
+- [x] `sp-label` — switched from `getInputLabelClasses` to the purpose-built
+      `getLabelClasses` (`.sp-form-label`, not `.sp-label`). Added a new
+      `required` property (`getLabelClasses` supports it; the component
+      didn't expose it before). Rendered class name changes from `sp-label`
+      to `sp-form-label` — called out explicitly in `CHANGELOG.md` since it's
+      visible in the DOM, even though it was never a supported styling hook.
+
+- [ ] `sp-select`, `sp-textarea` — **deferred, not a silent gap-fill.**
+      `getSelectClasses`/`getTextareaClasses` only support `{disabled,
+      focused}`, unlike `getInputClasses` (which these two currently use)
+      supporting `size`/`fullWidth`/`pill`/`invalid`/`success`/`loading` —
+      all of which `sp-select`/`sp-textarea`'s own public properties
+      actually drive today. Switching as originally planned would silently
+      drop that functionality, not just swap styling tokens. Filed as an
+      upstream request in `project-design/spectre-ui/TODO.md` Phase 5 P0
+      (added 2026-06-29) asking whether `@phcdevworks/spectre-ui` should
+      expand these two recipes to option-parity with `getInputClasses`, or
+      whether the minimal option set is intentional. Revisit once that's
+      decided — do not switch unilaterally either way.
 
 ### P1: Components Present in spectre-ui-astro but Missing Here
 

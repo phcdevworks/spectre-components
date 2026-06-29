@@ -328,6 +328,25 @@ describe('sp-checkbox', () => {
     input = element.querySelector<HTMLInputElement>('input[type=checkbox]');
     expect(input?.required).toBe(false);
   });
+
+  it('applies checked and disabled modifier classes to the indicator', async () => {
+    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    let indicator = element.querySelector('[data-sp-checkbox-indicator]');
+    expect(indicator?.className).toBe('sp-checkbox-indicator');
+
+    element.checked = true;
+    await element.updateComplete;
+    indicator = element.querySelector('[data-sp-checkbox-indicator]');
+    expect(indicator?.className).toContain('sp-checkbox-indicator--checked');
+
+    element.disabled = true;
+    await element.updateComplete;
+    indicator = element.querySelector('[data-sp-checkbox-indicator]');
+    expect(indicator?.className).toContain('sp-checkbox-indicator--disabled');
+  });
 });
 
 function superHasIdAttribute(element: HTMLElement): boolean {

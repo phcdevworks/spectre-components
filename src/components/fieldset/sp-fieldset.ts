@@ -3,7 +3,7 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getInputLabelClasses } from '@phcdevworks/spectre-ui'
+import { getFieldsetClasses, getFieldsetLegendClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreFieldsetProps {
   ariaLabel?: string | null
@@ -135,7 +135,7 @@ export class SpectreFieldsetElement
   }
 
   override render() {
-    const legendClasses = getInputLabelClasses({ disabled: this.isDisabled })
+    const legendClasses = getFieldsetLegendClasses()
     const legendContent = this.visibleLegend
       ? html`<legend class="${legendClasses}" data-sp-fieldset-legend>
           ${this.visibleLegend}
@@ -150,6 +150,7 @@ export class SpectreFieldsetElement
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       autocapitalize="${ifDefined(this.autocapitalize || undefined)}"
       ?autofocus="${this.autofocus}"
+      class="${getFieldsetClasses({ disabled: this.isDisabled })}"
       data-sp-fieldset-native
       ?disabled="${this.isDisabled}"
       form="${ifDefined(this.form || undefined)}"

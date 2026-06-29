@@ -330,6 +330,25 @@ describe('sp-radio', () => {
     expect(radio1.checked).toBe(false);
   });
 
+  it('applies checked and disabled modifier classes to the indicator', async () => {
+    const element = document.createElement('sp-radio') as SpectreRadioElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    let indicator = element.querySelector('[data-sp-radio-indicator]');
+    expect(indicator?.className).toBe('sp-radio-indicator');
+
+    element.checked = true;
+    await element.updateComplete;
+    indicator = element.querySelector('[data-sp-radio-indicator]');
+    expect(indicator?.className).toContain('sp-radio-indicator--checked');
+
+    element.disabled = true;
+    await element.updateComplete;
+    indicator = element.querySelector('[data-sp-radio-indicator]');
+    expect(indicator?.className).toContain('sp-radio-indicator--disabled');
+  });
+
   describe('group synchronization', () => {
     it('unchecks other radios in the same group when checked programmatically', async () => {
       const radio1 = document.createElement('sp-radio') as SpectreRadioElement;

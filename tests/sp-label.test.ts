@@ -20,8 +20,44 @@ describe('sp-label', () => {
     const label = element.querySelector('label');
 
     expect(label).not.toBeNull();
-    expect(label?.className).toContain('sp-label');
+    expect(label?.className).toContain('sp-form-label');
     expect(label?.textContent).toContain('Project name');
+  });
+
+  it('applies the required modifier class when required is true', async () => {
+    const element = document.createElement('sp-label') as SpectreLabelElement;
+    element.required = true;
+    element.append('Project name');
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const label = element.querySelector('label');
+
+    expect(label?.className).toContain('sp-form-label--required');
+  });
+
+  it('falls back to required=false when null or undefined is assigned', async () => {
+    const element = document.createElement('sp-label') as SpectreLabelElement;
+    element.required = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.required).toBe(true);
+
+    // @ts-expect-error - testing fallback
+    element.required = null;
+    await element.updateComplete;
+    expect(element.required).toBe(false);
+
+    element.required = true;
+    await element.updateComplete;
+    expect(element.required).toBe(true);
+
+    element.required = undefined;
+    await element.updateComplete;
+    expect(element.required).toBe(false);
   });
 
   it('forwards the for attribute and consumer-facing id to the native label only', async () => {

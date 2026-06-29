@@ -3,7 +3,7 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getInputLabelClasses } from '@phcdevworks/spectre-ui'
+import { getLabelClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreLabelProps {
   ariaLabel?: string | null
@@ -12,6 +12,7 @@ export interface SpectreLabelProps {
   disabled?: boolean | undefined
   id?: string | null | undefined
   htmlFor?: string | undefined
+  required?: boolean | undefined
   title?: string | null | undefined
 }
 
@@ -21,17 +22,23 @@ export class SpectreLabelElement
 {
   static properties = {
     disabled: { type: Boolean, reflect: true },
-    htmlFor: { attribute: 'for', type: String, reflect: true }
+    htmlFor: { attribute: 'for', type: String, reflect: true },
+    required: { type: Boolean, reflect: true }
   }
 
   disabled: boolean | undefined = false
   htmlFor: string | undefined
+  required: boolean | undefined = false
 
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
     if (changedProperties.has('disabled') && this.disabled == null) {
       this.disabled = false
+    }
+
+    if (changedProperties.has('required') && this.required == null) {
+      this.required = false
     }
   }
 
@@ -81,7 +88,7 @@ export class SpectreLabelElement
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
-      class="${getInputLabelClasses({ disabled: this.isDisabled })}"
+      class="${getLabelClasses({ disabled: this.isDisabled, required: this.required ?? false })}"
       data-sp-label-native
       for="${ifDefined(this.htmlFor || undefined)}"
       id="${ifDefined(this.id || undefined)}"
