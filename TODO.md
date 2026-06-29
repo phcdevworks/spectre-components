@@ -209,21 +209,31 @@ per `AGENTS.md` before work begins.
       `hasForwardedLabel` were centralized into `SpectreBaseElement`,
       removing the duplication across every affected component.
 
-- [ ] Evaluate adding visual regression testing (e.g. Playwright snapshot tests
+- [x] Evaluate adding visual regression testing (e.g. Playwright snapshot tests
       against `@phcdevworks/spectre-ui` styling) to catch unintended rendering
-      drift across releases. Partially scaffolded: `@playwright/test` is
-      installed and `playwright.config.ts` points at `./visual-tests`, but
-      that directory does not exist yet and no snapshot tests or
-      `npm run test:visual`-style script have been added. Treat this as still
-      open — scaffolding is not the same as shipped coverage.
+      drift across releases. Delivered: `visual-tests/components.visual.spec.ts`
+      drives the existing `verification_app.ts` page (the same one
+      `playwright.config.ts` already pointed `webServer` at) and snapshots
+      each of its 15 `<section>` groups, covering all 21 components. Run with
+      `npm run test:visual`; regenerate baselines with
+      `npm run test:visual:update` after an intentional visual change.
+      Committed baselines live in
+      `visual-tests/components.visual.spec.ts-snapshots/`. Deliberately not
+      wired into `.github/workflows/ci.yml` or `npm run check` — cross-runner
+      font/rendering differences make CI-gated pixel diffs a separate,
+      bigger decision than local opt-in coverage; revisit only if Bradley
+      Potts wants CI enforcement.
 
 - [ ] Evaluate a lightweight component preview/docs harness (e.g. a local
       Storybook-style page) so contributors can visually verify components
       without a consumer app. `verification_app.ts` plus `npm run verify:app`
       (Vite dev server) already exercises every component via
-      `defineSpectreComponents()`, which may already satisfy this need —
-      assess whether a dedicated Storybook-style harness adds value beyond
-      the existing verification app before building one.
+      `defineSpectreComponents()`, and is now also the page the new visual
+      regression suite renders against — it likely already satisfies this
+      need. Leaving open only as a placeholder in case a dedicated
+      Storybook-style tool is wanted for reasons beyond visual verification
+      (e.g. per-prop interactive controls); no further action recommended
+      unless that need is confirmed.
 
 Each remaining item in this phase requires explicit approval from Bradley
 Potts before implementation begins, per the package boundaries in
@@ -291,10 +301,10 @@ begins, per `AGENTS.md`.
    sp-pricing-card.
 7. Phase 5 P1 — done. Hardening and coverage audits; fixed an
    `aria-prohibited-attr` violation found across seven display components.
-8. **Phase 5 P2 — in progress.** Invariant-check duplication detection
-   delivered. Visual regression testing (Playwright) and a component
-   preview/docs harness remain open and require explicit approval before
-   implementation begins.
+8. **Phase 5 P2 — substantially done.** Invariant-check duplication detection
+   and visual regression testing (Playwright, local opt-in) delivered. A
+   dedicated component preview/docs harness remains open as a placeholder
+   only — the existing verification app likely already covers the need.
 
 ---
 
