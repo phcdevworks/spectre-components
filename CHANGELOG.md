@@ -73,6 +73,13 @@ reflects package releases published to npm.
     elements, long-text overflow). Confirmed `hasMeaningfulContent()` and
     `SpectreProjectableElement` already handle all four correctly; added
     regression tests locking in the behavior.
+  - Added Playwright-based visual regression coverage
+    (`visual-tests/components.visual.spec.ts`) snapshotting all 21 components
+    via the existing `verification_app.ts` page. Run with
+    `npm run test:visual`; regenerate baselines with
+    `npm run test:visual:update`. Local opt-in only — not wired into
+    `npm run check` or CI, since cross-runner font/rendering differences make
+    CI-gated pixel diffs a separate decision.
 
 ## [1.5.0] - 2026-06-11
 

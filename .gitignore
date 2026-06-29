@@ -6,6 +6,12 @@ dist/
 dist_verify/
 coverage/
 
+# Playwright
+test-results/
+playwright-report/
+visual-tests/**/*-actual.png
+visual-tests/**/*-diff.png
+
 # Logs and caches
 *.log
 .eslintcache

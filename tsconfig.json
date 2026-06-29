@@ -24,6 +24,7 @@
     "src",
     "tests",
     "scripts",
+    "visual-tests",
     "vitest.config.ts",
     "tsup.config.ts",
     "eslint.config.ts",
