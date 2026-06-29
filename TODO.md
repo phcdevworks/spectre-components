@@ -142,12 +142,13 @@ prep.
 
 ---
 
-## Phase 5 — Surface Growth, Hardening, and DX
+## Phase 5 — Surface Growth, Hardening, and DX: Completed
 
 `@phcdevworks/spectre-ui` already ships recipes for several primitives that have
 no `sp-*` wrapper yet. This phase expands the surface to cover them, deepens
 test coverage on the existing thirteen components, and improves contributor
-tooling.
+tooling. All three sub-phases (P0 new components, P1 hardening, P2 tooling
+and contributor DX) are delivered.
 
 ### P0: New Components with Existing Backing Recipes
 
@@ -224,19 +225,20 @@ per `AGENTS.md` before work begins.
       bigger decision than local opt-in coverage; revisit only if Bradley
       Potts wants CI enforcement.
 
-- [ ] Evaluate a lightweight component preview/docs harness (e.g. a local
+- [x] Evaluate a lightweight component preview/docs harness (e.g. a local
       Storybook-style page) so contributors can visually verify components
-      without a consumer app. `verification_app.ts` plus `npm run verify:app`
-      (Vite dev server) already exercises every component via
-      `defineSpectreComponents()`, and is now also the page the new visual
-      regression suite renders against — it likely already satisfies this
-      need. Leaving open only as a placeholder in case a dedicated
-      Storybook-style tool is wanted for reasons beyond visual verification
-      (e.g. per-prop interactive controls); no further action recommended
-      unless that need is confirmed.
+      without a consumer app. Closed as already satisfied:
+      `verification_app.ts` plus `npm run verify:app` (Vite dev server)
+      already renders every component via `defineSpectreComponents()` across
+      multiple states in a real browser, and is now also the page the visual
+      regression suite (above) renders against. A dedicated Storybook-style
+      tool would only be worth the added dependency and maintenance surface
+      if per-prop interactive controls (not just visual verification) become
+      a real need — re-open only if that's explicitly requested.
 
-Each remaining item in this phase requires explicit approval from Bradley
-Potts before implementation begins, per the package boundaries in
+Phase 5 P2 is complete. Any further items in this phase still require
+explicit approval from Bradley Potts before implementation begins, per the
+package boundaries in
 `AGENTS.md`.
 
 ---
@@ -301,10 +303,10 @@ begins, per `AGENTS.md`.
    sp-pricing-card.
 7. Phase 5 P1 — done. Hardening and coverage audits; fixed an
    `aria-prohibited-attr` violation found across seven display components.
-8. **Phase 5 P2 — substantially done.** Invariant-check duplication detection
-   and visual regression testing (Playwright, local opt-in) delivered. A
-   dedicated component preview/docs harness remains open as a placeholder
-   only — the existing verification app likely already covers the need.
+8. Phase 5 P2 — done. Invariant-check duplication detection and visual
+   regression testing (Playwright, local opt-in) delivered. Component
+   preview/docs harness closed as already satisfied by the existing
+   verification app.
 
 ---
 
