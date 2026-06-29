@@ -1,46 +1,49 @@
-import { html, nothing, type TemplateResult } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing, type TemplateResult } from 'lit'
+import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable';
+import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isButtonType,
   isButtonVariant,
   isInputSize,
   type SpectreButtonType,
   type SpectreButtonVariant,
-  type SpectreInputSize,
-} from '../../utils/form';
+  type SpectreInputSize
+} from '../../utils/form'
 
 import {
   getButtonClasses,
   getInputLabelClasses,
   type ButtonSize,
-  type ButtonVariant,
-} from '@phcdevworks/spectre-ui';
+  type ButtonVariant
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreButtonProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autofocus?: boolean | null | undefined;
-  disabled?: boolean | undefined;
-  form?: string | undefined;
-  fullWidth?: boolean | undefined;
-  iconOnly?: boolean | undefined;
-  id?: string | null | undefined;
-  label?: string | undefined;
-  loading?: boolean | undefined;
-  loadingLabel?: string | undefined;
-  name?: string | undefined;
-  pill?: boolean | undefined;
-  size?: SpectreInputSize | undefined;
-  title?: string | null | undefined;
-  type?: SpectreButtonType | undefined;
-  variant?: SpectreButtonVariant | undefined;
-  value?: string | undefined;
+  ariaLabel?: string | null
+  ariaLabelledBy?: string | null
+  ariaDescribedBy?: string | null
+  autofocus?: boolean | null | undefined
+  disabled?: boolean | undefined
+  form?: string | undefined
+  fullWidth?: boolean | undefined
+  iconOnly?: boolean | undefined
+  id?: string | null | undefined
+  label?: string | undefined
+  loading?: boolean | undefined
+  loadingLabel?: string | undefined
+  name?: string | undefined
+  pill?: boolean | undefined
+  size?: SpectreInputSize | undefined
+  title?: string | null | undefined
+  type?: SpectreButtonType | undefined
+  variant?: SpectreButtonVariant | undefined
+  value?: string | undefined
 }
 
-export class SpectreButtonElement extends SpectreProjectableElement implements SpectreButtonProps {
+export class SpectreButtonElement
+  extends SpectreProjectableElement
+  implements SpectreButtonProps
+{
   static properties = {
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
@@ -54,105 +57,116 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
     size: { type: String, reflect: true },
     type: { type: String, reflect: true },
     variant: { type: String, reflect: true },
-    value: { type: String },
-  };
+    value: { type: String }
+  }
 
-  disabled: boolean | undefined = false;
-  form: string | undefined;
-  fullWidth: boolean | undefined = false;
-  iconOnly: boolean | undefined = false;
-  label: string | undefined;
-  loading: boolean | undefined = false;
-  loadingLabel: string | undefined = 'Loading';
-  name: string | undefined;
-  pill: boolean | undefined = false;
-  size: SpectreInputSize | undefined = 'md';
-  type: SpectreButtonType | undefined = 'button';
-  variant: SpectreButtonVariant | undefined = 'primary';
-  value: string | undefined = '';
+  disabled: boolean | undefined = false
+  form: string | undefined
+  fullWidth: boolean | undefined = false
+  iconOnly: boolean | undefined = false
+  label: string | undefined
+  loading: boolean | undefined = false
+  loadingLabel: string | undefined = 'Loading'
+  name: string | undefined
+  pill: boolean | undefined = false
+  size: SpectreInputSize | undefined = 'md'
+  type: SpectreButtonType | undefined = 'button'
+  variant: SpectreButtonVariant | undefined = 'primary'
+  value: string | undefined = ''
 
   override get id(): string {
-    return super.id;
+    return super.id
   }
 
   override set id(value: string | null | undefined) {
-    super.id = value;
+    super.id = value
   }
 
   override get title(): string {
-    return super.title;
+    return super.title
   }
 
   override set title(value: string | null | undefined) {
-    super.title = value;
+    super.title = value
   }
 
   override get autofocus(): boolean {
-    return super.autofocus;
+    return super.autofocus
   }
 
   override set autofocus(value: boolean | undefined | null) {
-    super.autofocus = value;
+    super.autofocus = value
   }
 
   protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-button-native]');
+    return this.querySelector('[data-sp-button-native]')
   }
 
   protected override isInternalNode(node: Node): boolean {
     if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
+      return false
     }
 
-    const el = node as Element;
+    const el = node as Element
     return (
       el.hasAttribute('data-sp-button-native') ||
       el.hasAttribute('data-sp-button-loading-label') ||
       el.hasAttribute('data-sp-button-label-fallback')
-    );
+    )
   }
 
-  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+  protected override willUpdate(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
     if (changedProperties.has('disabled') && this.disabled == null) {
-      this.disabled = false;
+      this.disabled = false
     }
 
     if (changedProperties.has('fullWidth') && this.fullWidth == null) {
-      this.fullWidth = false;
+      this.fullWidth = false
     }
 
     if (changedProperties.has('iconOnly') && this.iconOnly == null) {
-      this.iconOnly = false;
+      this.iconOnly = false
     }
 
     if (changedProperties.has('loading') && this.loading == null) {
-      this.loading = false;
+      this.loading = false
     }
 
     if (changedProperties.has('pill') && this.pill == null) {
-      this.pill = false;
+      this.pill = false
     }
 
-    if (changedProperties.has('variant') && (this.variant == null || !isButtonVariant(this.variant))) {
-      this.variant = 'primary';
+    if (
+      changedProperties.has('variant') &&
+      (this.variant == null || !isButtonVariant(this.variant))
+    ) {
+      this.variant = 'primary'
     }
 
-    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
-      this.size = 'md';
+    if (
+      changedProperties.has('size') &&
+      (this.size == null || !isInputSize(this.size))
+    ) {
+      this.size = 'md'
     }
 
-    if (changedProperties.has('type') && (this.type == null || !isButtonType(this.type))) {
-      this.type = 'button';
+    if (
+      changedProperties.has('type') &&
+      (this.type == null || !isButtonType(this.type))
+    ) {
+      this.type = 'button'
     }
 
     if (changedProperties.has('loadingLabel')) {
       if (this.loadingLabel == null || this.loadingLabel.trim() === '') {
-        this.loadingLabel = 'Loading';
+        this.loadingLabel = 'Loading'
       }
     }
 
     if (changedProperties.has('value') && this.value == null) {
-      this.value = '';
+      this.value = ''
     }
   }
 
@@ -164,25 +178,21 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
       loading: this.loading ?? false,
       pill: this.pill ?? false,
       size: this.size as ButtonSize,
-      variant: this.variant as ButtonVariant,
-    });
-  }
-
-  private get isDisabled(): boolean {
-    return (this.disabled ?? false) || (this.loading ?? false);
+      variant: this.variant as ButtonVariant
+    })
   }
 
   private get visibleLabelFallback(): string | undefined {
-    const trimmedLabel = this.label?.trim();
-    return trimmedLabel ? trimmedLabel : undefined;
+    const trimmedLabel = this.label?.trim()
+    return trimmedLabel ? trimmedLabel : undefined
   }
 
   override focus(options?: FocusOptions): void {
-    (this.getContentContainer() as HTMLButtonElement | null)?.focus(options);
+    ;(this.getContentContainer() as HTMLButtonElement | null)?.focus(options)
   }
 
   override blur(): void {
-    (this.getContentContainer() as HTMLButtonElement | null)?.blur();
+    ;(this.getContentContainer() as HTMLButtonElement | null)?.blur()
   }
 
   private renderButtonContent(): TemplateResult | Node[] | typeof nothing {
@@ -190,19 +200,21 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
       return html`<span
         class="${getInputLabelClasses({ disabled: this.isDisabled })}"
         data-sp-button-loading-label
-      >${this.loadingLabel}</span>`;
+        >${this.loadingLabel}</span
+      >`
     }
 
     if (this.hasProjectedContent) {
-      return this.projectedContent;
+      return this.projectedContent
     }
 
     return this.visibleLabelFallback
       ? html`<span
           class="${getInputLabelClasses({ disabled: this.isDisabled })}"
           data-sp-button-label-fallback
-        >${this.visibleLabelFallback}</span>`
-      : nothing;
+          >${this.visibleLabelFallback}</span
+        >`
+      : nothing
   }
 
   override render() {
@@ -223,17 +235,19 @@ export class SpectreButtonElement extends SpectreProjectableElement implements S
       value="${ifDefined(this.value)}"
     >
       ${this.renderButtonContent()}
-    </button>`;
+    </button>`
   }
 }
 
-export function defineSpectreButton(tagName = 'sp-button'): typeof SpectreButtonElement {
-  const existingElement = customElements.get(tagName);
+export function defineSpectreButton(
+  tagName = 'sp-button'
+): typeof SpectreButtonElement {
+  const existingElement = customElements.get(tagName)
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreButtonElement;
+    return existingElement as unknown as typeof SpectreButtonElement
   }
 
-  customElements.define(tagName, SpectreButtonElement);
-  return SpectreButtonElement;
+  customElements.define(tagName, SpectreButtonElement)
+  return SpectreButtonElement
 }

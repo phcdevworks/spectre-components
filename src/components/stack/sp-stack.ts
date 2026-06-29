@@ -1,32 +1,32 @@
-import { html, nothing } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing } from 'lit'
+import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable';
+import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isStackAlign,
   isStackBasis,
   isStackDirection,
   type SpectreStackAlign,
   type SpectreStackBasis,
-  type SpectreStackDirection,
-} from '../../utils/form';
+  type SpectreStackDirection
+} from '../../utils/form'
 
 import {
   getStackClasses,
   type StackAlign,
   type StackBasis,
-  type StackDirection,
-} from '@phcdevworks/spectre-ui';
+  type StackDirection
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreStackProps {
-  align?: SpectreStackAlign | undefined;
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  basis?: SpectreStackBasis | undefined;
-  direction?: SpectreStackDirection | undefined;
-  id?: string | null | undefined;
-  title?: string | null | undefined;
+  align?: SpectreStackAlign | undefined
+  ariaLabel?: string | null
+  ariaLabelledBy?: string | null
+  ariaDescribedBy?: string | null
+  basis?: SpectreStackBasis | undefined
+  direction?: SpectreStackDirection | undefined
+  id?: string | null | undefined
+  title?: string | null | undefined
 }
 
 export class SpectreStackElement
@@ -36,60 +36,62 @@ export class SpectreStackElement
   static properties = {
     align: { type: String, reflect: true },
     basis: { type: String, reflect: true },
-    direction: { type: String, reflect: true },
-  };
+    direction: { type: String, reflect: true }
+  }
 
-  align: SpectreStackAlign | undefined = 'center';
-  basis: SpectreStackBasis | undefined = undefined;
-  direction: SpectreStackDirection | undefined = 'vertical';
+  align: SpectreStackAlign | undefined = 'center'
+  basis: SpectreStackBasis | undefined = undefined
+  direction: SpectreStackDirection | undefined = 'vertical'
 
   override get id(): string {
-    return super.id;
+    return super.id
   }
 
   override set id(value: string | null | undefined) {
-    super.id = value;
+    super.id = value
   }
 
   override get title(): string {
-    return super.title;
+    return super.title
   }
 
   override set title(value: string | null | undefined) {
-    super.title = value;
+    super.title = value
   }
 
   protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-stack-native]');
+    return this.querySelector('[data-sp-stack-native]')
   }
 
   protected override isInternalNode(node: Node): boolean {
     if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
+      return false
     }
-    const el = node as Element;
-    return el.hasAttribute('data-sp-stack-native');
+    const el = node as Element
+    return el.hasAttribute('data-sp-stack-native')
   }
 
-  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+  protected override willUpdate(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
     if (
       changedProperties.has('direction') &&
       (this.direction == null || !isStackDirection(this.direction))
     ) {
-      this.direction = 'vertical';
+      this.direction = 'vertical'
     }
     if (
       changedProperties.has('basis') &&
       this.basis != null &&
       !isStackBasis(this.basis)
     ) {
-      this.basis = undefined;
+      this.basis = undefined
     }
     if (
       changedProperties.has('align') &&
       (this.align == null || !isStackAlign(this.align))
     ) {
-      this.align = 'center';
+      this.align = 'center'
     }
   }
 
@@ -97,8 +99,8 @@ export class SpectreStackElement
     return getStackClasses({
       align: this.align as StackAlign,
       direction: this.direction as StackDirection,
-      ...(this.basis != null ? { basis: this.basis as StackBasis } : {}),
-    });
+      ...(this.basis != null ? { basis: this.basis as StackBasis } : {})
+    })
   }
 
   override render() {
@@ -112,17 +114,19 @@ export class SpectreStackElement
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.hasProjectedContent ? this.projectedContent : nothing}
-    </div>`;
+    </div>`
   }
 }
 
-export function defineSpectreStack(tagName = 'sp-stack'): typeof SpectreStackElement {
-  const existingElement = customElements.get(tagName);
+export function defineSpectreStack(
+  tagName = 'sp-stack'
+): typeof SpectreStackElement {
+  const existingElement = customElements.get(tagName)
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreStackElement;
+    return existingElement as unknown as typeof SpectreStackElement
   }
 
-  customElements.define(tagName, SpectreStackElement);
-  return SpectreStackElement;
+  customElements.define(tagName, SpectreStackElement)
+  return SpectreStackElement
 }

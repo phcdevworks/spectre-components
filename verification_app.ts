@@ -2,25 +2,9 @@ import '@phcdevworks/spectre-tokens/index.css';
 import '@phcdevworks/spectre-ui/index.css';
 
 import { html, render } from 'lit';
-import {
-  defineSpectreButton,
-  defineSpectreCheckbox,
-  defineSpectreFieldset,
-  defineSpectreInput,
-  defineSpectreLabel,
-  defineSpectreRadio,
-  defineSpectreSelect,
-  defineSpectreTextarea,
-} from './src';
+import { defineSpectreComponents } from './src';
 
-defineSpectreButton();
-defineSpectreCheckbox();
-defineSpectreFieldset();
-defineSpectreInput();
-defineSpectreLabel();
-defineSpectreRadio();
-defineSpectreSelect();
-defineSpectreTextarea();
+defineSpectreComponents();
 
 const template = html`
   <section>
@@ -121,6 +105,91 @@ const template = html`
     <sp-fieldset legend='Autofocus Fieldset' autofocus>
       <p>This fieldset should have autofocus.</p>
     </sp-fieldset>
+  </section>
+
+  <section>
+    <h2>sp-badge</h2>
+    <div class='row'>
+      <sp-badge variant='primary'>New</sp-badge>
+      <sp-badge variant='danger'>3</sp-badge>
+      <sp-badge variant='success' loading>Syncing</sp-badge>
+    </div>
+  </section>
+
+  <section>
+    <h2>sp-tag</h2>
+    <div class='row'>
+      <sp-tag>Default</sp-tag>
+      <sp-tag variant='success'>Active</sp-tag>
+      <sp-tag aria-label='Featured item'>Featured</sp-tag>
+    </div>
+  </section>
+
+  <section>
+    <h2>sp-card / sp-pricing-card</h2>
+    <div class='row'>
+      <sp-card>
+        <h3>Card title</h3>
+        <p>Card body content.</p>
+      </sp-card>
+      <sp-card interactive>
+        <h3>Interactive card</h3>
+        <a href='#'>View details</a>
+      </sp-card>
+      <sp-pricing-card>
+        <h3>Pro plan</h3>
+        <p>$19/mo</p>
+      </sp-pricing-card>
+    </div>
+  </section>
+
+  <section>
+    <h2>sp-alert</h2>
+    <div class='row'>
+      <sp-alert variant='info'>Heads up — this is an alert.</sp-alert>
+      <sp-alert variant='danger'>Something went wrong.</sp-alert>
+    </div>
+  </section>
+
+  <section>
+    <h2>sp-testimonial</h2>
+    <div class='row'>
+      <sp-testimonial>
+        <blockquote>Great product.</blockquote>
+        <cite>Jane Doe</cite>
+      </sp-testimonial>
+    </div>
+  </section>
+
+  <section>
+    <h2>sp-avatar / sp-icon-box / sp-rating / sp-spinner</h2>
+    <div class='row'>
+      <sp-avatar aria-label='Bradley Potts'>BP</sp-avatar>
+      <sp-icon-box aria-label='Feature icon'>
+        <svg width='24' height='24' aria-hidden='true'><circle cx='12' cy='12' r='10' /></svg>
+      </sp-icon-box>
+      <sp-rating></sp-rating>
+      <sp-rating value='4' label='4 out of 5 stars'></sp-rating>
+      <sp-spinner></sp-spinner>
+    </div>
+  </section>
+
+  <section>
+    <h2>Layout: sp-container / sp-grid / sp-section / sp-stack</h2>
+    <sp-container max-width='prose'>
+      <sp-section>
+        <sp-stack direction='horizontal' align='center'>
+          <sp-badge variant='primary'>A</sp-badge>
+          <sp-badge variant='secondary'>B</sp-badge>
+          <sp-badge variant='success'>C</sp-badge>
+        </sp-stack>
+        <sp-grid columns='3' gap='md'>
+          <sp-card><p>Grid item 1</p></sp-card>
+          <sp-card><p>Grid item 2</p></sp-card>
+          <sp-card><p>Grid item 3</p></sp-card>
+        </sp-grid>
+      </sp-section>
+    </sp-container>
   </section>
 `;
 

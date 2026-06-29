@@ -1,16 +1,16 @@
-import { html, nothing } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing } from 'lit'
+import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable';
+import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getSectionClasses } from '@phcdevworks/spectre-ui';
+import { getSectionClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreSectionProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  id?: string | null | undefined;
-  title?: string | null | undefined;
+  ariaLabel?: string | null
+  ariaLabelledBy?: string | null
+  ariaDescribedBy?: string | null
+  id?: string | null | undefined
+  title?: string | null | undefined
 }
 
 export class SpectreSectionElement
@@ -18,35 +18,35 @@ export class SpectreSectionElement
   implements SpectreSectionProps
 {
   override get id(): string {
-    return super.id;
+    return super.id
   }
 
   override set id(value: string | null | undefined) {
-    super.id = value;
+    super.id = value
   }
 
   override get title(): string {
-    return super.title;
+    return super.title
   }
 
   override set title(value: string | null | undefined) {
-    super.title = value;
+    super.title = value
   }
 
   protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-section-native]');
+    return this.querySelector('[data-sp-section-native]')
   }
 
   protected override isInternalNode(node: Node): boolean {
     if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
+      return false
     }
-    const el = node as Element;
-    return el.hasAttribute('data-sp-section-native');
+    const el = node as Element
+    return el.hasAttribute('data-sp-section-native')
   }
 
   private get sectionClasses(): string {
-    return getSectionClasses({});
+    return getSectionClasses({})
   }
 
   override render() {
@@ -60,19 +60,19 @@ export class SpectreSectionElement
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.hasProjectedContent ? this.projectedContent : nothing}
-    </section>`;
+    </section>`
   }
 }
 
 export function defineSpectreSection(
   tagName = 'sp-section'
 ): typeof SpectreSectionElement {
-  const existingElement = customElements.get(tagName);
+  const existingElement = customElements.get(tagName)
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreSectionElement;
+    return existingElement as unknown as typeof SpectreSectionElement
   }
 
-  customElements.define(tagName, SpectreSectionElement);
-  return SpectreSectionElement;
+  customElements.define(tagName, SpectreSectionElement)
+  return SpectreSectionElement
 }
