@@ -201,7 +201,41 @@ component families. All three sub-phases are delivered.
 
 ---
 
-## 6. Explicitly Out of Scope
+## 6. Phase 6 — Cross-Repo Parity Gaps (spectre-ui-astro)
+
+Audit against `@phcdevworks/spectre-ui-astro` (the L3b sibling) found gaps in
+both directions.
+
+### P0: Recipe Backing Gap on Existing Components — Partially delivered
+
+`sp-checkbox`, `sp-fieldset`, `sp-label`, `sp-radio`, `sp-select`, and
+`sp-textarea` shipped since Phase 1 with no backing recipe in
+`@phcdevworks/spectre-ui`. Gate cleared in `@phcdevworks/spectre-ui@2.6.0`.
+
+- `sp-checkbox`, `sp-radio` — fixed: indicator now calls
+  `getCheckboxClasses`/`getRadioClasses` instead of a static literal class
+  (the `--checked`/`--disabled` modifiers were never reachable before).
+- `sp-fieldset` — fixed: root element now calls `getFieldsetClasses` (had no
+  class at all before); legend switched from the generic
+  `getInputLabelClasses` to the purpose-built `getFieldsetLegendClasses`.
+- `sp-label` — switched from `getInputLabelClasses` to `getLabelClasses`;
+  added a `required` property the new recipe supports.
+- `sp-select`, `sp-textarea` — deferred. `getSelectClasses`/
+  `getTextareaClasses` lack the `size`/`fullWidth`/`pill`/state options these
+  two components' public properties drive today; switching would regress
+  functionality. Filed as an upstream request in
+  `project-design/spectre-ui/TODO.md` Phase 5 P0.
+
+### P1: Components Present in spectre-ui-astro but Missing Here
+
+`spectre-ui-astro` ships `SpDropdown`, `SpModal`, `SpNav`, `SpSidebar`,
+`SpToast`, and `SpTooltip` on recipes that already exist in
+`@phcdevworks/spectre-ui`. No Lit equivalents exist here yet. Not approved
+for implementation — requires explicit approval per `AGENTS.md`.
+
+---
+
+## 7. Explicitly Out of Scope
 
 - Token meaning and semantic design values — belong in
   `@phcdevworks/spectre-tokens`.
@@ -215,7 +249,7 @@ component families. All three sub-phases are delivered.
 
 ---
 
-## 7. Recommended Execution Order
+## 8. Recommended Execution Order
 
 1. **Phase 1** — done.
 2. **Phase 2** — done.
@@ -227,3 +261,6 @@ component families. All three sub-phases are delivered.
 8. **Phase 5 P2** — done. Invariant-duplication tooling and visual
    regression testing delivered; preview harness closed as already
    satisfied.
+9. **Phase 6 P0** — partially done. checkbox/radio/fieldset/label fixed;
+   select/textarea deferred pending an upstream recipe-parity decision in
+   `spectre-ui`.

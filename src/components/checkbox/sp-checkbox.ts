@@ -4,7 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getInputLabelClasses } from '@phcdevworks/spectre-ui'
+import { getCheckboxClasses, getInputLabelClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreCheckboxProps {
   ariaLabel?: string | null
@@ -187,7 +187,10 @@ export class SpectreCheckboxElement
         @change="${this.handleChange}"
         @input="${this.handleInput}"
       />
-      <span class="sp-checkbox-indicator" data-sp-checkbox-indicator></span>
+      <span
+        class="${getCheckboxClasses({ checked: this.checked ?? false, disabled: this.isDisabled })}"
+        data-sp-checkbox-indicator
+      ></span>
       ${labelContent}
     </label>`
   }

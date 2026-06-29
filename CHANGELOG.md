@@ -43,11 +43,49 @@ reflects package releases published to npm.
   omitted when no label is forwarded, so unlabeled instances are unaffected.
   Found while extending `tests/accessibility.test.ts` coverage (Phase 5 P1).
 
+- `sp-checkbox` and `sp-radio` indicator spans now call `getCheckboxClasses`/
+  `getRadioClasses` from `@phcdevworks/spectre-ui` instead of a hardcoded
+  literal class string. Previously the `--checked`/`--disabled` modifier
+  classes were never applied, so the indicator's visual state never changed
+  on toggle or disable, regardless of the native `<input>`'s actual state.
+
+- `sp-fieldset`'s root `<fieldset>` element now calls `getFieldsetClasses`
+  from `@phcdevworks/spectre-ui`. Previously it rendered with no `class`
+  attribute at all, so `@phcdevworks/spectre-ui`'s border/padding styling
+  for `.sp-fieldset` never applied.
+
 ### Changed
 
 - Bumped `@phcdevworks/spectre-tokens` to `^3.2.0`, closing dependency drift
   against the current published `project-design` version. The upstream
   release was additive only — no source changes required here.
+
+- `sp-fieldset`'s legend now calls the purpose-built `getFieldsetLegendClasses`
+  (`.sp-fieldset__legend`, themed via `--sp-fieldset-legend-text`) instead of
+  the generic `getInputLabelClasses` (`.sp-label`, themed via
+  `--sp-component-input-role-text`) it borrowed before
+  `@phcdevworks/spectre-ui@2.6.0` published a fieldset-specific recipe.
+
+- `sp-label` now calls `getLabelClasses` (`.sp-form-label`, themed via
+  `--sp-label-*`) instead of `getInputLabelClasses` (`.sp-label`, themed via
+  `--sp-component-input-role-text`) — the same kind of borrowed-recipe
+  situation as `sp-fieldset`'s legend, now that a label-specific recipe
+  exists. Added a `required` property, which `getLabelClasses` supports
+  (renders `sp-form-label--required`) but the previous recipe did not.
+
+  **Rendered class name change**: any external CSS that happened to target
+  `sp-fieldset`'s legend or `sp-label`'s native `<label>` via the `.sp-label`
+  class will no longer match — neither was a supported public styling hook,
+  but this is called out explicitly since the class name itself is visible
+  in the DOM.
+
+- `sp-select` and `sp-textarea` remain on `getInputClasses` for now (not
+  switched to the new `getSelectClasses`/`getTextareaClasses` recipes) —
+  those recipes only support `{disabled, focused}`, not the `size`/
+  `fullWidth`/`pill`/`invalid`/`success`/`loading` options these two
+  components' public properties actually drive. Filed as an upstream
+  request in `@phcdevworks/spectre-ui`'s `TODO.md` (Phase 5 P0) rather than
+  silently dropping that functionality.
 
 ### Testing
 
