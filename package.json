@@ -171,6 +171,8 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run check:exports && npm run check:contract && npm run check:invariants && npm run check:version-sync && npm run check:ecosystem",
     "check:exports": "node --experimental-strip-types scripts/check-exports.ts",
     "check:contract": "node --experimental-strip-types scripts/check-contract.ts",
