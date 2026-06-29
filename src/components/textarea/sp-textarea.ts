@@ -1,51 +1,52 @@
-import { html } from 'lit';
-import { live } from 'lit/directives/live.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html } from 'lit'
+import { live } from 'lit/directives/live.js'
+import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreBaseElement } from '../../utils/base';
+import { SpectreBaseElement } from '../../utils/base'
 import {
   isInputSize,
   type SpectreInputSize,
-  normalizeInt,
-} from '../../utils/form';
+  normalizeInt
+} from '../../utils/form'
 
-import { getInputClasses } from '@phcdevworks/spectre-ui';
+import { getInputClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreTextareaProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autocapitalize?: string | null | undefined;
-  autocomplete?: string | undefined;
-  autofocus?: boolean | null | undefined;
-  disabled?: boolean | undefined;
-  enterkeyhint?: string | undefined;
-  form?: string | undefined;
-  fullWidth?: boolean | undefined;
-  id?: string | null | undefined;
-  inputmode?: string | undefined;
-  invalid?: boolean | undefined;
-  loading?: boolean | undefined;
-  maxlength?: number | undefined;
-  minlength?: number | undefined;
-  name?: string | undefined;
-  pill?: boolean | undefined;
-  placeholder?: string | undefined;
-  readonly?: boolean | undefined;
-  required?: boolean | undefined;
-  rows?: number | undefined;
-  size?: SpectreInputSize | undefined;
-  spellcheck?: boolean | null | undefined;
-  success?: boolean | undefined;
-  title?: string | null | undefined;
-  value?: string | undefined;
+  ariaLabel?: string | null
+  ariaLabelledBy?: string | null
+  ariaDescribedBy?: string | null
+  autocapitalize?: string | null | undefined
+  autocomplete?: string | undefined
+  autofocus?: boolean | null | undefined
+  disabled?: boolean | undefined
+  enterkeyhint?: string | undefined
+  form?: string | undefined
+  fullWidth?: boolean | undefined
+  id?: string | null | undefined
+  inputmode?: string | undefined
+  invalid?: boolean | undefined
+  loading?: boolean | undefined
+  maxlength?: number | undefined
+  minlength?: number | undefined
+  name?: string | undefined
+  pill?: boolean | undefined
+  placeholder?: string | undefined
+  readonly?: boolean | undefined
+  required?: boolean | undefined
+  rows?: number | undefined
+  size?: SpectreInputSize | undefined
+  spellcheck?: boolean | null | undefined
+  success?: boolean | undefined
+  title?: string | null | undefined
+  value?: string | undefined
 }
 
-const DEFAULT_ROWS = 2;
+const DEFAULT_ROWS = 2
 
 export class SpectreTextareaElement
   extends SpectreBaseElement
-  implements SpectreTextareaProps {
+  implements SpectreTextareaProps
+{
   static properties = {
     autocomplete: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -65,125 +66,128 @@ export class SpectreTextareaElement
     rows: { type: Number, reflect: true },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
-    value: { type: String },
-  };
+    value: { type: String }
+  }
 
   override get autocapitalize(): string {
-    return super.autocapitalize;
+    return super.autocapitalize
   }
 
   override set autocapitalize(value: string | null | undefined) {
-    super.autocapitalize = value;
+    super.autocapitalize = value
   }
 
   override get autofocus(): boolean {
-    return super.autofocus;
+    return super.autofocus
   }
 
   override set autofocus(value: boolean | undefined | null) {
-    super.autofocus = value;
+    super.autofocus = value
   }
 
-  autocomplete: string | undefined;
-  disabled: boolean | undefined = false;
-  enterkeyhint: string | undefined;
-  form: string | undefined;
-  fullWidth: boolean | undefined = false;
+  autocomplete: string | undefined
+  disabled: boolean | undefined = false
+  enterkeyhint: string | undefined
+  form: string | undefined
+  fullWidth: boolean | undefined = false
 
   override get id(): string {
-    return super.id;
+    return super.id
   }
 
   override set id(value: string | null | undefined) {
-    super.id = value;
+    super.id = value
   }
 
-  inputmode: string | undefined;
-  invalid: boolean | undefined = false;
-  loading: boolean | undefined = false;
-  maxlength: number | undefined;
-  minlength: number | undefined;
-  name: string | undefined;
-  pill: boolean | undefined = false;
-  placeholder: string | undefined;
-  readonly: boolean | undefined = false;
-  required: boolean | undefined = false;
-  rows: number | undefined = DEFAULT_ROWS;
-  size: SpectreInputSize | undefined = 'md';
+  inputmode: string | undefined
+  invalid: boolean | undefined = false
+  loading: boolean | undefined = false
+  maxlength: number | undefined
+  minlength: number | undefined
+  name: string | undefined
+  pill: boolean | undefined = false
+  placeholder: string | undefined
+  readonly: boolean | undefined = false
+  required: boolean | undefined = false
+  rows: number | undefined = DEFAULT_ROWS
+  size: SpectreInputSize | undefined = 'md'
 
   override get spellcheck(): boolean {
-    return super.spellcheck;
+    return super.spellcheck
   }
 
   override set spellcheck(value: boolean | null | undefined) {
-    super.spellcheck = value;
+    super.spellcheck = value
   }
 
-  success: boolean | undefined = false;
+  success: boolean | undefined = false
 
   override get title(): string {
-    return super.title;
+    return super.title
   }
 
   override set title(value: string | null | undefined) {
-    super.title = value;
+    super.title = value
   }
 
-  value: string | undefined = '';
+  value: string | undefined = ''
 
   protected override willUpdate(
-    changedProperties: Map<PropertyKey, unknown>,
+    changedProperties: Map<PropertyKey, unknown>
   ): void {
     if (changedProperties.has('disabled') && this.disabled == null) {
-      this.disabled = false;
+      this.disabled = false
     }
 
     if (changedProperties.has('fullWidth') && this.fullWidth == null) {
-      this.fullWidth = false;
+      this.fullWidth = false
     }
 
     if (changedProperties.has('invalid') && this.invalid == null) {
-      this.invalid = false;
+      this.invalid = false
     }
 
     if (changedProperties.has('loading') && this.loading == null) {
-      this.loading = false;
+      this.loading = false
     }
 
     if (changedProperties.has('pill') && this.pill == null) {
-      this.pill = false;
+      this.pill = false
     }
 
     if (changedProperties.has('readonly') && this.readonly == null) {
-      this.readonly = false;
+      this.readonly = false
     }
 
     if (changedProperties.has('required') && this.required == null) {
-      this.required = false;
+      this.required = false
     }
 
     if (changedProperties.has('success') && this.success == null) {
-      this.success = false;
+      this.success = false
     }
 
-    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
-      this.size = 'md';
+    if (
+      changedProperties.has('size') &&
+      (this.size == null || !isInputSize(this.size))
+    ) {
+      this.size = 'md'
     }
 
     if (changedProperties.has('rows')) {
-      this.rows = normalizeInt(this.rows, DEFAULT_ROWS, 1) as number;
+      this.rows = normalizeInt(this.rows, DEFAULT_ROWS, 1) as number
     }
 
     if (changedProperties.has('value') && this.value == null) {
-      this.value = '';
+      this.value = ''
     }
 
     if (changedProperties.has('maxlength')) {
-      this.maxlength = normalizeInt(this.maxlength, undefined);
+      this.maxlength = normalizeInt(this.maxlength, undefined)
     }
 
     if (changedProperties.has('minlength')) {
-      this.minlength = normalizeInt(this.minlength, undefined);
+      this.minlength = normalizeInt(this.minlength, undefined)
     }
   }
 
@@ -200,34 +204,30 @@ export class SpectreTextareaElement
           ? 'error'
           : this.success
             ? 'success'
-            : 'default',
-    });
-  }
-
-  private get isDisabled(): boolean {
-    return (this.disabled ?? false) || (this.loading ?? false);
+            : 'default'
+    })
   }
 
   private get nativeTextarea(): HTMLTextAreaElement | null {
-    return this.querySelector('[data-sp-textarea-native]');
+    return this.querySelector('[data-sp-textarea-native]')
   }
 
   private handleInput(event: Event): void {
-    const textarea = event.currentTarget as HTMLTextAreaElement;
-    this.value = textarea.value;
+    const textarea = event.currentTarget as HTMLTextAreaElement
+    this.value = textarea.value
   }
 
   private handleChange(event: Event): void {
-    const textarea = event.currentTarget as HTMLTextAreaElement;
-    this.value = textarea.value;
+    const textarea = event.currentTarget as HTMLTextAreaElement
+    this.value = textarea.value
   }
 
   override focus(options?: FocusOptions): void {
-    this.nativeTextarea?.focus(options);
+    this.nativeTextarea?.focus(options)
   }
 
   override blur(): void {
-    this.nativeTextarea?.blur();
+    this.nativeTextarea?.blur()
   }
 
   override render() {
@@ -259,19 +259,19 @@ export class SpectreTextareaElement
       .value="${live(this.value)}"
       @change="${this.handleChange}"
       @input="${this.handleInput}"
-    ></textarea>`;
+    ></textarea>`
   }
 }
 
 export function defineSpectreTextarea(
-  tagName = 'sp-textarea',
+  tagName = 'sp-textarea'
 ): typeof SpectreTextareaElement {
-  const existingElement = customElements.get(tagName);
+  const existingElement = customElements.get(tagName)
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreTextareaElement;
+    return existingElement as unknown as typeof SpectreTextareaElement
   }
 
-  customElements.define(tagName, SpectreTextareaElement);
-  return SpectreTextareaElement;
+  customElements.define(tagName, SpectreTextareaElement)
+  return SpectreTextareaElement
 }

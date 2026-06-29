@@ -94,14 +94,6 @@ export class SpectrePricingCardElement
     })
   }
 
-  private get isDisabled(): boolean {
-    return (this.disabled ?? false) || (this.loading ?? false)
-  }
-
-  private get hasForwardedLabel(): boolean {
-    return Boolean(this.forwardedAriaLabel || this.forwardedAriaLabelledBy)
-  }
-
   override render() {
     return html`<div
       aria-busy="${this.loading ? 'true' : 'false'}"

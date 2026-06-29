@@ -1,133 +1,133 @@
-import { LitElement, type PropertyDeclarations } from 'lit';
+import { LitElement, type PropertyDeclarations } from 'lit'
 
 export class SpectreBaseElement extends LitElement {
-  static properties: PropertyDeclarations = {};
+  static properties: PropertyDeclarations = {}
 
-  private _ariaLabel: string | null = null;
-  private _ariaLabelledBy: string | null = null;
-  private _ariaDescribedBy: string | null = null;
-  private _autocapitalize = '';
-  private _autofocus = false;
-  private _spellcheck: boolean | null = null;
-  private _title = '';
-  private _id = '';
+  private _ariaLabel: string | null = null
+  private _ariaLabelledBy: string | null = null
+  private _ariaDescribedBy: string | null = null
+  private _autocapitalize = ''
+  private _autofocus = false
+  private _spellcheck: boolean | null = null
+  private _title = ''
+  private _id = ''
 
   get ariaLabel(): string | null {
-    return this._ariaLabel;
+    return this._ariaLabel
   }
 
   set ariaLabel(value: string | null) {
     if (this._ariaLabel === value) {
-      return;
+      return
     }
-    this._ariaLabel = value;
-    this._removeHostAttribute('aria-label');
-    this.requestUpdate();
+    this._ariaLabel = value
+    this._removeHostAttribute('aria-label')
+    this.requestUpdate()
   }
 
   get ariaLabelledBy(): string | null {
-    return this._ariaLabelledBy;
+    return this._ariaLabelledBy
   }
 
   set ariaLabelledBy(value: string | null) {
     if (this._ariaLabelledBy === value) {
-      return;
+      return
     }
-    this._ariaLabelledBy = value;
-    this._removeHostAttribute('aria-labelledby');
-    this.requestUpdate();
+    this._ariaLabelledBy = value
+    this._removeHostAttribute('aria-labelledby')
+    this.requestUpdate()
   }
 
   get ariaDescribedBy(): string | null {
-    return this._ariaDescribedBy;
+    return this._ariaDescribedBy
   }
 
   set ariaDescribedBy(value: string | null) {
     if (this._ariaDescribedBy === value) {
-      return;
+      return
     }
-    this._ariaDescribedBy = value;
-    this._removeHostAttribute('aria-describedby');
-    this.requestUpdate();
+    this._ariaDescribedBy = value
+    this._removeHostAttribute('aria-describedby')
+    this.requestUpdate()
   }
 
   override get autocapitalize(): string {
-    return this._autocapitalize;
+    return this._autocapitalize
   }
 
   override set autocapitalize(value: string | undefined | null) {
-    const normalizedValue = value ?? '';
+    const normalizedValue = value ?? ''
     if (this._autocapitalize === normalizedValue) {
-      return;
+      return
     }
-    this._autocapitalize = normalizedValue;
-    this._removeHostAttribute('autocapitalize');
-    this.requestUpdate();
+    this._autocapitalize = normalizedValue
+    this._removeHostAttribute('autocapitalize')
+    this.requestUpdate()
   }
 
   override get spellcheck(): boolean {
-    return this._spellcheck ?? super.spellcheck;
+    return this._spellcheck ?? super.spellcheck
   }
 
   override set spellcheck(value: boolean | undefined | null) {
     if (this._spellcheck === value) {
-      return;
+      return
     }
-    this._spellcheck = value ?? null;
-    this._removeHostAttribute('spellcheck');
-    this.requestUpdate();
+    this._spellcheck = value ?? null
+    this._removeHostAttribute('spellcheck')
+    this.requestUpdate()
   }
 
   override get title(): string {
-    return this._title;
+    return this._title
   }
 
   override set title(value: string | undefined | null) {
-    const normalizedValue = value ?? '';
+    const normalizedValue = value ?? ''
     if (this._title === normalizedValue) {
-      return;
+      return
     }
-    this._title = normalizedValue;
-    this._removeHostAttribute('title');
-    this.requestUpdate();
+    this._title = normalizedValue
+    this._removeHostAttribute('title')
+    this.requestUpdate()
   }
 
   override get id(): string {
-    return this._id;
+    return this._id
   }
 
   override set id(value: string | undefined | null) {
-    const normalizedValue = value ?? '';
+    const normalizedValue = value ?? ''
     if (this._id === normalizedValue) {
-      return;
+      return
     }
-    this._id = normalizedValue;
-    this._removeHostAttribute('id');
-    this.requestUpdate();
+    this._id = normalizedValue
+    this._removeHostAttribute('id')
+    this.requestUpdate()
   }
 
   override get autofocus(): boolean {
-    return this._autofocus;
+    return this._autofocus
   }
 
   override set autofocus(value: boolean | undefined | null) {
-    const normalizedValue = !!value;
+    const normalizedValue = !!value
     if (this._autofocus === normalizedValue) {
-      return;
+      return
     }
-    this._autofocus = normalizedValue;
-    this._removeHostAttribute('autofocus');
-    this.requestUpdate();
+    this._autofocus = normalizedValue
+    this._removeHostAttribute('autofocus')
+    this.requestUpdate()
   }
 
   // Spectre components intentionally render in light DOM so the global
   // `@phcdevworks/spectre-ui` styling contract can apply directly.
   createRenderRoot(): this {
-    return this;
+    return this
   }
 
   override connectedCallback(): void {
-    super.connectedCallback();
+    super.connectedCallback()
 
     const proxiedAttributes = [
       'id',
@@ -137,146 +137,158 @@ export class SpectreBaseElement extends LitElement {
       'spellcheck',
       'aria-label',
       'aria-labelledby',
-      'aria-describedby',
-    ];
+      'aria-describedby'
+    ]
 
     proxiedAttributes.forEach((attr) => {
-      const value = super.getAttribute(attr);
+      const value = super.getAttribute(attr)
       if (value !== null) {
-        this.setAttribute(attr, value);
+        this.setAttribute(attr, value)
       }
-    });
+    })
   }
 
   override getAttribute(qualifiedName: string): string | null {
     switch (qualifiedName) {
       case 'id':
-        return this.id || null;
+        return this.id || null
       case 'title':
-        return this.title || null;
+        return this.title || null
       case 'autocapitalize':
-        return this.autocapitalize || null;
+        return this.autocapitalize || null
       case 'autofocus':
-        return this.autofocus ? '' : null;
+        return this.autofocus ? '' : null
       case 'spellcheck':
-        return this._spellcheck !== null ? String(this._spellcheck) : null;
+        return this._spellcheck !== null ? String(this._spellcheck) : null
       case 'aria-label':
-        return this.ariaLabel;
+        return this.ariaLabel
       case 'aria-labelledby':
-        return this.ariaLabelledBy;
+        return this.ariaLabelledBy
       case 'aria-describedby':
-        return this.ariaDescribedBy;
+        return this.ariaDescribedBy
       default:
-        return super.getAttribute(qualifiedName);
+        return super.getAttribute(qualifiedName)
     }
   }
 
   override hasAttribute(qualifiedName: string): boolean {
     switch (qualifiedName) {
       case 'id':
-        return this.id !== '';
+        return this.id !== ''
       case 'title':
-        return this.title !== '';
+        return this.title !== ''
       case 'autocapitalize':
-        return this.autocapitalize !== '';
+        return this.autocapitalize !== ''
       case 'autofocus':
-        return this.autofocus;
+        return this.autofocus
       case 'spellcheck':
-        return this._spellcheck !== null;
+        return this._spellcheck !== null
       case 'aria-label':
-        return this.ariaLabel !== null;
+        return this.ariaLabel !== null
       case 'aria-labelledby':
-        return this.ariaLabelledBy !== null;
+        return this.ariaLabelledBy !== null
       case 'aria-describedby':
-        return this.ariaDescribedBy !== null;
+        return this.ariaDescribedBy !== null
       default:
-        return super.hasAttribute(qualifiedName);
+        return super.hasAttribute(qualifiedName)
     }
   }
 
   override setAttribute(qualifiedName: string, value: string): void {
     switch (qualifiedName) {
       case 'id':
-        this.id = value;
-        break;
+        this.id = value
+        break
       case 'title':
-        this.title = value;
-        break;
+        this.title = value
+        break
       case 'autocapitalize':
-        this.autocapitalize = value;
-        break;
+        this.autocapitalize = value
+        break
       case 'autofocus':
-        this.autofocus = true;
-        break;
+        this.autofocus = true
+        break
       case 'spellcheck':
-        this.spellcheck = value !== 'false';
-        break;
+        this.spellcheck = value !== 'false'
+        break
       case 'aria-label':
-        this.ariaLabel = value;
-        break;
+        this.ariaLabel = value
+        break
       case 'aria-labelledby':
-        this.ariaLabelledBy = value;
-        break;
+        this.ariaLabelledBy = value
+        break
       case 'aria-describedby':
-        this.ariaDescribedBy = value;
-        break;
+        this.ariaDescribedBy = value
+        break
       default:
-        super.setAttribute(qualifiedName, value);
+        super.setAttribute(qualifiedName, value)
     }
   }
 
   override removeAttribute(qualifiedName: string): void {
     switch (qualifiedName) {
       case 'id':
-        this.id = '';
-        break;
+        this.id = ''
+        break
       case 'title':
-        this.title = '';
-        break;
+        this.title = ''
+        break
       case 'autocapitalize':
-        this.autocapitalize = '';
-        break;
+        this.autocapitalize = ''
+        break
       case 'autofocus':
-        this.autofocus = false;
-        break;
+        this.autofocus = false
+        break
       case 'spellcheck':
-        this.spellcheck = null;
-        break;
+        this.spellcheck = null
+        break
       case 'aria-label':
-        this.ariaLabel = null;
-        break;
+        this.ariaLabel = null
+        break
       case 'aria-labelledby':
-        this.ariaLabelledBy = null;
-        break;
+        this.ariaLabelledBy = null
+        break
       case 'aria-describedby':
-        this.ariaDescribedBy = null;
-        break;
+        this.ariaDescribedBy = null
+        break
       default:
-        super.removeAttribute(qualifiedName);
+        super.removeAttribute(qualifiedName)
     }
   }
 
   private _removeHostAttribute(name: string): void {
-    const host = this as unknown as HTMLElement;
+    const host = this as unknown as HTMLElement
     if (HTMLElement.prototype.hasAttribute.call(host, name)) {
       // Use the native removeAttribute to avoid our own overridden version
       // which would reset the internal state.
-      HTMLElement.prototype.removeAttribute.call(host, name);
+      HTMLElement.prototype.removeAttribute.call(host, name)
     }
   }
 
   protected get forwardedAriaLabel(): string | undefined {
-    const value = this.ariaLabel?.trim();
-    return value ? value : undefined;
+    const value = this.ariaLabel?.trim()
+    return value ? value : undefined
   }
 
   protected get forwardedAriaLabelledBy(): string | undefined {
-    const value = this.ariaLabelledBy?.trim();
-    return value ? value : undefined;
+    const value = this.ariaLabelledBy?.trim()
+    return value ? value : undefined
   }
 
   protected get forwardedAriaDescribedBy(): string | undefined {
-    const value = this.ariaDescribedBy?.trim();
-    return value ? value : undefined;
+    const value = this.ariaDescribedBy?.trim()
+    return value ? value : undefined
+  }
+
+  // Subclasses that expose `disabled`/`loading` properties get this disabled
+  // calculation for free instead of redeclaring it per component.
+  protected get isDisabled(): boolean {
+    const self = this as unknown as { disabled?: boolean; loading?: boolean }
+    return (self.disabled ?? false) || (self.loading ?? false)
+  }
+
+  // Subclasses get this for free instead of redeclaring it per component.
+  protected get hasForwardedLabel(): boolean {
+    return Boolean(this.forwardedAriaLabel || this.forwardedAriaLabelledBy)
   }
 }

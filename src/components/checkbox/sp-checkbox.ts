@@ -1,31 +1,34 @@
-import { html, nothing } from 'lit';
-import { live } from 'lit/directives/live.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing } from 'lit'
+import { live } from 'lit/directives/live.js'
+import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable';
+import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getInputLabelClasses } from '@phcdevworks/spectre-ui';
+import { getInputLabelClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreCheckboxProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autofocus?: boolean | null | undefined;
-  checked?: boolean | undefined;
-  disabled?: boolean | undefined;
-  form?: string | undefined;
-  id?: string | null | undefined;
-  invalid?: boolean | undefined;
-  loading?: boolean | undefined;
-  label?: string | undefined;
-  name?: string | undefined;
-  required?: boolean | undefined;
-  success?: boolean | undefined;
-  title?: string | null | undefined;
-  value?: string | undefined;
+  ariaLabel?: string | null
+  ariaLabelledBy?: string | null
+  ariaDescribedBy?: string | null
+  autofocus?: boolean | null | undefined
+  checked?: boolean | undefined
+  disabled?: boolean | undefined
+  form?: string | undefined
+  id?: string | null | undefined
+  invalid?: boolean | undefined
+  loading?: boolean | undefined
+  label?: string | undefined
+  name?: string | undefined
+  required?: boolean | undefined
+  success?: boolean | undefined
+  title?: string | null | undefined
+  value?: string | undefined
 }
 
-export class SpectreCheckboxElement extends SpectreProjectableElement implements SpectreCheckboxProps {
+export class SpectreCheckboxElement
+  extends SpectreProjectableElement
+  implements SpectreCheckboxProps
+{
   static properties = {
     checked: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -36,122 +39,120 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
     name: { type: String, reflect: true },
     required: { type: Boolean, reflect: true },
     success: { type: Boolean, reflect: true },
-    value: { type: String },
-  };
+    value: { type: String }
+  }
 
-  checked: boolean | undefined = false;
-  disabled: boolean | undefined = false;
-  form: string | undefined;
-  invalid: boolean | undefined = false;
-  loading: boolean | undefined = false;
-  label: string | undefined;
-  name: string | undefined;
-  required: boolean | undefined = false;
-  success: boolean | undefined = false;
+  checked: boolean | undefined = false
+  disabled: boolean | undefined = false
+  form: string | undefined
+  invalid: boolean | undefined = false
+  loading: boolean | undefined = false
+  label: string | undefined
+  name: string | undefined
+  required: boolean | undefined = false
+  success: boolean | undefined = false
 
   override get id(): string {
-    return super.id;
+    return super.id
   }
 
   override set id(value: string | null | undefined) {
-    super.id = value;
+    super.id = value
   }
 
   override get title(): string {
-    return super.title;
+    return super.title
   }
 
   override set title(value: string | null | undefined) {
-    super.title = value;
+    super.title = value
   }
 
   override get autofocus(): boolean {
-    return super.autofocus;
+    return super.autofocus
   }
 
   override set autofocus(value: boolean | undefined | null) {
-    super.autofocus = value;
+    super.autofocus = value
   }
 
-  value: string | undefined = 'on';
+  value: string | undefined = 'on'
 
   protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-checkbox-label]');
+    return this.querySelector('[data-sp-checkbox-label]')
   }
 
   protected override isInternalNode(node: Node): boolean {
     if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
+      return false
     }
 
-    const el = node as Element;
+    const el = node as Element
     return (
       el.hasAttribute('data-sp-checkbox-label') ||
       el.hasAttribute('data-sp-checkbox-native') ||
       el.hasAttribute('data-sp-checkbox-label-fallback') ||
       el.hasAttribute('data-sp-checkbox-indicator')
-    );
+    )
   }
 
-  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+  protected override willUpdate(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
     if (changedProperties.has('checked') && this.checked == null) {
-      this.checked = false;
+      this.checked = false
     }
 
     if (changedProperties.has('disabled') && this.disabled == null) {
-      this.disabled = false;
+      this.disabled = false
     }
 
     if (changedProperties.has('invalid') && this.invalid == null) {
-      this.invalid = false;
+      this.invalid = false
     }
 
     if (changedProperties.has('loading') && this.loading == null) {
-      this.loading = false;
+      this.loading = false
     }
 
     if (changedProperties.has('required') && this.required == null) {
-      this.required = false;
+      this.required = false
     }
 
     if (changedProperties.has('success') && this.success == null) {
-      this.success = false;
+      this.success = false
     }
 
     if (changedProperties.has('value') && this.value == null) {
-      this.value = 'on';
+      this.value = 'on'
     }
   }
 
   private get nativeInput(): HTMLInputElement | null {
-    return this.querySelector('[data-sp-checkbox-native]');
-  }
-
-  private get isDisabled(): boolean {
-    return (this.disabled ?? false) || (this.loading ?? false);
+    return this.querySelector('[data-sp-checkbox-native]')
   }
 
   private get visibleLabelFallback(): string | undefined {
-    const trimmedLabel = this.label?.trim();
-    return trimmedLabel ? trimmedLabel : undefined;
+    const trimmedLabel = this.label?.trim()
+    return trimmedLabel ? trimmedLabel : undefined
   }
 
   private handleInput(event: Event): void {
-    const input = event.currentTarget as HTMLInputElement;
-    this.checked = input.checked;
+    const input = event.currentTarget as HTMLInputElement
+    this.checked = input.checked
   }
 
   private handleChange(event: Event): void {
-    const input = event.currentTarget as HTMLInputElement;
-    this.checked = input.checked;
+    const input = event.currentTarget as HTMLInputElement
+    this.checked = input.checked
   }
 
   override focus(options?: FocusOptions): void {
-    this.nativeInput?.focus(options);
+    this.nativeInput?.focus(options)
   }
 
   override blur(): void {
-    this.nativeInput?.blur();
+    this.nativeInput?.blur()
   }
 
   override render() {
@@ -161,8 +162,9 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
         ? html`<span
             class="${getInputLabelClasses({ disabled: this.isDisabled })}"
             data-sp-checkbox-label-fallback
-          >${this.visibleLabelFallback}</span>`
-        : nothing;
+            >${this.visibleLabelFallback}</span
+          >`
+        : nothing
 
     return html`<label data-sp-checkbox-label>
       <input
@@ -187,17 +189,19 @@ export class SpectreCheckboxElement extends SpectreProjectableElement implements
       />
       <span class="sp-checkbox-indicator" data-sp-checkbox-indicator></span>
       ${labelContent}
-    </label>`;
+    </label>`
   }
 }
 
-export function defineSpectreCheckbox(tagName = 'sp-checkbox'): typeof SpectreCheckboxElement {
-  const existingElement = customElements.get(tagName);
+export function defineSpectreCheckbox(
+  tagName = 'sp-checkbox'
+): typeof SpectreCheckboxElement {
+  const existingElement = customElements.get(tagName)
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreCheckboxElement;
+    return existingElement as unknown as typeof SpectreCheckboxElement
   }
 
-  customElements.define(tagName, SpectreCheckboxElement);
-  return SpectreCheckboxElement;
+  customElements.define(tagName, SpectreCheckboxElement)
+  return SpectreCheckboxElement
 }

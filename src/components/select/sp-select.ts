@@ -1,36 +1,39 @@
-import { html, nothing } from 'lit';
-import { live } from 'lit/directives/live.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing } from 'lit'
+import { live } from 'lit/directives/live.js'
+import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable';
-import { isInputSize, type SpectreInputSize } from '../../utils/form';
+import { SpectreProjectableElement } from '../../utils/projectable'
+import { isInputSize, type SpectreInputSize } from '../../utils/form'
 
-import { getInputClasses } from '@phcdevworks/spectre-ui';
+import { getInputClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreSelectProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  autocapitalize?: string | null | undefined;
-  autocomplete?: string | undefined;
-  autofocus?: boolean | null | undefined;
-  disabled?: boolean | undefined;
-  form?: string | undefined;
-  fullWidth?: boolean | undefined;
-  id?: string | null | undefined;
-  invalid?: boolean | undefined;
-  loading?: boolean | undefined;
-  name?: string | undefined;
-  pill?: boolean | undefined;
-  required?: boolean | undefined;
-  size?: SpectreInputSize | undefined;
-  spellcheck?: boolean | null | undefined;
-  success?: boolean | undefined;
-  title?: string | null | undefined;
-  value?: string | undefined;
+  ariaLabel?: string | null
+  ariaLabelledBy?: string | null
+  ariaDescribedBy?: string | null
+  autocapitalize?: string | null | undefined
+  autocomplete?: string | undefined
+  autofocus?: boolean | null | undefined
+  disabled?: boolean | undefined
+  form?: string | undefined
+  fullWidth?: boolean | undefined
+  id?: string | null | undefined
+  invalid?: boolean | undefined
+  loading?: boolean | undefined
+  name?: string | undefined
+  pill?: boolean | undefined
+  required?: boolean | undefined
+  size?: SpectreInputSize | undefined
+  spellcheck?: boolean | null | undefined
+  success?: boolean | undefined
+  title?: string | null | undefined
+  value?: string | undefined
 }
 
-export class SpectreSelectElement extends SpectreProjectableElement implements SpectreSelectProps {
+export class SpectreSelectElement
+  extends SpectreProjectableElement
+  implements SpectreSelectProps
+{
   static properties = {
     autocomplete: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -43,143 +46,152 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
     required: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
     success: { type: Boolean, reflect: true },
-    value: { type: String },
-  };
+    value: { type: String }
+  }
 
-  autocomplete: string | undefined;
-  disabled: boolean | undefined = false;
-  form: string | undefined;
-  fullWidth: boolean | undefined = false;
-  invalid: boolean | undefined = false;
-  loading: boolean | undefined = false;
-  name: string | undefined;
-  pill: boolean | undefined = false;
-  required: boolean | undefined = false;
-  size: SpectreInputSize | undefined = 'md';
-  success: boolean | undefined = false;
+  autocomplete: string | undefined
+  disabled: boolean | undefined = false
+  form: string | undefined
+  fullWidth: boolean | undefined = false
+  invalid: boolean | undefined = false
+  loading: boolean | undefined = false
+  name: string | undefined
+  pill: boolean | undefined = false
+  required: boolean | undefined = false
+  size: SpectreInputSize | undefined = 'md'
+  success: boolean | undefined = false
 
   override get id(): string {
-    return super.id;
+    return super.id
   }
 
   override set id(value: string | null | undefined) {
-    super.id = value;
+    super.id = value
   }
 
   override get title(): string {
-    return super.title;
+    return super.title
   }
 
   override set title(value: string | null | undefined) {
-    super.title = value;
+    super.title = value
   }
 
   override get autocapitalize(): string {
-    return super.autocapitalize;
+    return super.autocapitalize
   }
 
   override set autocapitalize(value: string | null | undefined) {
-    super.autocapitalize = value;
+    super.autocapitalize = value
   }
 
   override get autofocus(): boolean {
-    return super.autofocus;
+    return super.autofocus
   }
 
   override set autofocus(value: boolean | undefined | null) {
-    super.autofocus = value;
+    super.autofocus = value
   }
 
   override get spellcheck(): boolean {
-    return super.spellcheck;
+    return super.spellcheck
   }
 
   override set spellcheck(value: boolean | null | undefined) {
-    super.spellcheck = value;
+    super.spellcheck = value
   }
 
-  value: string | undefined = '';
+  value: string | undefined = ''
 
   protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-select-native]');
+    return this.querySelector('[data-sp-select-native]')
   }
 
   protected override isInternalNode(node: Node): boolean {
     if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false;
+      return false
     }
 
-    const el = node as Element;
-    return el.hasAttribute('data-sp-select-native');
+    const el = node as Element
+    return el.hasAttribute('data-sp-select-native')
   }
 
-  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+  protected override willUpdate(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
     if (changedProperties.has('disabled') && this.disabled == null) {
-      this.disabled = false;
+      this.disabled = false
     }
 
     if (changedProperties.has('fullWidth') && this.fullWidth == null) {
-      this.fullWidth = false;
+      this.fullWidth = false
     }
 
     if (changedProperties.has('invalid') && this.invalid == null) {
-      this.invalid = false;
+      this.invalid = false
     }
 
     if (changedProperties.has('loading') && this.loading == null) {
-      this.loading = false;
+      this.loading = false
     }
 
     if (changedProperties.has('pill') && this.pill == null) {
-      this.pill = false;
+      this.pill = false
     }
 
     if (changedProperties.has('required') && this.required == null) {
-      this.required = false;
+      this.required = false
     }
 
     if (changedProperties.has('success') && this.success == null) {
-      this.success = false;
+      this.success = false
     }
 
-    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
-      this.size = 'md';
+    if (
+      changedProperties.has('size') &&
+      (this.size == null || !isInputSize(this.size))
+    ) {
+      this.size = 'md'
     }
 
     if (changedProperties.has('value') && this.value == null) {
-      this.value = '';
+      this.value = ''
     }
   }
 
-  protected override updated(changedProperties: Map<PropertyKey, unknown>): void {
-    super.updated(changedProperties);
+  protected override updated(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    super.updated(changedProperties)
 
-    const nativeSelect = this.getContentContainer() as HTMLSelectElement | null;
+    const nativeSelect = this.getContentContainer() as HTMLSelectElement | null
     if (!nativeSelect) {
-      return;
+      return
     }
 
-    const valueChanged = changedProperties.has('value');
-    const oldValue = changedProperties.get('value');
+    const valueChanged = changedProperties.has('value')
+    const oldValue = changedProperties.get('value')
 
     if (
       valueChanged &&
       this.value !== undefined &&
-      (this.value !== '' || oldValue !== undefined || this.hasAttribute('value'))
+      (this.value !== '' ||
+        oldValue !== undefined ||
+        this.hasAttribute('value'))
     ) {
       if (nativeSelect.value !== this.value) {
-        nativeSelect.value = this.value;
+        nativeSelect.value = this.value
       }
     }
 
     if (this.value === '' && !this.hasAttribute('value')) {
-      const nativeValue = nativeSelect.value ?? '';
+      const nativeValue = nativeSelect.value ?? ''
       if (nativeValue !== '' && nativeValue !== this.value) {
         this.updateComplete.then(() => {
           if (this.value === '' && !this.hasAttribute('value')) {
-            this.value = nativeValue;
+            this.value = nativeValue
           }
-        });
+        })
       }
     }
   }
@@ -197,30 +209,26 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
           ? 'error'
           : this.success
             ? 'success'
-            : 'default',
-    });
-  }
-
-  private get isDisabled(): boolean {
-    return (this.disabled ?? false) || (this.loading ?? false);
+            : 'default'
+    })
   }
 
   private handleInput(event: Event): void {
-    const select = event.currentTarget as HTMLSelectElement;
-    this.value = select.value;
+    const select = event.currentTarget as HTMLSelectElement
+    this.value = select.value
   }
 
   private handleChange(event: Event): void {
-    const select = event.currentTarget as HTMLSelectElement;
-    this.value = select.value;
+    const select = event.currentTarget as HTMLSelectElement
+    this.value = select.value
   }
 
   override focus(options?: FocusOptions): void {
-    (this.getContentContainer() as HTMLSelectElement | null)?.focus(options);
+    ;(this.getContentContainer() as HTMLSelectElement | null)?.focus(options)
   }
 
   override blur(): void {
-    (this.getContentContainer() as HTMLSelectElement | null)?.blur();
+    ;(this.getContentContainer() as HTMLSelectElement | null)?.blur()
   }
 
   override render() {
@@ -247,17 +255,19 @@ export class SpectreSelectElement extends SpectreProjectableElement implements S
       @input="${this.handleInput}"
     >
       ${this.hasProjectedContent ? this.projectedContent : nothing}
-    </select>`;
+    </select>`
   }
 }
 
-export function defineSpectreSelect(tagName = 'sp-select'): typeof SpectreSelectElement {
-  const existingElement = customElements.get(tagName);
+export function defineSpectreSelect(
+  tagName = 'sp-select'
+): typeof SpectreSelectElement {
+  const existingElement = customElements.get(tagName)
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreSelectElement;
+    return existingElement as unknown as typeof SpectreSelectElement
   }
 
-  customElements.define(tagName, SpectreSelectElement);
-  return SpectreSelectElement;
+  customElements.define(tagName, SpectreSelectElement)
+  return SpectreSelectElement
 }

@@ -164,6 +164,7 @@
     "build": "tsup --config tsup.config.ts",
     "clean": "rm -rf dist coverage",
     "dev": "tsup --config tsup.config.ts --watch",
+    "verify:app": "vite",
     "typecheck": "tsc --noEmit",
     "release:propose": "node --experimental-strip-types scripts/propose-version.ts",
     "lint": "eslint .",
@@ -191,6 +192,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@phcdevworks/spectre-manifest": "^1.0.0",
+    "@playwright/test": "^1.61.1",
     "@types/node": "^26.0.1",
     "@typescript-eslint/eslint-plugin": "^8.62.0",
     "@typescript-eslint/parser": "^8.62.0",
