@@ -22,7 +22,7 @@ describe('sp-fieldset', () => {
     const legend = element.querySelector('legend');
 
     expect(fieldset).not.toBeNull();
-    expect(legend?.textContent).toBe('Contact preferences');
+    expect(legend?.textContent?.trim()).toBe('Contact preferences');
     expect(legend?.className).toContain('sp-label');
     expect(fieldset?.textContent).toContain('Email updates');
   });

@@ -3,6 +3,8 @@
 //   - no hardcoded hex colors or spacing values
 //   - no local CSS custom property redefinitions matching Spectre naming
 //   - no Shadow DOM without explicit approval in components.contract.json
+//   - no class-mapping getter duplicated across 3+ components (centralize in
+//     src/utils/ instead)
 // Run via: npm run check:invariants
 
 import { readFileSync, readdirSync, statSync } from 'node:fs'
@@ -86,6 +88,48 @@ function tagForFile(abs: string): string | null {
 }
 
 const files = collectTsFiles(srcDir)
+
+// Cross-file duplication check: a private getter with the exact same body,
+// repeated across 3+ component files, signals logic that belongs in
+// src/utils/ instead of being copy-pasted per component.
+const DUPLICATION_THRESHOLD = 3
+const GETTER_PATTERN =
+  /private get (\w+)\(\): \w+ \{\n((?:.+\n)+?) {2}\}/g
+
+function normalizeBody(body: string): string {
+  return body
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join('\n')
+}
+
+const gettersByBody = new Map<string, { name: string; files: Set<string> }>()
+
+for (const file of files) {
+  const rel = relPath(file)
+  const source = readFileSync(file, 'utf8')
+
+  for (const match of source.matchAll(GETTER_PATTERN)) {
+    const [, name, body] = match
+    if (!name || !body) continue
+    const normalized = normalizeBody(body)
+    const key = `${name}::${normalized}`
+    const entry = gettersByBody.get(key) ?? { name, files: new Set<string>() }
+    entry.files.add(rel)
+    gettersByBody.set(key, entry)
+  }
+}
+
+for (const { name, files: matchingFiles } of gettersByBody.values()) {
+  if (matchingFiles.size >= DUPLICATION_THRESHOLD) {
+    fail(
+      [...matchingFiles][0] ?? 'unknown',
+      0,
+      `getter "${name}" is duplicated identically across ${matchingFiles.size} files (${[...matchingFiles].join(', ')}) — centralize in src/utils/ instead`,
+    )
+  }
+}
 
 for (const file of files) {
   const rel = relPath(file)

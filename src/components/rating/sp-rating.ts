@@ -1,81 +1,93 @@
-import { html, nothing } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { html, nothing } from 'lit'
+import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreBaseElement } from '../../utils/base';
-import { isInputSize, normalizeInt, type SpectreInputSize } from '../../utils/form';
+import { SpectreBaseElement } from '../../utils/base'
+import {
+  isInputSize,
+  normalizeInt,
+  type SpectreInputSize
+} from '../../utils/form'
 
 import {
   getRatingClasses,
   getRatingStarsClasses,
   getRatingStarClasses,
   getRatingTextClasses,
-  type RatingSize,
-} from '@phcdevworks/spectre-ui';
+  type RatingSize
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreRatingProps {
-  ariaLabel?: string | null;
-  ariaLabelledBy?: string | null;
-  ariaDescribedBy?: string | null;
-  disabled?: boolean | undefined;
-  id?: string | null | undefined;
-  label?: string | undefined;
-  loading?: boolean | undefined;
-  max?: number | undefined;
-  size?: SpectreInputSize | undefined;
-  title?: string | null | undefined;
-  value?: number | undefined;
+  ariaLabel?: string | null
+  ariaLabelledBy?: string | null
+  ariaDescribedBy?: string | null
+  disabled?: boolean | undefined
+  id?: string | null | undefined
+  label?: string | undefined
+  loading?: boolean | undefined
+  max?: number | undefined
+  size?: SpectreInputSize | undefined
+  title?: string | null | undefined
+  value?: number | undefined
 }
 
-export class SpectreRatingElement extends SpectreBaseElement implements SpectreRatingProps {
+export class SpectreRatingElement
+  extends SpectreBaseElement
+  implements SpectreRatingProps
+{
   static properties = {
     disabled: { type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
     max: { type: Number, reflect: true },
     size: { type: String, reflect: true },
-    value: { type: Number, reflect: true },
-  };
+    value: { type: Number, reflect: true }
+  }
 
-  disabled: boolean | undefined = false;
-  label: string | undefined;
-  loading: boolean | undefined = false;
-  max: number | undefined = 5;
-  size: SpectreInputSize | undefined = 'md';
-  value: number | undefined = 0;
+  disabled: boolean | undefined = false
+  label: string | undefined
+  loading: boolean | undefined = false
+  max: number | undefined = 5
+  size: SpectreInputSize | undefined = 'md'
+  value: number | undefined = 0
 
   override get id(): string {
-    return super.id;
+    return super.id
   }
 
   override set id(value: string | null | undefined) {
-    super.id = value;
+    super.id = value
   }
 
   override get title(): string {
-    return super.title;
+    return super.title
   }
 
   override set title(value: string | null | undefined) {
-    super.title = value;
+    super.title = value
   }
 
-  protected override willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
+  protected override willUpdate(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
     if (changedProperties.has('disabled') && this.disabled == null) {
-      this.disabled = false;
+      this.disabled = false
     }
     if (changedProperties.has('loading') && this.loading == null) {
-      this.loading = false;
+      this.loading = false
     }
-    if (changedProperties.has('size') && (this.size == null || !isInputSize(this.size))) {
-      this.size = 'md';
+    if (
+      changedProperties.has('size') &&
+      (this.size == null || !isInputSize(this.size))
+    ) {
+      this.size = 'md'
     }
     if (changedProperties.has('max')) {
-      this.max = normalizeInt(this.max, 5, 1) ?? 5;
+      this.max = normalizeInt(this.max, 5, 1) ?? 5
     }
     if (changedProperties.has('value')) {
-      const safeMax = this.max ?? 5;
-      const normalized = normalizeInt(this.value, 0, 0);
-      this.value = normalized == null ? 0 : Math.min(normalized, safeMax);
+      const safeMax = this.max ?? 5
+      const normalized = normalizeInt(this.value, 0, 0)
+      this.value = normalized == null ? 0 : Math.min(normalized, safeMax)
     }
   }
 
@@ -83,38 +95,38 @@ export class SpectreRatingElement extends SpectreBaseElement implements SpectreR
     return getRatingClasses({
       disabled: this.isDisabled,
       loading: this.loading ?? false,
-      size: this.size as RatingSize,
-    });
-  }
-
-  private get isDisabled(): boolean {
-    return (this.disabled ?? false) || (this.loading ?? false);
+      size: this.size as RatingSize
+    })
   }
 
   private get effectiveMax(): number {
-    return this.max ?? 5;
+    return this.max ?? 5
   }
 
   private get effectiveValue(): number {
-    return this.value ?? 0;
+    return this.value ?? 0
   }
 
   private get computedAriaLabel(): string {
-    const base = this.forwardedAriaLabel;
-    if (base) return base;
-    return `Rating: ${this.effectiveValue} out of ${this.effectiveMax}`;
+    const base = this.forwardedAriaLabel
+    if (base) return base
+    return `Rating: ${this.effectiveValue} out of ${this.effectiveMax}`
   }
 
   private renderStars() {
-    const stars = [];
+    const stars = []
     for (let i = 1; i <= this.effectiveMax; i++) {
-      stars.push(html`<span class="${getRatingStarClasses(i <= this.effectiveValue)}"></span>`);
+      stars.push(
+        html`<span
+          class="${getRatingStarClasses(i <= this.effectiveValue)}"
+        ></span>`
+      )
     }
-    return stars;
+    return stars
   }
 
   override render() {
-    const trimmedLabel = this.label?.trim();
+    const trimmedLabel = this.label?.trim()
 
     return html`<div
       aria-busy="${this.loading ? 'true' : 'false'}"
@@ -128,20 +140,27 @@ export class SpectreRatingElement extends SpectreBaseElement implements SpectreR
       title="${ifDefined(this.title || undefined)}"
     >
       <div class="${getRatingStarsClasses()}">${this.renderStars()}</div>
-      ${trimmedLabel
-        ? html`<span class="${getRatingTextClasses({ disabled: this.isDisabled })}">${trimmedLabel}</span>`
-        : nothing}
-    </div>`;
+      ${
+        trimmedLabel
+          ? html`<span
+              class="${getRatingTextClasses({ disabled: this.isDisabled })}"
+              >${trimmedLabel}</span
+            >`
+          : nothing
+      }
+    </div>`
   }
 }
 
-export function defineSpectreRating(tagName = 'sp-rating'): typeof SpectreRatingElement {
-  const existingElement = customElements.get(tagName);
+export function defineSpectreRating(
+  tagName = 'sp-rating'
+): typeof SpectreRatingElement {
+  const existingElement = customElements.get(tagName)
 
   if (existingElement) {
-    return existingElement as unknown as typeof SpectreRatingElement;
+    return existingElement as unknown as typeof SpectreRatingElement
   }
 
-  customElements.define(tagName, SpectreRatingElement);
-  return SpectreRatingElement;
+  customElements.define(tagName, SpectreRatingElement)
+  return SpectreRatingElement
 }
