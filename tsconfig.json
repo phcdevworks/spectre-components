@@ -27,6 +27,7 @@
     "vitest.config.ts",
     "tsup.config.ts",
     "eslint.config.ts",
+    "playwright.config.ts",
     "verification_app.ts"
   ],
   "exclude": ["node_modules", "dist"]
