@@ -278,18 +278,21 @@ below.
       to `sp-form-label` — called out explicitly in `CHANGELOG.md` since it's
       visible in the DOM, even though it was never a supported styling hook.
 
-- [ ] `sp-select`, `sp-textarea` — **deferred, not a silent gap-fill.**
-      `getSelectClasses`/`getTextareaClasses` only support `{disabled,
-      focused}`, unlike `getInputClasses` (which these two currently use)
-      supporting `size`/`fullWidth`/`pill`/`invalid`/`success`/`loading` —
-      all of which `sp-select`/`sp-textarea`'s own public properties
-      actually drive today. Switching as originally planned would silently
-      drop that functionality, not just swap styling tokens. Filed as an
-      upstream request in `project-design/spectre-ui/TODO.md` Phase 5 P0
-      (added 2026-06-29) asking whether `@phcdevworks/spectre-ui` should
-      expand these two recipes to option-parity with `getInputClasses`, or
-      whether the minimal option set is intentional. Revisit once that's
-      decided — do not switch unilaterally either way.
+- [ ] `sp-select`, `sp-textarea` — **decision returned 2026-06-30, still not
+      switchable.** `@phcdevworks/spectre-ui@2.6.0`'s Phase 5 P0 added
+      `size`/`fullWidth`/`pill` to `getSelectClasses`/`getTextareaClasses`
+      (matching `getInputClasses`'s structural options), but deliberately
+      left `invalid`/`success`/`loading` out — `component.select`/
+      `component.textarea` have no color token roles for those states in
+      `@phcdevworks/spectre-tokens@3.2.0` (checked the published dist CSS
+      directly), unlike `component.input`'s dedicated error/success role
+      pair. That's now filed as `spectre-tokens` Phase 8 (not started).
+      `sp-select`/`sp-textarea`'s `invalid`/`success`/`loading` properties
+      still have real behavior today, so **keep calling
+      `getInputClasses()`** here, unchanged — switching now would still
+      drop those three states. Revisit only after `spectre-tokens` Phase 8
+      publishes and `spectre-ui` adds matching options to
+      `getSelectClasses`/`getTextareaClasses`.
 
 ### P1: Components Present in spectre-ui-astro but Missing Here
 
