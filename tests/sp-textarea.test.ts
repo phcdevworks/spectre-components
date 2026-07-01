@@ -25,10 +25,10 @@ describe('sp-textarea', () => {
     const textarea = element.querySelector('textarea');
 
     expect(textarea).not.toBeNull();
-    expect(textarea?.className).toContain('sp-input');
-    expect(textarea?.className).toContain('sp-input--md');
-    expect(textarea?.className).toContain('sp-input--full');
-    expect(textarea?.className).toContain('sp-input--pill');
+    expect(textarea?.className).toContain('sp-textarea');
+    expect(textarea?.className).toContain('sp-textarea--md');
+    expect(textarea?.className).toContain('sp-textarea--full');
+    expect(textarea?.className).toContain('sp-textarea--pill');
     expect(textarea?.getAttribute('placeholder')).toBe('Add more detail');
     expect(textarea?.getAttribute('rows')).toBe('4');
     expect(textarea?.getAttribute('aria-invalid')).toBeNull();
@@ -52,7 +52,7 @@ describe('sp-textarea', () => {
     expect(textarea?.readOnly).toBe(true);
     expect(textarea?.required).toBe(true);
     expect(textarea?.getAttribute('name')).toBe('notes');
-    expect(textarea?.className).toContain('sp-input--disabled');
+    expect(textarea?.className).toContain('sp-textarea--disabled');
 
     element.disabled = false;
     element.readonly = false;
@@ -63,7 +63,7 @@ describe('sp-textarea', () => {
     expect(textarea?.disabled).toBe(false);
     expect(textarea?.readOnly).toBe(false);
     expect(textarea?.required).toBe(false);
-    expect(textarea?.className).not.toContain('sp-input--disabled');
+    expect(textarea?.className).not.toContain('sp-textarea--disabled');
   });
 
   it('applies invalid semantics without overriding forwarded labeling', async () => {
@@ -80,7 +80,7 @@ describe('sp-textarea', () => {
 
     expect(textarea?.getAttribute('aria-invalid')).toBe('true');
     expect(textarea?.getAttribute('aria-label')).toBe('Project summary');
-    expect(textarea?.className).toContain('sp-input--error');
+    expect(textarea?.className).toContain('sp-textarea--invalid');
   });
 
   it('supports initial value from attribute and property updates', async () => {
@@ -287,8 +287,8 @@ describe('sp-textarea', () => {
     await element.updateComplete;
 
     let textarea = element.querySelector('textarea');
-    expect(textarea?.className).toContain('sp-input--sm');
-    expect(textarea?.className).toContain('sp-input--loading');
+    expect(textarea?.className).toContain('sp-textarea--sm');
+    expect(textarea?.className).toContain('sp-textarea--loading');
     expect(textarea?.getAttribute('aria-busy')).toBe('true');
 
     element.loading = false;
@@ -297,8 +297,8 @@ describe('sp-textarea', () => {
     await element.updateComplete;
 
     textarea = element.querySelector('textarea');
-    expect(textarea?.className).toContain('sp-input--lg');
-    expect(textarea?.className).toContain('sp-input--success');
+    expect(textarea?.className).toContain('sp-textarea--lg');
+    expect(textarea?.className).toContain('sp-textarea--success');
     expect(textarea?.getAttribute('aria-busy')).toBe('false');
   });
 

@@ -9,7 +9,7 @@ import {
   normalizeInt
 } from '../../utils/form'
 
-import { getInputClasses } from '@phcdevworks/spectre-ui'
+import { getTextareaClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreTextareaProps {
   ariaLabel?: string | null
@@ -192,19 +192,13 @@ export class SpectreTextareaElement
   }
 
   private get textareaClasses(): string {
-    return getInputClasses({
+    return getTextareaClasses({
       fullWidth: this.fullWidth ?? false,
       pill: this.pill ?? false,
       size: this.size as SpectreInputSize,
-      state: this.isDisabled
-        ? this.disabled
-          ? 'disabled'
-          : 'loading'
-        : this.invalid
-          ? 'error'
-          : this.success
-            ? 'success'
-            : 'default'
+      disabled: this.disabled ?? false,
+      loading: this.loading ?? false,
+      state: this.invalid ? 'invalid' : this.success ? 'success' : 'default'
     })
   }
 

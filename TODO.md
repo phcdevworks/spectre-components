@@ -250,7 +250,7 @@ both directions. P1 items are not approved for implementation yet — see
 `AGENTS.md` package-boundary approval requirement. P0 is approved and
 partially delivered.
 
-### P0: Recipe Backing Gap on Existing Components — Partially delivered
+### P0: Recipe Backing Gap on Existing Components — Delivered
 
 `sp-checkbox`, `sp-fieldset`, `sp-label`, `sp-radio`, `sp-select`, and
 `sp-textarea` shipped since Phase 1 with no backing recipe in
@@ -278,21 +278,21 @@ below.
       to `sp-form-label` — called out explicitly in `CHANGELOG.md` since it's
       visible in the DOM, even though it was never a supported styling hook.
 
-- [ ] `sp-select`, `sp-textarea` — **decision returned 2026-06-30, still not
-      switchable.** `@phcdevworks/spectre-ui@2.6.0`'s Phase 5 P0 added
-      `size`/`fullWidth`/`pill` to `getSelectClasses`/`getTextareaClasses`
-      (matching `getInputClasses`'s structural options), but deliberately
-      left `invalid`/`success`/`loading` out — `component.select`/
-      `component.textarea` have no color token roles for those states in
-      `@phcdevworks/spectre-tokens@3.2.0` (checked the published dist CSS
-      directly), unlike `component.input`'s dedicated error/success role
-      pair. That's now filed as `spectre-tokens` Phase 8 (not started).
-      `sp-select`/`sp-textarea`'s `invalid`/`success`/`loading` properties
-      still have real behavior today, so **keep calling
-      `getInputClasses()`** here, unchanged — switching now would still
-      drop those three states. Revisit only after `spectre-tokens` Phase 8
-      publishes and `spectre-ui` adds matching options to
-      `getSelectClasses`/`getTextareaClasses`.
+- [x] `sp-select`, `sp-textarea` — switched off the `getInputClasses()`
+      workaround now that `spectre-tokens@3.3.1` shipped
+      `component.select`/`component.textarea` invalid/success color roles and
+      `spectre-ui@2.7.0` added matching `state`/`loading` options to
+      `getSelectClasses`/`getTextareaClasses`. Both components now call their
+      purpose-built recipe with `size`/`fullWidth`/`pill`/`disabled`/`loading`
+      plus `state: invalid | success | default`. Rendered class names change
+      from `sp-input--*` to `sp-select--*`/`sp-textarea--*` — called out in
+      `CHANGELOG.md` since it's visible in the DOM, even though `sp-input--*`
+      was never a supported styling hook on these elements. `disabled` and
+      `loading` are now independent style classes instead of being collapsed
+      into one `state` value (the native `disabled` attribute is unaffected —
+      still driven by the existing `isDisabled` getter). Updated
+      `tests/sp-select.test.ts`/`tests/sp-textarea.test.ts` class assertions
+      to match.
 
 ### P1: Components Present in spectre-ui-astro but Missing Here
 

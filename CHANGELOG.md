@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-07-01
+
+**Release Title:** Phase 6 — Layout and Recipe Alignment
+
+Contract change type: additive
+
 ### Added
 
 - `sp-container` — layout component backed by `getContainerClasses`. Supports
@@ -56,10 +62,6 @@ reflects package releases published to npm.
 
 ### Changed
 
-- Bumped `@phcdevworks/spectre-tokens` to `^3.2.0`, closing dependency drift
-  against the current published `project-design` version. The upstream
-  release was additive only — no source changes required here.
-
 - `sp-fieldset`'s legend now calls the purpose-built `getFieldsetLegendClasses`
   (`.sp-fieldset__legend`, themed via `--sp-fieldset-legend-text`) instead of
   the generic `getInputLabelClasses` (`.sp-label`, themed via
@@ -79,13 +81,24 @@ reflects package releases published to npm.
   but this is called out explicitly since the class name itself is visible
   in the DOM.
 
-- `sp-select` and `sp-textarea` remain on `getInputClasses` for now (not
-  switched to the new `getSelectClasses`/`getTextareaClasses` recipes) —
-  those recipes only support `{disabled, focused}`, not the `size`/
-  `fullWidth`/`pill`/`invalid`/`success`/`loading` options these two
-  components' public properties actually drive. Filed as an upstream
-  request in `@phcdevworks/spectre-ui`'s `TODO.md` (Phase 5 P0) rather than
-  silently dropping that functionality.
+- `sp-select` and `sp-textarea` now call the purpose-built
+  `getSelectClasses`/`getTextareaClasses` recipes instead of borrowing
+  `getInputClasses`, now that `@phcdevworks/spectre-tokens@3.3.1` and
+  `@phcdevworks/spectre-ui@2.7.0` added `invalid`/`success`/`loading` state
+  support to those recipes. `disabled` and `loading` are now forwarded as
+  independent options instead of being collapsed into one `state` value, so
+  each now renders its own modifier class.
+
+  **Rendered class name change**: `sp-select`/`sp-textarea` previously
+  rendered `sp-input--*` modifier classes (e.g. `sp-input--lg`,
+  `sp-input--error`); they now render `sp-select--*`/`sp-textarea--*` (e.g.
+  `sp-select--lg`, `sp-select--invalid`). `sp-input--*` was never a supported
+  public styling hook on these elements, but this is called out explicitly
+  since the class names are visible in the DOM.
+
+- Bumped `@phcdevworks/spectre-tokens` to `^3.3.1` and
+  `@phcdevworks/spectre-ui` to `^2.7.0`, closing dependency drift against the
+  current published `project-design` versions.
 
 ### Testing
 
@@ -121,7 +134,7 @@ reflects package releases published to npm.
 
 ## [1.5.0] - 2026-06-11
 
-**Release Title:** Phase 5 Display Surface Expansion
+**Release Title:** Phase 5 — Display Surface Expansion
 
 Contract change type: additive
 
@@ -162,7 +175,7 @@ Contract change type: additive
 
 ## [1.4.0] - 2026-06-07
 
-**Release Title:** Display Component Expansion and Ecosystem Manifest Gate
+**Release Title:** Phase 4 — Display Component Expansion and Ecosystem Manifest Gate
 
 Contract change type: additive
 
@@ -210,7 +223,7 @@ Contract change type: additive
 
 ## [1.3.0] - 2026-06-04
 
-**Release Title:** Contract Validation and Accessibility Audit Gate
+**Release Title:** Phase 3 — Contract Validation and Accessibility Audit Gate
 
 Contract change type: additive
 
@@ -239,7 +252,7 @@ Contract change type: additive
 
 ## [1.2.0] - 2026-05-23
 
-**Release Title:** Styling Contract Alignment and Export Validation
+**Release Title:** Phase 2 — Styling Contract Alignment and Export Validation
 
 Contract change type: additive
 
@@ -316,7 +329,7 @@ Contract change type: additive
 
 ## [1.1.0] - 2026-05-05
 
-**Release Title:** Foundation API Tightening and Component Documentation
+**Release Title:** Phase 1 — Foundation API Tightening and Component Documentation
 
 Contract change type: additive
 
@@ -356,7 +369,7 @@ Contract change type: additive
 
 ## [1.0.0] - 2026-04-26
 
-**Release Title:** Foundation Stabilization and Package Release
+**Release Title:** Phase 1 — Foundation Stabilization and Package Release
 
 Contract change type: N/A
 
@@ -393,7 +406,7 @@ Contract change type: N/A
 
 ## [0.0.1] - 2026-04-13
 
-**Release Title:** Initial Component Foundations
+**Release Title:** Phase 0 — Initial Component Foundations
 
 Contract change type: N/A
 
@@ -433,7 +446,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/1.5.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/1.6.0...HEAD
+[1.6.0]: https://github.com/phcdevworks/spectre-components/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/phcdevworks/spectre-components/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/phcdevworks/spectre-components/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/phcdevworks/spectre-components/compare/1.2.0...1.3.0
