@@ -23,9 +23,9 @@ describe('sp-select', () => {
     const options = select?.querySelectorAll('option');
 
     expect(select).not.toBeNull();
-    expect(select?.className).toContain('sp-input');
-    expect(select?.className).toContain('sp-input--lg');
-    expect(select?.className).toContain('sp-input--full');
+    expect(select?.className).toContain('sp-select');
+    expect(select?.className).toContain('sp-select--lg');
+    expect(select?.className).toContain('sp-select--full');
     expect(options).toHaveLength(2);
     expect(options?.[0]?.value).toBe('small');
     expect(options?.[1]?.textContent).toBe('Medium');
@@ -85,7 +85,7 @@ describe('sp-select', () => {
     expect(select?.disabled).toBe(true);
     expect(select?.required).toBe(true);
     expect(select?.getAttribute('name')).toBe('size');
-    expect(select?.className).toContain('sp-input--disabled');
+    expect(select?.className).toContain('sp-select--disabled');
 
     element.disabled = false;
     element.required = false;
@@ -94,7 +94,7 @@ describe('sp-select', () => {
     select = element.querySelector('select');
     expect(select?.disabled).toBe(false);
     expect(select?.required).toBe(false);
-    expect(select?.className).not.toContain('sp-input--disabled');
+    expect(select?.className).not.toContain('sp-select--disabled');
   });
 
   it('applies invalid semantics without overriding forwarded labeling', async () => {
@@ -110,7 +110,7 @@ describe('sp-select', () => {
 
     expect(select?.getAttribute('aria-invalid')).toBe('true');
     expect(select?.getAttribute('aria-label')).toBe('Plan');
-    expect(select?.className).toContain('sp-input--error');
+    expect(select?.className).toContain('sp-select--invalid');
   });
 
   it('supports initial value from attribute and property updates', async () => {
@@ -258,7 +258,7 @@ describe('sp-select', () => {
     await element.updateComplete;
 
     let select = element.querySelector('select');
-    expect(select?.className).toContain('sp-input--loading');
+    expect(select?.className).toContain('sp-select--loading');
     expect(select?.getAttribute('aria-busy')).toBe('true');
 
     element.loading = false;
@@ -266,7 +266,7 @@ describe('sp-select', () => {
     await element.updateComplete;
 
     select = element.querySelector('select');
-    expect(select?.className).toContain('sp-input--success');
+    expect(select?.className).toContain('sp-select--success');
     expect(select?.getAttribute('aria-busy')).toBe('false');
   });
 
@@ -281,7 +281,7 @@ describe('sp-select', () => {
     const select = element.querySelector('select');
 
     expect(element.size).toBe('md');
-    expect(select?.className).toContain('sp-input--md');
+    expect(select?.className).toContain('sp-select--md');
   });
 
   it('reflects the pill property and applies the pill class', async () => {
@@ -294,12 +294,12 @@ describe('sp-select', () => {
 
     const select = element.querySelector('select');
     expect(element.hasAttribute('pill')).toBe(true);
-    expect(select?.className).toContain('sp-input--pill');
+    expect(select?.className).toContain('sp-select--pill');
 
     element.pill = false;
     await element.updateComplete;
     expect(element.hasAttribute('pill')).toBe(false);
-    expect(select?.className).not.toContain('sp-input--pill');
+    expect(select?.className).not.toContain('sp-select--pill');
   });
 
   it('forwards the form attribute to the native select', async () => {
