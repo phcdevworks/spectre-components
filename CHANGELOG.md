@@ -8,25 +8,25 @@ reflects package releases published to npm.
 
 ## [1.6.0] - 2026-07-01
 
-**Release Title:** Phase 6 — Layout and Recipe Alignment
+**Release Title:** Phase 6 - Layout and Recipe Alignment
 
 Contract change type: additive
 
 ### Added
 
-- `sp-container` — layout component backed by `getContainerClasses`. Supports
+- `sp-container` - layout component backed by `getContainerClasses`. Supports
   `max-width` (`prose`). Exports `spectreContainerMaxWidths` and
   `SpectreContainerMaxWidth`.
 
-- `sp-grid` — layout component backed by `getGridClasses`. Supports `columns`
+- `sp-grid` - layout component backed by `getGridClasses`. Supports `columns`
   (1/2/3/4/6/12, default `1`) and `gap` (sm/md/lg, default `md`). Exports
   `spectreGridColumns`, `spectreGridGaps`, `SpectreGridColumns`, and
   `SpectreGridGap`.
 
-- `sp-section` — layout wrapper backed by `getSectionClasses`. Renders a
+- `sp-section` - layout wrapper backed by `getSectionClasses`. Renders a
   `<section>` with no additional variant props.
 
-- `sp-stack` — layout component backed by `getStackClasses`. Supports
+- `sp-stack` - layout component backed by `getStackClasses`. Supports
   `direction` (vertical/horizontal, default `vertical`), `basis` (`sidebar`),
   and `align` (center/stretch, default `center`). Exports
   `spectreStackAligns`, `spectreStackBases`, `spectreStackDirections`,
@@ -44,7 +44,7 @@ Contract change type: additive
   `sp-pricing-card`, and `sp-tag` now render `role="group"` on their native
   element whenever an `aria-label` or `aria-labelledby` is forwarded. These
   components wrap a roleless `<div>`/`<span>`, and ARIA forbids `aria-label`/
-  `aria-labelledby` on an element with no role — axe-core's
+  `aria-labelledby` on an element with no role - axe-core's
   `aria-prohibited-attr` rule flagged this as a violation. The role is
   omitted when no label is forwarded, so unlabeled instances are unaffected.
   Found while extending `tests/accessibility.test.ts` coverage (Phase 5 P1).
@@ -70,14 +70,14 @@ Contract change type: additive
 
 - `sp-label` now calls `getLabelClasses` (`.sp-form-label`, themed via
   `--sp-label-*`) instead of `getInputLabelClasses` (`.sp-label`, themed via
-  `--sp-component-input-role-text`) — the same kind of borrowed-recipe
+  `--sp-component-input-role-text`) - the same kind of borrowed-recipe
   situation as `sp-fieldset`'s legend, now that a label-specific recipe
   exists. Added a `required` property, which `getLabelClasses` supports
   (renders `sp-form-label--required`) but the previous recipe did not.
 
   **Rendered class name change**: any external CSS that happened to target
   `sp-fieldset`'s legend or `sp-label`'s native `<label>` via the `.sp-label`
-  class will no longer match — neither was a supported public styling hook,
+  class will no longer match - neither was a supported public styling hook,
   but this is called out explicitly since the class name itself is visible
   in the DOM.
 
@@ -104,7 +104,7 @@ Contract change type: additive
 
 - Phase 5 P1 hardening pass (no other source changes required):
   - Keyboard interaction audit for `sp-select`, `sp-radio`, and `sp-checkbox`
-    confirmed no custom `keydown` handling exists anywhere in the package —
+    confirmed no custom `keydown` handling exists anywhere in the package -
     native browser keyboard semantics (space/enter activation, native radio
     group navigation) pass through untouched. Added tests asserting native
     keydown events are never intercepted or `preventDefault()`-ed, and that
@@ -117,7 +117,7 @@ Contract change type: additive
     Added end-to-end tests submitting through an ancestor `<form>`.
   - Extended `tests/accessibility.test.ts` with axe-core scenarios covering
     populated, empty, and slot-projection states for `sp-badge`, `sp-card`,
-    `sp-icon-box`, `sp-rating`, and `sp-testimonial` — this surfaced the
+    `sp-icon-box`, `sp-rating`, and `sp-testimonial` - this surfaced the
     `role="group"` fix above.
   - Audited `sp-card` and `sp-testimonial` for slotted-content edge cases
     (whitespace-only text, empty slotted elements, nested interactive
@@ -128,32 +128,32 @@ Contract change type: additive
     (`visual-tests/components.visual.spec.ts`) snapshotting all 21 components
     via the existing `verification_app.ts` page. Run with
     `npm run test:visual`; regenerate baselines with
-    `npm run test:visual:update`. Local opt-in only — not wired into
+    `npm run test:visual:update`. Local opt-in only - not wired into
     `npm run check` or CI, since cross-runner font/rendering differences make
     CI-gated pixel diffs a separate decision.
 
 ## [1.5.0] - 2026-06-11
 
-**Release Title:** Phase 5 — Display Surface Expansion
+**Release Title:** Phase 5 - Display Surface Expansion
 
 Contract change type: additive
 
 ### Added
 
-- `sp-alert` — display component backed by `getAlertClasses`. Supports `variant`
+- `sp-alert` - display component backed by `getAlertClasses`. Supports `variant`
   (info/success/warning/danger/neutral), `size` (sm/md/lg), `dismissed`,
   `disabled`, `loading`, and `full-width`. Renders with `role="alert"` and
   `aria-busy` reflecting the loading state. Exports `spectreAlertVariants`,
   `spectreAlertSizes`, `SpectreAlertVariant`, `SpectreAlertSize`, and
   `SpectreAlertProps`.
 
-- `sp-avatar` — display component backed by `getAvatarClasses`. Supports `size`
+- `sp-avatar` - display component backed by `getAvatarClasses`. Supports `size`
   (xs/sm/md/lg/xl), `shape` (circle/square), `interactive`, `disabled`,
   `loading`, `full-width`, and `placeholder`. Reflects the `loading` state to
   `aria-busy`. Exports `spectreAvatarShapes`, `spectreAvatarSizes`,
   `SpectreAvatarShape`, `SpectreAvatarSize`, and `SpectreAvatarProps`.
 
-- `sp-spinner` — loading indicator backed by `getSpinnerClasses`. Supports
+- `sp-spinner` - loading indicator backed by `getSpinnerClasses`. Supports
   `variant` (primary/secondary/success/warning/danger/info/neutral/accent/cta),
   `size` (sm/md/lg), `disabled`, and `loading` (defaults to `true`). Renders
   with `role="status"`, reflects the `loading` state to `aria-busy`, and
@@ -161,21 +161,21 @@ Contract change type: additive
   `spectreSpinnerSizes`, `SpectreSpinnerVariant`, `SpectreSpinnerSize`, and
   `SpectreSpinnerProps`.
 
-- `sp-tag` — display component backed by `getTagClasses`. Supports `variant`
+- `sp-tag` - display component backed by `getTagClasses`. Supports `variant`
   (default/primary/secondary/success/warning/danger/info/neutral/accent/cta/outline/ghost),
   `size` (sm/md/lg), `interactive`, `selected`, `dismissible`, `disabled`,
   `loading`, and `full-width`. Reflects the `loading` state to `aria-busy`.
   Exports `spectreTagVariants`, `spectreTagSizes`, `SpectreTagVariant`,
   `SpectreTagSize`, and `SpectreTagProps`.
 
-- `sp-pricing-card` — display container backed by `getPricingCardClasses`.
+- `sp-pricing-card` - display container backed by `getPricingCardClasses`.
   Supports `featured`, `interactive`, `disabled`, `loading`, and
   `full-height`. Reflects the `loading` state to `aria-busy`. Exports
   `SpectrePricingCardProps`.
 
 ## [1.4.0] - 2026-06-07
 
-**Release Title:** Phase 4 — Display Component Expansion and Ecosystem Manifest Gate
+**Release Title:** Phase 4 - Display Component Expansion and Ecosystem Manifest Gate
 
 Contract change type: additive
 
@@ -185,25 +185,25 @@ Contract change type: additive
   `spectre.manifest.json` at the repo root declares this package's ecosystem
   role, layer, exports, and allowed dependency targets. `check:ecosystem`
   validates it in the check pipeline.
-- `sp-badge` — display component backed by `getBadgeClasses`. Supports `variant`
+- `sp-badge` - display component backed by `getBadgeClasses`. Supports `variant`
   (11 values), `size` (sm/md/lg), `disabled`, `loading`, and `full-width`.
   Exports `spectreBadgeVariants`, `spectreBadgeSizes`, `SpectreBadgeVariant`,
   `SpectreBadgeSize`, and `SpectreBadgeProps`.
-- `sp-card` — display container backed by `getCardClasses`. Supports `variant`
+- `sp-card` - display container backed by `getCardClasses`. Supports `variant`
   (elevated/flat/outline/ghost), `padded`, `full-height`, `interactive`,
   `disabled`, and `loading`. Exports `spectreCardVariants`,
   `SpectreCardVariant`, and `SpectreCardProps`.
-- `sp-icon-box` — display component backed by `getIconBoxClasses`. Supports
+- `sp-icon-box` - display component backed by `getIconBoxClasses`. Supports
   `variant` (11 values), `size` (sm/md/lg), `disabled`, `loading`,
   `interactive`, `pill`, and `full-width`. Exports `spectreIconBoxVariants`,
   `spectreIconBoxSizes`, `SpectreIconBoxVariant`, `SpectreIconBoxSize`, and
   `SpectreIconBoxProps`.
-- `sp-rating` — display component backed by `getRatingClasses`. Renders star
+- `sp-rating` - display component backed by `getRatingClasses`. Renders star
   spans programmatically from `value` and `max` with a `role="img"` container
   and a computed accessible label. Supports `size` (sm/md/lg), `disabled`,
   `loading`, and a `label` text property. Exports `spectreRatingSizes`,
   `SpectreRatingSize`, and `SpectreRatingProps`.
-- `sp-testimonial` — display container backed by `getTestimonialClasses`.
+- `sp-testimonial` - display container backed by `getTestimonialClasses`.
   Supports `variant` (elevated/flat/outline/ghost), `full-height`,
   `interactive`, `disabled`, and `loading`. Exports
   `spectreTestimonialVariants`, `SpectreTestimonialVariant`, and
@@ -223,20 +223,20 @@ Contract change type: additive
 
 ## [1.3.0] - 2026-06-04
 
-**Release Title:** Phase 3 — Contract Validation and Accessibility Audit Gate
+**Release Title:** Phase 3 - Contract Validation and Accessibility Audit Gate
 
 Contract change type: additive
 
 ### Added
 
-- `components.contract.json` — machine-readable manifest anchoring the public
+- `components.contract.json` - machine-readable manifest anchoring the public
   component surface: tags, element classes, entry points, exported value
   symbols, exported types, and per-component rendering contracts (`renderMode`,
   `shadowDomApproved`).
-- `scripts/check-contract.ts` — export-snapshot validator that reads
+- `scripts/check-contract.ts` - export-snapshot validator that reads
   `components.contract.json` and fails if actual dist exports drift from the
   declared contract. Runs as `npm run check:contract`.
-- `scripts/check-invariants.ts` — thin-adapter invariant checker that fails on
+- `scripts/check-invariants.ts` - thin-adapter invariant checker that fails on
   hardcoded hex colors, hardcoded spacing values in template literals, local
   Spectre CSS custom property redefinitions, and Shadow DOM usage without
   explicit approval in the manifest. Runs as `npm run check:invariants`.
@@ -244,7 +244,7 @@ Contract change type: additive
 
 - `axe-core` devDependency added to support runtime ARIA and accessibility
   validation in tests.
-- `tests/accessibility.test.ts` — axe-core audit tests for all eight components
+- `tests/accessibility.test.ts` - axe-core audit tests for all eight components
   (`sp-button`, `sp-input`, `sp-textarea`, `sp-select`, `sp-checkbox`,
   `sp-radio`, `sp-label`, `sp-fieldset`). Covers default, invalid, loading, and
   aria-label/legend scenarios. Runs as part of `npm test` and the full
@@ -252,7 +252,7 @@ Contract change type: additive
 
 ## [1.2.0] - 2026-05-23
 
-**Release Title:** Phase 2 — Styling Contract Alignment and Export Validation
+**Release Title:** Phase 2 - Styling Contract Alignment and Export Validation
 
 Contract change type: additive
 
@@ -262,7 +262,7 @@ Contract change type: additive
   in `@phcdevworks/spectre-ui`.
 - `sp-label`: added `disabled` property to align with updated styling contract
   in `@phcdevworks/spectre-ui`.
-- `scripts/check-exports.ts` — post-build export resolution check that imports
+- `scripts/check-exports.ts` - post-build export resolution check that imports
   each subpath entry point and verifies the expected registration functions and
   element classes are present.
 - `check:exports` npm script wired into `npm run check` after the build step, so
@@ -329,7 +329,7 @@ Contract change type: additive
 
 ## [1.1.0] - 2026-05-05
 
-**Release Title:** Phase 1 — Foundation API Tightening and Component Documentation
+**Release Title:** Phase 1 - Foundation API Tightening and Component Documentation
 
 Contract change type: additive
 
@@ -369,7 +369,7 @@ Contract change type: additive
 
 ## [1.0.0] - 2026-04-26
 
-**Release Title:** Phase 1 — Foundation Stabilization and Package Release
+**Release Title:** Phase 1 - Foundation Stabilization and Package Release
 
 Contract change type: N/A
 
@@ -406,7 +406,7 @@ Contract change type: N/A
 
 ## [0.0.1] - 2026-04-13
 
-**Release Title:** Phase 0 — Initial Component Foundations
+**Release Title:** Phase 0 - Initial Component Foundations
 
 Contract change type: N/A
 
