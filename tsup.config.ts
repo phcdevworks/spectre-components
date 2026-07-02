@@ -26,7 +26,13 @@ export default defineConfig({
     container: 'src/components/container/index.ts',
     grid: 'src/components/grid/index.ts',
     section: 'src/components/section/index.ts',
-    stack: 'src/components/stack/index.ts'
+    stack: 'src/components/stack/index.ts',
+    dropdown: 'src/components/dropdown/index.ts',
+    modal: 'src/components/modal/index.ts',
+    nav: 'src/components/nav/index.ts',
+    sidebar: 'src/components/sidebar/index.ts',
+    toast: 'src/components/toast/index.ts',
+    tooltip: 'src/components/tooltip/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,
