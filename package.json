@@ -188,14 +188,14 @@
   },
   "dependencies": {
     "@phcdevworks/spectre-tokens": "^3.3.1",
-    "@phcdevworks/spectre-ui": "^2.7.0",
+    "@phcdevworks/spectre-ui": "^2.7.1",
     "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@phcdevworks/spectre-manifest": "^1.0.0",
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.0.1",
+    "@types/node": "^26.1.0",
     "@typescript-eslint/eslint-plugin": "^8.62.1",
     "@typescript-eslint/parser": "^8.62.1",
     "axe-core": "^4.12.1",
