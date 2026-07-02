@@ -6,6 +6,47 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `sp-nav` - thin wrapper backed by `getNavClasses`. Supports `bordered`,
+  `sticky`, and `full-width`.
+
+- `sp-sidebar` - off-canvas sidebar backed by `getSidebarClasses`,
+  `getSidebarBackdropClasses`, and `getSidebarToggleClasses`. Renders a toggle
+  button and backdrop, and manages `open` state as native Lit element
+  interactivity (click, backdrop click, `Esc`) instead of a ported script.
+  Reflects open/closed state via `data-sidebar-open` on the host to match the
+  Spectre CSS selector contract. Dispatches `sp-open` and `sp-close`.
+
+- `sp-dropdown` - trigger + menu backed by `getDropdownClasses` and
+  `getDropdownMenuClasses`. Supports `placement`
+  (bottom-start/bottom-end/top-start/top-end, default `bottom-start`) and
+  `full-width`. Projects `slot="trigger"` content into the trigger button and
+  all other children into the menu. Closes on outside click or `Esc` and returns
+  focus to the trigger. Dispatches `sp-open` and `sp-close`.
+
+- `sp-modal` - overlay + dialog backed by `getModalClasses` and
+  `getModalOverlayClasses`. Supports `open` and `full-width`. Implements
+  focus-trap (`Tab`/`Shift+Tab`), `Esc`-to-close, backdrop-click-to-close,
+  initial focus on open, and focus restoration on close. Dispatches `sp-close`.
+
+- `sp-toast` - notification backed by `getToastClasses` and
+  `getToastIconClasses`. Supports `variant` (info/success/warning/danger,
+  default `info`), `dismissed`, `full-width`, and `auto-dismiss` (ms). Exposes
+  imperative `show()`/`dismiss()` methods and dispatches `sp-show` and
+  `sp-dismiss`. Projects `slot="icon"` content into an icon container only when
+  present.
+
+- `sp-tooltip` - hover/focus-triggered tooltip backed by `getTooltipClasses`.
+  Supports `placement` (top/bottom/left/right, default `top`) and `visible`.
+  Shows on trigger `mouseenter`/`focusin` and hides on `mouseleave`/`focusout`.
+  Dispatches `sp-show` and `sp-hide`.
+
+  These six close the remaining component-coverage gap against
+  `@phcdevworks/spectre-ui-astro`, using its `.astro` adapters as the reference
+  for recipe options and markup structure, with interactivity implemented as
+  native Lit element state rather than ported scripts.
+
 ## [1.6.0] - 2026-07-01
 
 **Release Title:** Phase 6 - Layout and Recipe Alignment
@@ -28,15 +69,15 @@ Contract change type: additive
 
 - `sp-stack` - layout component backed by `getStackClasses`. Supports
   `direction` (vertical/horizontal, default `vertical`), `basis` (`sidebar`),
-  and `align` (center/stretch, default `center`). Exports
-  `spectreStackAligns`, `spectreStackBases`, `spectreStackDirections`,
-  `SpectreStackAlign`, `SpectreStackBasis`, and `SpectreStackDirection`.
+  and `align` (center/stretch, default `center`). Exports `spectreStackAligns`,
+  `spectreStackBases`, `spectreStackDirections`, `SpectreStackAlign`,
+  `SpectreStackBasis`, and `SpectreStackDirection`.
 
   These four close part of the component-coverage gap against
-  `@phcdevworks/spectre-ui-astro`, using its `.astro` adapters as the
-  reference for recipe options and markup structure (interactivity, where
-  applicable in later additions, is implemented as native Lit element state
-  rather than ported scripts).
+  `@phcdevworks/spectre-ui-astro`, using its `.astro` adapters as the reference
+  for recipe options and markup structure (interactivity, where applicable in
+  later additions, is implemented as native Lit element state rather than ported
+  scripts).
 
 ### Fixed
 
@@ -45,20 +86,20 @@ Contract change type: additive
   element whenever an `aria-label` or `aria-labelledby` is forwarded. These
   components wrap a roleless `<div>`/`<span>`, and ARIA forbids `aria-label`/
   `aria-labelledby` on an element with no role - axe-core's
-  `aria-prohibited-attr` rule flagged this as a violation. The role is
-  omitted when no label is forwarded, so unlabeled instances are unaffected.
-  Found while extending `tests/accessibility.test.ts` coverage (Phase 5 P1).
+  `aria-prohibited-attr` rule flagged this as a violation. The role is omitted
+  when no label is forwarded, so unlabeled instances are unaffected. Found while
+  extending `tests/accessibility.test.ts` coverage (Phase 5 P1).
 
 - `sp-checkbox` and `sp-radio` indicator spans now call `getCheckboxClasses`/
   `getRadioClasses` from `@phcdevworks/spectre-ui` instead of a hardcoded
-  literal class string. Previously the `--checked`/`--disabled` modifier
-  classes were never applied, so the indicator's visual state never changed
-  on toggle or disable, regardless of the native `<input>`'s actual state.
+  literal class string. Previously the `--checked`/`--disabled` modifier classes
+  were never applied, so the indicator's visual state never changed on toggle or
+  disable, regardless of the native `<input>`'s actual state.
 
-- `sp-fieldset`'s root `<fieldset>` element now calls `getFieldsetClasses`
-  from `@phcdevworks/spectre-ui`. Previously it rendered with no `class`
-  attribute at all, so `@phcdevworks/spectre-ui`'s border/padding styling
-  for `.sp-fieldset` never applied.
+- `sp-fieldset`'s root `<fieldset>` element now calls `getFieldsetClasses` from
+  `@phcdevworks/spectre-ui`. Previously it rendered with no `class` attribute at
+  all, so `@phcdevworks/spectre-ui`'s border/padding styling for `.sp-fieldset`
+  never applied.
 
 ### Changed
 
@@ -70,35 +111,35 @@ Contract change type: additive
 
 - `sp-label` now calls `getLabelClasses` (`.sp-form-label`, themed via
   `--sp-label-*`) instead of `getInputLabelClasses` (`.sp-label`, themed via
-  `--sp-component-input-role-text`) - the same kind of borrowed-recipe
-  situation as `sp-fieldset`'s legend, now that a label-specific recipe
-  exists. Added a `required` property, which `getLabelClasses` supports
-  (renders `sp-form-label--required`) but the previous recipe did not.
+  `--sp-component-input-role-text`) - the same kind of borrowed-recipe situation
+  as `sp-fieldset`'s legend, now that a label-specific recipe exists. Added a
+  `required` property, which `getLabelClasses` supports (renders
+  `sp-form-label--required`) but the previous recipe did not.
 
   **Rendered class name change**: any external CSS that happened to target
   `sp-fieldset`'s legend or `sp-label`'s native `<label>` via the `.sp-label`
-  class will no longer match - neither was a supported public styling hook,
-  but this is called out explicitly since the class name itself is visible
-  in the DOM.
+  class will no longer match - neither was a supported public styling hook, but
+  this is called out explicitly since the class name itself is visible in the
+  DOM.
 
 - `sp-select` and `sp-textarea` now call the purpose-built
   `getSelectClasses`/`getTextareaClasses` recipes instead of borrowing
   `getInputClasses`, now that `@phcdevworks/spectre-tokens@3.3.1` and
   `@phcdevworks/spectre-ui@2.7.0` added `invalid`/`success`/`loading` state
   support to those recipes. `disabled` and `loading` are now forwarded as
-  independent options instead of being collapsed into one `state` value, so
-  each now renders its own modifier class.
+  independent options instead of being collapsed into one `state` value, so each
+  now renders its own modifier class.
 
-  **Rendered class name change**: `sp-select`/`sp-textarea` previously
-  rendered `sp-input--*` modifier classes (e.g. `sp-input--lg`,
-  `sp-input--error`); they now render `sp-select--*`/`sp-textarea--*` (e.g.
-  `sp-select--lg`, `sp-select--invalid`). `sp-input--*` was never a supported
-  public styling hook on these elements, but this is called out explicitly
-  since the class names are visible in the DOM.
+  **Rendered class name change**: `sp-select`/`sp-textarea` previously rendered
+  `sp-input--*` modifier classes (e.g. `sp-input--lg`, `sp-input--error`); they
+  now render `sp-select--*`/`sp-textarea--*` (e.g. `sp-select--lg`,
+  `sp-select--invalid`). `sp-input--*` was never a supported public styling hook
+  on these elements, but this is called out explicitly since the class names are
+  visible in the DOM.
 
-- Bumped `@phcdevworks/spectre-tokens` to `^3.3.1` and
-  `@phcdevworks/spectre-ui` to `^2.7.0`, closing dependency drift against the
-  current published `project-design` versions.
+- Bumped `@phcdevworks/spectre-tokens` to `^3.3.1` and `@phcdevworks/spectre-ui`
+  to `^2.7.0`, closing dependency drift against the current published
+  `project-design` versions.
 
 ### Testing
 
@@ -112,25 +153,24 @@ Contract change type: additive
   - Form-association audit for `sp-input`, `sp-textarea`, `sp-select`,
     `sp-checkbox`, and `sp-radio` confirmed native form participation
     (`FormData`, `checkValidity()`, ancestor `form.checkValidity()`) works
-    correctly without `ElementInternals`/`formAssociated`, since each
-    component renders a real native form control as a light-DOM descendant.
-    Added end-to-end tests submitting through an ancestor `<form>`.
+    correctly without `ElementInternals`/`formAssociated`, since each component
+    renders a real native form control as a light-DOM descendant. Added
+    end-to-end tests submitting through an ancestor `<form>`.
   - Extended `tests/accessibility.test.ts` with axe-core scenarios covering
     populated, empty, and slot-projection states for `sp-badge`, `sp-card`,
     `sp-icon-box`, `sp-rating`, and `sp-testimonial` - this surfaced the
     `role="group"` fix above.
   - Audited `sp-card` and `sp-testimonial` for slotted-content edge cases
-    (whitespace-only text, empty slotted elements, nested interactive
-    elements, long-text overflow). Confirmed `hasMeaningfulContent()` and
+    (whitespace-only text, empty slotted elements, nested interactive elements,
+    long-text overflow). Confirmed `hasMeaningfulContent()` and
     `SpectreProjectableElement` already handle all four correctly; added
     regression tests locking in the behavior.
   - Added Playwright-based visual regression coverage
     (`visual-tests/components.visual.spec.ts`) snapshotting all 21 components
-    via the existing `verification_app.ts` page. Run with
-    `npm run test:visual`; regenerate baselines with
-    `npm run test:visual:update`. Local opt-in only - not wired into
-    `npm run check` or CI, since cross-runner font/rendering differences make
-    CI-gated pixel diffs a separate decision.
+    via the existing `verification_app.ts` page. Run with `npm run test:visual`;
+    regenerate baselines with `npm run test:visual:update`. Local opt-in only -
+    not wired into `npm run check` or CI, since cross-runner font/rendering
+    differences make CI-gated pixel diffs a separate decision.
 
 ## [1.5.0] - 2026-06-11
 
@@ -169,13 +209,14 @@ Contract change type: additive
   `SpectreTagSize`, and `SpectreTagProps`.
 
 - `sp-pricing-card` - display container backed by `getPricingCardClasses`.
-  Supports `featured`, `interactive`, `disabled`, `loading`, and
-  `full-height`. Reflects the `loading` state to `aria-busy`. Exports
+  Supports `featured`, `interactive`, `disabled`, `loading`, and `full-height`.
+  Reflects the `loading` state to `aria-busy`. Exports
   `SpectrePricingCardProps`.
 
 ## [1.4.0] - 2026-06-07
 
-**Release Title:** Phase 4 - Display Component Expansion and Ecosystem Manifest Gate
+**Release Title:** Phase 4 - Display Component Expansion and Ecosystem Manifest
+Gate
 
 Contract change type: additive
 
@@ -329,7 +370,8 @@ Contract change type: additive
 
 ## [1.1.0] - 2026-05-05
 
-**Release Title:** Phase 1 - Foundation API Tightening and Component Documentation
+**Release Title:** Phase 1 - Foundation API Tightening and Component
+Documentation
 
 Contract change type: additive
 

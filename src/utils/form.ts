@@ -257,6 +257,54 @@ export function isStackAlign(value: unknown): value is SpectreStackAlign {
   return (spectreStackAligns as readonly string[]).includes(value as string)
 }
 
+export const spectreDropdownPlacements = [
+  'bottom-start',
+  'bottom-end',
+  'top-start',
+  'top-end'
+] as const
+
+export type SpectreDropdownPlacement =
+  (typeof spectreDropdownPlacements)[number]
+
+export function isDropdownPlacement(
+  value: unknown
+): value is SpectreDropdownPlacement {
+  return (spectreDropdownPlacements as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreToastVariants = [
+  'info',
+  'success',
+  'warning',
+  'danger'
+] as const
+
+export type SpectreToastVariant = (typeof spectreToastVariants)[number]
+
+export function isToastVariant(value: unknown): value is SpectreToastVariant {
+  return (spectreToastVariants as readonly string[]).includes(value as string)
+}
+
+export const spectreTooltipPlacements = [
+  'top',
+  'bottom',
+  'left',
+  'right'
+] as const
+
+export type SpectreTooltipPlacement = (typeof spectreTooltipPlacements)[number]
+
+export function isTooltipPlacement(
+  value: unknown
+): value is SpectreTooltipPlacement {
+  return (spectreTooltipPlacements as readonly string[]).includes(
+    value as string
+  )
+}
+
 export function normalizeInt(
   value: unknown,
   fallback: number | undefined,
