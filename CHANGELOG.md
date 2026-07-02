@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-07-02
+
+**Release Title:** Phase 6 - Interaction Parity
+
+Contract change type: additive
+
 ### Added
 
 - `sp-nav` - thin wrapper backed by `getNavClasses`. Supports `bordered`,
@@ -488,7 +494,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/1.6.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/1.7.0...HEAD
+[1.7.0]: https://github.com/phcdevworks/spectre-components/compare/1.6.0...1.7.0
 [1.6.0]: https://github.com/phcdevworks/spectre-components/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/phcdevworks/spectre-components/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/phcdevworks/spectre-components/compare/1.3.0...1.4.0
