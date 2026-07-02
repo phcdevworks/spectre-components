@@ -49,7 +49,17 @@
         "./avatar",
         "./spinner",
         "./tag",
-        "./pricing-card"
+        "./pricing-card",
+        "./container",
+        "./grid",
+        "./section",
+        "./stack",
+        "./dropdown",
+        "./modal",
+        "./nav",
+        "./sidebar",
+        "./toast",
+        "./tooltip"
       ],
       "dependencies": [
         "@phcdevworks/spectre-tokens",

@@ -149,26 +149,36 @@ rules.
 
 ## Current Components
 
-| Tag              | Element class               | Entry point                                   |
-| ---------------- | --------------------------- | --------------------------------------------- |
-| `sp-button`      | `SpectreButtonElement`      | `@phcdevworks/spectre-components/button`      |
-| `sp-input`       | `SpectreInputElement`       | `@phcdevworks/spectre-components/input`       |
-| `sp-textarea`    | `SpectreTextareaElement`    | `@phcdevworks/spectre-components/textarea`    |
-| `sp-select`      | `SpectreSelectElement`      | `@phcdevworks/spectre-components/select`      |
-| `sp-checkbox`    | `SpectreCheckboxElement`    | `@phcdevworks/spectre-components/checkbox`    |
-| `sp-radio`       | `SpectreRadioElement`       | `@phcdevworks/spectre-components/radio`       |
-| `sp-label`       | `SpectreLabelElement`       | `@phcdevworks/spectre-components/label`       |
-| `sp-fieldset`    | `SpectreFieldsetElement`    | `@phcdevworks/spectre-components/fieldset`    |
-| `sp-badge`       | `SpectreBadgeElement`       | `@phcdevworks/spectre-components/badge`       |
-| `sp-card`        | `SpectreCardElement`        | `@phcdevworks/spectre-components/card`        |
-| `sp-icon-box`    | `SpectreIconBoxElement`     | `@phcdevworks/spectre-components/icon-box`    |
-| `sp-rating`      | `SpectreRatingElement`      | `@phcdevworks/spectre-components/rating`      |
-| `sp-testimonial` | `SpectreTestimonialElement` | `@phcdevworks/spectre-components/testimonial` |
-| `sp-alert`       | `SpectreAlertElement`       | `@phcdevworks/spectre-components/alert`       |
-| `sp-avatar`      | `SpectreAvatarElement`      | `@phcdevworks/spectre-components/avatar`      |
-| `sp-spinner`     | `SpectreSpinnerElement`     | `@phcdevworks/spectre-components/spinner`     |
-| `sp-tag`         | `SpectreTagElement`         | `@phcdevworks/spectre-components/tag`         |
-| `sp-pricing-card` | `SpectrePricingCardElement` | `@phcdevworks/spectre-components/pricing-card` |
+| Tag               | Element class                | Entry point                                    |
+| ----------------- | ---------------------------- | ---------------------------------------------- |
+| `sp-button`       | `SpectreButtonElement`       | `@phcdevworks/spectre-components/button`       |
+| `sp-input`        | `SpectreInputElement`        | `@phcdevworks/spectre-components/input`        |
+| `sp-textarea`     | `SpectreTextareaElement`     | `@phcdevworks/spectre-components/textarea`     |
+| `sp-select`       | `SpectreSelectElement`       | `@phcdevworks/spectre-components/select`       |
+| `sp-checkbox`     | `SpectreCheckboxElement`     | `@phcdevworks/spectre-components/checkbox`     |
+| `sp-radio`        | `SpectreRadioElement`        | `@phcdevworks/spectre-components/radio`        |
+| `sp-label`        | `SpectreLabelElement`        | `@phcdevworks/spectre-components/label`        |
+| `sp-fieldset`     | `SpectreFieldsetElement`     | `@phcdevworks/spectre-components/fieldset`     |
+| `sp-badge`        | `SpectreBadgeElement`        | `@phcdevworks/spectre-components/badge`        |
+| `sp-card`         | `SpectreCardElement`         | `@phcdevworks/spectre-components/card`         |
+| `sp-icon-box`     | `SpectreIconBoxElement`      | `@phcdevworks/spectre-components/icon-box`     |
+| `sp-rating`       | `SpectreRatingElement`       | `@phcdevworks/spectre-components/rating`       |
+| `sp-testimonial`  | `SpectreTestimonialElement`  | `@phcdevworks/spectre-components/testimonial`  |
+| `sp-alert`        | `SpectreAlertElement`        | `@phcdevworks/spectre-components/alert`        |
+| `sp-avatar`       | `SpectreAvatarElement`       | `@phcdevworks/spectre-components/avatar`       |
+| `sp-spinner`      | `SpectreSpinnerElement`      | `@phcdevworks/spectre-components/spinner`      |
+| `sp-tag`          | `SpectreTagElement`          | `@phcdevworks/spectre-components/tag`          |
+| `sp-pricing-card` | `SpectrePricingCardElement`  | `@phcdevworks/spectre-components/pricing-card` |
+| `sp-container`    | `SpectreContainerElement`    | `@phcdevworks/spectre-components/container`    |
+| `sp-grid`         | `SpectreGridElement`         | `@phcdevworks/spectre-components/grid`         |
+| `sp-section`      | `SpectreSectionElement`      | `@phcdevworks/spectre-components/section`      |
+| `sp-stack`        | `SpectreStackElement`        | `@phcdevworks/spectre-components/stack`        |
+| `sp-dropdown`     | `SpectreDropdownElement`     | `@phcdevworks/spectre-components/dropdown`     |
+| `sp-modal`        | `SpectreModalElement`        | `@phcdevworks/spectre-components/modal`        |
+| `sp-nav`          | `SpectreNavElement`          | `@phcdevworks/spectre-components/nav`          |
+| `sp-sidebar`      | `SpectreSidebarElement`      | `@phcdevworks/spectre-components/sidebar`      |
+| `sp-toast`        | `SpectreToastElement`        | `@phcdevworks/spectre-components/toast`        |
+| `sp-tooltip`      | `SpectreTooltipElement`      | `@phcdevworks/spectre-components/tooltip`      |
 
 ## Core Component Contract
 

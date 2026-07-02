@@ -244,9 +244,8 @@ boundaries in `AGENTS.md`.
 ## Phase 6 — Cross-Repo Parity Gaps (spectre-ui-astro)
 
 Audit against `@phcdevworks/spectre-ui-astro` (the L3b sibling) found gaps in
-both directions. P1 items are not approved for implementation yet — see
-`AGENTS.md` package-boundary approval requirement. P0 is approved and partially
-delivered.
+both directions. Both P0 and P1 are approved and delivered — see `AGENTS.md`
+package-boundary approval requirement.
 
 ### P0: Recipe Backing Gap on Existing Components — Delivered
 
@@ -343,6 +342,11 @@ Each item was implemented with explicit approval from Bradley Potts per
    regression testing (Playwright, local opt-in) delivered. Component
    preview/docs harness closed as already satisfied by the existing verification
    app.
+9. Phase 6 P0 — done. Fixed the recipe-backing gap on sp-checkbox,
+   sp-fieldset, sp-label, sp-radio, sp-select, and sp-textarea.
+10. Phase 6 P1 — done. Added sp-dropdown, sp-modal, sp-nav, sp-sidebar,
+    sp-toast, and sp-tooltip, closing full component-coverage parity with
+    spectre-ui-astro.
 
 ---
 
