@@ -152,6 +152,36 @@
       "types": "./dist/stack.d.ts",
       "import": "./dist/stack.js",
       "require": "./dist/stack.cjs"
+    },
+    "./dropdown": {
+      "types": "./dist/dropdown.d.ts",
+      "import": "./dist/dropdown.js",
+      "require": "./dist/dropdown.cjs"
+    },
+    "./modal": {
+      "types": "./dist/modal.d.ts",
+      "import": "./dist/modal.js",
+      "require": "./dist/modal.cjs"
+    },
+    "./nav": {
+      "types": "./dist/nav.d.ts",
+      "import": "./dist/nav.js",
+      "require": "./dist/nav.cjs"
+    },
+    "./sidebar": {
+      "types": "./dist/sidebar.d.ts",
+      "import": "./dist/sidebar.js",
+      "require": "./dist/sidebar.cjs"
+    },
+    "./toast": {
+      "types": "./dist/toast.d.ts",
+      "import": "./dist/toast.js",
+      "require": "./dist/toast.cjs"
+    },
+    "./tooltip": {
+      "types": "./dist/tooltip.d.ts",
+      "import": "./dist/tooltip.js",
+      "require": "./dist/tooltip.cjs"
     }
   },
   "files": [

@@ -6,35 +6,47 @@ import {
   defineSpectreButton,
   defineSpectreCard,
   defineSpectreCheckbox,
+  defineSpectreDropdown,
   defineSpectreFieldset,
   defineSpectreIconBox,
   defineSpectreInput,
   defineSpectreLabel,
+  defineSpectreModal,
+  defineSpectreNav,
   defineSpectreRadio,
   defineSpectreRating,
   defineSpectreSelect,
+  defineSpectreSidebar,
   defineSpectreTestimonial,
   defineSpectreTextarea,
+  defineSpectreToast,
+  defineSpectreTooltip,
   SpectreBadgeElement,
   SpectreButtonElement,
   SpectreCardElement,
   SpectreCheckboxElement,
+  SpectreDropdownElement,
   SpectreFieldsetElement,
   SpectreIconBoxElement,
   SpectreInputElement,
   SpectreLabelElement,
+  SpectreModalElement,
+  SpectreNavElement,
   SpectreRadioElement,
   SpectreRatingElement,
   SpectreSelectElement,
+  SpectreSidebarElement,
   SpectreTestimonialElement,
   SpectreTextareaElement,
+  SpectreToastElement,
+  SpectreTooltipElement
 } from '../src'
 
 const AXE_OPTIONS: axe.RunOptions = {
   rules: {
     'color-contrast': { enabled: false },
-    'region': { enabled: false },
-  },
+    region: { enabled: false }
+  }
 }
 
 async function audit(el: HTMLElement): Promise<axe.Result[]> {
@@ -52,15 +64,21 @@ describe('accessibility audit', () => {
     defineSpectreButton()
     defineSpectreCard()
     defineSpectreCheckbox()
+    defineSpectreDropdown()
     defineSpectreFieldset()
     defineSpectreIconBox()
     defineSpectreInput()
     defineSpectreLabel()
+    defineSpectreModal()
+    defineSpectreNav()
     defineSpectreRadio()
     defineSpectreRating()
     defineSpectreSelect()
+    defineSpectreSidebar()
     defineSpectreTestimonial()
     defineSpectreTextarea()
+    defineSpectreToast()
+    defineSpectreTooltip()
   })
 
   afterEach(() => {
@@ -270,23 +288,89 @@ describe('accessibility audit', () => {
   })
 
   it('sp-testimonial has no violations with populated quote content', async () => {
-    const el = document.createElement('sp-testimonial') as SpectreTestimonialElement
-    el.innerHTML = '<blockquote>Great product.</blockquote><cite>Jane Doe</cite>'
+    const el = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    el.innerHTML =
+      '<blockquote>Great product.</blockquote><cite>Jane Doe</cite>'
     const violations = await audit(el)
     expect(violations).toEqual([])
   })
 
   it('sp-testimonial has no violations when empty with an aria-label', async () => {
-    const el = document.createElement('sp-testimonial') as SpectreTestimonialElement
+    const el = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
     el.setAttribute('aria-label', 'Empty testimonial placeholder')
     const violations = await audit(el)
     expect(violations).toEqual([])
   })
 
   it('sp-testimonial has no violations with slotted nested interactive content', async () => {
-    const el = document.createElement('sp-testimonial') as SpectreTestimonialElement
+    const el = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
     el.innerHTML =
       '<blockquote>Great product.</blockquote><a href="/reviews/1">Read full review</a>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-nav has no violations with an aria-label and links', async () => {
+    const el = document.createElement('sp-nav') as SpectreNavElement
+    el.setAttribute('aria-label', 'Primary')
+    el.innerHTML = '<a href="/">Home</a><a href="/about">About</a>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-sidebar has no violations with an aria-label and links', async () => {
+    const el = document.createElement('sp-sidebar') as SpectreSidebarElement
+    el.setAttribute('aria-label', 'Dashboard navigation')
+    el.innerHTML = '<a href="/dashboard">Dashboard</a>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-dropdown has no violations closed', async () => {
+    const el = document.createElement('sp-dropdown') as SpectreDropdownElement
+    el.innerHTML = '<a href="/profile">Profile</a>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-dropdown has no violations open', async () => {
+    const el = document.createElement('sp-dropdown') as SpectreDropdownElement
+    el.open = true
+    el.innerHTML = '<a href="/profile">Profile</a>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-modal has no violations with an aria-label', async () => {
+    const el = document.createElement('sp-modal') as SpectreModalElement
+    el.open = true
+    el.setAttribute('aria-label', 'Confirm deletion')
+    el.innerHTML = '<button type="button">Confirm</button>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-toast has no violations with populated content', async () => {
+    const el = document.createElement('sp-toast') as SpectreToastElement
+    el.textContent = 'Saved successfully'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-tooltip has no violations with trigger and tooltip content', async () => {
+    const el = document.createElement('sp-tooltip') as SpectreTooltipElement
+    const trigger = document.createElement('button')
+    trigger.textContent = 'Info'
+    const body = document.createElement('span')
+    body.setAttribute('slot', 'tooltip')
+    body.textContent = 'More details'
+    el.append(trigger, body)
     const violations = await audit(el)
     expect(violations).toEqual([])
   })

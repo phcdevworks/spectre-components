@@ -147,8 +147,8 @@ prep.
 `@phcdevworks/spectre-ui` already ships recipes for several primitives that have
 no `sp-*` wrapper yet. This phase expands the surface to cover them, deepens
 test coverage on the existing thirteen components, and improves contributor
-tooling. All three sub-phases (P0 new components, P1 hardening, P2 tooling
-and contributor DX) are delivered.
+tooling. All three sub-phases (P0 new components, P1 hardening, P2 tooling and
+contributor DX) are delivered.
 
 ### P0: New Components with Existing Backing Recipes
 
@@ -181,10 +181,10 @@ per `AGENTS.md` before work begins.
 
 - [x] Audit form-association behavior (`formAssociated`, `ElementInternals`,
       validity state reporting) across `sp-input`, `sp-textarea`, `sp-select`,
-      `sp-checkbox`, and `sp-radio`. Native form participation already works
-      via light-DOM native controls — no `ElementInternals` shim needed.
-      Added end-to-end `FormData`/`checkValidity()` tests submitting through
-      an ancestor `<form>`.
+      `sp-checkbox`, and `sp-radio`. Native form participation already works via
+      light-DOM native controls — no `ElementInternals` shim needed. Added
+      end-to-end `FormData`/`checkValidity()` tests submitting through an
+      ancestor `<form>`.
 
 - [x] Extend `tests/accessibility.test.ts` with axe-core scenarios for the five
       Phase 3 display components (`sp-badge`, `sp-card`, `sp-icon-box`,
@@ -195,51 +195,49 @@ per `AGENTS.md` before work begins.
       `sp-avatar`, `sp-pricing-card`, and `sp-tag`; fixed by rendering
       `role="group"` whenever a label is forwarded.
 
-- [x] Audit `sp-card` and `sp-testimonial` for slotted-content edge cases
-      (empty slots, nested interactive elements, long-text overflow).
-      Confirmed `hasMeaningfulContent()` and `SpectreProjectableElement`
-      already handle all four correctly; added regression tests.
+- [x] Audit `sp-card` and `sp-testimonial` for slotted-content edge cases (empty
+      slots, nested interactive elements, long-text overflow). Confirmed
+      `hasMeaningfulContent()` and `SpectreProjectableElement` already handle
+      all four correctly; added regression tests.
 
 ### P2: Tooling and Contributor DX
 
 - [x] Extend `scripts/check-invariants.ts` to flag duplicated class-mapping
       logic across components that could be centralized in `src/utils/`.
-      Delivered: a cross-file duplication check fails the gate when an
-      identical private getter body is repeated across 3+ component files
+      Delivered: a cross-file duplication check fails the gate when an identical
+      private getter body is repeated across 3+ component files
       (`DUPLICATION_THRESHOLD`). Paired with this, `isDisabled` and
-      `hasForwardedLabel` were centralized into `SpectreBaseElement`,
-      removing the duplication across every affected component.
+      `hasForwardedLabel` were centralized into `SpectreBaseElement`, removing
+      the duplication across every affected component.
 
 - [x] Evaluate adding visual regression testing (e.g. Playwright snapshot tests
       against `@phcdevworks/spectre-ui` styling) to catch unintended rendering
       drift across releases. Delivered: `visual-tests/components.visual.spec.ts`
       drives the existing `verification_app.ts` page (the same one
-      `playwright.config.ts` already pointed `webServer` at) and snapshots
-      each of its 15 `<section>` groups, covering all 21 components. Run with
+      `playwright.config.ts` already pointed `webServer` at) and snapshots each
+      of its 15 `<section>` groups, covering all 21 components. Run with
       `npm run test:visual`; regenerate baselines with
-      `npm run test:visual:update` after an intentional visual change.
-      Committed baselines live in
-      `visual-tests/components.visual.spec.ts-snapshots/`. Deliberately not
-      wired into `.github/workflows/ci.yml` or `npm run check` — cross-runner
-      font/rendering differences make CI-gated pixel diffs a separate,
-      bigger decision than local opt-in coverage; revisit only if Bradley
-      Potts wants CI enforcement.
+      `npm run test:visual:update` after an intentional visual change. Committed
+      baselines live in `visual-tests/components.visual.spec.ts-snapshots/`.
+      Deliberately not wired into `.github/workflows/ci.yml` or `npm run check`
+      — cross-runner font/rendering differences make CI-gated pixel diffs a
+      separate, bigger decision than local opt-in coverage; revisit only if
+      Bradley Potts wants CI enforcement.
 
 - [x] Evaluate a lightweight component preview/docs harness (e.g. a local
       Storybook-style page) so contributors can visually verify components
-      without a consumer app. Closed as already satisfied:
-      `verification_app.ts` plus `npm run verify:app` (Vite dev server)
-      already renders every component via `defineSpectreComponents()` across
-      multiple states in a real browser, and is now also the page the visual
-      regression suite (above) renders against. A dedicated Storybook-style
-      tool would only be worth the added dependency and maintenance surface
-      if per-prop interactive controls (not just visual verification) become
-      a real need — re-open only if that's explicitly requested.
+      without a consumer app. Closed as already satisfied: `verification_app.ts`
+      plus `npm run verify:app` (Vite dev server) already renders every
+      component via `defineSpectreComponents()` across multiple states in a real
+      browser, and is now also the page the visual regression suite (above)
+      renders against. A dedicated Storybook-style tool would only be worth the
+      added dependency and maintenance surface if per-prop interactive controls
+      (not just visual verification) become a real need — re-open only if that's
+      explicitly requested.
 
-Phase 5 P2 is complete. Any further items in this phase still require
-explicit approval from Bradley Potts before implementation begins, per the
-package boundaries in
-`AGENTS.md`.
+Phase 5 P2 is complete. Any further items in this phase still require explicit
+approval from Bradley Potts before implementation begins, per the package
+boundaries in `AGENTS.md`.
 
 ---
 
@@ -247,35 +245,34 @@ package boundaries in
 
 Audit against `@phcdevworks/spectre-ui-astro` (the L3b sibling) found gaps in
 both directions. P1 items are not approved for implementation yet — see
-`AGENTS.md` package-boundary approval requirement. P0 is approved and
-partially delivered.
+`AGENTS.md` package-boundary approval requirement. P0 is approved and partially
+delivered.
 
 ### P0: Recipe Backing Gap on Existing Components — Delivered
 
 `sp-checkbox`, `sp-fieldset`, `sp-label`, `sp-radio`, `sp-select`, and
 `sp-textarea` shipped since Phase 1 with no backing recipe in
 `@phcdevworks/spectre-ui`, unlike every other component in this package. The
-gate (`@phcdevworks/spectre-tokens` Phase 7 / `@phcdevworks/spectre-ui`
-Phase 4e publishing) cleared in `@phcdevworks/spectre-ui@2.6.0`. Investigation
-found three distinct situations, not one uniform gap — see per-item detail
-below.
+gate (`@phcdevworks/spectre-tokens` Phase 7 / `@phcdevworks/spectre-ui` Phase 4e
+publishing) cleared in `@phcdevworks/spectre-ui@2.6.0`. Investigation found
+three distinct situations, not one uniform gap — see per-item detail below.
 
 - [x] `sp-checkbox`, `sp-radio` — fixed a real bug: the indicator `<span>`
-      hardcoded a literal class string with no `--checked`/`--disabled`
-      modifier ever applied. Now calls `getCheckboxClasses`/`getRadioClasses`.
-      Added indicator-class test coverage (previously untested).
+      hardcoded a literal class string with no `--checked`/`--disabled` modifier
+      ever applied. Now calls `getCheckboxClasses`/`getRadioClasses`. Added
+      indicator-class test coverage (previously untested).
 
 - [x] `sp-fieldset` — fixed a real bug: the root `<fieldset>` had no `class`
-      attribute at all, so `.sp-fieldset` border/padding styling never
-      applied. Now calls `getFieldsetClasses`. Legend switched from the
-      generic `getInputLabelClasses` to the purpose-built
-      `getFieldsetLegendClasses` (`.sp-fieldset__legend`, not `.sp-label`).
+      attribute at all, so `.sp-fieldset` border/padding styling never applied.
+      Now calls `getFieldsetClasses`. Legend switched from the generic
+      `getInputLabelClasses` to the purpose-built `getFieldsetLegendClasses`
+      (`.sp-fieldset__legend`, not `.sp-label`).
 
 - [x] `sp-label` — switched from `getInputLabelClasses` to the purpose-built
       `getLabelClasses` (`.sp-form-label`, not `.sp-label`). Added a new
-      `required` property (`getLabelClasses` supports it; the component
-      didn't expose it before). Rendered class name changes from `sp-label`
-      to `sp-form-label` — called out explicitly in `CHANGELOG.md` since it's
+      `required` property (`getLabelClasses` supports it; the component didn't
+      expose it before). Rendered class name changes from `sp-label` to
+      `sp-form-label` — called out explicitly in `CHANGELOG.md` since it's
       visible in the DOM, even though it was never a supported styling hook.
 
 - [x] `sp-select`, `sp-textarea` — switched off the `getInputClasses()`
@@ -291,40 +288,43 @@ below.
       `loading` are now independent style classes instead of being collapsed
       into one `state` value (the native `disabled` attribute is unaffected —
       still driven by the existing `isDisabled` getter). Updated
-      `tests/sp-select.test.ts`/`tests/sp-textarea.test.ts` class assertions
-      to match.
+      `tests/sp-select.test.ts`/`tests/sp-textarea.test.ts` class assertions to
+      match.
 
 ### P1: Components Present in spectre-ui-astro but Missing Here
 
 `spectre-ui-astro` ships `SpDropdown`, `SpModal`, `SpNav`, `SpSidebar`,
 `SpToast`, and `SpTooltip` on top of recipes that already exist in
-`@phcdevworks/spectre-ui` (Phase 4, delivered v2.9.0-aligned). No Lit
-equivalents exist here yet.
+`@phcdevworks/spectre-ui` (Phase 4, delivered v2.9.0-aligned). All six now have
+Lit equivalents here, implemented as native Lit element interactivity rather
+than ported `.astro` scripts.
 
-- [ ] Evaluate `sp-dropdown` — backing recipes `getDropdownClasses`,
-      `getDropdownMenuClasses`, `getDropdownItemClasses` already published.
+- [x] `sp-dropdown` — backed by `getDropdownClasses`, `getDropdownMenuClasses`.
+      Toggle on trigger click, close on outside click/`Esc` with focus
+      restoration to the trigger, `placement` and `full-width` props.
 
-- [ ] Evaluate `sp-modal` — backing recipes `getModalClasses`,
-      `getModalOverlayClasses` already published. Needs focus-trap and
-      `Esc`-to-close behavior considerations beyond what a thin Astro
-      wrapper provides.
+- [x] `sp-modal` — backed by `getModalClasses`, `getModalOverlayClasses`.
+      Focus-trap (`Tab`/`Shift+Tab`), `Esc`-to-close, backdrop-click-to-close,
+      initial focus on open, focus restoration on close.
 
-- [ ] Evaluate `sp-nav` — backing recipes `getNavClasses`,
-      `getNavLinksClasses`, `getNavLinkClasses` already published.
+- [x] `sp-nav` — backed by `getNavClasses`. Thin wrapper with `bordered`,
+      `sticky`, and `full-width` props.
 
-- [ ] Evaluate `sp-sidebar` — backing recipe `getSidebarClasses` already
-      published.
+- [x] `sp-sidebar` — backed by `getSidebarClasses`, `getSidebarBackdropClasses`,
+      `getSidebarToggleClasses`. Toggle button/backdrop/`Esc` interactivity,
+      `data-sidebar-open` reflected on the host to match the Spectre CSS
+      selector contract.
 
-- [ ] Evaluate `sp-toast` — backing recipes `getToastClasses`,
-      `getToastIconClasses` already published. Likely needs an imperative
-      show/dismiss API, which is a meaningfully different contract from the
-      other display components.
+- [x] `sp-toast` — backed by `getToastClasses`, `getToastIconClasses`.
+      Imperative `show()`/`dismiss()` API plus `auto-dismiss` timer, a
+      meaningfully different contract from the other display components as
+      anticipated.
 
-- [ ] Evaluate `sp-tooltip` — backing recipe `getTooltipClasses` already
-      published. Needs positioning/hover-trigger behavior considerations.
+- [x] `sp-tooltip` — backed by `getTooltipClasses`. Hover/focus-trigger
+      show/hide, `placement` prop.
 
-Each item requires explicit approval from Bradley Potts before implementation
-begins, per `AGENTS.md`.
+Each item was implemented with explicit approval from Bradley Potts per
+`AGENTS.md`.
 
 ---
 
@@ -341,8 +341,8 @@ begins, per `AGENTS.md`.
    `aria-prohibited-attr` violation found across seven display components.
 8. Phase 5 P2 — done. Invariant-check duplication detection and visual
    regression testing (Playwright, local opt-in) delivered. Component
-   preview/docs harness closed as already satisfied by the existing
-   verification app.
+   preview/docs harness closed as already satisfied by the existing verification
+   app.
 
 ---
 

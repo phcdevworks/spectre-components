@@ -856,6 +856,167 @@ Renders a `<div>` flex stack backed by the Spectre stack recipe.
 
 **Internal target** — `[data-sp-stack-native]` selects the native `<div>`.
 
+---
+
+### sp-nav
+
+Renders a `<nav>` backed by the Spectre nav recipe.
+
+**Attributes**
+
+| Attribute                 | Type    | Default | Description                     |
+| ------------------------- | ------- | ------- | ------------------------------- |
+| `bordered`                | boolean | `false` | Adds a bottom border            |
+| `sticky`                  | boolean | `false` | Sticks the nav to the viewport  |
+| `full-width`              | boolean | `false` | Spans full container width      |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<nav>` |
+
+**Content projection** — children become the nav content (links, brand mark,
+etc.).
+
+**Internal target** — `[data-sp-nav-native]` selects the native `<nav>`.
+
+---
+
+### sp-sidebar
+
+Renders an off-canvas `<aside>` with a toggle button and backdrop, backed by the
+Spectre sidebar recipe.
+
+**Attributes**
+
+| Attribute                 | Type    | Default          | Description                            |
+| ------------------------- | ------- | ---------------- | -------------------------------------- |
+| `bordered`                | boolean | `false`          | Adds a trailing border                 |
+| `open`                    | boolean | `false`          | Open/closed off-canvas state           |
+| `toggle-label`            | string  | `Toggle sidebar` | Accessible label for the toggle button |
+| `id` / `title` / `aria-*` | string  | —                | Forwarded to the native `<aside>`      |
+
+**Content projection** — children become the sidebar content (links, navigation
+groups, etc.).
+
+**Behavior** — clicking the toggle button opens/closes the sidebar; clicking the
+backdrop or pressing `Esc` closes it. Toggling sets `data-sidebar-open`
+(`"true"`/`"false"`) on the host element, which the Spectre CSS uses to show or
+hide the off-canvas panel and backdrop.
+
+**Events** — `sp-open` and `sp-close`, both bubbling `CustomEvent`s with no
+`detail`.
+
+**Internal target** — `[data-sp-sidebar-native]` selects the native `<aside>`.
+
+---
+
+### sp-dropdown
+
+Renders a trigger button and a menu container, backed by the Spectre dropdown
+recipes.
+
+**Attributes**
+
+| Attribute                 | Type                                                 | Default        | Description                                                                   |
+| ------------------------- | ---------------------------------------------------- | -------------- | ----------------------------------------------------------------------------- |
+| `open`                    | boolean                                              | `false`        | Open/closed menu state                                                        |
+| `placement`               | `bottom-start \| bottom-end \| top-start \| top-end` | `bottom-start` | Menu position relative to trigger                                             |
+| `full-width`              | boolean                                              | `false`        | Spans full container width                                                    |
+| `trigger-label`           | string                                               | `Toggle menu`  | Visible/accessible trigger text when no `slot="trigger"` content is projected |
+| `id` / `title` / `aria-*` | string                                               | —              | Forwarded to the trigger button                                               |
+
+**Content projection** — an element with `slot="trigger"` becomes the trigger
+button content; all other children become the menu content.
+
+**Behavior** — clicking the trigger toggles the menu; clicking outside the
+component or pressing `Esc` closes it and returns focus to the trigger.
+
+**Events** — `sp-open` and `sp-close`, both bubbling `CustomEvent`s with no
+`detail`.
+
+**Internal targets** — `[data-sp-dropdown-trigger]` selects the trigger button,
+`[data-sp-dropdown-menu]` selects the menu container.
+
+---
+
+### sp-modal
+
+Renders a full-screen overlay and dialog, backed by the Spectre modal recipes.
+
+**Attributes**
+
+| Attribute                 | Type    | Default | Description                            |
+| ------------------------- | ------- | ------- | -------------------------------------- |
+| `open`                    | boolean | `false` | Open/closed dialog state               |
+| `full-width`              | boolean | `false` | Spans full container width             |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native dialog element |
+
+**Content projection** — children become the dialog content.
+
+**Behavior** — traps `Tab`/`Shift+Tab` focus within the dialog while open,
+closes on `Esc` or a backdrop click, focuses the first focusable element on
+open, and restores focus to the previously focused element on close.
+
+**Events** — `sp-close`, a bubbling `CustomEvent` with no `detail`.
+
+**Internal target** — `[data-sp-modal-native]` selects the native dialog
+element; `[data-sp-modal-overlay]` selects the overlay backdrop.
+
+---
+
+### sp-toast
+
+Renders a `<div role="status">` notification, backed by the Spectre toast
+recipes, with an imperative show/dismiss API.
+
+**Attributes**
+
+| Attribute                 | Type                                   | Default | Description                         |
+| ------------------------- | -------------------------------------- | ------- | ----------------------------------- |
+| `variant`                 | `info \| success \| warning \| danger` | `info`  | Visual style                        |
+| `dismissed`               | boolean                                | `false` | Dismissed visual state              |
+| `full-width`              | boolean                                | `false` | Spans full container width          |
+| `auto-dismiss`            | number                                 | —       | Milliseconds before auto-dismissing |
+| `id` / `title` / `aria-*` | string                                 | —       | Forwarded to the native `<div>`     |
+
+**Content projection** — an element with `slot="icon"` becomes the toast icon;
+all other children become the toast body content.
+
+**Methods** — `show()` and `dismiss()` toggle the `dismissed` state
+imperatively.
+
+**Events** — `sp-show` and `sp-dismiss`, both bubbling `CustomEvent`s with no
+`detail`.
+
+**Accessibility** — renders `role="status"` with `aria-live="polite"` and
+`aria-atomic="true"`.
+
+**Internal target** — `[data-sp-toast-native]` selects the native `<div>`.
+
+---
+
+### sp-tooltip
+
+Renders a trigger wrapper and a `role="tooltip"` body, backed by the Spectre
+tooltip recipe.
+
+**Attributes**
+
+| Attribute                 | Type                             | Default | Description                          |
+| ------------------------- | -------------------------------- | ------- | ------------------------------------ |
+| `placement`               | `top \| bottom \| left \| right` | `top`   | Tooltip position relative to trigger |
+| `visible`                 | boolean                          | `false` | Visible/hidden tooltip state         |
+| `id` / `title` / `aria-*` | string                           | —       | Forwarded to the tooltip body        |
+
+**Content projection** — an element with `slot="tooltip"` becomes the tooltip
+body; all other children become the trigger content.
+
+**Behavior** — becomes visible on trigger `mouseenter`/`focusin` and hides on
+`mouseleave`/`focusout`.
+
+**Events** — `sp-show` and `sp-hide`, both bubbling `CustomEvent`s with no
+`detail`.
+
+**Internal target** — `[data-sp-tooltip-native]` selects the native tooltip
+body.
+
 ## Package exports / API surface
 
 ### Root — `@phcdevworks/spectre-components`
@@ -923,6 +1084,12 @@ defineSpectreComponents() // registers all sp-* elements
 `SpectreStackBasis`, `SpectreStackDirection`, `SpectreContainerProps`,
 `SpectreGridProps`, `SpectreSectionProps`, `SpectreStackProps`
 
+**Interactive constants and types**: `spectreDropdownPlacements`,
+`spectreToastVariants`, `spectreTooltipPlacements`, `SpectreDropdownPlacement`,
+`SpectreToastVariant`, `SpectreTooltipPlacement`, `SpectreNavProps`,
+`SpectreSidebarProps`, `SpectreDropdownProps`, `SpectreModalProps`,
+`SpectreToastProps`, `SpectreTooltipProps`
+
 ### Subpath entry points
 
 Each entry point registers only that component and exports only its surface:
@@ -951,6 +1118,12 @@ Each entry point registers only that component and exports only its surface:
 | `.../grid`         | `sp-grid`         | `defineSpectreGrid`, `SpectreGridElement`, grid constants and types                      |
 | `.../section`      | `sp-section`      | `defineSpectreSection`, `SpectreSectionElement`, `SpectreSectionProps`                   |
 | `.../stack`        | `sp-stack`        | `defineSpectreStack`, `SpectreStackElement`, stack constants and types                   |
+| `.../nav`          | `sp-nav`          | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                               |
+| `.../sidebar`      | `sp-sidebar`      | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                   |
+| `.../dropdown`     | `sp-dropdown`     | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types          |
+| `.../modal`        | `sp-modal`        | `defineSpectreModal`, `SpectreModalElement`, `SpectreModalProps`                         |
+| `.../toast`        | `sp-toast`        | `defineSpectreToast`, `SpectreToastElement`, toast constants and types                   |
+| `.../tooltip`      | `sp-tooltip`      | `defineSpectreTooltip`, `SpectreTooltipElement`, tooltip constants and types             |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside

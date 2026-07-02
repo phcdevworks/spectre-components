@@ -428,6 +428,102 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-dropdown",
+      "elementClass": "SpectreDropdownElement",
+      "entryPoint": "./dropdown",
+      "distFile": "dist/dropdown.js",
+      "exports": {
+        "values": [
+          "defineSpectreDropdown",
+          "SpectreDropdownElement",
+          "spectreDropdownPlacements"
+        ],
+        "types": ["SpectreDropdownProps", "SpectreDropdownPlacement"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-modal",
+      "elementClass": "SpectreModalElement",
+      "entryPoint": "./modal",
+      "distFile": "dist/modal.js",
+      "exports": {
+        "values": ["defineSpectreModal", "SpectreModalElement"],
+        "types": ["SpectreModalProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-nav",
+      "elementClass": "SpectreNavElement",
+      "entryPoint": "./nav",
+      "distFile": "dist/nav.js",
+      "exports": {
+        "values": ["defineSpectreNav", "SpectreNavElement"],
+        "types": ["SpectreNavProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-sidebar",
+      "elementClass": "SpectreSidebarElement",
+      "entryPoint": "./sidebar",
+      "distFile": "dist/sidebar.js",
+      "exports": {
+        "values": ["defineSpectreSidebar", "SpectreSidebarElement"],
+        "types": ["SpectreSidebarProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-toast",
+      "elementClass": "SpectreToastElement",
+      "entryPoint": "./toast",
+      "distFile": "dist/toast.js",
+      "exports": {
+        "values": [
+          "defineSpectreToast",
+          "SpectreToastElement",
+          "spectreToastVariants"
+        ],
+        "types": ["SpectreToastProps", "SpectreToastVariant"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-tooltip",
+      "elementClass": "SpectreTooltipElement",
+      "entryPoint": "./tooltip",
+      "distFile": "dist/tooltip.js",
+      "exports": {
+        "values": [
+          "defineSpectreTooltip",
+          "SpectreTooltipElement",
+          "spectreTooltipPlacements"
+        ],
+        "types": ["SpectreTooltipProps", "SpectreTooltipPlacement"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {
