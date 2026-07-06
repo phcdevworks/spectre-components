@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `sp-footer` - thin wrapper backed by `getFooterClasses`. Supports
+  `bordered` and `full-width`. Closes the final gap against
+  `@phcdevworks/spectre-ui-astro`.
+
 ## [1.7.0] - 2026-07-02
 
 **Release Title:** Phase 6 - Interaction Parity

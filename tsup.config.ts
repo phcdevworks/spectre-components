@@ -28,6 +28,7 @@ export default defineConfig({
     section: 'src/components/section/index.ts',
     stack: 'src/components/stack/index.ts',
     dropdown: 'src/components/dropdown/index.ts',
+    footer: 'src/components/footer/index.ts',
     modal: 'src/components/modal/index.ts',
     nav: 'src/components/nav/index.ts',
     sidebar: 'src/components/sidebar/index.ts',

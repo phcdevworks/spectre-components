@@ -23,6 +23,7 @@ import { defineSpectreGrid } from './components/grid'
 import { defineSpectreSection } from './components/section'
 import { defineSpectreStack } from './components/stack'
 import { defineSpectreDropdown } from './components/dropdown'
+import { defineSpectreFooter } from './components/footer'
 import { defineSpectreModal } from './components/modal'
 import { defineSpectreNav } from './components/nav'
 import { defineSpectreSidebar } from './components/sidebar'
@@ -53,6 +54,7 @@ export function defineSpectreComponents(): void {
   defineSpectreSection()
   defineSpectreStack()
   defineSpectreDropdown()
+  defineSpectreFooter()
   defineSpectreModal()
   defineSpectreNav()
   defineSpectreSidebar()
