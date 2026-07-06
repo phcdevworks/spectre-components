@@ -858,6 +858,25 @@ Renders a `<div>` flex stack backed by the Spectre stack recipe.
 
 ---
 
+### sp-footer
+
+Renders a `<footer>` backed by the Spectre footer recipe.
+
+**Attributes**
+
+| Attribute                 | Type    | Default | Description                        |
+| ------------------------- | ------- | ------- | ---------------------------------- |
+| `bordered`                | boolean | `false` | Adds a top border                  |
+| `full-width`              | boolean | `false` | Spans full container width         |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<footer>` |
+
+**Content projection** — children become the footer content (links, legal
+text, etc.).
+
+**Internal target** — `[data-sp-footer-native]` selects the native `<footer>`.
+
+---
+
 ### sp-nav
 
 Renders a `<nav>` backed by the Spectre nav recipe.
@@ -1086,9 +1105,9 @@ defineSpectreComponents() // registers all sp-* elements
 
 **Interactive constants and types**: `spectreDropdownPlacements`,
 `spectreToastVariants`, `spectreTooltipPlacements`, `SpectreDropdownPlacement`,
-`SpectreToastVariant`, `SpectreTooltipPlacement`, `SpectreNavProps`,
-`SpectreSidebarProps`, `SpectreDropdownProps`, `SpectreModalProps`,
-`SpectreToastProps`, `SpectreTooltipProps`
+`SpectreToastVariant`, `SpectreTooltipPlacement`, `SpectreFooterProps`,
+`SpectreNavProps`, `SpectreSidebarProps`, `SpectreDropdownProps`,
+`SpectreModalProps`, `SpectreToastProps`, `SpectreTooltipProps`
 
 ### Subpath entry points
 
@@ -1121,6 +1140,7 @@ Each entry point registers only that component and exports only its surface:
 | `.../nav`          | `sp-nav`          | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                               |
 | `.../sidebar`      | `sp-sidebar`      | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                   |
 | `.../dropdown`     | `sp-dropdown`     | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types          |
+| `.../footer`       | `sp-footer`       | `defineSpectreFooter`, `SpectreFooterElement`, `SpectreFooterProps`                      |
 | `.../modal`        | `sp-modal`        | `defineSpectreModal`, `SpectreModalElement`, `SpectreModalProps`                         |
 | `.../toast`        | `sp-toast`        | `defineSpectreToast`, `SpectreToastElement`, toast constants and types                   |
 | `.../tooltip`      | `sp-tooltip`      | `defineSpectreTooltip`, `SpectreTooltipElement`, tooltip constants and types             |

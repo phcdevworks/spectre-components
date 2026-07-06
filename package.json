@@ -158,6 +158,11 @@
       "import": "./dist/dropdown.js",
       "require": "./dist/dropdown.cjs"
     },
+    "./footer": {
+      "types": "./dist/footer.d.ts",
+      "import": "./dist/footer.js",
+      "require": "./dist/footer.cjs"
+    },
     "./modal": {
       "types": "./dist/modal.d.ts",
       "import": "./dist/modal.js",
