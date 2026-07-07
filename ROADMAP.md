@@ -206,7 +206,7 @@ component families. All three sub-phases are delivered.
 Audit against `@phcdevworks/spectre-ui-astro` (the L3b sibling) found gaps in
 both directions.
 
-### P0: Recipe Backing Gap on Existing Components — Partially delivered
+### P0: Recipe Backing Gap on Existing Components — Delivered
 
 `sp-checkbox`, `sp-fieldset`, `sp-label`, `sp-radio`, `sp-select`, and
 `sp-textarea` shipped since Phase 1 with no backing recipe in
@@ -220,18 +220,19 @@ both directions.
   `getInputLabelClasses` to the purpose-built `getFieldsetLegendClasses`.
 - `sp-label` — switched from `getInputLabelClasses` to `getLabelClasses`;
   added a `required` property the new recipe supports.
-- `sp-select`, `sp-textarea` — deferred. `getSelectClasses`/
-  `getTextareaClasses` lack the `size`/`fullWidth`/`pill`/state options these
-  two components' public properties drive today; switching would regress
-  functionality. Filed as an upstream request in
-  `project-design/spectre-ui/TODO.md` Phase 5 P0.
+- `sp-select`, `sp-textarea` — switched off the `getInputClasses()` workaround
+  once `spectre-tokens@3.3.1` and `spectre-ui@2.7.0` shipped matching
+  `size`/`fullWidth`/`pill`/`state`/`loading` options on
+  `getSelectClasses`/`getTextareaClasses`.
 
-### P1: Components Present in spectre-ui-astro but Missing Here
+### P1: Components Present in spectre-ui-astro but Missing Here — Delivered
 
-`spectre-ui-astro` ships `SpDropdown`, `SpModal`, `SpNav`, `SpSidebar`,
-`SpToast`, and `SpTooltip` on recipes that already exist in
-`@phcdevworks/spectre-ui`. No Lit equivalents exist here yet. Not approved
-for implementation — requires explicit approval per `AGENTS.md`.
+`spectre-ui-astro` shipped `SpDropdown`, `SpModal`, `SpNav`, `SpSidebar`,
+`SpToast`, `SpTooltip`, and `SpFooter` on recipes that already existed in
+`@phcdevworks/spectre-ui`. All seven now have Lit equivalents here
+(`sp-dropdown`, `sp-modal`, `sp-nav`, `sp-sidebar`, `sp-toast`, `sp-tooltip`
+shipped in v1.7.0; `sp-footer` follows in the next release), closing full
+component-coverage parity with `spectre-ui-astro`.
 
 ---
 
@@ -261,6 +262,9 @@ for implementation — requires explicit approval per `AGENTS.md`.
 8. **Phase 5 P2** — done. Invariant-duplication tooling and visual
    regression testing delivered; preview harness closed as already
    satisfied.
-9. **Phase 6 P0** — partially done. checkbox/radio/fieldset/label fixed;
-   select/textarea deferred pending an upstream recipe-parity decision in
-   `spectre-ui`.
+9. **Phase 6 P0** — done. checkbox/radio/fieldset/label fixed; select/textarea
+   switched to their purpose-built recipes once `spectre-ui@2.7.0` shipped
+   matching options.
+10. **Phase 6 P1** — done. Added sp-dropdown, sp-modal, sp-nav, sp-sidebar,
+    sp-toast, sp-tooltip, and sp-footer, closing full component-coverage
+    parity with spectre-ui-astro.
