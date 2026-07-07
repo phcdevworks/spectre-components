@@ -462,6 +462,20 @@
       }
     },
     {
+      "tag": "sp-footer",
+      "elementClass": "SpectreFooterElement",
+      "entryPoint": "./footer",
+      "distFile": "dist/footer.js",
+      "exports": {
+        "values": ["defineSpectreFooter", "SpectreFooterElement"],
+        "types": ["SpectreFooterProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
       "tag": "sp-nav",
       "elementClass": "SpectreNavElement",
       "entryPoint": "./nav",
