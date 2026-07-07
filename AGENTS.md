@@ -174,6 +174,7 @@ rules.
 | `sp-section`      | `SpectreSectionElement`      | `@phcdevworks/spectre-components/section`      |
 | `sp-stack`        | `SpectreStackElement`        | `@phcdevworks/spectre-components/stack`        |
 | `sp-dropdown`     | `SpectreDropdownElement`     | `@phcdevworks/spectre-components/dropdown`     |
+| `sp-footer`       | `SpectreFooterElement`       | `@phcdevworks/spectre-components/footer`       |
 | `sp-modal`        | `SpectreModalElement`        | `@phcdevworks/spectre-components/modal`        |
 | `sp-nav`          | `SpectreNavElement`          | `@phcdevworks/spectre-components/nav`          |
 | `sp-sidebar`      | `SpectreSidebarElement`      | `@phcdevworks/spectre-components/sidebar`      |

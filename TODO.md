@@ -293,10 +293,10 @@ three distinct situations, not one uniform gap — see per-item detail below.
 ### P1: Components Present in spectre-ui-astro but Missing Here
 
 `spectre-ui-astro` ships `SpDropdown`, `SpModal`, `SpNav`, `SpSidebar`,
-`SpToast`, and `SpTooltip` on top of recipes that already exist in
-`@phcdevworks/spectre-ui` (Phase 4, delivered v2.9.0-aligned). All six now have
-Lit equivalents here, implemented as native Lit element interactivity rather
-than ported `.astro` scripts.
+`SpToast`, `SpTooltip`, and `SpFooter` on top of recipes that already exist in
+`@phcdevworks/spectre-ui` (Phase 4, delivered v2.9.0-aligned). All seven now
+have Lit equivalents here, implemented as native Lit element interactivity
+rather than ported `.astro` scripts.
 
 - [x] `sp-dropdown` — backed by `getDropdownClasses`, `getDropdownMenuClasses`.
       Toggle on trigger click, close on outside click/`Esc` with focus
@@ -322,6 +322,10 @@ than ported `.astro` scripts.
 - [x] `sp-tooltip` — backed by `getTooltipClasses`. Hover/focus-trigger
       show/hide, `placement` prop.
 
+- [x] `sp-footer` — backed by `getFooterClasses`. Thin wrapper with `bordered`
+      and `full-width` props, closing full component-coverage parity with
+      `spectre-ui-astro`.
+
 Each item was implemented with explicit approval from Bradley Potts per
 `AGENTS.md`.
 
@@ -345,8 +349,8 @@ Each item was implemented with explicit approval from Bradley Potts per
 9. Phase 6 P0 — done. Fixed the recipe-backing gap on sp-checkbox,
    sp-fieldset, sp-label, sp-radio, sp-select, and sp-textarea.
 10. Phase 6 P1 — done. Added sp-dropdown, sp-modal, sp-nav, sp-sidebar,
-    sp-toast, and sp-tooltip, closing full component-coverage parity with
-    spectre-ui-astro.
+    sp-toast, sp-tooltip, and sp-footer, closing full component-coverage
+    parity with spectre-ui-astro.
 
 ---
 
