@@ -1,5 +1,14 @@
 # @phcdevworks/spectre-components
 
+`@phcdevworks/spectre-components` is the Lit-based component layer of the
+Spectre system. It implements Spectre's design contracts as reusable,
+accessible, framework-agnostic web components.
+
+Maintained by [PHCDevworks](https://go.phcdev.co). It draws on Spectre's
+token and styling contracts to ship drop-in UI primitives, so applications
+that need working components — rather than raw CSS or recipes to assemble
+themselves — can consume Spectre without a framework-specific adapter.
+
 ## Repository Snapshot
 
 | Field                  | Value                               |
