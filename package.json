@@ -239,7 +239,7 @@
     "happy-dom": "^20.10.6",
     "jiti": "^2.7.0",
     "prettier": "^3.9.5",
-    "tailwindcss": "^4.3.2",
+    "tailwindcss": "^4.3.3",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.63.0",
