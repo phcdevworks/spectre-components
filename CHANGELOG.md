@@ -8,14 +8,14 @@ reflects package releases published to npm.
 
 ## [1.9.0] - 2026-07-21
 
-**Release Title:** TypeScript 7 Compatibility
+**Release Title:** Phase 6 - TypeScript 7 Compatibility
 
 Contract change type: additive
 
 ### Changed
 
-- Widened the `typescript` peer dependency range to add TypeScript 7
-  support: `^5.9 || ^6.0` → `^5.0 || ^6.0 || ^7.0`. Internal tooling
+- Widened the `typescript` peer dependency range to add TypeScript 7 support:
+  `^5.9 || ^6.0` → `^5.0 || ^6.0 || ^7.0`. Internal tooling
   (ESLint/typescript-eslint) runs against TypeScript 6 via an
   `npm:@typescript/typescript6` alias since `typescript-eslint` does not yet
   support TypeScript 7's programmatic API; TypeScript 7's native compiler is
@@ -34,8 +34,8 @@ Contract change type: additive
 
 ### Added
 
-- `sp-footer` - thin wrapper backed by `getFooterClasses`. Supports
-  `bordered` and `full-width`. Closes the final gap against
+- `sp-footer` - thin wrapper backed by `getFooterClasses`. Supports `bordered`
+  and `full-width`. Closes the final gap against
   `@phcdevworks/spectre-ui-astro`.
 
 ## [1.7.0] - 2026-07-02
