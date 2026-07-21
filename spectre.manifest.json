@@ -55,6 +55,7 @@
         "./section",
         "./stack",
         "./dropdown",
+        "./footer",
         "./modal",
         "./nav",
         "./sidebar",

@@ -6,6 +6,10 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-07-21
+
+**Release Title:** TypeScript 7 Compatibility
+
 Contract change type: additive
 
 ### Changed
@@ -16,6 +20,11 @@ Contract change type: additive
   `npm:@typescript/typescript6` alias since `typescript-eslint` does not yet
   support TypeScript 7's programmatic API; TypeScript 7's native compiler is
   available via the `@typescript/native` devDependency alias.
+
+### Fixed
+
+- Added the existing `./footer` package export to `spectre.manifest.json`,
+  restoring parity between the ecosystem manifest and the public exports map.
 
 ## [1.8.0] - 2026-07-07
 
@@ -517,7 +526,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/1.8.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/1.9.0...HEAD
+[1.9.0]: https://github.com/phcdevworks/spectre-components/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/phcdevworks/spectre-components/compare/1.7.0...1.8.0
 [1.7.0]: https://github.com/phcdevworks/spectre-components/compare/1.6.0...1.7.0
 [1.6.0]: https://github.com/phcdevworks/spectre-components/compare/1.5.0...1.6.0
