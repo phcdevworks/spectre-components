@@ -16,7 +16,7 @@ themselves — can consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.8.0                               |
+| Current version/status | 1.9.0                               |
 
 ## Standard Workflow
 
