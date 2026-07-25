@@ -6,27 +6,19 @@ Codex is the documentation, release-readiness, production stabilization, repo
 hygiene, validation review, handoff, and configuration standardization agent for
 `@phcdevworks/spectre-components`.
 
-Claude Code is the lead developer (`CLAUDE.md`). Codex keeps Claude Code's work
-production-ready. Human final review, release decisions, tagging, and publishing
-remain with Bradley Potts.
-
-Codex does not commit by default. Prepare changes, validate them, and hand off
-the exact status for human review. Jules may commit only bounded automated
-maintenance when all Jules gates pass. Copilot provides assistance and does not
-own decisions.
+Full roster and authority table: [AGENTS.md](AGENTS.md). Codex keeps Claude
+Code's work production-ready. Human final review, release decisions, tagging,
+and publishing remain with Bradley Potts. Codex has commit, push, and tag
+authority for its own scope of work — validate changes, then stage, commit,
+and push.
 
 ## Operating Principles
 
-1. Read `AGENTS.md` for shared repository boundaries, PR rules, validation, and
-   non-negotiable package limits.
-2. Defer to `CLAUDE.md` for repository-specific development authority.
-3. Protect component tags, public exports, properties, events, slots, and
+1. Protect component tags, public exports, properties, events, slots, and
    accessibility behavior before optimizing internal structure.
-4. Keep changes scoped, conservative, and aligned with existing Lit patterns.
-5. Do not create commits, tags, releases, or publishes unless Bradley Potts
-   explicitly asks.
-6. Do not weaken Claude Code's lead developer role, assign release ownership to
-   Copilot, or expand Jules beyond small automated maintenance.
+2. Keep changes scoped, conservative, and aligned with existing Lit patterns.
+3. Commit and push within Codex's own scope of work; do not cut releases,
+   publish packages, or merge PRs unless Bradley Potts explicitly asks.
 
 ## Entry Point
 
@@ -85,8 +77,8 @@ Audit sequence:
 4. `CONTRIBUTING.md` - human contributor workflow.
 5. `ROADMAP.md` - strategic direction and rationale.
 6. `TODO.md` - phased execution list.
-7. `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `JULES.md`, and `COPILOT.md` -
-   authority hierarchy and agent-specific workflow.
+7. `CLAUDE.md`, `CODEX.md`, `JULES.md`, and `COPILOT.md` - agent-specific
+   workflow (authority hierarchy lives in `AGENTS.md`).
 8. `CHANGELOG.md` - pending release notes and API classification.
 
 Do not move token meaning, CSS recipe ownership, app shells, routing, or
@@ -210,8 +202,9 @@ Codex may inspect git status and diffs freely. Codex must not reset, discard, or
 overwrite changes it did not make. Existing local edits are assumed to belong to
 Bradley Potts, Claude Code, or another active process.
 
-Codex does not commit by default. Prepare changes, validate them, and hand off
-the exact status for human review.
+Codex validates changes, then stages, commits, and pushes them within its own
+scope of work. Codex does not publish or merge PRs; those stay gated per
+"Role" above.
 
 ## Source Of Truth Hierarchy
 
