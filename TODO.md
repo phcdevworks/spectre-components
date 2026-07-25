@@ -354,6 +354,25 @@ Each item was implemented with explicit approval from Bradley Potts per
 
 ---
 
+## Requested by Downstream
+
+- [ ] **`sp-text` component — unblocked 2026-07-23, not started.** Requested
+      by `spectre-base` (2026-07-23) while converting `spectre-theme/` PHP
+      templates off hand-rolled CSS onto `sp-*` components. The blocking gap
+      is closed: `@phcdevworks/spectre-ui` Phase 4g shipped `getTextClasses`
+      (single recipe, `size`/`variant`/`family?` options — `xs`–`6xl` scale,
+      `default`/`muted`/`subtle`/`meta`/`brand` color roles,
+      `sans`/`serif`/`mono` family). Bump the declared
+      `@phcdevworks/spectre-ui` peer/dependency range to cover the version
+      that publishes it, then add `sp-text` calling `getTextClasses`
+      following the normal Phase pattern (source, tests, exports, docs,
+      `AGENTS.md` inventory update, `CHANGELOG.md [Unreleased]` entry) — same
+      delivery shape as `sp-label`/`sp-fieldset`. A `level`/`as` prop should
+      swap the rendered tag (`h1`–`h6`/`p`/`span`) without changing the
+      recipe call, per the single-element-many-options shape decided in
+      `spectre-ui`'s `TODO.md` Phase 4g. Needs explicit approval from Bradley
+      Potts before implementation.
+
 ## Explicitly Out of Scope
 
 - Do not add token meaning or semantic design values here.
