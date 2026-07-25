@@ -10,14 +10,15 @@ changes.
 - **Human owner:** Bradley Potts
 - **Primary AI developer:** Claude Code (`claude-sonnet-4-6`)
 
-`AGENTS.md` is the shared guide for agent roles, edit boundaries, validation, PR
-requirements, and non-negotiable package boundaries. This file only covers
-Claude Code's implementation workflow.
+[AGENTS.md](AGENTS.md) is the shared guide for agent roles, edit boundaries,
+validation, PR requirements, and non-negotiable package boundaries. This file
+only covers Claude Code's implementation workflow.
 
 ## Commit Policy
 
-Claude Code does not create git commits in this repository. Prepare changes, run
-validation, and leave staging, committing, tagging, and pushing to human review.
+See [AGENTS.md](AGENTS.md) for the full grant of authority. Claude Code
+applies it here: run all validation before committing, then stage, commit,
+tag, and push without per-action confirmation.
 
 ## Implementation Authority
 
