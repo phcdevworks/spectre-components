@@ -131,7 +131,7 @@ unresolved release risk in the summary.
 
 ## Release Review Checklist
 
-Use this checklist before every release handoff to Bradley Potts.
+Use this checklist before cutting every release (tag + GitHub Release).
 
 ### Pre-Release Validation
 
@@ -168,15 +168,30 @@ Use this checklist before every release handoff to Bradley Potts.
 
 ### Release Mechanics
 
-- [ ] `package.json` version is bumped to the intended release version.
-- [ ] `CHANGELOG.md [Unreleased]` notes are moved to a new versioned entry.
-- [ ] Compare links at the bottom of `CHANGELOG.md` are updated.
-- [ ] Shared validation gate passes on the release-ready state.
+1. `package.json` version is bumped to the intended release version.
+2. `CHANGELOG.md [Unreleased]` notes are moved to a new versioned entry:
+   `## [<version>] - <YYYY-MM-DD>`, with a release title line in the format
+   `**Release Title:** Phase <N> - <short title>`, where `Phase <N>` is the
+   active phase name from this repo's own `ROADMAP.md` and `<short title>`
+   is a concise summary of what shipped. If the release spans no single
+   ROADMAP phase, state that explicitly instead of inventing one.
+3. Compare links at the bottom of `CHANGELOG.md` are updated.
+4. Shared validation gate passes on the release-ready state.
+5. Stage and commit the version bump and changelog update.
+6. Create the git tag: `git tag v<version>` (matching `package.json`
+   exactly), then push the commit and tag.
+7. Publish the GitHub Release from that tag: `gh release create v<version>
+   --title "v<version>: Phase <N> - <short title>" --notes-file` (extract the
+   new version's changelog section, or `--notes` inline for a short release).
+8. `npm publish` is **not** run by Codex — that stays with Bradley Potts.
 
 ### Handoff
 
-- [ ] A clear summary of changed files, validation results, classification, and
-      blockers is prepared for Bradley Potts.
+- [ ] The commit, tag, and GitHub Release are complete (or, if blocked,
+      exactly which step failed and why).
+- [ ] A clear summary of changed files, validation results, classification,
+      and any unresolved risk is prepared for Bradley Potts, including the
+      npm publish step still pending his action.
 
 ## Documentation Audit Procedure
 

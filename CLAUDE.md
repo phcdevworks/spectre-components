@@ -143,11 +143,11 @@ explicit approval, as defined in `AGENTS.md`.
 
 ## Release Procedure
 
-1. Move `[Unreleased]` entries under a new `[x.y.z] - YYYY-MM-DD` heading.
-2. Bump `version` in `package.json`.
-3. Add the comparison link at the bottom of `CHANGELOG.md`.
-4. Run the shared validation gate.
-5. Hand off to Bradley Potts for review, commit, tag, and publish.
+Claude Code implements features and fixes with a `CHANGELOG.md [Unreleased]`
+entry classified per change. Cutting the release itself — version bump,
+changelog versioning, `v<version>` tag, and GitHub Release — is Codex's job;
+see `CODEX.md` "Release Mechanics" for the full procedure. `npm publish`
+stays with Bradley Potts regardless of who prepares the release.
 
 ## Key Files
 
