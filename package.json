@@ -1,6 +1,6 @@
 {
   "name": "@phcdevworks/spectre-components",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "@phcdevworks/spectre-components is the Lit-based component layer of the Spectre system. It implements Spectre's design contracts as reusable, accessible, framework-agnostic web components.",
   "keywords": [
     "phcdevworks",
@@ -222,25 +222,24 @@
     "typescript": "^5.0 || ^6.0 || ^7.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^3.5.0",
-    "@phcdevworks/spectre-ui": "^2.10.0",
+    "@phcdevworks/spectre-tokens": "^4.0.0",
+    "@phcdevworks/spectre-ui": "^3.0.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@phcdevworks/spectre-manifest": "^1.1.0",
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.62.0",
     "@types/node": "^26.1.1",
     "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@typescript-eslint/parser": "^8.65.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "axe-core": "^4.12.1",
-    "eslint": "^10.7.0",
+    "eslint": "^10.8.0",
     "globals": "^17.7.0",
-    "happy-dom": "^20.11.0",
+    "happy-dom": "^20.11.1",
     "jiti": "^2.7.0",
-    "prettier": "^3.9.5",
-    "tailwindcss": "^4.3.3",
+    "prettier": "^3.9.6",
     "tsup": "^8.5.1",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.65.0",
