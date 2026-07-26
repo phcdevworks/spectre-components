@@ -87,7 +87,6 @@
       "description": "Layer 2 styling contract between spectre-tokens and downstream adapters.",
       "exports": [
         ".",
-        "./tailwind",
         "./index.css",
         "./base.css",
         "./components.css",

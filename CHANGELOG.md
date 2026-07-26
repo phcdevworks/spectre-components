@@ -6,6 +6,30 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-07-27
+
+**Release Title:** Phase 6 - Spectre 4 Alignment
+
+Contract change type: behavioral change
+
+### Changed
+
+- Aligned the component layer with the current Spectre styling contract by
+  upgrading `@phcdevworks/spectre-tokens` to `^4.0.0` and
+  `@phcdevworks/spectre-ui` to `^3.0.0`.
+- Removed the direct Tailwind development dependency because Spectre UI 3 no
+  longer exposes or requires its former Tailwind integration.
+- Refreshed Playwright, ESLint, happy-dom, Prettier, Rollup, and related
+  lockfile entries to their current compatible releases.
+- Normalized repository metadata, CI Node coverage, workspace tasks, and agent
+  release guidance without changing component tags, properties, events, slots,
+  exports, or accessibility behavior.
+
+### Fixed
+
+- Removed the retired `@phcdevworks/spectre-ui/tailwind` entry from the
+  ecosystem manifest so declared upstream exports match Spectre UI 3.
+
 ## [1.9.0] - 2026-07-21
 
 **Release Title:** Phase 6 - TypeScript 7 Compatibility
@@ -526,7 +550,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.9.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.10.0...HEAD
+[1.10.0]: https://github.com/phcdevworks/spectre-components/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/phcdevworks/spectre-components/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/phcdevworks/spectre-components/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/phcdevworks/spectre-components/compare/v1.6.0...v1.7.0
