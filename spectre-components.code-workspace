@@ -76,7 +76,7 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Build UI",
+        "name": "Build Components",
         "type": "node-terminal",
         "request": "launch",
         "command": "npm run build"
@@ -118,6 +118,11 @@
       {
         "label": "test",
         "command": "npm test",
+        "type": "shell"
+      },
+      {
+        "label": "check",
+        "command": "npm run check",
         "type": "shell"
       }
     ]
