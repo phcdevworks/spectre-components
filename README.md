@@ -57,7 +57,7 @@ be consumed directly or wrapped by downstream adapter packages.
 [Changelog](CHANGELOG.md) | [Roadmap](ROADMAP.md) |
 [Security Policy](SECURITY.md)
 
-## Why this package exists alongside spectre-ui
+## Why This Package Exists Alongside Spectre-UI
 
 `@phcdevworks/spectre-ui` owns CSS: class recipes, Tailwind helpers, and the
 styling contract that maps Spectre tokens to visual output. It ships CSS rules
@@ -81,7 +81,7 @@ If you only need CSS class names, use `@phcdevworks/spectre-ui` directly. If you
 need ready-to-use HTML elements with behavior, accessibility, and a typed API,
 use this package.
 
-## Key capabilities
+## Key Capabilities
 
 - Lit-based custom elements on the Custom Elements standard
 - Renders in **light DOM** so `@phcdevworks/spectre-ui` global styles apply
@@ -94,7 +94,7 @@ use this package.
 - ESM + CJS dual build with TypeScript declaration files
 - Tree-shakeable subpath exports per component
 
-## When to use this package
+## When To Use This Package
 
 - You are building UI with the Spectre design system and want standards-based
   custom elements with baked-in behavior and accessibility.
@@ -104,7 +104,7 @@ use this package.
 - You are writing a framework adapter (React, Vue, Astro) and need a reliable,
   stable element layer to wrap.
 
-## When not to use this package
+## When Not To Use This Package
 
 - You only need CSS class names — use `@phcdevworks/spectre-ui` directly.
 - You are adding routing, shell logic, or app-startup orchestration — those are
@@ -118,7 +118,7 @@ use this package.
 npm install @phcdevworks/spectre-components @phcdevworks/spectre-ui @phcdevworks/spectre-tokens
 ```
 
-## Quick start
+## Quick Start
 
 ### Plain HTML
 
@@ -298,7 +298,7 @@ to the native `<label>` element.
 **Keyboard behavior** — provided entirely by the native element inside each
 component. No custom keyboard handling is layered on top.
 
-## Light DOM rendering
+## Light DOM Rendering
 
 All components render in **light DOM** (`createRenderRoot() { return this; }`).
 This is intentional: it allows `@phcdevworks/spectre-ui` global CSS to reach the
@@ -1045,7 +1045,7 @@ body; all other children become the trigger content.
 **Internal target** — `[data-sp-tooltip-native]` selects the native tooltip
 body.
 
-## Package exports / API surface
+## Package Exports / API Surface
 
 ### Root — `@phcdevworks/spectre-components`
 
@@ -1158,7 +1158,7 @@ Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside
 textarea or select.
 
-## Relationship to the rest of Spectre
+## Relationship To The Rest Of Spectre
 
 ```
 spectre-tokens  →  design values (colors, spacing, typography)
@@ -1235,17 +1235,17 @@ This runs: lint → typecheck → tests → build → export validation → cont
 validation → invariant checks → ecosystem manifest validation. All steps must
 pass.
 
-## AI and automation boundaries
+## AI And Automation Boundaries
 
 Claude Code (`claude-sonnet-4-6`) is the primary development agent for this
-repository. Codex handles releases and production stabilization. Jules handles
-small automated fixes and dependency updates. GitHub Copilot provides
-development support.
+repository. Codex handles releases, including cutting tagged releases and
+GitHub Releases, and production stabilization. Jules handles small automated
+fixes and dependency updates. GitHub Copilot provides development support.
 
-Claude Code, Codex, and Copilot do not create git commits by default. Jules may
-commit only bounded automated maintenance when the `JULES.md` scope and
-validation gates pass. Release decisions, tags, and publishing remain with
-Bradley Potts.
+All AI agents with repository access (Claude Code, Codex, Copilot, Jules)
+have commit, push, and tag authority in this repository. Publishing to npm
+remains Bradley Potts's sole authority. See [AGENTS.md](AGENTS.md) for the
+full commit-policy and release-authority grant.
 
 **Protected from automated change:** component public API surface (tags,
 properties, events, slots, ARIA), the light-DOM rendering model, and the
