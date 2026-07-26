@@ -18,3 +18,4 @@ visual-tests/**/*-diff.png
 
 # OS files
 .DS_Store
+Thumbs.db
