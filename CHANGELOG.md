@@ -6,6 +6,16 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+Contract change type: additive
+
+### Added
+
+- `sp-text` — new text primitive backed by `getTextClasses` in
+  `@phcdevworks/spectre-ui`. Renders `h1`–`h6`, `p`, or `span` via the `level`
+  property (defaults to `p`) with `size`, `variant`, and `family` properties
+  mapped to the recipe's options. Requested by `spectre-base` while converting
+  `spectre-theme/` PHP templates off hand-rolled CSS onto `sp-*` components.
+
 ## [1.10.0] - 2026-07-27
 
 **Release Title:** Phase 6 - Spectre 4 Alignment

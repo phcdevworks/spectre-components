@@ -191,6 +191,16 @@ const template = html`
       </sp-section>
     </sp-container>
   </section>
+
+  <section>
+    <h2>sp-text</h2>
+    <sp-text level='h1'>Heading 1</sp-text>
+    <sp-text level='h2'>Heading 2</sp-text>
+    <sp-text level='p'>Default paragraph text</sp-text>
+    <sp-text level='span' variant='muted'>Muted inline text</sp-text>
+    <sp-text variant='brand' size='lg'>Brand-colored large text</sp-text>
+    <sp-text family='mono' size='sm'>Monospace small text</sp-text>
+  </section>
 `;
 
 render(template, document.body);

@@ -219,6 +219,7 @@ rules.
 | `sp-sidebar`      | `SpectreSidebarElement`      | `@phcdevworks/spectre-components/sidebar`      |
 | `sp-toast`        | `SpectreToastElement`        | `@phcdevworks/spectre-components/toast`        |
 | `sp-tooltip`      | `SpectreTooltipElement`      | `@phcdevworks/spectre-components/tooltip`      |
+| `sp-text`         | `SpectreTextElement`         | `@phcdevworks/spectre-components/text`         |
 
 ## Core Component Contract
 
