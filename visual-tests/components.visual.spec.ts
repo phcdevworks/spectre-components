@@ -18,6 +18,7 @@ const sections = [
   'sp-card / sp-pricing-card',
   'sp-alert',
   'sp-testimonial',
+  'sp-text',
   'sp-avatar / sp-icon-box / sp-rating / sp-spinner',
   'Layout: sp-container / sp-grid / sp-section / sp-stack',
 ]
