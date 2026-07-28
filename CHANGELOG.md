@@ -6,6 +6,10 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-07-29
+
+**Release Title:** No active roadmap phase - Text Primitive
+
 Contract change type: additive
 
 ### Added
@@ -560,7 +564,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.10.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.11.0...HEAD
+[1.11.0]: https://github.com/phcdevworks/spectre-components/compare/v1.10.0...v1.11.0
 [1.10.0]: https://github.com/phcdevworks/spectre-components/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/phcdevworks/spectre-components/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/phcdevworks/spectre-components/compare/v1.7.0...v1.8.0

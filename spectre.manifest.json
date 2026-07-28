@@ -60,7 +60,8 @@
         "./nav",
         "./sidebar",
         "./toast",
-        "./tooltip"
+        "./tooltip",
+        "./text"
       ],
       "dependencies": [
         "@phcdevworks/spectre-tokens",
