@@ -173,8 +173,9 @@ Use this checklist before cutting every release (tag + GitHub Release).
    `## [<version>] - <YYYY-MM-DD>`, with a release title line in the format
    `**Release Title:** Phase <N> - <short title>`, where `Phase <N>` is the
    active phase name from this repo's own `ROADMAP.md` and `<short title>`
-   is a concise summary of what shipped. If the release spans no single
-   ROADMAP phase, state that explicitly instead of inventing one.
+   is a concise summary of what shipped. Every release must belong to a
+   numbered roadmap phase. If no phase is active, add the next numbered phase
+   to `ROADMAP.md` before preparing the release.
 3. Compare links at the bottom of `CHANGELOG.md` are updated.
 4. Shared validation gate passes on the release-ready state.
 5. Stage and commit the version bump and changelog update.

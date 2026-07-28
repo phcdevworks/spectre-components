@@ -8,7 +8,7 @@ reflects package releases published to npm.
 
 ## [1.11.0] - 2026-07-29
 
-**Release Title:** No active roadmap phase - Text Primitive
+**Release Title:** Phase 7 - Text Primitive
 
 Contract change type: additive
 
