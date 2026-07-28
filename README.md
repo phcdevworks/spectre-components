@@ -1045,6 +1045,28 @@ body; all other children become the trigger content.
 **Internal target** — `[data-sp-tooltip-native]` selects the native tooltip
 body.
 
+---
+
+### sp-text
+
+Renders a text primitive backed by the Spectre text recipe. The rendered tag
+switches with `level` while the recipe call and styling stay the same.
+
+**Attributes**
+
+| Attribute                 | Type                                                    | Default   | Description                            |
+| ------------------------- | -------------------------------------------------------- | --------- | --------------------------------------- |
+| `level`                   | `h1 \| h2 \| h3 \| h4 \| h5 \| h6 \| p \| span`          | `p`       | Rendered element tag                    |
+| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl \| 5xl \| 6xl` | `md` | Text size scale                         |
+| `variant`                 | `default \| muted \| subtle \| meta \| brand`            | `default` | Text color role                         |
+| `family`                  | `sans \| serif \| mono`                                  | —         | Optional font family override           |
+| `id` / `title` / `aria-*` | string                                                    | —         | Forwarded to the rendered native element |
+
+**Content projection** — children become the text content.
+
+**Internal target** — `[data-sp-text-native]` selects the rendered native
+element.
+
 ## Package Exports / API Surface
 
 ### Root — `@phcdevworks/spectre-components`

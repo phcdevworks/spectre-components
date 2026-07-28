@@ -33,7 +33,8 @@ export default defineConfig({
     nav: 'src/components/nav/index.ts',
     sidebar: 'src/components/sidebar/index.ts',
     toast: 'src/components/toast/index.ts',
-    tooltip: 'src/components/tooltip/index.ts'
+    tooltip: 'src/components/tooltip/index.ts',
+    text: 'src/components/text/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,

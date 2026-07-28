@@ -305,6 +305,64 @@ export function isTooltipPlacement(
   )
 }
 
+export const spectreTextSizes = [
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  '2xl',
+  '3xl',
+  '4xl',
+  '5xl',
+  '6xl'
+] as const
+
+export type SpectreTextSize = (typeof spectreTextSizes)[number]
+
+export function isTextSize(value: unknown): value is SpectreTextSize {
+  return (spectreTextSizes as readonly string[]).includes(value as string)
+}
+
+export const spectreTextVariants = [
+  'default',
+  'muted',
+  'subtle',
+  'meta',
+  'brand'
+] as const
+
+export type SpectreTextVariant = (typeof spectreTextVariants)[number]
+
+export function isTextVariant(value: unknown): value is SpectreTextVariant {
+  return (spectreTextVariants as readonly string[]).includes(value as string)
+}
+
+export const spectreTextFamilies = ['sans', 'serif', 'mono'] as const
+
+export type SpectreTextFamily = (typeof spectreTextFamilies)[number]
+
+export function isTextFamily(value: unknown): value is SpectreTextFamily {
+  return (spectreTextFamilies as readonly string[]).includes(value as string)
+}
+
+export const spectreTextLevels = [
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'p',
+  'span'
+] as const
+
+export type SpectreTextLevel = (typeof spectreTextLevels)[number]
+
+export function isTextLevel(value: unknown): value is SpectreTextLevel {
+  return (spectreTextLevels as readonly string[]).includes(value as string)
+}
+
 export function normalizeInt(
   value: unknown,
   fallback: number | undefined,

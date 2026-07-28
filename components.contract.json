@@ -538,6 +538,33 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-text",
+      "elementClass": "SpectreTextElement",
+      "entryPoint": "./text",
+      "distFile": "dist/text.js",
+      "exports": {
+        "values": [
+          "defineSpectreText",
+          "SpectreTextElement",
+          "spectreTextSizes",
+          "spectreTextVariants",
+          "spectreTextFamilies",
+          "spectreTextLevels"
+        ],
+        "types": [
+          "SpectreTextProps",
+          "SpectreTextSize",
+          "SpectreTextVariant",
+          "SpectreTextFamily",
+          "SpectreTextLevel"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {

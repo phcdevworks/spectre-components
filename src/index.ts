@@ -29,6 +29,7 @@ import { defineSpectreNav } from './components/nav'
 import { defineSpectreSidebar } from './components/sidebar'
 import { defineSpectreToast } from './components/toast'
 import { defineSpectreTooltip } from './components/tooltip'
+import { defineSpectreText } from './components/text'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -60,4 +61,5 @@ export function defineSpectreComponents(): void {
   defineSpectreSidebar()
   defineSpectreToast()
   defineSpectreTooltip()
+  defineSpectreText()
 }

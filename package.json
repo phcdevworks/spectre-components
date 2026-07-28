@@ -187,6 +187,11 @@
       "types": "./dist/tooltip.d.ts",
       "import": "./dist/tooltip.js",
       "require": "./dist/tooltip.cjs"
+    },
+    "./text": {
+      "types": "./dist/text.d.ts",
+      "import": "./dist/text.js",
+      "require": "./dist/text.cjs"
     }
   },
   "files": [
@@ -223,20 +228,20 @@
   },
   "dependencies": {
     "@phcdevworks/spectre-tokens": "^4.0.0",
-    "@phcdevworks/spectre-ui": "^3.0.0",
+    "@phcdevworks/spectre-ui": "^3.1.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@phcdevworks/spectre-manifest": "^1.1.0",
     "@playwright/test": "^1.62.0",
-    "@types/node": "^26.1.1",
+    "@types/node": "^26.1.2",
     "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@typescript-eslint/parser": "^8.65.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "axe-core": "^4.12.1",
     "eslint": "^10.8.0",
-    "globals": "^17.7.0",
+    "globals": "^17.8.0",
     "happy-dom": "^20.11.1",
     "jiti": "^2.7.0",
     "prettier": "^3.9.6",
