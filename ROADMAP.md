@@ -23,6 +23,7 @@ this file does not restate delivered work.
 | 5 | Surface growth and DX — `sp-alert`, `sp-avatar`, `sp-spinner`, `sp-tag`, `sp-pricing-card`; keyboard/form-association audits; invariant duplication tooling; Playwright visual regression | 1.5.0–1.6.0 |
 | 6 | Cross-repo parity with `spectre-ui-astro`, followed by Spectre 4 alignment through `spectre-tokens@^4.0.0` and `spectre-ui@^3.0.0` | 1.6.0–1.10.0 |
 | 7 | `sp-text` — text primitive backed by `getTextClasses`, requested by `spectre-base` | 1.11.0 |
+| 8 | Navigation composition — `sp-nav-item` adds plain-link and dropdown/mega-menu content support inside `sp-nav` | 1.12.0 |
 
 ---
 

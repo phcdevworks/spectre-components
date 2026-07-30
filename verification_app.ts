@@ -201,6 +201,18 @@ const template = html`
     <sp-text variant='brand' size='lg'>Brand-colored large text</sp-text>
     <sp-text family='mono' size='sm'>Monospace small text</sp-text>
   </section>
+
+  <section>
+    <h2>sp-nav / sp-nav-item</h2>
+    <sp-nav aria-label='Primary navigation' bordered>
+      <sp-nav-item href='#home'>Home</sp-nav-item>
+      <sp-nav-item href='#about'>About</sp-nav-item>
+      <sp-nav-item dropdown label='Products'>
+        <a href='#components'>Components</a>
+        <a href='#tokens'>Tokens</a>
+      </sp-nav-item>
+    </sp-nav>
+  </section>
 `;
 
 render(template, document.body);

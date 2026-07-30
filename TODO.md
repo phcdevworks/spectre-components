@@ -1,7 +1,6 @@
 # Spectre Components Execution Todo
 
-No active work is currently open. Phases 1 through 6 are complete, and the
-one standing downstream request (`sp-text`) has shipped — see
+No active work is currently open. Phases 1 through 8 are complete — see
 [ROADMAP.md](ROADMAP.md) for the full delivery history and
 [CHANGELOG.md](CHANGELOG.md) for release-by-release detail.
 
