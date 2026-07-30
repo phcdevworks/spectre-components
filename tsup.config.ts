@@ -31,6 +31,7 @@ export default defineConfig({
     footer: 'src/components/footer/index.ts',
     modal: 'src/components/modal/index.ts',
     nav: 'src/components/nav/index.ts',
+    'nav-item': 'src/components/nav-item/index.ts',
     sidebar: 'src/components/sidebar/index.ts',
     toast: 'src/components/toast/index.ts',
     tooltip: 'src/components/tooltip/index.ts',

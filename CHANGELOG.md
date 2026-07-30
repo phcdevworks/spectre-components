@@ -6,6 +6,14 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `sp-nav-item` — dropdown-capable nav link for use inside `sp-nav`. Renders a
+  plain `<a>` by default, or a dropdown trigger + menu (backed by the existing
+  `getDropdownClasses`/`getDropdownMenuClasses` recipes) when `dropdown` is
+  set. The menu accepts arbitrary projected content, including `sp-grid`, so a
+  single nav link can open either a simple link list or a full mega-menu grid.
+
 ## [1.11.0] - 2026-07-29
 
 **Release Title:** Phase 7 - Text Primitive

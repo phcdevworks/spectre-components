@@ -58,6 +58,7 @@
         "./footer",
         "./modal",
         "./nav",
+        "./nav-item",
         "./sidebar",
         "./toast",
         "./tooltip",

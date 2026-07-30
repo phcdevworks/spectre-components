@@ -216,6 +216,7 @@ rules.
 | `sp-footer`       | `SpectreFooterElement`       | `@phcdevworks/spectre-components/footer`       |
 | `sp-modal`        | `SpectreModalElement`        | `@phcdevworks/spectre-components/modal`        |
 | `sp-nav`          | `SpectreNavElement`          | `@phcdevworks/spectre-components/nav`          |
+| `sp-nav-item`     | `SpectreNavItemElement`      | `@phcdevworks/spectre-components/nav-item`     |
 | `sp-sidebar`      | `SpectreSidebarElement`      | `@phcdevworks/spectre-components/sidebar`      |
 | `sp-toast`        | `SpectreToastElement`        | `@phcdevworks/spectre-components/toast`        |
 | `sp-tooltip`      | `SpectreTooltipElement`      | `@phcdevworks/spectre-components/tooltip`      |
