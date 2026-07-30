@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-07-30
+
+**Release Title:** Phase 8 - Navigation Composition
+
+Contract change type: additive
+
 ### Added
 
 - `sp-nav-item` — dropdown-capable nav link for use inside `sp-nav`. Renders a
@@ -572,7 +578,8 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.11.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.12.0...HEAD
+[1.12.0]: https://github.com/phcdevworks/spectre-components/compare/v1.11.0...v1.12.0
 [1.11.0]: https://github.com/phcdevworks/spectre-components/compare/v1.10.0...v1.11.0
 [1.10.0]: https://github.com/phcdevworks/spectre-components/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/phcdevworks/spectre-components/compare/v1.8.0...v1.9.0

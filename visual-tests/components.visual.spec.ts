@@ -19,6 +19,7 @@ const sections = [
   'sp-alert',
   'sp-testimonial',
   'sp-text',
+  'sp-nav / sp-nav-item',
   'sp-avatar / sp-icon-box / sp-rating / sp-spinner',
   'Layout: sp-container / sp-grid / sp-section / sp-stack',
 ]
