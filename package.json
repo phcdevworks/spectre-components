@@ -173,6 +173,11 @@
       "import": "./dist/nav.js",
       "require": "./dist/nav.cjs"
     },
+    "./nav-item": {
+      "types": "./dist/nav-item.d.ts",
+      "import": "./dist/nav-item.js",
+      "require": "./dist/nav-item.cjs"
+    },
     "./sidebar": {
       "types": "./dist/sidebar.d.ts",
       "import": "./dist/sidebar.js",

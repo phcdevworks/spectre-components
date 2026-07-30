@@ -906,6 +906,48 @@ etc.).
 
 ---
 
+### sp-nav-item
+
+Renders a nav link that can optionally become a dropdown trigger, backed by
+the same Spectre dropdown recipe as `sp-dropdown`. Place it inside `sp-nav`
+alongside plain `<a>` links.
+
+**Attributes**
+
+| Attribute                 | Type    | Default          | Description                                                         |
+| ------------------------- | ------- | ---------------- | ------------------------------------------------------------------- |
+| `dropdown`                | boolean | `false`          | Renders a dropdown trigger + menu instead of a plain `<a>`          |
+| `href`                    | string  | —                | Link target when `dropdown` is `false`                              |
+| `label`                   | string  | —                | Trigger/link text when no content is projected                      |
+| `open`                    | boolean | `false`          | Open/closed menu state (dropdown mode only)                         |
+| `placement`               | string  | `'bottom-start'` | Menu position: `bottom-start`, `bottom-end`, `top-start`, `top-end` |
+| `id` / `title` / `aria-*` | string  | —                | Forwarded to the rendered `<a>` or trigger `<button>`               |
+
+**Content projection** — in dropdown mode, children become the menu content;
+a child with `slot="trigger"` becomes the trigger content instead of `label`.
+Menu content can be a plain list of links or an `sp-grid` for a full mega-menu
+layout. In link mode, children become the link's content.
+
+**Events** — `sp-open` and `sp-close` (dropdown mode only), both `bubbles`.
+
+**Internal targets** — `[data-sp-nav-item-trigger]` selects the trigger
+button; `[data-sp-nav-item-menu]` selects the menu panel.
+
+```html
+<sp-nav>
+  <sp-nav-item href="/">Home</sp-nav-item>
+  <sp-nav-item dropdown label="Products">
+    <sp-grid columns="3" gap="lg">
+      <div>Column one</div>
+      <div>Column two</div>
+      <div>Column three</div>
+    </sp-grid>
+  </sp-nav-item>
+</sp-nav>
+```
+
+---
+
 ### sp-sidebar
 
 Renders an off-canvas `<aside>` with a toggle button and backdrop, backed by the
@@ -1169,6 +1211,7 @@ Each entry point registers only that component and exports only its surface:
 | `.../section`      | `sp-section`      | `defineSpectreSection`, `SpectreSectionElement`, `SpectreSectionProps`                   |
 | `.../stack`        | `sp-stack`        | `defineSpectreStack`, `SpectreStackElement`, stack constants and types                   |
 | `.../nav`          | `sp-nav`          | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                               |
+| `.../nav-item`     | `sp-nav-item`     | `defineSpectreNavItem`, `SpectreNavItemElement`, `SpectreNavItemProps`                   |
 | `.../sidebar`      | `sp-sidebar`      | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                   |
 | `.../dropdown`     | `sp-dropdown`     | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types          |
 | `.../footer`       | `sp-footer`       | `defineSpectreFooter`, `SpectreFooterElement`, `SpectreFooterProps`                      |

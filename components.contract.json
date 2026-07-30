@@ -490,6 +490,20 @@
       }
     },
     {
+      "tag": "sp-nav-item",
+      "elementClass": "SpectreNavItemElement",
+      "entryPoint": "./nav-item",
+      "distFile": "dist/nav-item.js",
+      "exports": {
+        "values": ["defineSpectreNavItem", "SpectreNavItemElement"],
+        "types": ["SpectreNavItemProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
       "tag": "sp-sidebar",
       "elementClass": "SpectreSidebarElement",
       "entryPoint": "./sidebar",
