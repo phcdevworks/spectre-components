@@ -328,31 +328,36 @@ design-system-level decision.
 ### sp-button
 
 Renders a `<button>` with Spectre variant, size, loading, and pill support.
+Set `href` to render a native `<a>` instead, styled with the same classes —
+useful when the button needs to navigate rather than submit/act.
 
 **Attributes**
 
-| Attribute          | Type                                                                  | Default   | Description                                              |
-| ------------------ | --------------------------------------------------------------------- | --------- | -------------------------------------------------------- |
-| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent` | `primary` | Visual style                                             |
-| `size`             | `sm \| md \| lg`                                                      | `md`      | Control size                                             |
-| `type`             | `button \| submit \| reset`                                           | `button`  | Native button type                                       |
-| `label`            | string                                                                | —         | Text label (overridden by content projection)            |
-| `loading`          | boolean                                                               | `false`   | Busy state — disables the button and shows loading label |
-| `loading-label`    | string                                                                | `Loading` | Accessible text shown during loading                     |
-| `disabled`         | boolean                                                               | `false`   | Disables the button                                      |
-| `full-width`       | boolean                                                               | `false`   | Spans full container width                               |
-| `pill`             | boolean                                                               | `false`   | Pill / fully-rounded corners                             |
-| `name`             | string                                                                | —         | Form field name                                          |
-| `value`            | string                                                                | `''`      | Submitted value                                          |
-| `form`             | string                                                                | —         | Associates with a form by ID                             |
-| `autofocus`        | boolean                                                               | `false`   | Autofocus on page load                                   |
-| `id`               | string                                                                | —         | Forwarded to the native `<button>`                       |
-| `title`            | string                                                                | —         | Forwarded to the native `<button>`                       |
-| `aria-label`       | string                                                                | —         | Forwarded to the native `<button>`                       |
-| `aria-labelledby`  | string                                                                | —         | Forwarded to the native `<button>`                       |
-| `aria-describedby` | string                                                                | —         | Forwarded to the native `<button>`                       |
+| Attribute          | Type                                                                  | Default   | Description                                                                   |
+| ------------------ | --------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------|
+| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent` | `primary` | Visual style                                                                  |
+| `size`             | `sm \| md \| lg`                                                      | `md`      | Control size                                                                  |
+| `type`             | `button \| submit \| reset`                                           | `button`  | Native button type (ignored when rendered as a link)                         |
+| `href`             | string                                                                | —         | Renders `<a href>` instead of `<button>` (unless `disabled`/`loading`)        |
+| `target`           | `_blank \| _self \| _parent \| _top`                                  | —         | Forwarded to the native `<a>` when `href` is set                             |
+| `rel`              | string                                                                | —         | Forwarded to the native `<a>` when `href` is set                             |
+| `label`            | string                                                                | —         | Text label (overridden by content projection)                                |
+| `loading`          | boolean                                                               | `false`   | Busy state — disables the button/link and shows loading label                |
+| `loading-label`    | string                                                                | `Loading` | Accessible text shown during loading                                         |
+| `disabled`         | boolean                                                               | `false`   | Disables the button; if `href` is also set, still renders `<button disabled>` |
+| `full-width`       | boolean                                                               | `false`   | Spans full container width                                                   |
+| `pill`             | boolean                                                               | `false`   | Pill / fully-rounded corners                                                 |
+| `name`             | string                                                                | —         | Form field name                                                              |
+| `value`            | string                                                                | `''`      | Submitted value                                                              |
+| `form`             | string                                                                | —         | Associates with a form by ID                                                 |
+| `autofocus`        | boolean                                                               | `false`   | Autofocus on page load                                                       |
+| `id`               | string                                                                | —         | Forwarded to the native element                                              |
+| `title`            | string                                                                | —         | Forwarded to the native element                                              |
+| `aria-label`       | string                                                                | —         | Forwarded to the native element                                              |
+| `aria-labelledby`  | string                                                                | —         | Forwarded to the native element                                              |
+| `aria-describedby` | string                                                                | —         | Forwarded to the native element                                              |
 
-**Events** — native button events bubble normally (`click`, `focus`, `blur`).
+**Events** — native button/link events bubble normally (`click`, `focus`, `blur`).
 
 **Content projection** — place children inside `<sp-button>` to use them as
 button content instead of the `label` property:
@@ -364,7 +369,16 @@ button content instead of the `label` property:
 </sp-button>
 ```
 
-**Internal target** — `[data-sp-button-native]` selects the native `<button>`.
+**Link mode:**
+
+```html
+<sp-button variant="secondary" href="/pricing" target="_blank" rel="noopener">
+  View pricing
+</sp-button>
+```
+
+**Internal target** — `[data-sp-button-native]` selects the native
+`<button>` or `<a>`.
 
 ---
 

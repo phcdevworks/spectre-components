@@ -11,6 +11,7 @@ export {
   defineSpectreButton,
   SpectreButtonElement,
   type SpectreButtonProps,
+  type SpectreButtonTarget,
 } from './sp-button';
 
 export {

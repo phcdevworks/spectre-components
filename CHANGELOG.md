@@ -6,6 +6,18 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+Contract change type: additive
+
+### Added
+
+- `sp-button` — new `href`, `target`, and `rel` properties. When `href` is set
+  (and the button is not disabled/loading), `sp-button` renders a native `<a>`
+  styled with the same `getButtonClasses` recipe instead of a `<button>`,
+  matching the polymorphic `as="a"` behavior already available in
+  `SpButton.astro`. Disabled or loading still renders a native `<button
+  disabled>` even if `href` is set, since a disabled anchor has no reliable
+  native semantics.
+
 ## [1.12.0] - 2026-07-30
 
 **Release Title:** Phase 8 - Navigation Composition
