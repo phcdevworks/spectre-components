@@ -249,4 +249,64 @@ describe('sp-button', () => {
     expect(button?.hasAttribute('value')).toBe(true);
     expect(button?.getAttribute('value')).toBe('');
   });
+
+  it('renders a native anchor when href is set', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.href = '/pricing';
+    element.target = '_blank';
+    element.rel = 'noopener';
+    element.variant = 'secondary';
+    element.append(document.createTextNode('View pricing'));
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.querySelector('button')).toBeNull();
+
+    const link = element.querySelector('a');
+    expect(link).not.toBeNull();
+    expect(link?.getAttribute('href')).toBe('/pricing');
+    expect(link?.getAttribute('target')).toBe('_blank');
+    expect(link?.getAttribute('rel')).toBe('noopener');
+    expect(link?.className).toContain('sp-btn');
+    expect(link?.className).toContain('sp-btn--secondary');
+    expect(link?.textContent?.trim()).toBe('View pricing');
+  });
+
+  it('falls back to a disabled native button when href is set but disabled is true', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.href = '/pricing';
+    element.disabled = true;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.querySelector('a')).toBeNull();
+
+    const button = element.querySelector('button');
+    expect(button).not.toBeNull();
+    expect(button?.disabled).toBe(true);
+    expect(button?.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  it('handles focus and blur on the rendered anchor', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement;
+    element.href = '/pricing';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const link = element.querySelector('a');
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+
+    link?.addEventListener('focus', onFocus);
+    link?.addEventListener('blur', onBlur);
+
+    element.focus();
+    expect(onFocus).toHaveBeenCalled();
+
+    element.blur();
+    expect(onBlur).toHaveBeenCalled();
+  });
 });

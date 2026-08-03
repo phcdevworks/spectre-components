@@ -18,6 +18,8 @@ import {
   type ButtonVariant
 } from '@phcdevworks/spectre-ui'
 
+export type SpectreButtonTarget = '_blank' | '_self' | '_parent' | '_top'
+
 export interface SpectreButtonProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
@@ -26,6 +28,7 @@ export interface SpectreButtonProps {
   disabled?: boolean | undefined
   form?: string | undefined
   fullWidth?: boolean | undefined
+  href?: string | undefined
   iconOnly?: boolean | undefined
   id?: string | null | undefined
   label?: string | undefined
@@ -33,7 +36,9 @@ export interface SpectreButtonProps {
   loadingLabel?: string | undefined
   name?: string | undefined
   pill?: boolean | undefined
+  rel?: string | undefined
   size?: SpectreInputSize | undefined
+  target?: SpectreButtonTarget | undefined
   title?: string | null | undefined
   type?: SpectreButtonType | undefined
   variant?: SpectreButtonVariant | undefined
@@ -48,13 +53,16 @@ export class SpectreButtonElement
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    href: { type: String, reflect: true },
     iconOnly: { attribute: 'icon-only', type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
     loadingLabel: { attribute: 'loading-label', type: String, reflect: true },
     name: { type: String, reflect: true },
     pill: { type: Boolean, reflect: true },
+    rel: { type: String },
     size: { type: String, reflect: true },
+    target: { type: String },
     type: { type: String, reflect: true },
     variant: { type: String, reflect: true },
     value: { type: String }
@@ -63,13 +71,16 @@ export class SpectreButtonElement
   disabled: boolean | undefined = false
   form: string | undefined
   fullWidth: boolean | undefined = false
+  href: string | undefined
   iconOnly: boolean | undefined = false
   label: string | undefined
   loading: boolean | undefined = false
   loadingLabel: string | undefined = 'Loading'
   name: string | undefined
   pill: boolean | undefined = false
+  rel: string | undefined
   size: SpectreInputSize | undefined = 'md'
+  target: SpectreButtonTarget | undefined
   type: SpectreButtonType | undefined = 'button'
   variant: SpectreButtonVariant | undefined = 'primary'
   value: string | undefined = ''
@@ -96,6 +107,10 @@ export class SpectreButtonElement
 
   override set autofocus(value: boolean | undefined | null) {
     super.autofocus = value
+  }
+
+  private get isLink(): boolean {
+    return Boolean(this.href) && !this.isDisabled
   }
 
   protected override getContentContainer(): Element | null {
@@ -188,11 +203,15 @@ export class SpectreButtonElement
   }
 
   override focus(options?: FocusOptions): void {
-    ;(this.getContentContainer() as HTMLButtonElement | null)?.focus(options)
+    ;(
+      this.getContentContainer() as HTMLButtonElement | HTMLAnchorElement | null
+    )?.focus(options)
   }
 
   override blur(): void {
-    ;(this.getContentContainer() as HTMLButtonElement | null)?.blur()
+    ;(
+      this.getContentContainer() as HTMLButtonElement | HTMLAnchorElement | null
+    )?.blur()
   }
 
   private renderButtonContent(): TemplateResult | Node[] | typeof nothing {
@@ -218,12 +237,31 @@ export class SpectreButtonElement
   }
 
   override render() {
+    if (this.isLink) {
+      return html`<a
+        aria-busy="${this.loading ? 'true' : 'false'}"
+        aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
+        aria-label="${ifDefined(this.forwardedAriaLabel)}"
+        aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
+        class="${this.buttonClasses}"
+        data-sp-button-native
+        href="${ifDefined(this.href)}"
+        id="${ifDefined(this.id || undefined)}"
+        rel="${ifDefined(this.rel || undefined)}"
+        target="${ifDefined(this.target || undefined)}"
+        title="${ifDefined(this.title || undefined)}"
+      >
+        ${this.renderButtonContent()}
+      </a>`
+    }
+
     return html`<button
       aria-busy="${this.loading ? 'true' : 'false'}"
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       ?autofocus="${this.autofocus}"
+      aria-disabled="${ifDefined(this.href && this.isDisabled ? 'true' : undefined)}"
       class="${this.buttonClasses}"
       data-sp-button-native
       ?disabled="${this.isDisabled}"
