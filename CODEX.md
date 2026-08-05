@@ -171,19 +171,21 @@ Use this checklist before cutting every release (tag + GitHub Release).
 1. `package.json` version is bumped to the intended release version.
 2. `CHANGELOG.md [Unreleased]` notes are moved to a new versioned entry:
    `## [<version>] - <YYYY-MM-DD>`, with a release title line in the format
-   `**Release Title:** Phase <N> - <short title>`, where `Phase <N>` is the
-   active phase name from this repo's own `ROADMAP.md` and `<short title>`
-   is a concise summary of what shipped. Every release must belong to a
-   numbered roadmap phase. If no phase is active, add the next numbered phase
-   to `ROADMAP.md` before preparing the release.
+   `**Release Title:** <short title>`. Release titles do not include the
+   version or roadmap phase; the version remains in the changelog heading and
+   git tag. Every release must still belong to a numbered roadmap phase. If no
+   phase is active, add the next numbered phase to `ROADMAP.md` before preparing
+   the release.
 3. Compare links at the bottom of `CHANGELOG.md` are updated.
 4. Shared validation gate passes on the release-ready state.
 5. Stage and commit the version bump and changelog update.
 6. Create the git tag: `git tag v<version>` (matching `package.json`
    exactly), then push the commit and tag.
 7. Publish the GitHub Release from that tag: `gh release create v<version>
-   --title "v<version>: Phase <N> - <short title>" --notes-file` (extract the
-   new version's changelog section, or `--notes` inline for a short release).
+   --title "<short title>" --notes-file` (extract the new version's changelog
+   section, or `--notes` inline for a short release). Keep the `v` prefix on
+   the tag, but do not include the version or roadmap phase in the release
+   title.
 8. `npm publish` is **not** run by Codex — that stays with Bradley Potts.
 
 ### Handoff
