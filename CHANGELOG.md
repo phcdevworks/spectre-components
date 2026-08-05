@@ -8,7 +8,7 @@ reflects package releases published to npm.
 
 ## [1.14.0] - 2026-08-06
 
-**Release Title:** Phase 10 - Recipe Surface Alignment
+**Release Title:** Recipe Surface Alignment
 
 Contract change type: additive
 
@@ -29,7 +29,7 @@ Contract change type: additive
 
 ## [1.13.0] - 2026-08-04
 
-**Release Title:** Phase 9 - Button Link Semantics
+**Release Title:** Button Link Semantics
 
 Contract change type: additive
 
@@ -45,7 +45,7 @@ Contract change type: additive
 
 ## [1.12.0] - 2026-07-30
 
-**Release Title:** Phase 8 - Navigation Composition
+**Release Title:** Navigation Composition
 
 Contract change type: additive
 
@@ -59,7 +59,7 @@ Contract change type: additive
 
 ## [1.11.0] - 2026-07-29
 
-**Release Title:** Phase 7 - Text Primitive
+**Release Title:** Text Primitive
 
 Contract change type: additive
 
@@ -73,7 +73,7 @@ Contract change type: additive
 
 ## [1.10.0] - 2026-07-27
 
-**Release Title:** Phase 6 - Spectre 4 Alignment
+**Release Title:** Spectre 4 Alignment
 
 Contract change type: behavioral change
 
@@ -97,7 +97,7 @@ Contract change type: behavioral change
 
 ## [1.9.0] - 2026-07-21
 
-**Release Title:** Phase 6 - TypeScript 7 Compatibility
+**Release Title:** TypeScript 7 Compatibility
 
 Contract change type: additive
 
@@ -117,7 +117,7 @@ Contract change type: additive
 
 ## [1.8.0] - 2026-07-07
 
-**Release Title:** Phase 6 - Footer Parity
+**Release Title:** Footer Parity
 
 Contract change type: additive
 
@@ -129,7 +129,7 @@ Contract change type: additive
 
 ## [1.7.0] - 2026-07-02
 
-**Release Title:** Phase 6 - Interaction Parity
+**Release Title:** Interaction Parity
 
 Contract change type: additive
 
@@ -176,7 +176,7 @@ Contract change type: additive
 
 ## [1.6.0] - 2026-07-01
 
-**Release Title:** Phase 6 - Layout and Recipe Alignment
+**Release Title:** Layout and Recipe Alignment
 
 Contract change type: additive
 
@@ -301,7 +301,7 @@ Contract change type: additive
 
 ## [1.5.0] - 2026-06-11
 
-**Release Title:** Phase 5 - Display Surface Expansion
+**Release Title:** Display Surface Expansion
 
 Contract change type: additive
 
@@ -342,7 +342,7 @@ Contract change type: additive
 
 ## [1.4.0] - 2026-06-07
 
-**Release Title:** Phase 4 - Display Component Expansion and Ecosystem Manifest
+**Release Title:** Display Component Expansion and Ecosystem Manifest
 Gate
 
 Contract change type: additive
@@ -391,7 +391,7 @@ Contract change type: additive
 
 ## [1.3.0] - 2026-06-04
 
-**Release Title:** Phase 3 - Contract Validation and Accessibility Audit Gate
+**Release Title:** Contract Validation and Accessibility Audit Gate
 
 Contract change type: additive
 
@@ -420,7 +420,7 @@ Contract change type: additive
 
 ## [1.2.0] - 2026-05-23
 
-**Release Title:** Phase 2 - Styling Contract Alignment and Export Validation
+**Release Title:** Styling Contract Alignment and Export Validation
 
 Contract change type: additive
 
@@ -497,7 +497,7 @@ Contract change type: additive
 
 ## [1.1.0] - 2026-05-05
 
-**Release Title:** Phase 1 - Foundation API Tightening and Component
+**Release Title:** Foundation API Tightening and Component
 Documentation
 
 Contract change type: additive
@@ -538,7 +538,7 @@ Contract change type: additive
 
 ## [1.0.0] - 2026-04-26
 
-**Release Title:** Phase 1 - Foundation Stabilization and Package Release
+**Release Title:** Foundation Stabilization and Package Release
 
 Contract change type: N/A
 
@@ -575,7 +575,7 @@ Contract change type: N/A
 
 ## [0.0.1] - 2026-04-13
 
-**Release Title:** Phase 0 - Initial Component Foundations
+**Release Title:** Initial Component Foundations
 
 Contract change type: N/A
 
