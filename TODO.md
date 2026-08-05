@@ -1,6 +1,6 @@
 # Spectre Components Execution Todo
 
-No active work is currently open. Phases 1 through 8 are complete — see
+No active work is currently open. Phases 1 through 10 are complete — see
 [ROADMAP.md](ROADMAP.md) for the full delivery history and
 [CHANGELOG.md](CHANGELOG.md) for release-by-release detail.
 
