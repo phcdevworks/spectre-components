@@ -131,4 +131,38 @@ describe('sp-text', () => {
     const native = element.querySelector('[data-sp-text-native]')
     expect(native?.getAttribute('aria-label')).toBe('Status message')
   })
+
+  it('defaults to transform=undefined and applies no transform class', async () => {
+    const element = document.createElement('sp-text') as SpectreTextElement
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.transform).toBeUndefined()
+    const native = element.querySelector('[data-sp-text-native]')
+    expect(native?.className).not.toMatch(
+      /sp-text--(uppercase|lowercase|capitalize)/
+    )
+  })
+
+  it('reflects a valid transform onto the rendered classes', async () => {
+    const element = document.createElement('sp-text') as SpectreTextElement
+    element.transform = 'uppercase'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const native = element.querySelector('[data-sp-text-native]')
+    expect(native?.className).toContain('sp-text--uppercase')
+  })
+
+  it('falls back to transform=undefined for an invalid transform', async () => {
+    const element = document.createElement('sp-text') as SpectreTextElement
+    // @ts-expect-error - testing invalid value
+    element.transform = 'not-a-transform'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.transform).toBeUndefined()
+  })
 })

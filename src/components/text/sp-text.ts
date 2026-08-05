@@ -7,10 +7,12 @@ import {
   isTextFamily,
   isTextLevel,
   isTextSize,
+  isTextTransform,
   isTextVariant,
   type SpectreTextFamily,
   type SpectreTextLevel,
   type SpectreTextSize,
+  type SpectreTextTransform,
   type SpectreTextVariant
 } from '../../utils/form'
 
@@ -36,6 +38,7 @@ export interface SpectreTextProps {
   level?: SpectreTextLevel | undefined
   size?: SpectreTextSize | undefined
   title?: string | null | undefined
+  transform?: SpectreTextTransform | undefined
   variant?: SpectreTextVariant | undefined
 }
 
@@ -47,12 +50,14 @@ export class SpectreTextElement
     family: { type: String, reflect: true },
     level: { type: String, reflect: true },
     size: { type: String, reflect: true },
+    transform: { type: String, reflect: true },
     variant: { type: String, reflect: true }
   }
 
   family: SpectreTextFamily | undefined
   level: SpectreTextLevel | undefined = 'p'
   size: SpectreTextSize | undefined = 'md'
+  transform: SpectreTextTransform | undefined
   variant: SpectreTextVariant | undefined = 'default'
 
   protected override willUpdate(
@@ -72,6 +77,14 @@ export class SpectreTextElement
 
     if (changedProperties.has('variant') && !isTextVariant(this.variant)) {
       this.variant = 'default'
+    }
+
+    if (
+      changedProperties.has('transform') &&
+      this.transform !== undefined &&
+      !isTextTransform(this.transform)
+    ) {
+      this.transform = undefined
     }
   }
 
@@ -109,6 +122,7 @@ export class SpectreTextElement
     const textClasses = getTextClasses({
       ...(this.family !== undefined && { family: this.family }),
       size: this.size ?? 'md',
+      ...(this.transform !== undefined && { transform: this.transform }),
       variant: this.variant ?? 'default'
     })
 

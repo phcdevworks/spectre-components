@@ -6,6 +6,21 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `sp-text` — new `transform` property (`none | uppercase | lowercase |
+  capitalize`), surfacing the `transform` option added to `getTextClasses` in
+  `@phcdevworks/spectre-ui` 3.2.0.
+- `sp-grid` — new `span` property (`1`-`12` or `'full'`, or a per-breakpoint
+  `{ base?, md?, lg? }` object; JS property only, not attribute-reflected),
+  surfacing the `span` option added to `getGridClasses` in
+  `@phcdevworks/spectre-ui` 3.2.0.
+
+### Changed
+
+- Bumped `@phcdevworks/spectre-tokens` to `^4.1.0` and `@phcdevworks/spectre-ui`
+  to `^3.2.0`.
+
 ## [1.13.0] - 2026-08-04
 
 **Release Title:** Phase 9 - Button Link Semantics

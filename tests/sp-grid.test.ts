@@ -70,4 +70,49 @@ describe('sp-grid', () => {
 
     expect(element.gap).toBe('md');
   });
+
+  it('defaults to span=undefined and applies no span class', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.span).toBeUndefined();
+    const div = element.querySelector('div[data-sp-grid-native]');
+    expect(div?.className).not.toContain('sp-col-span-');
+  });
+
+  it('reflects a single span value onto the div classes', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement;
+    element.span = 6;
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div[data-sp-grid-native]');
+    expect(div?.className).toContain('sp-col-span-6');
+  });
+
+  it('reflects per-breakpoint span options onto the div classes', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement;
+    element.span = { base: 12, md: 6, lg: 4 };
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div[data-sp-grid-native]');
+    expect(div?.className).toContain('sp-col-span-12');
+    expect(div?.className).toContain('sp-md-col-span-6');
+    expect(div?.className).toContain('sp-lg-col-span-4');
+  });
+
+  it('falls back to span=undefined for an invalid value', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement;
+    // @ts-expect-error - testing invalid value
+    element.span = 'not-a-span';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.span).toBeUndefined();
+  });
 });
