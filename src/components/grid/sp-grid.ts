@@ -5,14 +5,20 @@ import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isGridColumns,
   isGridGap,
+  isGridSpan,
+  isGridSpanOptions,
   type SpectreGridColumns,
-  type SpectreGridGap
+  type SpectreGridGap,
+  type SpectreGridSpan,
+  type SpectreGridSpanOptions
 } from '../../utils/form'
 
 import {
   getGridClasses,
   type GridColumns,
-  type GridGap
+  type GridGap,
+  type GridSpan,
+  type GridSpanOptions
 } from '@phcdevworks/spectre-ui'
 import { normalizeInt } from '../../utils/form'
 
@@ -23,6 +29,7 @@ export interface SpectreGridProps {
   columns?: SpectreGridColumns | undefined
   gap?: SpectreGridGap | undefined
   id?: string | null | undefined
+  span?: SpectreGridSpan | SpectreGridSpanOptions | undefined
   title?: string | null | undefined
 }
 
@@ -32,11 +39,13 @@ export class SpectreGridElement
 {
   static properties = {
     columns: { type: Number, reflect: true },
-    gap: { type: String, reflect: true }
+    gap: { type: String, reflect: true },
+    span: { type: Object }
   }
 
   columns: SpectreGridColumns | undefined = 1
   gap: SpectreGridGap | undefined = 'md'
+  span: SpectreGridSpan | SpectreGridSpanOptions | undefined
 
   override get id(): string {
     return super.id
@@ -82,12 +91,23 @@ export class SpectreGridElement
     ) {
       this.gap = 'md'
     }
+    if (
+      changedProperties.has('span') &&
+      this.span !== undefined &&
+      !isGridSpan(this.span) &&
+      !isGridSpanOptions(this.span)
+    ) {
+      this.span = undefined
+    }
   }
 
   private get gridClasses(): string {
     return getGridClasses({
       columns: this.columns as GridColumns,
-      gap: this.gap as GridGap
+      gap: this.gap as GridGap,
+      ...(this.span !== undefined && {
+        span: this.span as GridSpan | GridSpanOptions
+      })
     })
   }
 

@@ -4,10 +4,10 @@
 Spectre system. It implements Spectre's design contracts as reusable,
 accessible, framework-agnostic web components.
 
-Maintained by [PHCDevworks](https://go.phcdev.co). It draws on Spectre's
-token and styling contracts to ship drop-in UI primitives, so applications
-that need working components — rather than raw CSS or recipes to assemble
-themselves — can consume Spectre without a framework-specific adapter.
+Maintained by [PHCDevworks](https://go.phcdev.co). It draws on Spectre's token
+and styling contracts to ship drop-in UI primitives, so applications that need
+working components — rather than raw CSS or recipes to assemble themselves — can
+consume Spectre without a framework-specific adapter.
 
 ## Repository Snapshot
 
@@ -327,37 +327,38 @@ design-system-level decision.
 
 ### sp-button
 
-Renders a `<button>` with Spectre variant, size, loading, and pill support.
-Set `href` to render a native `<a>` instead, styled with the same classes —
-useful when the button needs to navigate rather than submit/act.
+Renders a `<button>` with Spectre variant, size, loading, and pill support. Set
+`href` to render a native `<a>` instead, styled with the same classes — useful
+when the button needs to navigate rather than submit/act.
 
 **Attributes**
 
 | Attribute          | Type                                                                  | Default   | Description                                                                   |
-| ------------------ | --------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------|
+| ------------------ | --------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
 | `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent` | `primary` | Visual style                                                                  |
 | `size`             | `sm \| md \| lg`                                                      | `md`      | Control size                                                                  |
-| `type`             | `button \| submit \| reset`                                           | `button`  | Native button type (ignored when rendered as a link)                         |
+| `type`             | `button \| submit \| reset`                                           | `button`  | Native button type (ignored when rendered as a link)                          |
 | `href`             | string                                                                | —         | Renders `<a href>` instead of `<button>` (unless `disabled`/`loading`)        |
-| `target`           | `_blank \| _self \| _parent \| _top`                                  | —         | Forwarded to the native `<a>` when `href` is set                             |
-| `rel`              | string                                                                | —         | Forwarded to the native `<a>` when `href` is set                             |
-| `label`            | string                                                                | —         | Text label (overridden by content projection)                                |
-| `loading`          | boolean                                                               | `false`   | Busy state — disables the button/link and shows loading label                |
-| `loading-label`    | string                                                                | `Loading` | Accessible text shown during loading                                         |
+| `target`           | `_blank \| _self \| _parent \| _top`                                  | —         | Forwarded to the native `<a>` when `href` is set                              |
+| `rel`              | string                                                                | —         | Forwarded to the native `<a>` when `href` is set                              |
+| `label`            | string                                                                | —         | Text label (overridden by content projection)                                 |
+| `loading`          | boolean                                                               | `false`   | Busy state — disables the button/link and shows loading label                 |
+| `loading-label`    | string                                                                | `Loading` | Accessible text shown during loading                                          |
 | `disabled`         | boolean                                                               | `false`   | Disables the button; if `href` is also set, still renders `<button disabled>` |
-| `full-width`       | boolean                                                               | `false`   | Spans full container width                                                   |
-| `pill`             | boolean                                                               | `false`   | Pill / fully-rounded corners                                                 |
-| `name`             | string                                                                | —         | Form field name                                                              |
-| `value`            | string                                                                | `''`      | Submitted value                                                              |
-| `form`             | string                                                                | —         | Associates with a form by ID                                                 |
-| `autofocus`        | boolean                                                               | `false`   | Autofocus on page load                                                       |
-| `id`               | string                                                                | —         | Forwarded to the native element                                              |
-| `title`            | string                                                                | —         | Forwarded to the native element                                              |
-| `aria-label`       | string                                                                | —         | Forwarded to the native element                                              |
-| `aria-labelledby`  | string                                                                | —         | Forwarded to the native element                                              |
-| `aria-describedby` | string                                                                | —         | Forwarded to the native element                                              |
+| `full-width`       | boolean                                                               | `false`   | Spans full container width                                                    |
+| `pill`             | boolean                                                               | `false`   | Pill / fully-rounded corners                                                  |
+| `name`             | string                                                                | —         | Form field name                                                               |
+| `value`            | string                                                                | `''`      | Submitted value                                                               |
+| `form`             | string                                                                | —         | Associates with a form by ID                                                  |
+| `autofocus`        | boolean                                                               | `false`   | Autofocus on page load                                                        |
+| `id`               | string                                                                | —         | Forwarded to the native element                                               |
+| `title`            | string                                                                | —         | Forwarded to the native element                                               |
+| `aria-label`       | string                                                                | —         | Forwarded to the native element                                               |
+| `aria-labelledby`  | string                                                                | —         | Forwarded to the native element                                               |
+| `aria-describedby` | string                                                                | —         | Forwarded to the native element                                               |
 
-**Events** — native button/link events bubble normally (`click`, `focus`, `blur`).
+**Events** — native button/link events bubble normally (`click`, `focus`,
+`blur`).
 
 **Content projection** — place children inside `<sp-button>` to use them as
 button content instead of the `label` property:
@@ -377,8 +378,8 @@ button content instead of the `label` property:
 </sp-button>
 ```
 
-**Internal target** — `[data-sp-button-native]` selects the native
-`<button>` or `<a>`.
+**Internal target** — `[data-sp-button-native]` selects the native `<button>` or
+`<a>`.
 
 ---
 
@@ -834,11 +835,12 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 
 **Attributes**
 
-| Attribute                 | Type                          | Default | Description                     |
-| ------------------------- | ----------------------------- | ------- | ------------------------------- |
-| `columns`                 | `1 \| 2 \| 3 \| 4 \| 6 \| 12` | `1`     | Number of grid columns          |
-| `gap`                     | `sm \| md \| lg`              | `md`    | Gap between grid items          |
-| `id` / `title` / `aria-*` | string                        | —       | Forwarded to the native `<div>` |
+| Attribute                 | Type                                                         | Default | Description                                                 |
+| ------------------------- | ------------------------------------------------------------ | ------- | ----------------------------------------------------------- |
+| `columns`                 | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                | `1`     | Number of grid columns                                      |
+| `gap`                     | `sm \| md \| lg`                                             | `md`    | Gap between grid items                                      |
+| `span`                    | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only) | —       | Column span for a grid item, single value or per-breakpoint |
+| `id` / `title` / `aria-*` | string                                                       | —       | Forwarded to the native `<div>`                             |
 
 **Content projection** — children become grid items.
 
@@ -893,8 +895,8 @@ Renders a `<footer>` backed by the Spectre footer recipe.
 | `full-width`              | boolean | `false` | Spans full container width         |
 | `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<footer>` |
 
-**Content projection** — children become the footer content (links, legal
-text, etc.).
+**Content projection** — children become the footer content (links, legal text,
+etc.).
 
 **Internal target** — `[data-sp-footer-native]` selects the native `<footer>`.
 
@@ -922,8 +924,8 @@ etc.).
 
 ### sp-nav-item
 
-Renders a nav link that can optionally become a dropdown trigger, backed by
-the same Spectre dropdown recipe as `sp-dropdown`. Place it inside `sp-nav`
+Renders a nav link that can optionally become a dropdown trigger, backed by the
+same Spectre dropdown recipe as `sp-dropdown`. Place it inside `sp-nav`
 alongside plain `<a>` links.
 
 **Attributes**
@@ -937,15 +939,15 @@ alongside plain `<a>` links.
 | `placement`               | string  | `'bottom-start'` | Menu position: `bottom-start`, `bottom-end`, `top-start`, `top-end` |
 | `id` / `title` / `aria-*` | string  | —                | Forwarded to the rendered `<a>` or trigger `<button>`               |
 
-**Content projection** — in dropdown mode, children become the menu content;
-a child with `slot="trigger"` becomes the trigger content instead of `label`.
-Menu content can be a plain list of links or an `sp-grid` for a full mega-menu
+**Content projection** — in dropdown mode, children become the menu content; a
+child with `slot="trigger"` becomes the trigger content instead of `label`. Menu
+content can be a plain list of links or an `sp-grid` for a full mega-menu
 layout. In link mode, children become the link's content.
 
 **Events** — `sp-open` and `sp-close` (dropdown mode only), both `bubbles`.
 
-**Internal targets** — `[data-sp-nav-item-trigger]` selects the trigger
-button; `[data-sp-nav-item-menu]` selects the menu panel.
+**Internal targets** — `[data-sp-nav-item-trigger]` selects the trigger button;
+`[data-sp-nav-item-menu]` selects the menu panel.
 
 ```html
 <sp-nav>
@@ -1110,13 +1112,14 @@ switches with `level` while the recipe call and styling stay the same.
 
 **Attributes**
 
-| Attribute                 | Type                                                    | Default   | Description                            |
-| ------------------------- | -------------------------------------------------------- | --------- | --------------------------------------- |
-| `level`                   | `h1 \| h2 \| h3 \| h4 \| h5 \| h6 \| p \| span`          | `p`       | Rendered element tag                    |
-| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl \| 5xl \| 6xl` | `md` | Text size scale                         |
-| `variant`                 | `default \| muted \| subtle \| meta \| brand`            | `default` | Text color role                         |
-| `family`                  | `sans \| serif \| mono`                                  | —         | Optional font family override           |
-| `id` / `title` / `aria-*` | string                                                    | —         | Forwarded to the rendered native element |
+| Attribute                 | Type                                                            | Default   | Description                              |
+| ------------------------- | --------------------------------------------------------------- | --------- | ---------------------------------------- |
+| `level`                   | `h1 \| h2 \| h3 \| h4 \| h5 \| h6 \| p \| span`                 | `p`       | Rendered element tag                     |
+| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl \| 5xl \| 6xl` | `md`      | Text size scale                          |
+| `variant`                 | `default \| muted \| subtle \| meta \| brand`                   | `default` | Text color role                          |
+| `family`                  | `sans \| serif \| mono`                                         | —         | Optional font family override            |
+| `transform`               | `none \| uppercase \| lowercase \| capitalize`                  | —         | Optional text transform                  |
+| `id` / `title` / `aria-*` | string                                                          | —         | Forwarded to the rendered native element |
 
 **Content projection** — children become the text content.
 
@@ -1317,14 +1320,14 @@ pass.
 ## AI And Automation Boundaries
 
 Claude Code (`claude-sonnet-4-6`) is the primary development agent for this
-repository. Codex handles releases, including cutting tagged releases and
-GitHub Releases, and production stabilization. Jules handles small automated
-fixes and dependency updates. GitHub Copilot provides development support.
+repository. Codex handles releases, including cutting tagged releases and GitHub
+Releases, and production stabilization. Jules handles small automated fixes and
+dependency updates. GitHub Copilot provides development support.
 
-All AI agents with repository access (Claude Code, Codex, Copilot, Jules)
-have commit, push, and tag authority in this repository. Publishing to npm
-remains Bradley Potts's sole authority. See [AGENTS.md](AGENTS.md) for the
-full commit-policy and release-authority grant.
+All AI agents with repository access (Claude Code, Codex, Copilot, Jules) have
+commit, push, and tag authority in this repository. Publishing to npm remains
+Bradley Potts's sole authority. See [AGENTS.md](AGENTS.md) for the full
+commit-policy and release-authority grant.
 
 **Protected from automated change:** component public API surface (tags,
 properties, events, slots, ARIA), the light-DOM rendering model, and the

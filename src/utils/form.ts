@@ -229,6 +229,38 @@ export function isGridGap(value: unknown): value is SpectreGridGap {
   return (spectreGridGaps as readonly string[]).includes(value as string)
 }
 
+export const spectreGridSpans = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 'full'
+] as const
+
+export type SpectreGridSpan = (typeof spectreGridSpans)[number]
+
+export function isGridSpan(value: unknown): value is SpectreGridSpan {
+  return (spectreGridSpans as readonly (number | string)[]).includes(
+    value as number | string
+  )
+}
+
+export interface SpectreGridSpanOptions {
+  base?: SpectreGridSpan
+  md?: SpectreGridSpan
+  lg?: SpectreGridSpan
+}
+
+export function isGridSpanOptions(
+  value: unknown
+): value is SpectreGridSpanOptions {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  const candidate = value as Record<string, unknown>
+  return (
+    (candidate.base === undefined || isGridSpan(candidate.base)) &&
+    (candidate.md === undefined || isGridSpan(candidate.md)) &&
+    (candidate.lg === undefined || isGridSpan(candidate.lg))
+  )
+}
+
 export const spectreStackDirections = ['vertical', 'horizontal'] as const
 
 export type SpectreStackDirection = (typeof spectreStackDirections)[number]
@@ -361,6 +393,23 @@ export type SpectreTextLevel = (typeof spectreTextLevels)[number]
 
 export function isTextLevel(value: unknown): value is SpectreTextLevel {
   return (spectreTextLevels as readonly string[]).includes(value as string)
+}
+
+export const spectreTextTransforms = [
+  'none',
+  'uppercase',
+  'lowercase',
+  'capitalize'
+] as const
+
+export type SpectreTextTransform = (typeof spectreTextTransforms)[number]
+
+export function isTextTransform(
+  value: unknown
+): value is SpectreTextTransform {
+  return (spectreTextTransforms as readonly string[]).includes(
+    value as string
+  )
 }
 
 export function normalizeInt(
