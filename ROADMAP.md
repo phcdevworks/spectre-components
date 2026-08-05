@@ -25,6 +25,7 @@ this file does not restate delivered work.
 | 7 | `sp-text` — text primitive backed by `getTextClasses`, requested by `spectre-base` | 1.11.0 |
 | 8 | Navigation composition — `sp-nav-item` adds plain-link and dropdown/mega-menu content support inside `sp-nav` | 1.12.0 |
 | 9 | Button link semantics — `sp-button` adds native anchor rendering for navigation actions | 1.13.0 |
+| 10 | Recipe surface alignment — `sp-text` text transforms and responsive `sp-grid` column spans from `spectre-ui` 3.2.0 | 1.14.0 |
 
 ---
 
