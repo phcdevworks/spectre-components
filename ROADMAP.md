@@ -31,10 +31,13 @@ this file does not restate delivered work.
 
 ## What's Next
 
-No active phase is currently open. New component or contract work is
-demand-driven: it opens only when `spectre-ui` (or another downstream
-consumer) surfaces a concrete missing recipe or requirement. See
-[TODO.md](TODO.md) for the current work queue.
+### Phase 11 — Inner Layout Utility Forwarding
+
+downstream integration's first production child theme exposed a delivery gap: layout
+utilities applied to a custom-element host do not reach the native light-DOM
+element that owns the component recipe classes. Phase 11 will add an explicit
+inner-class contract to layout components after the `spectre-ui` Phase 8 layout
+utility release is published. See [TODO.md](TODO.md) for the gated work queue.
 
 ---
 
