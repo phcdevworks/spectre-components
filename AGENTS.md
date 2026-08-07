@@ -104,10 +104,10 @@ Roadmap Self-Expansion." Applied to this repo:
   doesn't exist upstream, append the request to `spectre-ui/TODO.md` under
   `## Requested by Downstream`, dated, with the reason and a link back to this
   repo's own TODO.md/ROADMAP.md. Never recreate the recipe locally instead.
-- There is no known downstream consumer of this repo within the workspace yet.
-  If one appears, it should append requests to this repo's own `TODO.md` under
-  `## Requested by Downstream`, kept visible and separate from self-planned
-  component work.
+- downstream integration is a confirmed downstream consumer through `spectre-base`; its
+  source repo is not currently present in this workspace. Requests from that
+  integration belong in this repo's `TODO.md` under `## Requested by
+  Downstream`, kept visible and separate from self-planned component work.
 - This repo's own [ROADMAP.md](ROADMAP.md) may be proactively expanded with new
   or reordered phases by the agent's own analysis — but never mark a phase
   delivered without `npm run check` passing, and never add a speculative new

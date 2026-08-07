@@ -39,6 +39,13 @@ element that owns the component recipe classes. Phase 11 will add an explicit
 inner-class contract to layout components after the `spectre-ui` Phase 8 layout
 utility release is published. See [TODO.md](TODO.md) for the gated work queue.
 
+### Phase 12 — Mega-Menu Delivery Contract
+
+After `spectre-ui` publishes reusable wide-menu geometry, surface it through an
+additive `sp-nav-item`/`sp-dropdown` contract. This closes the gap between the
+package's advertised mega-menu content support and the container-level
+positioning production mega menus actually require.
+
 ---
 
 ## Explicitly Out of Scope
