@@ -21,9 +21,9 @@ Gated on the publication of the `spectre-ui` Phase 8 layout utility release.
       styled element without changing the host's own classes.
 - [ ] Document the markup contract and update the component changelog.
 
-Requested by downstream integration on 2026-08-07 after its first production child theme
-had to target generated inner elements (`> .sp-stack`, `> .sp-grid`, and
-similar selectors) for basic layout composition.
+Requested by a downstream integration on 2026-08-07 after a production child
+theme had to target generated inner elements (`> .sp-stack`, `> .sp-grid`,
+and similar selectors) for basic layout composition.
 
 ## Phase 12: Mega-Menu Delivery Contract
 
