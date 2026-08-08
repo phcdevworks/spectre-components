@@ -33,7 +33,7 @@ this file does not restate delivered work.
 
 ### Phase 11 — Inner Layout Utility Forwarding
 
-downstream integration's first production child theme exposed a delivery gap: layout
+A production child-theme integration exposed a delivery gap: layout
 utilities applied to a custom-element host do not reach the native light-DOM
 element that owns the component recipe classes. Phase 11 will add an explicit
 inner-class contract to layout components after the `spectre-ui` Phase 8 layout
