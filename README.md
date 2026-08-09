@@ -818,17 +818,17 @@ price, feature list, call-to-action, etc.).
 share two contracts:
 
 - **Host display** — the host element defaults to `display: block` (set via
-  inline style in `connectedCallback`, so a consumer's own `style="display:
-  ..."` always wins) instead of the browser's default inline custom-element
-  box. This keeps backgrounds, margins, and full-width inner content from
-  being trapped inside an inline box.
+  inline style in `connectedCallback`, so a consumer's own
+  `style="display: ..."` always wins) instead of the browser's default inline
+  custom-element box. This keeps backgrounds, margins, and full-width inner
+  content from being trapped inside an inline box.
 - **`inner-class`** — an `inner-class` attribute (`innerClass` JS property)
-  appends consumer-supplied Spectre utility classes to the native inner
-  element the component's recipe classes render on, without touching the
-  host's own `class` attribute. Host `class` and `inner-class` are distinct
-  targets: host `class` affects the custom-element box itself, `inner-class`
-  affects the styled element inside it. Only tokens matching `sp-*` (Spectre
-  utility class syntax) are applied; anything else is silently dropped.
+  appends consumer-supplied Spectre utility classes to the native inner element
+  the component's recipe classes render on, without touching the host's own
+  `class` attribute. Host `class` and `inner-class` are distinct targets: host
+  `class` affects the custom-element box itself, `inner-class` affects the
+  styled element inside it. Only tokens matching `sp-*` (Spectre utility class
+  syntax) are applied; anything else is silently dropped.
 
 ```html
 <sp-stack class="my-host-hook" inner-class="sp-bg-primary-500 sp-p-8">
@@ -1013,12 +1013,13 @@ Spectre sidebar recipe.
 
 **Attributes**
 
-| Attribute                 | Type    | Default          | Description                            |
-| ------------------------- | ------- | ---------------- | -------------------------------------- |
-| `bordered`                | boolean | `false`          | Adds a trailing border                 |
-| `open`                    | boolean | `false`          | Open/closed off-canvas state           |
-| `toggle-label`            | string  | `Toggle sidebar` | Accessible label for the toggle button |
-| `id` / `title` / `aria-*` | string  | —                | Forwarded to the native `<aside>`      |
+| Attribute                 | Type    | Default          | Description                                                                           |
+| ------------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------- |
+| `bordered`                | boolean | `false`          | Adds a trailing border                                                                |
+| `hide-toggle`             | boolean | `false`          | Suppresses the built-in toggle button (e.g. when using `sp-sidebar-toggle` elsewhere) |
+| `open`                    | boolean | `false`          | Open/closed off-canvas state                                                          |
+| `toggle-label`            | string  | `Toggle sidebar` | Accessible label for the built-in toggle button                                       |
+| `id` / `title` / `aria-*` | string  | —                | Forwarded to the native `<aside>`                                                     |
 
 **Content projection** — children become the sidebar content (links, navigation
 groups, etc.).
@@ -1032,6 +1033,45 @@ hide the off-canvas panel and backdrop.
 `detail`.
 
 **Internal target** — `[data-sp-sidebar-native]` selects the native `<aside>`.
+
+---
+
+### sp-sidebar-toggle
+
+Renders a standalone trigger button that opens/closes a remote `sp-sidebar`,
+backed by the Spectre sidebar-toggle recipe. Use it to place a toggle somewhere
+other than inside the sidebar itself (a header, a nav bar) — pair it with
+`hide-toggle` on the target `sp-sidebar` to suppress that sidebar's own built-in
+toggle, or leave both in place to control the same sidebar from two triggers.
+
+**Attributes**
+
+| Attribute                 | Type   | Default          | Description                                                                                      |
+| ------------------------- | ------ | ---------------- | ------------------------------------------------------------------------------------------------ |
+| `for`                     | string | —                | `id` of the target `sp-sidebar`'s native content (the id set on the `sp-sidebar` element itself) |
+| `label`                   | string | `Toggle sidebar` | Accessible label when no icon content is projected                                               |
+| `id` / `title` / `aria-*` | string | —                | Forwarded to the native `<button>`                                                               |
+
+**Content projection** — children become the button's icon content; falls back
+to a default `☰` glyph when empty.
+
+**Behavior** — clicking the button toggles the target `sp-sidebar`'s `open`
+property and mirrors its own `aria-expanded` state, including staying in sync
+when the target is opened/closed by another trigger (its own built-in toggle,
+the backdrop, `Esc`, or a second `sp-sidebar-toggle`).
+
+```html
+<sp-nav>
+  <sp-sidebar-toggle for="app-sidebar"></sp-sidebar-toggle>
+</sp-nav>
+
+<sp-sidebar id="app-sidebar" hide-toggle>
+  <a href="/dashboard">Dashboard</a>
+</sp-sidebar>
+```
+
+**Internal target** — `[data-sp-sidebar-toggle-native]` selects the native
+`<button>`.
 
 ---
 
@@ -1239,45 +1279,47 @@ defineSpectreComponents() // registers all sp-* elements
 **Interactive constants and types**: `spectreDropdownPlacements`,
 `spectreToastVariants`, `spectreTooltipPlacements`, `SpectreDropdownPlacement`,
 `SpectreToastVariant`, `SpectreTooltipPlacement`, `SpectreFooterProps`,
-`SpectreNavProps`, `SpectreSidebarProps`, `SpectreDropdownProps`,
-`SpectreModalProps`, `SpectreToastProps`, `SpectreTooltipProps`
+`SpectreNavProps`, `SpectreSidebarProps`, `SpectreSidebarToggleProps`,
+`SpectreDropdownProps`, `SpectreModalProps`, `SpectreToastProps`,
+`SpectreTooltipProps`
 
 ### Subpath entry points
 
 Each entry point registers only that component and exports only its surface:
 
-| Entry point        | Registers         | Key exports                                                                              |
-| ------------------ | ----------------- | ---------------------------------------------------------------------------------------- |
-| `.../button`       | `sp-button`       | `defineSpectreButton`, `SpectreButtonElement`, button constants and types                |
-| `.../input`        | `sp-input`        | `defineSpectreInput`, `SpectreInputElement`, input constants and types                   |
-| `.../textarea`     | `sp-textarea`     | `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`                |
-| `.../select`       | `sp-select`       | `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`                      |
-| `.../checkbox`     | `sp-checkbox`     | `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`                |
-| `.../radio`        | `sp-radio`        | `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`                         |
-| `.../label`        | `sp-label`        | `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`                         |
-| `.../fieldset`     | `sp-fieldset`     | `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`                |
-| `.../badge`        | `sp-badge`        | `defineSpectreBadge`, `SpectreBadgeElement`, badge constants and types                   |
-| `.../card`         | `sp-card`         | `defineSpectreCard`, `SpectreCardElement`, card constants and types                      |
-| `.../icon-box`     | `sp-icon-box`     | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types            |
-| `.../rating`       | `sp-rating`       | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                |
-| `.../testimonial`  | `sp-testimonial`  | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
-| `.../alert`        | `sp-alert`        | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
-| `.../avatar`       | `sp-avatar`       | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                |
-| `.../spinner`      | `sp-spinner`      | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types             |
-| `.../tag`          | `sp-tag`          | `defineSpectreTag`, `SpectreTagElement`, tag constants and types                         |
-| `.../pricing-card` | `sp-pricing-card` | `defineSpectrePricingCard`, `SpectrePricingCardElement`, `SpectrePricingCardProps`       |
-| `.../container`    | `sp-container`    | `defineSpectreContainer`, `SpectreContainerElement`, container constants and types       |
-| `.../grid`         | `sp-grid`         | `defineSpectreGrid`, `SpectreGridElement`, grid constants and types                      |
-| `.../section`      | `sp-section`      | `defineSpectreSection`, `SpectreSectionElement`, `SpectreSectionProps`                   |
-| `.../stack`        | `sp-stack`        | `defineSpectreStack`, `SpectreStackElement`, stack constants and types                   |
-| `.../nav`          | `sp-nav`          | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                               |
-| `.../nav-item`     | `sp-nav-item`     | `defineSpectreNavItem`, `SpectreNavItemElement`, `SpectreNavItemProps`                   |
-| `.../sidebar`      | `sp-sidebar`      | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                   |
-| `.../dropdown`     | `sp-dropdown`     | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types          |
-| `.../footer`       | `sp-footer`       | `defineSpectreFooter`, `SpectreFooterElement`, `SpectreFooterProps`                      |
-| `.../modal`        | `sp-modal`        | `defineSpectreModal`, `SpectreModalElement`, `SpectreModalProps`                         |
-| `.../toast`        | `sp-toast`        | `defineSpectreToast`, `SpectreToastElement`, toast constants and types                   |
-| `.../tooltip`      | `sp-tooltip`      | `defineSpectreTooltip`, `SpectreTooltipElement`, tooltip constants and types             |
+| Entry point          | Registers           | Key exports                                                                              |
+| -------------------- | ------------------- | ---------------------------------------------------------------------------------------- |
+| `.../button`         | `sp-button`         | `defineSpectreButton`, `SpectreButtonElement`, button constants and types                |
+| `.../input`          | `sp-input`          | `defineSpectreInput`, `SpectreInputElement`, input constants and types                   |
+| `.../textarea`       | `sp-textarea`       | `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`                |
+| `.../select`         | `sp-select`         | `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`                      |
+| `.../checkbox`       | `sp-checkbox`       | `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`                |
+| `.../radio`          | `sp-radio`          | `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`                         |
+| `.../label`          | `sp-label`          | `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`                         |
+| `.../fieldset`       | `sp-fieldset`       | `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`                |
+| `.../badge`          | `sp-badge`          | `defineSpectreBadge`, `SpectreBadgeElement`, badge constants and types                   |
+| `.../card`           | `sp-card`           | `defineSpectreCard`, `SpectreCardElement`, card constants and types                      |
+| `.../icon-box`       | `sp-icon-box`       | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types            |
+| `.../rating`         | `sp-rating`         | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                |
+| `.../testimonial`    | `sp-testimonial`    | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
+| `.../alert`          | `sp-alert`          | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
+| `.../avatar`         | `sp-avatar`         | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                |
+| `.../spinner`        | `sp-spinner`        | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types             |
+| `.../tag`            | `sp-tag`            | `defineSpectreTag`, `SpectreTagElement`, tag constants and types                         |
+| `.../pricing-card`   | `sp-pricing-card`   | `defineSpectrePricingCard`, `SpectrePricingCardElement`, `SpectrePricingCardProps`       |
+| `.../container`      | `sp-container`      | `defineSpectreContainer`, `SpectreContainerElement`, container constants and types       |
+| `.../grid`           | `sp-grid`           | `defineSpectreGrid`, `SpectreGridElement`, grid constants and types                      |
+| `.../section`        | `sp-section`        | `defineSpectreSection`, `SpectreSectionElement`, `SpectreSectionProps`                   |
+| `.../stack`          | `sp-stack`          | `defineSpectreStack`, `SpectreStackElement`, stack constants and types                   |
+| `.../nav`            | `sp-nav`            | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                               |
+| `.../nav-item`       | `sp-nav-item`       | `defineSpectreNavItem`, `SpectreNavItemElement`, `SpectreNavItemProps`                   |
+| `.../sidebar`        | `sp-sidebar`        | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                   |
+| `.../sidebar-toggle` | `sp-sidebar-toggle` | `defineSpectreSidebarToggle`, `SpectreSidebarToggleElement`, `SpectreSidebarToggleProps` |
+| `.../dropdown`       | `sp-dropdown`       | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types          |
+| `.../footer`         | `sp-footer`         | `defineSpectreFooter`, `SpectreFooterElement`, `SpectreFooterProps`                      |
+| `.../modal`          | `sp-modal`          | `defineSpectreModal`, `SpectreModalElement`, `SpectreModalProps`                         |
+| `.../toast`          | `sp-toast`          | `defineSpectreToast`, `SpectreToastElement`, toast constants and types                   |
+| `.../tooltip`        | `sp-tooltip`        | `defineSpectreTooltip`, `SpectreTooltipElement`, tooltip constants and types             |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside

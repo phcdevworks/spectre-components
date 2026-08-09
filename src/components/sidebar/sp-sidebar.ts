@@ -12,6 +12,7 @@ import {
 export interface SpectreSidebarProps {
   ariaLabel?: string | null
   bordered?: boolean | undefined
+  hideToggle?: boolean | undefined
   id?: string | null | undefined
   open?: boolean | undefined
   title?: string | null | undefined
@@ -24,11 +25,13 @@ export class SpectreSidebarElement
 {
   static properties = {
     bordered: { type: Boolean, reflect: true },
+    hideToggle: { attribute: 'hide-toggle', type: Boolean, reflect: true },
     open: { type: Boolean, reflect: false },
     toggleLabel: { attribute: 'toggle-label', type: String }
   }
 
   bordered: boolean | undefined = false
+  hideToggle: boolean | undefined = false
   open: boolean | undefined = false
   toggleLabel: string | undefined = 'Toggle sidebar'
 
@@ -69,6 +72,9 @@ export class SpectreSidebarElement
   ): void {
     if (changedProperties.has('bordered') && this.bordered == null) {
       this.bordered = false
+    }
+    if (changedProperties.has('hideToggle') && this.hideToggle == null) {
+      this.hideToggle = false
     }
     if (changedProperties.has('open') && this.open == null) {
       this.open = false
@@ -135,16 +141,20 @@ export class SpectreSidebarElement
   }
 
   override render() {
-    return html`<button
-        aria-expanded="${this.open ? 'true' : 'false'}"
-        aria-label="${ifDefined(this.toggleLabel)}"
-        class="${getSidebarToggleClasses()}"
-        data-sp-sidebar-toggle
-        type="button"
-        @click="${() => this.toggle()}"
-      >
-        &#9776;
-      </button>
+    return html`${
+        this.hideToggle
+          ? nothing
+          : html`<button
+              aria-expanded="${this.open ? 'true' : 'false'}"
+              aria-label="${ifDefined(this.toggleLabel)}"
+              class="${getSidebarToggleClasses()}"
+              data-sp-sidebar-toggle
+              type="button"
+              @click="${() => this.toggle()}"
+            >
+              &#9776;
+            </button>`
+      }
       <div
         class="${getSidebarBackdropClasses()}"
         data-sp-sidebar-backdrop

@@ -33,6 +33,7 @@ export default defineConfig({
     nav: 'src/components/nav/index.ts',
     'nav-item': 'src/components/nav-item/index.ts',
     sidebar: 'src/components/sidebar/index.ts',
+    'sidebar-toggle': 'src/components/sidebar-toggle/index.ts',
     toast: 'src/components/toast/index.ts',
     tooltip: 'src/components/tooltip/index.ts',
     text: 'src/components/text/index.ts'

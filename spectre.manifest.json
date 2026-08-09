@@ -60,6 +60,7 @@
         "./nav",
         "./nav-item",
         "./sidebar",
+        "./sidebar-toggle",
         "./toast",
         "./tooltip",
         "./text"

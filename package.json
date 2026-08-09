@@ -183,6 +183,11 @@
       "import": "./dist/sidebar.js",
       "require": "./dist/sidebar.cjs"
     },
+    "./sidebar-toggle": {
+      "types": "./dist/sidebar-toggle.d.ts",
+      "import": "./dist/sidebar-toggle.js",
+      "require": "./dist/sidebar-toggle.cjs"
+    },
     "./toast": {
       "types": "./dist/toast.d.ts",
       "import": "./dist/toast.js",

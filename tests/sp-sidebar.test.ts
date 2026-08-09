@@ -145,4 +145,34 @@ describe('sp-sidebar', () => {
 
     expect(toggle?.getAttribute('aria-label')).toBe('Open navigation')
   })
+
+  it('suppresses the built-in toggle when hide-toggle is set', async () => {
+    const element = document.createElement(
+      'sp-sidebar'
+    ) as SpectreSidebarElement
+    element.hideToggle = true
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.querySelector('[data-sp-sidebar-toggle]')).toBeNull()
+    expect(element.querySelector('[data-sp-sidebar-backdrop]')).not.toBeNull()
+    expect(element.querySelector('aside')).not.toBeNull()
+  })
+
+  it('still opens via the open property when hide-toggle is set', async () => {
+    const element = document.createElement(
+      'sp-sidebar'
+    ) as SpectreSidebarElement
+    element.hideToggle = true
+    element.id = 'remote-sidebar'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    element.open = true
+    await element.updateComplete
+
+    expect(element.getAttribute('data-sidebar-open')).toBe('true')
+  })
 })

@@ -311,11 +311,7 @@
           "spectreTagSizes",
           "spectreTagVariants"
         ],
-        "types": [
-          "SpectreTagProps",
-          "SpectreTagSize",
-          "SpectreTagVariant"
-        ]
+        "types": ["SpectreTagProps", "SpectreTagSize", "SpectreTagVariant"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -328,13 +324,8 @@
       "entryPoint": "./pricing-card",
       "distFile": "dist/pricing-card.js",
       "exports": {
-        "values": [
-          "defineSpectrePricingCard",
-          "SpectrePricingCardElement"
-        ],
-        "types": [
-          "SpectrePricingCardProps"
-        ]
+        "values": ["defineSpectrePricingCard", "SpectrePricingCardElement"],
+        "types": ["SpectrePricingCardProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -352,10 +343,7 @@
           "SpectreContainerElement",
           "spectreContainerMaxWidths"
         ],
-        "types": [
-          "SpectreContainerProps",
-          "SpectreContainerMaxWidth"
-        ]
+        "types": ["SpectreContainerProps", "SpectreContainerMaxWidth"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -374,11 +362,7 @@
           "spectreGridColumns",
           "spectreGridGaps"
         ],
-        "types": [
-          "SpectreGridProps",
-          "SpectreGridColumns",
-          "SpectreGridGap"
-        ]
+        "types": ["SpectreGridProps", "SpectreGridColumns", "SpectreGridGap"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -391,13 +375,8 @@
       "entryPoint": "./section",
       "distFile": "dist/section.js",
       "exports": {
-        "values": [
-          "defineSpectreSection",
-          "SpectreSectionElement"
-        ],
-        "types": [
-          "SpectreSectionProps"
-        ]
+        "values": ["defineSpectreSection", "SpectreSectionElement"],
+        "types": ["SpectreSectionProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -511,6 +490,20 @@
       "exports": {
         "values": ["defineSpectreSidebar", "SpectreSidebarElement"],
         "types": ["SpectreSidebarProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-sidebar-toggle",
+      "elementClass": "SpectreSidebarToggleElement",
+      "entryPoint": "./sidebar-toggle",
+      "distFile": "dist/sidebar-toggle.js",
+      "exports": {
+        "values": ["defineSpectreSidebarToggle", "SpectreSidebarToggleElement"],
+        "types": ["SpectreSidebarToggleProps"]
       },
       "contracts": {
         "renderMode": "light-dom",

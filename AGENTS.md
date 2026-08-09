@@ -2,76 +2,74 @@
 
 ## Repository Snapshot
 
-| Field | Value |
-|-------|-------|
-| Project team | `project-design` |
-| Repository role | Spectre L3a Lit web component layer |
-| Package/artifact | `@phcdevworks/spectre-components` |
-| Validation gate | `npm run check` |
+| Field            | Value                               |
+| ---------------- | ----------------------------------- |
+| Project team     | `project-design`                    |
+| Repository role  | Spectre L3a Lit web component layer |
+| Package/artifact | `@phcdevworks/spectre-components`   |
+| Validation gate  | `npm run check`                     |
 
 ## Standard Authority Model
 
-| Agent | Role | Authority |
-|-------|------|-----------|
-| Claude Code | Lead implementation and validation | [CLAUDE.md](CLAUDE.md) |
-| OpenAI Codex | Documentation, release readiness, stabilization, and repo hygiene | [CODEX.md](CODEX.md) |
-| ChatGPT | Strategy, coordination, prompt design, and external review | Support only |
-| GitHub Copilot | Development assistance | [COPILOT.md](COPILOT.md) |
-| Google Jules | Bounded automated maintenance | [JULES.md](JULES.md) |
+| Agent          | Role                                                              | Authority                |
+| -------------- | ----------------------------------------------------------------- | ------------------------ |
+| Claude Code    | Lead implementation and validation                                | [CLAUDE.md](CLAUDE.md)   |
+| OpenAI Codex   | Documentation, release readiness, stabilization, and repo hygiene | [CODEX.md](CODEX.md)     |
+| ChatGPT        | Strategy, coordination, prompt design, and external review        | Support only             |
+| GitHub Copilot | Development assistance                                            | [COPILOT.md](COPILOT.md) |
+| Google Jules   | Bounded automated maintenance                                     | [JULES.md](JULES.md)     |
 
 **All AI agents in this roster** — Claude Code, OpenAI Codex, GitHub Copilot,
-and Google Jules — have full commit, push, and tag authority in this
-repository, effective 2026-07-25 by explicit direction from Bradley Potts —
-see the Commit Policy section in each agent's own guide
-([CLAUDE.md](CLAUDE.md), [CODEX.md](CODEX.md), [COPILOT.md](COPILOT.md),
-[JULES.md](JULES.md)). **OpenAI Codex** additionally has release authority:
-Codex cuts releases autonomously — version bump, changelog versioning,
-`v<version>` git tag, and GitHub Release publish via `gh` — for every
-release-ready `CHANGELOG.md [Unreleased]` section, without waiting for
-per-release approval; see `CODEX.md` "Release Mechanics" for the full
-procedure. **npm publishing remains Bradley Potts's sole authority** — no
-agent runs `npm publish`. Bradley Potts retains ultimate ownership and can
+and Google Jules — have full commit, push, and tag authority in this repository,
+effective 2026-07-25 by explicit direction from Bradley Potts — see the Commit
+Policy section in each agent's own guide ([CLAUDE.md](CLAUDE.md),
+[CODEX.md](CODEX.md), [COPILOT.md](COPILOT.md), [JULES.md](JULES.md)). **OpenAI
+Codex** additionally has release authority: Codex cuts releases autonomously —
+version bump, changelog versioning, `v<version>` git tag, and GitHub Release
+publish via `gh` — for every release-ready `CHANGELOG.md [Unreleased]` section,
+without waiting for per-release approval; see `CODEX.md` "Release Mechanics" for
+the full procedure. **npm publishing remains Bradley Potts's sole authority** —
+no agent runs `npm publish`. Bradley Potts retains ultimate ownership and can
 revoke or narrow any of this at any time. This grant covers git and release
-operations within each agent's own scope of work as defined above — it does
-not expand what any agent is authorized to decide otherwise. ChatGPT has no
+operations within each agent's own scope of work as defined above — it does not
+expand what any agent is authorized to decide otherwise. ChatGPT has no
 repository access and is excluded.
 
-**A commit is not finished until it is pushed.** Every agent in this roster
-must push immediately after committing (`git push`, including any needed
-`-u`/tags) as part of the same action — never leave a commit sitting local
-only. This closes a recurring gap where an agent commits and stops short of
-pushing, leaving work stranded on the machine.
+**A commit is not finished until it is pushed.** Every agent in this roster must
+push immediately after committing (`git push`, including any needed `-u`/tags)
+as part of the same action — never leave a commit sitting local only. This
+closes a recurring gap where an agent commits and stops short of pushing,
+leaving work stranded on the machine.
 
-**Commit authorship is human-only.** No agent adds itself (or any other AI)
-as a commit author or co-author — no `Co-Authored-By: Claude`/`Codex`/
-`Copilot`/`Jules` trailer, no author-field changes, in this repository. The
-git author/committer stays Bradley Potts (or the configured human git user)
-on every commit, regardless of which agent performed the work. Push and tag
-authority above does not extend to authorship attribution.
-
+**Commit authorship is human-only.** No agent adds itself (or any other AI) as a
+commit author or co-author — no `Co-Authored-By: Claude`/`Codex`/
+`Copilot`/`Jules` trailer, no author-field changes, in this repository. The git
+author/committer stays Bradley Potts (or the configured human git user) on every
+commit, regardless of which agent performed the work. Push and tag authority
+above does not extend to authorship attribution.
 
 ## Cross-Repo Access
 
 This repo may be worked on standalone or alongside any combination of other
-PHCDevworks repos — do not assume the company root or sibling project areas
-are present. The following rules are self-contained and apply whether or not
-that broader context is available.
+PHCDevworks repos — do not assume the company root or sibling project areas are
+present. The following rules are self-contained and apply whether or not that
+broader context is available.
 
 **File access.** An agent working in this repo has full read/write access to
-every file in this repo. When this repo is present alongside other
-PHCDevworks repos (company root or sibling `project-*` areas), the same full
-read/write access extends to those repos too — there is no per-repo access
-restriction anywhere in this workspace. What differs repo-to-repo is not
-*access*, it's *editorial ownership*: each repo's own `CLAUDE.md`/`AGENTS.md`
-still governs what changes make sense there (design-token authority, layer
-boundaries, etc.) — being able to open and edit a file is not the same as it
-being this repo's job to change it.
+every file in this repo. When this repo is present alongside other PHCDevworks
+repos (company root or sibling `project-*` areas), the same full read/write
+access extends to those repos too — there is no per-repo access restriction
+anywhere in this workspace. What differs repo-to-repo is not _access_, it's
+_editorial ownership_: each repo's own `CLAUDE.md`/`AGENTS.md` still governs
+what changes make sense there (design-token authority, layer boundaries, etc.) —
+being able to open and edit a file is not the same as it being this repo's job
+to change it.
 
 **Cross-repo changelog and TODO/roadmap requests.** Full rules: company root
 [AGENTS.md](../../AGENTS.md) § "Cross-Repo Changelog Sync" and § "Upstream
-Requests and Roadmap Self-Expansion." Applied here without exception — this
-repo may append `[Unreleased]` changelog entries and downstream TODO requests
-to other present repos per those rules, and no AI agent creates commits, tags,
+Requests and Roadmap Self-Expansion." Applied here without exception — this repo
+may append `[Unreleased]` changelog entries and downstream TODO requests to
+other present repos per those rules, and no AI agent creates commits, tags,
 publishes packages, or merges changes in this repo or any other unless that
 repo's own agent guide explicitly grants that authority.
 
@@ -98,18 +96,17 @@ requires explicit approval from Bradley Potts before merge. See
 
 Never record external customer, vendor, user, client-site, or private-project
 identities in tracked files, git metadata, reviews, releases, issues, or
-handoffs. Use anonymous role-based wording such as "a downstream integration"
-or "a production consumer." Public package and platform names are allowed
-only when technically required to identify a dependency or supported
-integration.
+handoffs. Use anonymous role-based wording such as "a downstream integration" or
+"a production consumer." Public package and platform names are allowed only when
+technically required to identify a dependency or supported integration.
 
 **Zero tolerance, no exceptions.** This is not a case-by-case judgment call.
-Every upstream vendor, customer, client, or third-party identity — regardless
-of how well-known, already public, or seemingly harmless — is forbidden from
+Every upstream vendor, customer, client, or third-party identity — regardless of
+how well-known, already public, or seemingly harmless — is forbidden from
 appearing in any file, commit, tag, branch name, PR, issue, roadmap, TODO, or
-agent output anywhere in this repo. If a vendor name is already present
-anywhere in tracked files, it must be anonymized on sight, not left in place
-because it predates this rule.
+agent output anywhere in this repo. If a vendor name is already present anywhere
+in tracked files, it must be anonymized on sight, not left in place because it
+predates this rule.
 
 ## Upstream Requests and Roadmap Self-Expansion
 
@@ -123,16 +120,16 @@ Roadmap Self-Expansion." Applied to this repo:
   repo's own TODO.md/ROADMAP.md. Never recreate the recipe locally instead.
 - Requests from external integrations belong in this repo's `TODO.md` under
   `## Requested by Downstream`, kept visible and separate from self-planned
-  component work. Never record the external party's identity, repository
-  name, domain, account, or other identifying details; use anonymous
-  role-based wording in all tracked artifacts and handoffs.
+  component work. Never record the external party's identity, repository name,
+  domain, account, or other identifying details; use anonymous role-based
+  wording in all tracked artifacts and handoffs.
 - This repo's own [ROADMAP.md](ROADMAP.md) may be proactively expanded with new
   or reordered phases by the agent's own analysis — but never mark a phase
   delivered without `npm run check` passing, and never add a speculative new
   component without a backing recipe already published in `spectre-ui`.
 - Surface any new TODO request or roadmap expansion in the handoff for Bradley
-  Potts in the same change it was made, and reflect cross-repo-relevant
-  changes in the project-team's own ROADMAP.md/TODO.md.
+  Potts in the same change it was made, and reflect cross-repo-relevant changes
+  in the project-team's own ROADMAP.md/TODO.md.
 
 ## Shared Source Rules
 
@@ -220,39 +217,40 @@ rules.
 
 ## Current Components
 
-| Tag               | Element class                | Entry point                                    |
-| ----------------- | ---------------------------- | ---------------------------------------------- |
-| `sp-button`       | `SpectreButtonElement`       | `@phcdevworks/spectre-components/button`       |
-| `sp-input`        | `SpectreInputElement`        | `@phcdevworks/spectre-components/input`        |
-| `sp-textarea`     | `SpectreTextareaElement`     | `@phcdevworks/spectre-components/textarea`     |
-| `sp-select`       | `SpectreSelectElement`       | `@phcdevworks/spectre-components/select`       |
-| `sp-checkbox`     | `SpectreCheckboxElement`     | `@phcdevworks/spectre-components/checkbox`     |
-| `sp-radio`        | `SpectreRadioElement`        | `@phcdevworks/spectre-components/radio`        |
-| `sp-label`        | `SpectreLabelElement`        | `@phcdevworks/spectre-components/label`        |
-| `sp-fieldset`     | `SpectreFieldsetElement`     | `@phcdevworks/spectre-components/fieldset`     |
-| `sp-badge`        | `SpectreBadgeElement`        | `@phcdevworks/spectre-components/badge`        |
-| `sp-card`         | `SpectreCardElement`         | `@phcdevworks/spectre-components/card`         |
-| `sp-icon-box`     | `SpectreIconBoxElement`      | `@phcdevworks/spectre-components/icon-box`     |
-| `sp-rating`       | `SpectreRatingElement`       | `@phcdevworks/spectre-components/rating`       |
-| `sp-testimonial`  | `SpectreTestimonialElement`  | `@phcdevworks/spectre-components/testimonial`  |
-| `sp-alert`        | `SpectreAlertElement`        | `@phcdevworks/spectre-components/alert`        |
-| `sp-avatar`       | `SpectreAvatarElement`       | `@phcdevworks/spectre-components/avatar`       |
-| `sp-spinner`      | `SpectreSpinnerElement`      | `@phcdevworks/spectre-components/spinner`      |
-| `sp-tag`          | `SpectreTagElement`          | `@phcdevworks/spectre-components/tag`          |
-| `sp-pricing-card` | `SpectrePricingCardElement`  | `@phcdevworks/spectre-components/pricing-card` |
-| `sp-container`    | `SpectreContainerElement`    | `@phcdevworks/spectre-components/container`    |
-| `sp-grid`         | `SpectreGridElement`         | `@phcdevworks/spectre-components/grid`         |
-| `sp-section`      | `SpectreSectionElement`      | `@phcdevworks/spectre-components/section`      |
-| `sp-stack`        | `SpectreStackElement`        | `@phcdevworks/spectre-components/stack`        |
-| `sp-dropdown`     | `SpectreDropdownElement`     | `@phcdevworks/spectre-components/dropdown`     |
-| `sp-footer`       | `SpectreFooterElement`       | `@phcdevworks/spectre-components/footer`       |
-| `sp-modal`        | `SpectreModalElement`        | `@phcdevworks/spectre-components/modal`        |
-| `sp-nav`          | `SpectreNavElement`          | `@phcdevworks/spectre-components/nav`          |
-| `sp-nav-item`     | `SpectreNavItemElement`      | `@phcdevworks/spectre-components/nav-item`     |
-| `sp-sidebar`      | `SpectreSidebarElement`      | `@phcdevworks/spectre-components/sidebar`      |
-| `sp-toast`        | `SpectreToastElement`        | `@phcdevworks/spectre-components/toast`        |
-| `sp-tooltip`      | `SpectreTooltipElement`      | `@phcdevworks/spectre-components/tooltip`      |
-| `sp-text`         | `SpectreTextElement`         | `@phcdevworks/spectre-components/text`         |
+| Tag                 | Element class                 | Entry point                                      |
+| ------------------- | ----------------------------- | ------------------------------------------------ |
+| `sp-button`         | `SpectreButtonElement`        | `@phcdevworks/spectre-components/button`         |
+| `sp-input`          | `SpectreInputElement`         | `@phcdevworks/spectre-components/input`          |
+| `sp-textarea`       | `SpectreTextareaElement`      | `@phcdevworks/spectre-components/textarea`       |
+| `sp-select`         | `SpectreSelectElement`        | `@phcdevworks/spectre-components/select`         |
+| `sp-checkbox`       | `SpectreCheckboxElement`      | `@phcdevworks/spectre-components/checkbox`       |
+| `sp-radio`          | `SpectreRadioElement`         | `@phcdevworks/spectre-components/radio`          |
+| `sp-label`          | `SpectreLabelElement`         | `@phcdevworks/spectre-components/label`          |
+| `sp-fieldset`       | `SpectreFieldsetElement`      | `@phcdevworks/spectre-components/fieldset`       |
+| `sp-badge`          | `SpectreBadgeElement`         | `@phcdevworks/spectre-components/badge`          |
+| `sp-card`           | `SpectreCardElement`          | `@phcdevworks/spectre-components/card`           |
+| `sp-icon-box`       | `SpectreIconBoxElement`       | `@phcdevworks/spectre-components/icon-box`       |
+| `sp-rating`         | `SpectreRatingElement`        | `@phcdevworks/spectre-components/rating`         |
+| `sp-testimonial`    | `SpectreTestimonialElement`   | `@phcdevworks/spectre-components/testimonial`    |
+| `sp-alert`          | `SpectreAlertElement`         | `@phcdevworks/spectre-components/alert`          |
+| `sp-avatar`         | `SpectreAvatarElement`        | `@phcdevworks/spectre-components/avatar`         |
+| `sp-spinner`        | `SpectreSpinnerElement`       | `@phcdevworks/spectre-components/spinner`        |
+| `sp-tag`            | `SpectreTagElement`           | `@phcdevworks/spectre-components/tag`            |
+| `sp-pricing-card`   | `SpectrePricingCardElement`   | `@phcdevworks/spectre-components/pricing-card`   |
+| `sp-container`      | `SpectreContainerElement`     | `@phcdevworks/spectre-components/container`      |
+| `sp-grid`           | `SpectreGridElement`          | `@phcdevworks/spectre-components/grid`           |
+| `sp-section`        | `SpectreSectionElement`       | `@phcdevworks/spectre-components/section`        |
+| `sp-stack`          | `SpectreStackElement`         | `@phcdevworks/spectre-components/stack`          |
+| `sp-dropdown`       | `SpectreDropdownElement`      | `@phcdevworks/spectre-components/dropdown`       |
+| `sp-footer`         | `SpectreFooterElement`        | `@phcdevworks/spectre-components/footer`         |
+| `sp-modal`          | `SpectreModalElement`         | `@phcdevworks/spectre-components/modal`          |
+| `sp-nav`            | `SpectreNavElement`           | `@phcdevworks/spectre-components/nav`            |
+| `sp-nav-item`       | `SpectreNavItemElement`       | `@phcdevworks/spectre-components/nav-item`       |
+| `sp-sidebar`        | `SpectreSidebarElement`       | `@phcdevworks/spectre-components/sidebar`        |
+| `sp-sidebar-toggle` | `SpectreSidebarToggleElement` | `@phcdevworks/spectre-components/sidebar-toggle` |
+| `sp-toast`          | `SpectreToastElement`         | `@phcdevworks/spectre-components/toast`          |
+| `sp-tooltip`        | `SpectreTooltipElement`       | `@phcdevworks/spectre-components/tooltip`        |
+| `sp-text`           | `SpectreTextElement`          | `@phcdevworks/spectre-components/text`           |
 
 ## Core Component Contract
 
@@ -313,11 +311,12 @@ approval from Bradley Potts recorded in a commit message or PR description.
 ## Ecosystem Manifest
 
 `spectre.manifest.json` at the root is this package's declaration in the Spectre
-ecosystem contract, validated by `@phcdevworks/spectre-manifest`. It records role,
-layer, exports, and allowed Spectre dependency targets. `check:ecosystem` validates
-it as part of `npm run check`.
+ecosystem contract, validated by `@phcdevworks/spectre-manifest`. It records
+role, layer, exports, and allowed Spectre dependency targets. `check:ecosystem`
+validates it as part of `npm run check`.
 
 Keep `spectre.manifest.json` in sync when:
+
 - Package exports in `package.json` are added or removed
 - A Spectre package dependency is added or removed
 - The package stability changes

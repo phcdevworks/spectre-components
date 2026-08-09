@@ -17,6 +17,7 @@ import {
   defineSpectreRating,
   defineSpectreSelect,
   defineSpectreSidebar,
+  defineSpectreSidebarToggle,
   defineSpectreTestimonial,
   defineSpectreTextarea,
   defineSpectreToast,
@@ -36,6 +37,7 @@ import {
   SpectreRatingElement,
   SpectreSelectElement,
   SpectreSidebarElement,
+  SpectreSidebarToggleElement,
   SpectreTestimonialElement,
   SpectreTextareaElement,
   SpectreToastElement,
@@ -75,6 +77,7 @@ describe('accessibility audit', () => {
     defineSpectreRating()
     defineSpectreSelect()
     defineSpectreSidebar()
+    defineSpectreSidebarToggle()
     defineSpectreTestimonial()
     defineSpectreTextarea()
     defineSpectreToast()
@@ -328,6 +331,15 @@ describe('accessibility audit', () => {
     const el = document.createElement('sp-sidebar') as SpectreSidebarElement
     el.setAttribute('aria-label', 'Dashboard navigation')
     el.innerHTML = '<a href="/dashboard">Dashboard</a>'
+    const violations = await audit(el)
+    expect(violations).toEqual([])
+  })
+
+  it('sp-sidebar-toggle has no violations', async () => {
+    const el = document.createElement(
+      'sp-sidebar-toggle'
+    ) as SpectreSidebarToggleElement
+    el.for = 'audit-sidebar'
     const violations = await audit(el)
     expect(violations).toEqual([])
   })

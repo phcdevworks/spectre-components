@@ -28,6 +28,7 @@ import { defineSpectreModal } from './components/modal'
 import { defineSpectreNav } from './components/nav'
 import { defineSpectreNavItem } from './components/nav-item'
 import { defineSpectreSidebar } from './components/sidebar'
+import { defineSpectreSidebarToggle } from './components/sidebar-toggle'
 import { defineSpectreToast } from './components/toast'
 import { defineSpectreTooltip } from './components/tooltip'
 import { defineSpectreText } from './components/text'
@@ -61,6 +62,7 @@ export function defineSpectreComponents(): void {
   defineSpectreNav()
   defineSpectreNavItem()
   defineSpectreSidebar()
+  defineSpectreSidebarToggle()
   defineSpectreToast()
   defineSpectreTooltip()
   defineSpectreText()

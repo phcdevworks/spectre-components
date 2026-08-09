@@ -1,12 +1,11 @@
 # Spectre Components Execution Todo
 
-Phases 1 through 12 are complete — see [ROADMAP.md](ROADMAP.md) for the full
-delivery history and [CHANGELOG.md](CHANGELOG.md) for release-by-release
-detail.
+Phases 1 through 13 are complete — see [ROADMAP.md](ROADMAP.md) for the full
+delivery history and [CHANGELOG.md](CHANGELOG.md) for release-by-release detail.
 
 New component or contract work here is demand-driven: it opens only when
-`spectre-ui` (or another downstream consumer) surfaces a concrete missing
-recipe or requirement, and requires explicit approval from Bradley Potts per
+`spectre-ui` (or another downstream consumer) surfaces a concrete missing recipe
+or requirement, and requires explicit approval from Bradley Potts per
 `AGENTS.md` before implementation begins.
 
 ---
@@ -18,5 +17,5 @@ recipe or requirement, and requires explicit approval from Bradley Potts per
 - Do not add framework adapters or framework-only files here.
 - Do not add app shell, routing, manifest, service worker, or startup
   orchestration here.
-- Do not add speculative components without upstream recipe support and
-  explicit approval.
+- Do not add speculative components without upstream recipe support and explicit
+  approval.

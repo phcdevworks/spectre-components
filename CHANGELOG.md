@@ -15,27 +15,36 @@ Contract change type: behavioral change
   `@phcdevworks/spectre-ui` 4.0.0. Anchors the menu to the nearest positioned
   ancestor (typically `sp-nav`) instead of the trigger wrapper, spanning that
   ancestor's full width, for mega-menu content combined with a projected
-  `sp-grid` panel. Simple dropdown/nav-item behavior is unchanged when `mega`
-  is unset. Closes Phase 12 (Mega-Menu Delivery Contract) in `TODO.md`.
-- `sp-container`, `sp-grid`, `sp-section`, `sp-stack`, `sp-footer`, and
-  `sp-nav` — new `inner-class` attribute (`innerClass` JS property) that
-  applies consumer-supplied Spectre utility classes (`sp-*` tokens only,
-  anything else is silently dropped) to the native inner element the
-  component's recipe classes render on, without touching the host's own
-  `class` attribute. Closes the Phase 11 (Inner Layout Utility Forwarding)
-  gap in `TODO.md` where consumers had to target generated inner elements
-  (`> .sp-stack`, `> .sp-grid`, and similar selectors) directly.
+  `sp-grid` panel. Simple dropdown/nav-item behavior is unchanged when `mega` is
+  unset. Closes Phase 12 (Mega-Menu Delivery Contract) in `TODO.md`.
+- `sp-container`, `sp-grid`, `sp-section`, `sp-stack`, `sp-footer`, and `sp-nav`
+  — new `inner-class` attribute (`innerClass` JS property) that applies
+  consumer-supplied Spectre utility classes (`sp-*` tokens only, anything else
+  is silently dropped) to the native inner element the component's recipe
+  classes render on, without touching the host's own `class` attribute. Closes
+  the Phase 11 (Inner Layout Utility Forwarding) gap in `TODO.md` where
+  consumers had to target generated inner elements (`> .sp-stack`, `> .sp-grid`,
+  and similar selectors) directly.
+- `sp-sidebar-toggle` — new component, backed by `getSidebarToggleClasses` in
+  `@phcdevworks/spectre-ui`. A standalone trigger button that opens/closes a
+  remote `sp-sidebar` via a `for` id reference, staying in sync (via
+  `sp-open`/`sp-close`) with the target's own built-in toggle, backdrop, `Esc`,
+  or a second `sp-sidebar-toggle` targeting the same sidebar. Closes the last
+  gap in the `spectre-ui-astro` component-parity plan (`SpSidebarToggle`).
+- `sp-sidebar` — new `hide-toggle` boolean property to suppress the built-in
+  toggle button, for use alongside a standalone `sp-sidebar-toggle` placed
+  elsewhere on the page.
 
 ### Changed
 
 - Aligned the component layer with `@phcdevworks/spectre-tokens` 4.3 and
   `@phcdevworks/spectre-ui` 4.0, and refreshed compatible development tooling
   and lockfile entries.
-- `sp-container`, `sp-grid`, `sp-section`, `sp-stack`, `sp-footer`, and
-  `sp-nav` now default their host element to `display: block` (set via inline
-  style in `connectedCallback`, so a consumer's own inline `display` always
-  wins) instead of the browser's default inline custom-element box. Inline
-  primitives (`sp-badge`, `sp-tag`, `sp-tooltip`, etc.) are unaffected.
+- `sp-container`, `sp-grid`, `sp-section`, `sp-stack`, `sp-footer`, and `sp-nav`
+  now default their host element to `display: block` (set via inline style in
+  `connectedCallback`, so a consumer's own inline `display` always wins) instead
+  of the browser's default inline custom-element box. Inline primitives
+  (`sp-badge`, `sp-tag`, `sp-tooltip`, etc.) are unaffected.
 
 ## [1.14.0] - 2026-08-06
 
@@ -45,9 +54,9 @@ Contract change type: additive
 
 ### Added
 
-- `sp-text` — new `transform` property (`none | uppercase | lowercase |
-  capitalize`), surfacing the `transform` option added to `getTextClasses` in
-  `@phcdevworks/spectre-ui` 3.2.0.
+- `sp-text` — new `transform` property
+  (`none | uppercase | lowercase | capitalize`), surfacing the `transform`
+  option added to `getTextClasses` in `@phcdevworks/spectre-ui` 3.2.0.
 - `sp-grid` — new `span` property (`1`-`12` or `'full'`, or a per-breakpoint
   `{ base?, md?, lg? }` object; JS property only, not attribute-reflected),
   surfacing the `span` option added to `getGridClasses` in
@@ -70,9 +79,9 @@ Contract change type: additive
   (and the button is not disabled/loading), `sp-button` renders a native `<a>`
   styled with the same `getButtonClasses` recipe instead of a `<button>`,
   matching the polymorphic `as="a"` behavior already available in
-  `SpButton.astro`. Disabled or loading still renders a native `<button
-  disabled>` even if `href` is set, since a disabled anchor has no reliable
-  native semantics.
+  `SpButton.astro`. Disabled or loading still renders a native
+  `<button disabled>` even if `href` is set, since a disabled anchor has no
+  reliable native semantics.
 
 ## [1.12.0] - 2026-07-30
 
@@ -84,9 +93,9 @@ Contract change type: additive
 
 - `sp-nav-item` — dropdown-capable nav link for use inside `sp-nav`. Renders a
   plain `<a>` by default, or a dropdown trigger + menu (backed by the existing
-  `getDropdownClasses`/`getDropdownMenuClasses` recipes) when `dropdown` is
-  set. The menu accepts arbitrary projected content, including `sp-grid`, so a
-  single nav link can open either a simple link list or a full mega-menu grid.
+  `getDropdownClasses`/`getDropdownMenuClasses` recipes) when `dropdown` is set.
+  The menu accepts arbitrary projected content, including `sp-grid`, so a single
+  nav link can open either a simple link list or a full mega-menu grid.
 
 ## [1.11.0] - 2026-07-29
 
@@ -373,8 +382,7 @@ Contract change type: additive
 
 ## [1.4.0] - 2026-06-07
 
-**Release Title:** Display Component Expansion and Ecosystem Manifest
-Gate
+**Release Title:** Display Component Expansion and Ecosystem Manifest Gate
 
 Contract change type: additive
 
@@ -528,8 +536,7 @@ Contract change type: additive
 
 ## [1.1.0] - 2026-05-05
 
-**Release Title:** Foundation API Tightening and Component
-Documentation
+**Release Title:** Foundation API Tightening and Component Documentation
 
 Contract change type: additive
 
@@ -647,19 +654,34 @@ Contract change type: N/A
 
 [unreleased]:
   https://github.com/phcdevworks/spectre-components/compare/v1.14.0...HEAD
-[1.14.0]: https://github.com/phcdevworks/spectre-components/compare/v1.13.0...v1.14.0
-[1.13.0]: https://github.com/phcdevworks/spectre-components/compare/v1.12.0...v1.13.0
-[1.12.0]: https://github.com/phcdevworks/spectre-components/compare/v1.11.0...v1.12.0
-[1.11.0]: https://github.com/phcdevworks/spectre-components/compare/v1.10.0...v1.11.0
-[1.10.0]: https://github.com/phcdevworks/spectre-components/compare/v1.9.0...v1.10.0
-[1.9.0]: https://github.com/phcdevworks/spectre-components/compare/v1.8.0...v1.9.0
-[1.8.0]: https://github.com/phcdevworks/spectre-components/compare/v1.7.0...v1.8.0
-[1.7.0]: https://github.com/phcdevworks/spectre-components/compare/v1.6.0...v1.7.0
-[1.6.0]: https://github.com/phcdevworks/spectre-components/compare/v1.5.0...v1.6.0
-[1.5.0]: https://github.com/phcdevworks/spectre-components/compare/v1.4.0...v1.5.0
-[1.4.0]: https://github.com/phcdevworks/spectre-components/compare/v1.3.0...v1.4.0
-[1.3.0]: https://github.com/phcdevworks/spectre-components/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/phcdevworks/spectre-components/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/phcdevworks/spectre-components/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/phcdevworks/spectre-components/compare/v0.0.1...v1.0.0
+[1.14.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.13.0...v1.14.0
+[1.13.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.12.0...v1.13.0
+[1.12.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.11.0...v1.12.0
+[1.11.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.10.0...v1.11.0
+[1.10.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.9.0...v1.10.0
+[1.9.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.8.0...v1.9.0
+[1.8.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.7.0...v1.8.0
+[1.7.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.6.0...v1.7.0
+[1.6.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.5.0...v1.6.0
+[1.5.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.4.0...v1.5.0
+[1.4.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.3.0...v1.4.0
+[1.3.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.2.0...v1.3.0
+[1.2.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.1.0...v1.2.0
+[1.1.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.0.0...v1.1.0
+[1.0.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v0.0.1...v1.0.0
 [0.0.1]: https://github.com/phcdevworks/spectre-components/tree/v0.0.1
