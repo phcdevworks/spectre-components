@@ -51,4 +51,28 @@ describe('sp-section', () => {
 
     expect(section?.getAttribute('aria-labelledby')).toBe('section-heading');
   });
+
+  it('defaults the host to block display', async () => {
+    const element = document.createElement('sp-section') as SpectreSectionElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(getComputedStyle(element).display).toBe('block');
+  });
+
+  it('applies innerClass to the native section without touching the host class', async () => {
+    const element = document.createElement('sp-section') as SpectreSectionElement;
+    element.className = 'host-class';
+    element.innerClass = 'sp-py-16 not-allowed';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const section = element.querySelector('section');
+
+    expect(section?.className).toContain('sp-py-16');
+    expect(section?.className).not.toContain('not-allowed');
+    expect(section?.className).not.toContain('host-class');
+    expect(element.className).toBe('host-class');
+  });
 });

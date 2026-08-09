@@ -4,6 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isContainerMaxWidth,
+  sanitizeUtilityClasses,
   type SpectreContainerMaxWidth
 } from '../../utils/form'
 
@@ -17,6 +18,7 @@ export interface SpectreContainerProps {
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
   id?: string | null | undefined
+  innerClass?: string | undefined
   maxWidth?: SpectreContainerMaxWidth | undefined
   title?: string | null | undefined
 }
@@ -26,9 +28,11 @@ export class SpectreContainerElement
   implements SpectreContainerProps
 {
   static properties = {
+    innerClass: { attribute: 'inner-class', type: String },
     maxWidth: { attribute: 'max-width', type: String, reflect: true }
   }
 
+  innerClass: string | undefined = undefined
   maxWidth: SpectreContainerMaxWidth | undefined = undefined
 
   override get id(): string {
@@ -45,6 +49,11 @@ export class SpectreContainerElement
 
   override set title(value: string | null | undefined) {
     super.title = value
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback()
+    this.style.display ||= 'block'
   }
 
   protected override getContentContainer(): Element | null {
@@ -72,11 +81,15 @@ export class SpectreContainerElement
   }
 
   private get containerClasses(): string {
-    return getContainerClasses(
+    const recipeClasses = getContainerClasses(
       this.maxWidth != null
         ? { maxWidth: this.maxWidth as ContainerMaxWidth }
         : {}
     )
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses
+      ? `${recipeClasses} ${utilityClasses}`
+      : recipeClasses
   }
 
   override render() {

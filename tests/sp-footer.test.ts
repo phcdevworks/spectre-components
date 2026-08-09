@@ -85,4 +85,28 @@ describe('sp-footer', () => {
 
     expect(footer?.getAttribute('aria-label')).toBe('Site footer')
   })
+
+  it('defaults the host to block display', async () => {
+    const element = document.createElement('sp-footer') as SpectreFooterElement
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(getComputedStyle(element).display).toBe('block')
+  })
+
+  it('applies innerClass to the native footer without touching the host class', async () => {
+    const element = document.createElement('sp-footer') as SpectreFooterElement
+    element.className = 'host-class'
+    element.innerClass = 'sp-py-8 not-allowed'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const footer = element.querySelector('footer')
+
+    expect(footer?.className).toContain('sp-py-8')
+    expect(footer?.className).not.toContain('not-allowed')
+    expect(footer?.className).not.toContain('host-class')
+    expect(element.className).toBe('host-class')
+  })
 })

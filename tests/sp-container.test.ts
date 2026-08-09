@@ -84,4 +84,42 @@ describe('sp-container', () => {
 
     expect(div?.getAttribute('aria-label')).toBe('Main content');
   });
+
+  it('defaults the host to block display', async () => {
+    const element = document.createElement('sp-container') as SpectreContainerElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(getComputedStyle(element).display).toBe('block');
+  });
+
+  it('applies innerClass to the native div without touching the host class', async () => {
+    const element = document.createElement('sp-container') as SpectreContainerElement;
+    element.className = 'host-class';
+    element.innerClass = 'sp-mt-4 sp-bg-primary-500';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.className).toContain('sp-mt-4');
+    expect(div?.className).toContain('sp-bg-primary-500');
+    expect(div?.className).not.toContain('host-class');
+    expect(element.className).toBe('host-class');
+  });
+
+  it('drops unsafe or non-sp- tokens from innerClass', async () => {
+    const element = document.createElement('sp-container') as SpectreContainerElement;
+    element.innerClass = 'sp-mt-4 not-allowed "><script>alert(1)</script>';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+
+    expect(div?.className).toContain('sp-mt-4');
+    expect(div?.className).not.toContain('not-allowed');
+    expect(div?.className).not.toContain('script');
+  });
 });

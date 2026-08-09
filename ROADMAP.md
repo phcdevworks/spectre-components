@@ -26,25 +26,17 @@ this file does not restate delivered work.
 | 8 | Navigation composition — `sp-nav-item` adds plain-link and dropdown/mega-menu content support inside `sp-nav` | 1.12.0 |
 | 9 | Button link semantics — `sp-button` adds native anchor rendering for navigation actions | 1.13.0 |
 | 10 | Recipe surface alignment — `sp-text` text transforms and responsive `sp-grid` column spans from `spectre-ui` 3.2.0 | 1.14.0 |
+| 11 | Inner layout utility forwarding — `inner-class` contract and block-level host defaults for `sp-container`, `sp-stack`, `sp-grid`, `sp-section`, `sp-nav`, `sp-footer` | Unreleased |
+| 12 | Mega-menu delivery contract — `mega` property on `sp-dropdown`/`sp-nav-item`, backed by `spectre-ui` 4.0.0's `mega` flag | Unreleased |
 
 ---
 
 ## What's Next
 
-### Phase 11 — Inner Layout Utility Forwarding
-
-A production child-theme integration exposed a delivery gap: layout
-utilities applied to a custom-element host do not reach the native light-DOM
-element that owns the component recipe classes. Phase 11 will add an explicit
-inner-class contract to layout components after the `spectre-ui` Phase 8 layout
-utility release is published. See [TODO.md](TODO.md) for the gated work queue.
-
-### Phase 12 — Mega-Menu Delivery Contract
-
-After `spectre-ui` publishes reusable wide-menu geometry, surface it through an
-additive `sp-nav-item`/`sp-dropdown` contract. This closes the gap between the
-package's advertised mega-menu content support and the container-level
-positioning production mega menus actually require.
+Nothing queued. New component or contract work is demand-driven: it opens
+only when `spectre-ui` (or another downstream consumer) surfaces a concrete
+missing recipe or requirement, and requires explicit approval from Bradley
+Potts per `AGENTS.md`. See [TODO.md](TODO.md).
 
 ---
 

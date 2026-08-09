@@ -6,6 +6,7 @@ import {
   isStackAlign,
   isStackBasis,
   isStackDirection,
+  sanitizeUtilityClasses,
   type SpectreStackAlign,
   type SpectreStackBasis,
   type SpectreStackDirection
@@ -26,6 +27,7 @@ export interface SpectreStackProps {
   basis?: SpectreStackBasis | undefined
   direction?: SpectreStackDirection | undefined
   id?: string | null | undefined
+  innerClass?: string | undefined
   title?: string | null | undefined
 }
 
@@ -36,12 +38,14 @@ export class SpectreStackElement
   static properties = {
     align: { type: String, reflect: true },
     basis: { type: String, reflect: true },
-    direction: { type: String, reflect: true }
+    direction: { type: String, reflect: true },
+    innerClass: { attribute: 'inner-class', type: String }
   }
 
   align: SpectreStackAlign | undefined = 'center'
   basis: SpectreStackBasis | undefined = undefined
   direction: SpectreStackDirection | undefined = 'vertical'
+  innerClass: string | undefined = undefined
 
   override get id(): string {
     return super.id
@@ -57,6 +61,11 @@ export class SpectreStackElement
 
   override set title(value: string | null | undefined) {
     super.title = value
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback()
+    this.style.display ||= 'block'
   }
 
   protected override getContentContainer(): Element | null {
@@ -96,11 +105,15 @@ export class SpectreStackElement
   }
 
   private get stackClasses(): string {
-    return getStackClasses({
+    const recipeClasses = getStackClasses({
       align: this.align as StackAlign,
       direction: this.direction as StackDirection,
       ...(this.basis != null ? { basis: this.basis as StackBasis } : {})
     })
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses
+      ? `${recipeClasses} ${utilityClasses}`
+      : recipeClasses
   }
 
   override render() {

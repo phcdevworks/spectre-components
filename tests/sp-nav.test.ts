@@ -88,4 +88,28 @@ describe('sp-nav', () => {
 
     expect(nav?.getAttribute('aria-label')).toBe('Primary')
   })
+
+  it('defaults the host to block display', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(getComputedStyle(element).display).toBe('block')
+  })
+
+  it('applies innerClass to the native nav without touching the host class', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    element.className = 'host-class'
+    element.innerClass = 'sp-px-4 not-allowed'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const nav = element.querySelector('nav')
+
+    expect(nav?.className).toContain('sp-px-4')
+    expect(nav?.className).not.toContain('not-allowed')
+    expect(nav?.className).not.toContain('host-class')
+    expect(element.className).toBe('host-class')
+  })
 })

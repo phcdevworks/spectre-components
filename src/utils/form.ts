@@ -427,3 +427,15 @@ export function normalizeInt(
   }
   return value
 }
+
+const spectreUtilityClassPattern = /^sp-[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+export function sanitizeUtilityClasses(value: string | null | undefined): string {
+  if (!value) {
+    return ''
+  }
+  return value
+    .split(/\s+/)
+    .filter((token) => spectreUtilityClassPattern.test(token))
+    .join(' ')
+}

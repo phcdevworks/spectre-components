@@ -115,4 +115,28 @@ describe('sp-grid', () => {
 
     expect(element.span).toBeUndefined();
   });
+
+  it('defaults the host to block display', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(getComputedStyle(element).display).toBe('block');
+  });
+
+  it('applies innerClass to the native div without touching the host class', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement;
+    element.className = 'host-class';
+    element.innerClass = 'sp-lg-gap-8 not-allowed';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div[data-sp-grid-native]');
+
+    expect(div?.className).toContain('sp-lg-gap-8');
+    expect(div?.className).not.toContain('not-allowed');
+    expect(div?.className).not.toContain('host-class');
+    expect(element.className).toBe('host-class');
+  });
 });

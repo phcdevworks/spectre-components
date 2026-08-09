@@ -2,6 +2,7 @@ import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
+import { sanitizeUtilityClasses } from '../../utils/form'
 
 import { getFooterClasses } from '@phcdevworks/spectre-ui'
 
@@ -10,6 +11,7 @@ export interface SpectreFooterProps {
   bordered?: boolean | undefined
   fullWidth?: boolean | undefined
   id?: string | null | undefined
+  innerClass?: string | undefined
   title?: string | null | undefined
 }
 
@@ -19,11 +21,13 @@ export class SpectreFooterElement
 {
   static properties = {
     bordered: { type: Boolean, reflect: true },
-    fullWidth: { attribute: 'full-width', type: Boolean, reflect: true }
+    fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    innerClass: { attribute: 'inner-class', type: String }
   }
 
   bordered: boolean | undefined = false
   fullWidth: boolean | undefined = false
+  innerClass: string | undefined = undefined
 
   override get id(): string {
     return super.id
@@ -39,6 +43,11 @@ export class SpectreFooterElement
 
   override set title(value: string | null | undefined) {
     super.title = value
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback()
+    this.style.display ||= 'block'
   }
 
   protected override getContentContainer(): Element | null {
@@ -65,10 +74,14 @@ export class SpectreFooterElement
   }
 
   private get footerClasses(): string {
-    return getFooterClasses({
+    const recipeClasses = getFooterClasses({
       bordered: this.bordered ?? false,
       fullWidth: this.fullWidth ?? false
     })
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses
+      ? `${recipeClasses} ${utilityClasses}`
+      : recipeClasses
   }
 
   override render() {

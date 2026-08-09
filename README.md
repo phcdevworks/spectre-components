@@ -812,16 +812,41 @@ price, feature list, call-to-action, etc.).
 
 ---
 
+### Layout components
+
+`sp-container`, `sp-grid`, `sp-section`, `sp-stack`, `sp-footer`, and `sp-nav`
+share two contracts:
+
+- **Host display** — the host element defaults to `display: block` (set via
+  inline style in `connectedCallback`, so a consumer's own `style="display:
+  ..."` always wins) instead of the browser's default inline custom-element
+  box. This keeps backgrounds, margins, and full-width inner content from
+  being trapped inside an inline box.
+- **`inner-class`** — an `inner-class` attribute (`innerClass` JS property)
+  appends consumer-supplied Spectre utility classes to the native inner
+  element the component's recipe classes render on, without touching the
+  host's own `class` attribute. Host `class` and `inner-class` are distinct
+  targets: host `class` affects the custom-element box itself, `inner-class`
+  affects the styled element inside it. Only tokens matching `sp-*` (Spectre
+  utility class syntax) are applied; anything else is silently dropped.
+
+```html
+<sp-stack class="my-host-hook" inner-class="sp-bg-primary-500 sp-p-8">
+  ...
+</sp-stack>
+```
+
 ### sp-container
 
 Renders a `<div>` layout container backed by the Spectre container recipe.
 
 **Attributes**
 
-| Attribute                 | Type    | Default | Description                       |
-| ------------------------- | ------- | ------- | --------------------------------- |
-| `max-width`               | `prose` | —       | Constrains content to a max width |
-| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<div>`   |
+| Attribute                 | Type    | Default | Description                                           |
+| ------------------------- | ------- | ------- | ----------------------------------------------------- |
+| `max-width`               | `prose` | —       | Constrains content to a max width                     |
+| `inner-class`             | string  | —       | Spectre utility classes applied to the native `<div>` |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<div>`                       |
 
 **Content projection** — children become the container content.
 
@@ -840,6 +865,7 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 | `columns`                 | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                | `1`     | Number of grid columns                                      |
 | `gap`                     | `sm \| md \| lg`                                             | `md`    | Gap between grid items                                      |
 | `span`                    | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only) | —       | Column span for a grid item, single value or per-breakpoint |
+| `inner-class`             | string                                                       | —       | Spectre utility classes applied to the native `<div>`       |
 | `id` / `title` / `aria-*` | string                                                       | —       | Forwarded to the native `<div>`                             |
 
 **Content projection** — children become grid items.
@@ -854,9 +880,10 @@ Renders a `<section>` layout wrapper backed by the Spectre section recipe.
 
 **Attributes**
 
-| Attribute                 | Type   | Default | Description                         |
-| ------------------------- | ------ | ------- | ----------------------------------- |
-| `id` / `title` / `aria-*` | string | —       | Forwarded to the native `<section>` |
+| Attribute                 | Type   | Default | Description                                               |
+| ------------------------- | ------ | ------- | --------------------------------------------------------- |
+| `inner-class`             | string | —       | Spectre utility classes applied to the native `<section>` |
+| `id` / `title` / `aria-*` | string | —       | Forwarded to the native `<section>`                       |
 
 **Content projection** — children become the section content.
 
@@ -870,12 +897,13 @@ Renders a `<div>` flex stack backed by the Spectre stack recipe.
 
 **Attributes**
 
-| Attribute                 | Type                     | Default    | Description                           |
-| ------------------------- | ------------------------ | ---------- | ------------------------------------- |
-| `direction`               | `vertical \| horizontal` | `vertical` | Stack axis                            |
-| `basis`                   | `sidebar`                | —          | Reserves sidebar-sized basis on items |
-| `align`                   | `center \| stretch`      | `center`   | Cross-axis alignment                  |
-| `id` / `title` / `aria-*` | string                   | —          | Forwarded to the native `<div>`       |
+| Attribute                 | Type                     | Default    | Description                                           |
+| ------------------------- | ------------------------ | ---------- | ----------------------------------------------------- |
+| `direction`               | `vertical \| horizontal` | `vertical` | Stack axis                                            |
+| `basis`                   | `sidebar`                | —          | Reserves sidebar-sized basis on items                 |
+| `align`                   | `center \| stretch`      | `center`   | Cross-axis alignment                                  |
+| `inner-class`             | string                   | —          | Spectre utility classes applied to the native `<div>` |
+| `id` / `title` / `aria-*` | string                   | —          | Forwarded to the native `<div>`                       |
 
 **Content projection** — children become stack items.
 
@@ -889,11 +917,12 @@ Renders a `<footer>` backed by the Spectre footer recipe.
 
 **Attributes**
 
-| Attribute                 | Type    | Default | Description                        |
-| ------------------------- | ------- | ------- | ---------------------------------- |
-| `bordered`                | boolean | `false` | Adds a top border                  |
-| `full-width`              | boolean | `false` | Spans full container width         |
-| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<footer>` |
+| Attribute                 | Type    | Default | Description                                              |
+| ------------------------- | ------- | ------- | -------------------------------------------------------- |
+| `bordered`                | boolean | `false` | Adds a top border                                        |
+| `full-width`              | boolean | `false` | Spans full container width                               |
+| `inner-class`             | string  | —       | Spectre utility classes applied to the native `<footer>` |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<footer>`                       |
 
 **Content projection** — children become the footer content (links, legal text,
 etc.).
@@ -908,12 +937,13 @@ Renders a `<nav>` backed by the Spectre nav recipe.
 
 **Attributes**
 
-| Attribute                 | Type    | Default | Description                     |
-| ------------------------- | ------- | ------- | ------------------------------- |
-| `bordered`                | boolean | `false` | Adds a bottom border            |
-| `sticky`                  | boolean | `false` | Sticks the nav to the viewport  |
-| `full-width`              | boolean | `false` | Spans full container width      |
-| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<nav>` |
+| Attribute                 | Type    | Default | Description                                           |
+| ------------------------- | ------- | ------- | ----------------------------------------------------- |
+| `bordered`                | boolean | `false` | Adds a bottom border                                  |
+| `sticky`                  | boolean | `false` | Sticks the nav to the viewport                        |
+| `full-width`              | boolean | `false` | Spans full container width                            |
+| `inner-class`             | string  | —       | Spectre utility classes applied to the native `<nav>` |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<nav>`                       |
 
 **Content projection** — children become the nav content (links, brand mark,
 etc.).

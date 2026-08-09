@@ -7,6 +7,7 @@ import {
   isGridGap,
   isGridSpan,
   isGridSpanOptions,
+  sanitizeUtilityClasses,
   type SpectreGridColumns,
   type SpectreGridGap,
   type SpectreGridSpan,
@@ -29,6 +30,7 @@ export interface SpectreGridProps {
   columns?: SpectreGridColumns | undefined
   gap?: SpectreGridGap | undefined
   id?: string | null | undefined
+  innerClass?: string | undefined
   span?: SpectreGridSpan | SpectreGridSpanOptions | undefined
   title?: string | null | undefined
 }
@@ -40,11 +42,13 @@ export class SpectreGridElement
   static properties = {
     columns: { type: Number, reflect: true },
     gap: { type: String, reflect: true },
+    innerClass: { attribute: 'inner-class', type: String },
     span: { type: Object }
   }
 
   columns: SpectreGridColumns | undefined = 1
   gap: SpectreGridGap | undefined = 'md'
+  innerClass: string | undefined = undefined
   span: SpectreGridSpan | SpectreGridSpanOptions | undefined
 
   override get id(): string {
@@ -61,6 +65,11 @@ export class SpectreGridElement
 
   override set title(value: string | null | undefined) {
     super.title = value
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback()
+    this.style.display ||= 'block'
   }
 
   protected override getContentContainer(): Element | null {
@@ -102,13 +111,17 @@ export class SpectreGridElement
   }
 
   private get gridClasses(): string {
-    return getGridClasses({
+    const recipeClasses = getGridClasses({
       columns: this.columns as GridColumns,
       gap: this.gap as GridGap,
       ...(this.span !== undefined && {
         span: this.span as GridSpan | GridSpanOptions
       })
     })
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses
+      ? `${recipeClasses} ${utilityClasses}`
+      : recipeClasses
   }
 
   override render() {

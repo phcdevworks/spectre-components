@@ -81,4 +81,28 @@ describe('sp-stack', () => {
 
     expect(element.basis).toBeUndefined();
   });
+
+  it('defaults the host to block display', async () => {
+    const element = document.createElement('sp-stack') as SpectreStackElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(getComputedStyle(element).display).toBe('block');
+  });
+
+  it('applies innerClass to the native div without touching the host class', async () => {
+    const element = document.createElement('sp-stack') as SpectreStackElement;
+    element.className = 'host-class';
+    element.innerClass = 'sp-gap-8 not-allowed';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div[data-sp-stack-native]');
+
+    expect(div?.className).toContain('sp-gap-8');
+    expect(div?.className).not.toContain('not-allowed');
+    expect(div?.className).not.toContain('host-class');
+    expect(element.className).toBe('host-class');
+  });
 });

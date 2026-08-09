@@ -17,12 +17,25 @@ Contract change type: behavioral change
   ancestor's full width, for mega-menu content combined with a projected
   `sp-grid` panel. Simple dropdown/nav-item behavior is unchanged when `mega`
   is unset. Closes Phase 12 (Mega-Menu Delivery Contract) in `TODO.md`.
+- `sp-container`, `sp-grid`, `sp-section`, `sp-stack`, `sp-footer`, and
+  `sp-nav` — new `inner-class` attribute (`innerClass` JS property) that
+  applies consumer-supplied Spectre utility classes (`sp-*` tokens only,
+  anything else is silently dropped) to the native inner element the
+  component's recipe classes render on, without touching the host's own
+  `class` attribute. Closes the Phase 11 (Inner Layout Utility Forwarding)
+  gap in `TODO.md` where consumers had to target generated inner elements
+  (`> .sp-stack`, `> .sp-grid`, and similar selectors) directly.
 
 ### Changed
 
 - Aligned the component layer with `@phcdevworks/spectre-tokens` 4.3 and
   `@phcdevworks/spectre-ui` 4.0, and refreshed compatible development tooling
   and lockfile entries.
+- `sp-container`, `sp-grid`, `sp-section`, `sp-stack`, `sp-footer`, and
+  `sp-nav` now default their host element to `display: block` (set via inline
+  style in `connectedCallback`, so a consumer's own inline `display` always
+  wins) instead of the browser's default inline custom-element box. Inline
+  primitives (`sp-badge`, `sp-tag`, `sp-tooltip`, etc.) are unaffected.
 
 ## [1.14.0] - 2026-08-06
 

@@ -2,6 +2,7 @@ import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
+import { sanitizeUtilityClasses } from '../../utils/form'
 
 import { getSectionClasses } from '@phcdevworks/spectre-ui'
 
@@ -10,6 +11,7 @@ export interface SpectreSectionProps {
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
   id?: string | null | undefined
+  innerClass?: string | undefined
   title?: string | null | undefined
 }
 
@@ -17,6 +19,12 @@ export class SpectreSectionElement
   extends SpectreProjectableElement
   implements SpectreSectionProps
 {
+  static properties = {
+    innerClass: { attribute: 'inner-class', type: String }
+  }
+
+  innerClass: string | undefined = undefined
+
   override get id(): string {
     return super.id
   }
@@ -33,6 +41,11 @@ export class SpectreSectionElement
     super.title = value
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback()
+    this.style.display ||= 'block'
+  }
+
   protected override getContentContainer(): Element | null {
     return this.querySelector('[data-sp-section-native]')
   }
@@ -46,7 +59,11 @@ export class SpectreSectionElement
   }
 
   private get sectionClasses(): string {
-    return getSectionClasses({})
+    const recipeClasses = getSectionClasses({})
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses
+      ? `${recipeClasses} ${utilityClasses}`
+      : recipeClasses
   }
 
   override render() {
