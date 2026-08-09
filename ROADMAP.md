@@ -26,9 +26,9 @@ file does not restate delivered work.
 | 8     | Navigation composition — `sp-nav-item` adds plain-link and dropdown/mega-menu content support inside `sp-nav`                                                                                    | 1.12.0       |
 | 9     | Button link semantics — `sp-button` adds native anchor rendering for navigation actions                                                                                                          | 1.13.0       |
 | 10    | Recipe surface alignment — `sp-text` text transforms and responsive `sp-grid` column spans from `spectre-ui` 3.2.0                                                                               | 1.14.0       |
-| 11    | Inner layout utility forwarding — `inner-class` contract and block-level host defaults for `sp-container`, `sp-stack`, `sp-grid`, `sp-section`, `sp-nav`, `sp-footer`                            | Unreleased   |
-| 12    | Mega-menu delivery contract — `mega` property on `sp-dropdown`/`sp-nav-item`, backed by `spectre-ui` 4.0.0's `mega` flag                                                                         | Unreleased   |
-| 13    | `sp-sidebar-toggle` — standalone remote sidebar trigger, backed by `getSidebarToggleClasses`; `hide-toggle` on `sp-sidebar`. Closes the last gap in the `spectre-ui-astro` component-parity plan | Unreleased   |
+| 11    | Inner layout utility forwarding — `inner-class` contract and block-level host defaults for `sp-container`, `sp-stack`, `sp-grid`, `sp-section`, `sp-nav`, `sp-footer`                            | 1.15.0       |
+| 12    | Mega-menu delivery contract — `mega` property on `sp-dropdown`/`sp-nav-item`, backed by `spectre-ui` 4.0.0's `mega` flag                                                                         | 1.15.0       |
+| 13    | `sp-sidebar-toggle` — standalone remote sidebar trigger, backed by `getSidebarToggleClasses`; `hide-toggle` on `sp-sidebar`. Closes the last gap in the `spectre-ui-astro` component-parity plan | 1.15.0       |
 
 ---
 

@@ -6,6 +6,10 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-08-09
+
+**Release Title:** Layout and Navigation Contracts
+
 Contract change type: behavioral change
 
 ### Added
@@ -653,7 +657,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.14.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.15.0...HEAD
+[1.15.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.14.0...v1.15.0
 [1.14.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.13.0...v1.14.0
 [1.13.0]:

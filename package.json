@@ -1,6 +1,6 @@
 {
   "name": "@phcdevworks/spectre-components",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "@phcdevworks/spectre-components is the Lit-based component layer of the Spectre system. It implements Spectre's design contracts as reusable, accessible, framework-agnostic web components.",
   "keywords": [
     "phcdevworks",
@@ -211,9 +211,9 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup --config tsup.config.ts",
+    "build": "node --max-old-space-size=4096 ./node_modules/tsup/dist/cli-default.js --config tsup.config.ts",
     "clean": "rm -rf dist coverage",
-    "dev": "tsup --config tsup.config.ts --watch",
+    "dev": "node --max-old-space-size=4096 ./node_modules/tsup/dist/cli-default.js --config tsup.config.ts --watch",
     "verify:app": "vite",
     "typecheck": "tsc --noEmit",
     "release:propose": "node --experimental-strip-types scripts/propose-version.ts",
