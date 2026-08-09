@@ -232,28 +232,28 @@
     "typescript": "^5.0 || ^6.0 || ^7.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^4.1.0",
-    "@phcdevworks/spectre-ui": "^3.2.0",
+    "@phcdevworks/spectre-tokens": "^4.3.0",
+    "@phcdevworks/spectre-ui": "^4.0.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@phcdevworks/spectre-manifest": "^1.1.0",
     "@playwright/test": "^1.62.1",
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.2.0",
     "@typescript-eslint/eslint-plugin": "^8.66.0",
     "@typescript-eslint/parser": "^8.66.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "axe-core": "^4.13.0",
-    "eslint": "^10.8.0",
+    "eslint": "^10.8.1",
     "globals": "^17.9.0",
-    "happy-dom": "^20.11.1",
+    "happy-dom": "^20.11.2",
     "jiti": "^2.7.0",
     "prettier": "^3.9.6",
     "tsup": "^8.5.1",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.66.0",
-    "vite": "^8.2.0",
+    "vite": "^8.2.1",
     "vitest": "^4.1.10"
   },
   "allowScripts": {

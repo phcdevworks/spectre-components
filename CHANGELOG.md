@@ -6,6 +6,14 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+Contract change type: behavioral change
+
+### Changed
+
+- Aligned the component layer with `@phcdevworks/spectre-tokens` 4.3 and
+  `@phcdevworks/spectre-ui` 4.0, and refreshed compatible development tooling
+  and lockfile entries.
+
 ## [1.14.0] - 2026-08-06
 
 **Release Title:** Recipe Surface Alignment
