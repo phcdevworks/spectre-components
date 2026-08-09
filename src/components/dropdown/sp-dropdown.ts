@@ -17,6 +17,7 @@ export interface SpectreDropdownProps {
   ariaLabel?: string | null
   fullWidth?: boolean | undefined
   id?: string | null | undefined
+  mega?: boolean | undefined
   open?: boolean | undefined
   placement?: SpectreDropdownPlacement | undefined
   title?: string | null | undefined
@@ -29,12 +30,14 @@ export class SpectreDropdownElement
 {
   static properties = {
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    mega: { type: Boolean, reflect: true },
     open: { type: Boolean, reflect: true },
     placement: { type: String, reflect: true },
     triggerLabel: { attribute: 'trigger-label', type: String }
   }
 
   fullWidth: boolean | undefined = false
+  mega: boolean | undefined = false
   open: boolean | undefined = false
   placement: SpectreDropdownPlacement | undefined = 'bottom-start'
   triggerLabel: string | undefined = 'Toggle menu'
@@ -156,6 +159,9 @@ export class SpectreDropdownElement
     if (changedProperties.has('fullWidth') && this.fullWidth == null) {
       this.fullWidth = false
     }
+    if (changedProperties.has('mega') && this.mega == null) {
+      this.mega = false
+    }
     if (changedProperties.has('open') && this.open == null) {
       this.open = false
     }
@@ -215,11 +221,15 @@ export class SpectreDropdownElement
   }
 
   private get dropdownClasses(): string {
-    return getDropdownClasses({ fullWidth: this.fullWidth ?? false })
+    return getDropdownClasses({
+      fullWidth: this.fullWidth ?? false,
+      mega: this.mega ?? false
+    })
   }
 
   private get menuClasses(): string {
     return getDropdownMenuClasses({
+      mega: this.mega ?? false,
       open: this.open ?? false,
       placement: this.placement as SpectreDropdownPlacement
     })

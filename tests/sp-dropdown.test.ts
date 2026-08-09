@@ -159,4 +159,60 @@ describe('sp-dropdown', () => {
 
     expect(wrapper?.className).toContain('sp-dropdown--full')
   })
+
+  it('defaults mega to false and omits the mega classes', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const wrapper = element.querySelector('div.sp-dropdown')
+    const menu = element.querySelector('[data-sp-dropdown-menu]')
+
+    expect(element.mega).toBe(false)
+    expect(wrapper?.className).not.toContain('sp-dropdown--mega')
+    expect(menu?.className).not.toContain('sp-dropdown__menu--mega')
+  })
+
+  it('reflects mega onto the wrapper and menu classes', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    element.mega = true
+    const item = document.createElement('a')
+    item.textContent = 'Solutions'
+    element.append(item)
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const wrapper = element.querySelector('div.sp-dropdown')
+    const menu = element.querySelector('[data-sp-dropdown-menu]')
+
+    expect(wrapper?.className).toContain('sp-dropdown--mega')
+    expect(menu?.className).toContain('sp-dropdown__menu--mega')
+    expect(menu?.querySelector('a')?.textContent).toBe('Solutions')
+  })
+
+  it('opens and closes normally when mega is enabled', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    element.mega = true
+    document.body.append(element)
+    await element.updateComplete
+
+    const trigger = element.querySelector<HTMLButtonElement>(
+      '[data-sp-dropdown-trigger]'
+    )
+
+    trigger?.click()
+    await element.updateComplete
+    expect(element.open).toBe(true)
+
+    trigger?.click()
+    await element.updateComplete
+    expect(element.open).toBe(false)
+  })
 })

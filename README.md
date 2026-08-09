@@ -930,14 +930,15 @@ alongside plain `<a>` links.
 
 **Attributes**
 
-| Attribute                 | Type    | Default          | Description                                                         |
-| ------------------------- | ------- | ---------------- | ------------------------------------------------------------------- |
-| `dropdown`                | boolean | `false`          | Renders a dropdown trigger + menu instead of a plain `<a>`          |
-| `href`                    | string  | —                | Link target when `dropdown` is `false`                              |
-| `label`                   | string  | —                | Trigger/link text when no content is projected                      |
-| `open`                    | boolean | `false`          | Open/closed menu state (dropdown mode only)                         |
-| `placement`               | string  | `'bottom-start'` | Menu position: `bottom-start`, `bottom-end`, `top-start`, `top-end` |
-| `id` / `title` / `aria-*` | string  | —                | Forwarded to the rendered `<a>` or trigger `<button>`               |
+| Attribute                 | Type    | Default          | Description                                                                                                              |
+| ------------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `dropdown`                | boolean | `false`          | Renders a dropdown trigger + menu instead of a plain `<a>`                                                               |
+| `href`                    | string  | —                | Link target when `dropdown` is `false`                                                                                   |
+| `label`                   | string  | —                | Trigger/link text when no content is projected                                                                           |
+| `mega`                    | boolean | `false`          | Anchors the menu to the nearest positioned ancestor instead of the trigger, spanning its full width (dropdown mode only) |
+| `open`                    | boolean | `false`          | Open/closed menu state (dropdown mode only)                                                                              |
+| `placement`               | string  | `'bottom-start'` | Menu position: `bottom-start`, `bottom-end`, `top-start`, `top-end`                                                      |
+| `id` / `title` / `aria-*` | string  | —                | Forwarded to the rendered `<a>` or trigger `<button>`                                                                    |
 
 **Content projection** — in dropdown mode, children become the menu content; a
 child with `slot="trigger"` becomes the trigger content instead of `label`. Menu
@@ -959,8 +960,19 @@ layout. In link mode, children become the link's content.
       <div>Column three</div>
     </sp-grid>
   </sp-nav-item>
+  <sp-nav-item dropdown mega label="Solutions">
+    <sp-grid columns="4" gap="lg">
+      <div>Column one</div>
+      <div>Column two</div>
+      <div>Column three</div>
+      <div>Column four</div>
+    </sp-grid>
+  </sp-nav-item>
 </sp-nav>
 ```
+
+`mega` requires a positioned ancestor to anchor against — `sp-nav` is a
+positioning context by default, so nesting inside it is sufficient.
 
 ---
 
@@ -1000,13 +1012,14 @@ recipes.
 
 **Attributes**
 
-| Attribute                 | Type                                                 | Default        | Description                                                                   |
-| ------------------------- | ---------------------------------------------------- | -------------- | ----------------------------------------------------------------------------- |
-| `open`                    | boolean                                              | `false`        | Open/closed menu state                                                        |
-| `placement`               | `bottom-start \| bottom-end \| top-start \| top-end` | `bottom-start` | Menu position relative to trigger                                             |
-| `full-width`              | boolean                                              | `false`        | Spans full container width                                                    |
-| `trigger-label`           | string                                               | `Toggle menu`  | Visible/accessible trigger text when no `slot="trigger"` content is projected |
-| `id` / `title` / `aria-*` | string                                               | —              | Forwarded to the trigger button                                               |
+| Attribute                 | Type                                                 | Default        | Description                                                                                         |
+| ------------------------- | ---------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------- |
+| `open`                    | boolean                                              | `false`        | Open/closed menu state                                                                              |
+| `placement`               | `bottom-start \| bottom-end \| top-start \| top-end` | `bottom-start` | Menu position relative to trigger                                                                   |
+| `full-width`              | boolean                                              | `false`        | Spans full container width                                                                          |
+| `mega`                    | boolean                                              | `false`        | Anchors the menu to the nearest positioned ancestor instead of the trigger, spanning its full width |
+| `trigger-label`           | string                                               | `Toggle menu`  | Visible/accessible trigger text when no `slot="trigger"` content is projected                       |
+| `id` / `title` / `aria-*` | string                                               | —              | Forwarded to the trigger button                                                                     |
 
 **Content projection** — an element with `slot="trigger"` becomes the trigger
 button content; all other children become the menu content.

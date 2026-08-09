@@ -192,4 +192,65 @@ describe('sp-nav-item', () => {
 
     expect(trigger?.querySelector('span')?.textContent).toBe('Account')
   })
+
+  it('defaults mega to false and omits the mega classes', async () => {
+    const element = document.createElement(
+      'sp-nav-item'
+    ) as SpectreNavItemElement
+    element.dropdown = true
+    document.body.append(element)
+    await element.updateComplete
+
+    const wrapper = element.querySelector('div.sp-dropdown')
+    const menu = element.querySelector('[data-sp-nav-item-menu]')
+
+    expect(element.mega).toBe(false)
+    expect(wrapper?.className).not.toContain('sp-dropdown--mega')
+    expect(menu?.className).not.toContain('sp-dropdown__menu--mega')
+  })
+
+  it('reflects mega onto the wrapper and menu classes with a grid panel', async () => {
+    const element = document.createElement(
+      'sp-nav-item'
+    ) as SpectreNavItemElement
+    element.dropdown = true
+    element.mega = true
+    element.label = 'Solutions'
+    const grid = document.createElement('sp-grid')
+    grid.setAttribute('columns', '3')
+    element.append(grid)
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const wrapper = element.querySelector('div.sp-dropdown')
+    const menu = element.querySelector('[data-sp-nav-item-menu]')
+
+    expect(wrapper?.className).toContain('sp-dropdown--mega')
+    expect(menu?.className).toContain('sp-dropdown__menu--mega')
+    expect(menu?.querySelector('sp-grid')).not.toBeNull()
+  })
+
+  it('opens and closes normally when mega is enabled', async () => {
+    const element = document.createElement(
+      'sp-nav-item'
+    ) as SpectreNavItemElement
+    element.dropdown = true
+    element.mega = true
+    document.body.append(element)
+    await element.updateComplete
+
+    const trigger = element.querySelector<HTMLButtonElement>(
+      '[data-sp-nav-item-trigger]'
+    )
+
+    trigger?.click()
+    await element.updateComplete
+    expect(element.open).toBe(true)
+    expect(trigger?.getAttribute('aria-expanded')).toBe('true')
+
+    trigger?.click()
+    await element.updateComplete
+    expect(element.open).toBe(false)
+  })
 })

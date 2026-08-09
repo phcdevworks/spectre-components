@@ -20,6 +20,7 @@ export interface SpectreNavItemProps {
   href?: string | undefined
   id?: string | null | undefined
   label?: string | undefined
+  mega?: boolean | undefined
   open?: boolean | undefined
   placement?: SpectreDropdownPlacement | undefined
   title?: string | null | undefined
@@ -33,6 +34,7 @@ export class SpectreNavItemElement
     dropdown: { type: Boolean, reflect: true },
     href: { type: String },
     label: { type: String },
+    mega: { type: Boolean, reflect: true },
     open: { type: Boolean, reflect: true },
     placement: { type: String, reflect: true }
   }
@@ -40,6 +42,7 @@ export class SpectreNavItemElement
   dropdown: boolean | undefined = false
   href: string | undefined = undefined
   label: string | undefined = undefined
+  mega: boolean | undefined = false
   open: boolean | undefined = false
   placement: SpectreDropdownPlacement | undefined = 'bottom-start'
 
@@ -160,6 +163,9 @@ export class SpectreNavItemElement
     if (changedProperties.has('dropdown') && this.dropdown == null) {
       this.dropdown = false
     }
+    if (changedProperties.has('mega') && this.mega == null) {
+      this.mega = false
+    }
     if (changedProperties.has('open') && this.open == null) {
       this.open = false
     }
@@ -216,11 +222,12 @@ export class SpectreNavItemElement
   }
 
   private get wrapperClasses(): string {
-    return getDropdownClasses()
+    return getDropdownClasses({ mega: this.mega ?? false })
   }
 
   private get menuClasses(): string {
     return getDropdownMenuClasses({
+      mega: this.mega ?? false,
       open: this.open ?? false,
       placement: this.placement as SpectreDropdownPlacement
     })

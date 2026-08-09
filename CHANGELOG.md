@@ -8,6 +8,16 @@ reflects package releases published to npm.
 
 Contract change type: behavioral change
 
+### Added
+
+- `sp-dropdown` and `sp-nav-item` — new `mega` boolean property, surfacing the
+  `mega` flag added to `getDropdownClasses`/`getDropdownMenuClasses` in
+  `@phcdevworks/spectre-ui` 4.0.0. Anchors the menu to the nearest positioned
+  ancestor (typically `sp-nav`) instead of the trigger wrapper, spanning that
+  ancestor's full width, for mega-menu content combined with a projected
+  `sp-grid` panel. Simple dropdown/nav-item behavior is unchanged when `mega`
+  is unset. Closes Phase 12 (Mega-Menu Delivery Contract) in `TODO.md`.
+
 ### Changed
 
 - Aligned the component layer with `@phcdevworks/spectre-tokens` 4.3 and

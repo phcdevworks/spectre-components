@@ -25,17 +25,18 @@ Requested by a downstream integration on 2026-08-07 after a production child
 theme had to target generated inner elements (`> .sp-stack`, `> .sp-grid`,
 and similar selectors) for basic layout composition.
 
-## Phase 12: Mega-Menu Delivery Contract
+## Phase 12: Mega-Menu Delivery Contract — Complete
 
-Gated on publication of the corresponding `spectre-ui` wide-menu geometry
-contract.
+Unblocked by `@phcdevworks/spectre-ui` 4.0.0 publishing the `mega` flag on
+`getDropdownClasses`/`getDropdownMenuClasses`. Approved by Bradley Potts on
+2026-08-09.
 
-- [ ] Extend `sp-nav-item`/`sp-dropdown` with the additive property or variant
+- [x] Extend `sp-nav-item`/`sp-dropdown` with the additive property or variant
       needed to select container-anchored wide-menu geometry without exposing
       internal selectors to consumers.
-- [ ] Verify simple dropdown behavior remains unchanged while mega-menu content
+- [x] Verify simple dropdown behavior remains unchanged while mega-menu content
       can use responsive Grid utilities, bounded height, and scrolling.
-- [ ] Add behavior, accessibility, and projected-content regression coverage;
+- [x] Add behavior, accessibility, and projected-content regression coverage;
       document the public contract and update `CHANGELOG.md`.
 
 New component or contract work here is otherwise demand-driven: it opens only
