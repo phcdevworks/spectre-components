@@ -177,11 +177,11 @@ Use this checklist before cutting every release (tag + GitHub Release).
 1. `package.json` version is bumped to the intended release version.
 2. `CHANGELOG.md [Unreleased]` notes are moved to a new versioned entry:
    `## [<version>] - <YYYY-MM-DD>`, with a release title line in the format
-   `**Release Title:** <short title>`. Release titles do not include the
-   version or roadmap phase; the version remains in the changelog heading and
-   git tag. Every release must still belong to a numbered roadmap phase. If no
-   phase is active, add the next numbered phase to `ROADMAP.md` before preparing
-   the release.
+   `**Release Title:** <short title>`, where `<short title>` is a concise
+   summary of what shipped without a roadmap phase or version prefix — the
+   version remains in the changelog heading and git tag. Every release must
+   still belong to a numbered roadmap phase. If no phase is active, add the
+   next numbered phase to `ROADMAP.md` before preparing the release.
 3. Compare links at the bottom of `CHANGELOG.md` are updated.
 4. Shared validation gate passes on the release-ready state.
 5. Stage and commit the version bump and changelog update.
