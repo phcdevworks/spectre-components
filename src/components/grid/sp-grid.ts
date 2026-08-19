@@ -4,12 +4,26 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isGridColumns,
+  isGridExplicitTemplateOptions,
+  isGridFixedTracksOptions,
   isGridGap,
+  isGridLeadingTracksOptions,
+  isGridOffset,
+  isGridOffsetOptions,
+  isGridOrder,
+  isGridOrderOptions,
   isGridSpan,
   isGridSpanOptions,
   sanitizeUtilityClasses,
   type SpectreGridColumns,
+  type SpectreGridExplicitTemplateOptions,
+  type SpectreGridFixedTracksOptions,
   type SpectreGridGap,
+  type SpectreGridLeadingTracksOptions,
+  type SpectreGridOffset,
+  type SpectreGridOffsetOptions,
+  type SpectreGridOrder,
+  type SpectreGridOrderOptions,
   type SpectreGridSpan,
   type SpectreGridSpanOptions
 } from '../../utils/form'
@@ -17,7 +31,14 @@ import {
 import {
   getGridClasses,
   type GridColumns,
+  type GridExplicitTemplateOptions,
+  type GridFixedTracksOptions,
   type GridGap,
+  type GridLeadingTracksOptions,
+  type GridOffset,
+  type GridOffsetOptions,
+  type GridOrder,
+  type GridOrderOptions,
   type GridSpan,
   type GridSpanOptions
 } from '@phcdevworks/spectre-ui'
@@ -28,9 +49,18 @@ export interface SpectreGridProps {
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
   columns?: SpectreGridColumns | undefined
+  columnGap?: SpectreGridGap | undefined
+  explicitTemplate?: SpectreGridExplicitTemplateOptions | undefined
+  fixedTracks?: SpectreGridFixedTracksOptions | undefined
   gap?: SpectreGridGap | undefined
   id?: string | null | undefined
   innerClass?: string | undefined
+  leadingTracks?: SpectreGridLeadingTracksOptions | undefined
+  offset?: SpectreGridOffset | SpectreGridOffsetOptions | undefined
+  order?: SpectreGridOrder | SpectreGridOrderOptions | undefined
+  rowGap?: SpectreGridGap | undefined
+  rowOffset?: SpectreGridOffset | SpectreGridOffsetOptions | undefined
+  rowSpan?: SpectreGridSpan | SpectreGridSpanOptions | undefined
   span?: SpectreGridSpan | SpectreGridSpanOptions | undefined
   title?: string | null | undefined
 }
@@ -41,14 +71,32 @@ export class SpectreGridElement
 {
   static properties = {
     columns: { type: Number, reflect: true },
+    columnGap: { attribute: 'column-gap', type: String, reflect: true },
+    explicitTemplate: { attribute: 'explicit-template', type: Object },
+    fixedTracks: { attribute: 'fixed-tracks', type: Object },
     gap: { type: String, reflect: true },
     innerClass: { attribute: 'inner-class', type: String },
+    leadingTracks: { attribute: 'leading-tracks', type: Object },
+    offset: { type: Object },
+    order: { type: Object },
+    rowGap: { attribute: 'row-gap', type: String, reflect: true },
+    rowOffset: { attribute: 'row-offset', type: Object },
+    rowSpan: { attribute: 'row-span', type: Object },
     span: { type: Object }
   }
 
   columns: SpectreGridColumns | undefined = 1
+  columnGap: SpectreGridGap | undefined = undefined
+  explicitTemplate: SpectreGridExplicitTemplateOptions | undefined = undefined
+  fixedTracks: SpectreGridFixedTracksOptions | undefined = undefined
   gap: SpectreGridGap | undefined = 'md'
   innerClass: string | undefined = undefined
+  leadingTracks: SpectreGridLeadingTracksOptions | undefined = undefined
+  offset: SpectreGridOffset | SpectreGridOffsetOptions | undefined
+  order: SpectreGridOrder | SpectreGridOrderOptions | undefined
+  rowGap: SpectreGridGap | undefined = undefined
+  rowOffset: SpectreGridOffset | SpectreGridOffsetOptions | undefined
+  rowSpan: SpectreGridSpan | SpectreGridSpanOptions | undefined
   span: SpectreGridSpan | SpectreGridSpanOptions | undefined
 
   override get id(): string {
@@ -101,6 +149,20 @@ export class SpectreGridElement
       this.gap = 'md'
     }
     if (
+      changedProperties.has('columnGap') &&
+      this.columnGap != null &&
+      !isGridGap(this.columnGap)
+    ) {
+      this.columnGap = undefined
+    }
+    if (
+      changedProperties.has('rowGap') &&
+      this.rowGap != null &&
+      !isGridGap(this.rowGap)
+    ) {
+      this.rowGap = undefined
+    }
+    if (
       changedProperties.has('span') &&
       this.span !== undefined &&
       !isGridSpan(this.span) &&
@@ -108,20 +170,96 @@ export class SpectreGridElement
     ) {
       this.span = undefined
     }
+    if (
+      changedProperties.has('offset') &&
+      this.offset !== undefined &&
+      !isGridOffset(this.offset) &&
+      !isGridOffsetOptions(this.offset)
+    ) {
+      this.offset = undefined
+    }
+    if (
+      changedProperties.has('rowSpan') &&
+      this.rowSpan !== undefined &&
+      !isGridSpan(this.rowSpan) &&
+      !isGridSpanOptions(this.rowSpan)
+    ) {
+      this.rowSpan = undefined
+    }
+    if (
+      changedProperties.has('rowOffset') &&
+      this.rowOffset !== undefined &&
+      !isGridOffset(this.rowOffset) &&
+      !isGridOffsetOptions(this.rowOffset)
+    ) {
+      this.rowOffset = undefined
+    }
+    if (
+      changedProperties.has('order') &&
+      this.order !== undefined &&
+      !isGridOrder(this.order) &&
+      !isGridOrderOptions(this.order)
+    ) {
+      this.order = undefined
+    }
+    if (
+      changedProperties.has('leadingTracks') &&
+      this.leadingTracks !== undefined &&
+      !isGridLeadingTracksOptions(this.leadingTracks)
+    ) {
+      this.leadingTracks = undefined
+    }
+    if (
+      changedProperties.has('fixedTracks') &&
+      this.fixedTracks !== undefined &&
+      !isGridFixedTracksOptions(this.fixedTracks)
+    ) {
+      this.fixedTracks = undefined
+    }
+    if (
+      changedProperties.has('explicitTemplate') &&
+      this.explicitTemplate !== undefined &&
+      !isGridExplicitTemplateOptions(this.explicitTemplate)
+    ) {
+      this.explicitTemplate = undefined
+    }
   }
 
   private get gridClasses(): string {
     const recipeClasses = getGridClasses({
       columns: this.columns as GridColumns,
       gap: this.gap as GridGap,
+      ...(this.columnGap !== undefined && {
+        columnGap: this.columnGap as GridGap
+      }),
+      ...(this.rowGap !== undefined && { rowGap: this.rowGap as GridGap }),
       ...(this.span !== undefined && {
         span: this.span as GridSpan | GridSpanOptions
+      }),
+      ...(this.offset !== undefined && {
+        offset: this.offset as GridOffset | GridOffsetOptions
+      }),
+      ...(this.rowSpan !== undefined && {
+        rowSpan: this.rowSpan as GridSpan | GridSpanOptions
+      }),
+      ...(this.rowOffset !== undefined && {
+        rowOffset: this.rowOffset as GridOffset | GridOffsetOptions
+      }),
+      ...(this.order !== undefined && {
+        order: this.order as GridOrder | GridOrderOptions
+      }),
+      ...(this.leadingTracks !== undefined && {
+        leadingTracks: this.leadingTracks as GridLeadingTracksOptions
+      }),
+      ...(this.fixedTracks !== undefined && {
+        fixedTracks: this.fixedTracks as GridFixedTracksOptions
+      }),
+      ...(this.explicitTemplate !== undefined && {
+        explicitTemplate: this.explicitTemplate as GridExplicitTemplateOptions
       })
     })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
-    return utilityClasses
-      ? `${recipeClasses} ${utilityClasses}`
-      : recipeClasses
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
   }
 
   override render() {

@@ -6,6 +6,36 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.16.0] - 2026-08-19
+
+**Release Title:** Expanded Layout and Semantic Links
+
+Contract change type: additive
+
+### Added
+
+- Bumped `@phcdevworks/spectre-tokens` to `^4.4.0` and `@phcdevworks/spectre-ui`
+  to `^4.1.1`, and caught `sp-grid`, `sp-nav`, and `sp-button` up to the fuller
+  recipe surface those releases shipped:
+  - `sp-grid` — new `column-gap`, `row-gap`, `offset`, `row-span`, `row-offset`,
+    `order`, `leading-tracks`, `fixed-tracks`, and `explicit-template`
+    properties, covering the rest of `getGridClasses`' option surface
+    (asymmetric/fixed/leading column templates, per-axis gap, and item
+    reordering) that `columns`/`gap`/`span` alone didn't reach.
+  - `sp-nav` — new `align` property (`start`/`center`/`end`), surfacing
+    `getNavClasses`' `align` option added in `spectre-ui` 4.1.0.
+  - `sp-button` — new `compact` property, surfacing `getButtonClasses`'
+    `compact` option.
+- `sp-footer-link` and `sp-footer-chip` — new components wrapping
+  `getFooterLinkClasses`/`getFooterChipClasses` (added to `spectre-ui` in
+  4.0.0's Footer Semantic Alignment work), which previously had no component
+  surfacing them. `sp-footer-link` renders an `<a>` with `active`/`disabled`
+  state (and drops `href`/sets `tabindex="-1"` when disabled); `sp-footer-chip`
+  renders a `<span>` with `disabled` state.
+- `sp-sidebar-link` — new component wrapping `getSidebarLinkClasses`, with
+  `active`/`disabled`/`level` (`parent`/`child`) properties, following the same
+  link pattern as `sp-footer-link`.
+
 ## [1.15.0] - 2026-08-09
 
 **Release Title:** Layout and Navigation Contracts
@@ -657,7 +687,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.15.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.16.0...HEAD
+[1.16.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.15.0...v1.16.0
 [1.15.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.14.0...v1.15.0
 [1.14.0]:

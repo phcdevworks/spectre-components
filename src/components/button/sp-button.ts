@@ -25,6 +25,7 @@ export interface SpectreButtonProps {
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
   autofocus?: boolean | null | undefined
+  compact?: boolean | undefined
   disabled?: boolean | undefined
   form?: string | undefined
   fullWidth?: boolean | undefined
@@ -50,6 +51,7 @@ export class SpectreButtonElement
   implements SpectreButtonProps
 {
   static properties = {
+    compact: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
@@ -68,6 +70,7 @@ export class SpectreButtonElement
     value: { type: String }
   }
 
+  compact: boolean | undefined = false
   disabled: boolean | undefined = false
   form: string | undefined
   fullWidth: boolean | undefined = false
@@ -133,6 +136,10 @@ export class SpectreButtonElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (changedProperties.has('compact') && this.compact == null) {
+      this.compact = false
+    }
+
     if (changedProperties.has('disabled') && this.disabled == null) {
       this.disabled = false
     }
@@ -187,6 +194,7 @@ export class SpectreButtonElement
 
   private get buttonClasses(): string {
     return getButtonClasses({
+      compact: this.compact ?? false,
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
       iconOnly: this.iconOnly ?? false,

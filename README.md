@@ -16,7 +16,7 @@ consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.15.0                              |
+| Current version/status | 1.16.0                              |
 
 ## Standard Workflow
 
@@ -347,6 +347,7 @@ when the button needs to navigate rather than submit/act.
 | `disabled`         | boolean                                                               | `false`   | Disables the button; if `href` is also set, still renders `<button disabled>` |
 | `full-width`       | boolean                                                               | `false`   | Spans full container width                                                    |
 | `pill`             | boolean                                                               | `false`   | Pill / fully-rounded corners                                                  |
+| `compact`          | boolean                                                               | `false`   | Denser padding/height variant                                                 |
 | `name`             | string                                                                | —         | Form field name                                                               |
 | `value`            | string                                                                | `''`      | Submitted value                                                               |
 | `form`             | string                                                                | —         | Associates with a form by ID                                                  |
@@ -860,13 +861,26 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 
 **Attributes**
 
-| Attribute                 | Type                                                         | Default | Description                                                 |
-| ------------------------- | ------------------------------------------------------------ | ------- | ----------------------------------------------------------- |
-| `columns`                 | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                | `1`     | Number of grid columns                                      |
-| `gap`                     | `sm \| md \| lg`                                             | `md`    | Gap between grid items                                      |
-| `span`                    | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only) | —       | Column span for a grid item, single value or per-breakpoint |
-| `inner-class`             | string                                                       | —       | Spectre utility classes applied to the native `<div>`       |
-| `id` / `title` / `aria-*` | string                                                       | —       | Forwarded to the native `<div>`                             |
+| Attribute                 | Type                                                                                     | Default | Description                                                                     |
+| ------------------------- | ---------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------- |
+| `columns`                 | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                                            | `1`     | Number of grid columns                                                          |
+| `gap`                     | `sm \| md \| lg`                                                                         | `md`    | Gap between grid items                                                          |
+| `span`                    | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only)                             | —       | Column span for a grid item, single value or per-breakpoint                     |
+| `column-gap`              | `sm \| md \| lg` (JS: `columnGap`)                                                       | —       | Overrides `gap` on the column axis only                                         |
+| `row-gap`                 | `sm \| md \| lg` (JS: `rowGap`)                                                          | —       | Overrides `gap` on the row axis only                                            |
+| `offset`                  | `0-11` or `{ base?, md?, lg? }` (JS property only)                                       | —       | Column offset for a grid item, single value or per-breakpoint                   |
+| `row-span`                | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS: `rowSpan`)                                | —       | Row span for a grid item, single value or per-breakpoint                        |
+| `row-offset`              | `0-11` or `{ base?, md?, lg? }` (JS: `rowOffset`)                                        | —       | Row offset for a grid item, single value or per-breakpoint                      |
+| `order`                   | `'first' \| 'last' \| 'none' \| 1-12` or `{ base?, md?, lg? }` (JS property only)        | —       | Reorders a grid item independent of source order                                |
+| `leading-tracks`          | `{ weight: 1.5\|1.6\|2\|2.5\|3 \| { base?, md?, lg? } }` (JS: `leadingTracks`)           | —       | One wider leading column plus `columns - 1` equal columns                       |
+| `fixed-tracks`            | `{ count: 1\|2\|3\|4 }` (JS: `fixedTracks`)                                              | —       | Fixed-width repeated tracks (`--sp-space-240`), replaces `columns`              |
+| `explicit-template`       | `{ template: 'edge-fluid-edge'\|'label-fluid-fluid', weight? }` (JS: `explicitTemplate`) | —       | Named asymmetric column shape; replaces `columns`/`leadingTracks`/`fixedTracks` |
+| `inner-class`             | string                                                                                   | —       | Spectre utility classes applied to the native `<div>`                           |
+| `id` / `title` / `aria-*` | string                                                                                   | —       | Forwarded to the native `<div>`                                                 |
+
+`leading-tracks`, `fixed-tracks`, `explicit-template`, and any per-breakpoint
+`{ base?, md?, lg? }` shape are JS-property-only (set via the DOM property, not
+an HTML attribute string).
 
 **Content projection** — children become grid items.
 
@@ -931,19 +945,66 @@ etc.).
 
 ---
 
+### sp-footer-link
+
+Renders an `<a>` link styled for `sp-footer` content, backed by the Spectre
+footer link recipe.
+
+**Attributes**
+
+| Attribute                 | Type    | Default | Description                                                     |
+| ------------------------- | ------- | ------- | --------------------------------------------------------------- |
+| `href`                    | string  | —       | Link target (dropped when `disabled`)                           |
+| `active`                  | boolean | `false` | Marks the link as the current page (`aria-current="page"`)      |
+| `disabled`                | boolean | `false` | Disables the link (`aria-disabled`, `tabindex="-1"`, no `href`) |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<a>`                                   |
+
+**Content projection** — children become the link text.
+
+**Internal target** — `[data-sp-footer-link-native]` selects the native `<a>`.
+
+```html
+<sp-footer>
+  <sp-footer-link href="/privacy">Privacy</sp-footer-link>
+  <sp-footer-link href="/terms" active>Terms</sp-footer-link>
+</sp-footer>
+```
+
+---
+
+### sp-footer-chip
+
+Renders a `<span>` chip styled for `sp-footer` content (e.g. a version or status
+badge), backed by the Spectre footer chip recipe.
+
+**Attributes**
+
+| Attribute                 | Type    | Default | Description                             |
+| ------------------------- | ------- | ------- | --------------------------------------- |
+| `disabled`                | boolean | `false` | Disabled visual state (`aria-disabled`) |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<span>`        |
+
+**Content projection** — children become the chip text.
+
+**Internal target** — `[data-sp-footer-chip-native]` selects the native
+`<span>`.
+
+---
+
 ### sp-nav
 
 Renders a `<nav>` backed by the Spectre nav recipe.
 
 **Attributes**
 
-| Attribute                 | Type    | Default | Description                                           |
-| ------------------------- | ------- | ------- | ----------------------------------------------------- |
-| `bordered`                | boolean | `false` | Adds a bottom border                                  |
-| `sticky`                  | boolean | `false` | Sticks the nav to the viewport                        |
-| `full-width`              | boolean | `false` | Spans full container width                            |
-| `inner-class`             | string  | —       | Spectre utility classes applied to the native `<nav>` |
-| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<nav>`                       |
+| Attribute                 | Type                     | Default | Description                                           |
+| ------------------------- | ------------------------ | ------- | ----------------------------------------------------- |
+| `bordered`                | boolean                  | `false` | Adds a bottom border                                  |
+| `sticky`                  | boolean                  | `false` | Sticks the nav to the viewport                        |
+| `full-width`              | boolean                  | `false` | Spans full container width                            |
+| `align`                   | `start \| center \| end` | —       | Horizontal alignment of nav content within the bar    |
+| `inner-class`             | string                   | —       | Spectre utility classes applied to the native `<nav>` |
+| `id` / `title` / `aria-*` | string                   | —       | Forwarded to the native `<nav>`                       |
 
 **Content projection** — children become the nav content (links, brand mark,
 etc.).
@@ -1033,6 +1094,37 @@ hide the off-canvas panel and backdrop.
 `detail`.
 
 **Internal target** — `[data-sp-sidebar-native]` selects the native `<aside>`.
+
+---
+
+### sp-sidebar-link
+
+Renders an `<a>` link styled for `sp-sidebar` navigation content, backed by the
+Spectre sidebar link recipe.
+
+**Attributes**
+
+| Attribute                 | Type              | Default  | Description                                                     |
+| ------------------------- | ----------------- | -------- | --------------------------------------------------------------- |
+| `href`                    | string            | —        | Link target (dropped when `disabled`)                           |
+| `active`                  | boolean           | `false`  | Marks the link as the current page (`aria-current="page"`)      |
+| `disabled`                | boolean           | `false`  | Disables the link (`aria-disabled`, `tabindex="-1"`, no `href`) |
+| `level`                   | `parent \| child` | `parent` | Indents/styles the link as a nested (`child`) sidebar link      |
+| `id` / `title` / `aria-*` | string            | —        | Forwarded to the native `<a>`                                   |
+
+**Content projection** — children become the link text.
+
+**Internal target** — `[data-sp-sidebar-link-native]` selects the native `<a>`.
+
+```html
+<sp-sidebar>
+  <sp-sidebar-link href="/dashboard" active>Dashboard</sp-sidebar-link>
+  <sp-sidebar-link href="/settings">Settings</sp-sidebar-link>
+  <sp-sidebar-link href="/settings/billing" level="child"
+    >Billing</sp-sidebar-link
+  >
+</sp-sidebar>
+```
 
 ---
 
@@ -1314,9 +1406,12 @@ Each entry point registers only that component and exports only its surface:
 | `.../nav`            | `sp-nav`            | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                               |
 | `.../nav-item`       | `sp-nav-item`       | `defineSpectreNavItem`, `SpectreNavItemElement`, `SpectreNavItemProps`                   |
 | `.../sidebar`        | `sp-sidebar`        | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                   |
+| `.../sidebar-link`   | `sp-sidebar-link`   | `defineSpectreSidebarLink`, `SpectreSidebarLinkElement`, `SpectreSidebarLinkProps`       |
 | `.../sidebar-toggle` | `sp-sidebar-toggle` | `defineSpectreSidebarToggle`, `SpectreSidebarToggleElement`, `SpectreSidebarToggleProps` |
 | `.../dropdown`       | `sp-dropdown`       | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types          |
 | `.../footer`         | `sp-footer`         | `defineSpectreFooter`, `SpectreFooterElement`, `SpectreFooterProps`                      |
+| `.../footer-link`    | `sp-footer-link`    | `defineSpectreFooterLink`, `SpectreFooterLinkElement`, `SpectreFooterLinkProps`          |
+| `.../footer-chip`    | `sp-footer-chip`    | `defineSpectreFooterChip`, `SpectreFooterChipElement`, `SpectreFooterChipProps`          |
 | `.../modal`          | `sp-modal`          | `defineSpectreModal`, `SpectreModalElement`, `SpectreModalProps`                         |
 | `.../toast`          | `sp-toast`          | `defineSpectreToast`, `SpectreToastElement`, toast constants and types                   |
 | `.../tooltip`        | `sp-tooltip`        | `defineSpectreTooltip`, `SpectreTooltipElement`, tooltip constants and types             |

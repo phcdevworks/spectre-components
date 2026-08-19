@@ -63,6 +63,38 @@ describe('sp-nav', () => {
     expect(element.bordered).toBe(false)
   })
 
+  it('defaults to align=undefined and applies no align class', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.align).toBeUndefined()
+    const nav = element.querySelector('nav')
+    expect(nav?.className).not.toContain('sp-nav--align-')
+  })
+
+  it('reflects align onto the nav classes', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    element.align = 'center'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const nav = element.querySelector('nav')
+    expect(nav?.className).toContain('sp-nav--align-center')
+  })
+
+  it('falls back to align=undefined for an invalid value', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    // @ts-expect-error - testing invalid value
+    element.align = 'not-an-align'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.align).toBeUndefined()
+  })
+
   it('forwards the consumer-facing id to the native nav only', async () => {
     const element = document.createElement('sp-nav') as SpectreNavElement
     element.id = 'nav-1'

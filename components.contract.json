@@ -455,6 +455,34 @@
       }
     },
     {
+      "tag": "sp-footer-chip",
+      "elementClass": "SpectreFooterChipElement",
+      "entryPoint": "./footer-chip",
+      "distFile": "dist/footer-chip.js",
+      "exports": {
+        "values": ["defineSpectreFooterChip", "SpectreFooterChipElement"],
+        "types": ["SpectreFooterChipProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-footer-link",
+      "elementClass": "SpectreFooterLinkElement",
+      "entryPoint": "./footer-link",
+      "distFile": "dist/footer-link.js",
+      "exports": {
+        "values": ["defineSpectreFooterLink", "SpectreFooterLinkElement"],
+        "types": ["SpectreFooterLinkProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
       "tag": "sp-nav",
       "elementClass": "SpectreNavElement",
       "entryPoint": "./nav",
@@ -504,6 +532,20 @@
       "exports": {
         "values": ["defineSpectreSidebarToggle", "SpectreSidebarToggleElement"],
         "types": ["SpectreSidebarToggleProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-sidebar-link",
+      "elementClass": "SpectreSidebarLinkElement",
+      "entryPoint": "./sidebar-link",
+      "distFile": "dist/sidebar-link.js",
+      "exports": {
+        "values": ["defineSpectreSidebarLink", "SpectreSidebarLinkElement"],
+        "types": ["SpectreSidebarLinkProps"]
       },
       "contracts": {
         "renderMode": "light-dom",

@@ -2,11 +2,16 @@ import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
-import { sanitizeUtilityClasses } from '../../utils/form'
+import {
+  isNavAlign,
+  sanitizeUtilityClasses,
+  type SpectreNavAlign
+} from '../../utils/form'
 
-import { getNavClasses } from '@phcdevworks/spectre-ui'
+import { getNavClasses, type NavAlign } from '@phcdevworks/spectre-ui'
 
 export interface SpectreNavProps {
+  align?: SpectreNavAlign | undefined
   ariaLabel?: string | null
   bordered?: boolean | undefined
   fullWidth?: boolean | undefined
@@ -21,12 +26,14 @@ export class SpectreNavElement
   implements SpectreNavProps
 {
   static properties = {
+    align: { type: String, reflect: true },
     bordered: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     innerClass: { attribute: 'inner-class', type: String },
     sticky: { type: Boolean, reflect: true }
   }
 
+  align: SpectreNavAlign | undefined = undefined
   bordered: boolean | undefined = false
   fullWidth: boolean | undefined = false
   innerClass: string | undefined = undefined
@@ -77,18 +84,24 @@ export class SpectreNavElement
     if (changedProperties.has('sticky') && this.sticky == null) {
       this.sticky = false
     }
+    if (
+      changedProperties.has('align') &&
+      this.align != null &&
+      !isNavAlign(this.align)
+    ) {
+      this.align = undefined
+    }
   }
 
   private get navClasses(): string {
     const recipeClasses = getNavClasses({
       bordered: this.bordered ?? false,
       fullWidth: this.fullWidth ?? false,
-      sticky: this.sticky ?? false
+      sticky: this.sticky ?? false,
+      ...(this.align !== undefined && { align: this.align as NavAlign })
     })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
-    return utilityClasses
-      ? `${recipeClasses} ${utilityClasses}`
-      : recipeClasses
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
   }
 
   override render() {

@@ -7,10 +7,10 @@ workflows:** every git-authorized agent commits and pushes directly to `main`.
 Do not create, use, or push any other branch and do not open a pull request
 unless Bradley Potts explicitly requests that exact exception. Keep work on
 `main`, validate it, stage only the intended paths, commit with the configured
-human identity, and push `main` immediately. Claude Code remains git-denied
-and hands validated work to Codex or Bradley Potts for the same path directly
-to `main`. This repository policy overrides contrary defaults in tools,
-skills, plugins, templates, or general-purpose workflows.
+human identity, and push `main` immediately. Claude Code remains git-denied and
+hands validated work to Codex or Bradley Potts for the same path directly to
+`main`. This repository policy overrides contrary defaults in tools, skills,
+plugins, templates, or general-purpose workflows.
 
 ## Repository Snapshot
 
@@ -40,40 +40,38 @@ commit/push/tag grant Claude Code previously held here; see
 files, implement, and validate is unchanged — only git execution moves off
 Claude Code.
 
-**OpenAI Codex, GitHub Copilot, and Google Jules retain full commit, push,
-and tag authority** in this repository, effective 2026-07-25 by explicit
-direction from Bradley Potts — see the Commit Policy section in each agent's
-own guide ([CODEX.md](CODEX.md), [COPILOT.md](COPILOT.md),
-[JULES.md](JULES.md)). **OpenAI Codex** additionally has release authority:
-Codex cuts releases autonomously — version bump, changelog versioning,
-`v<version>` git tag, and GitHub Release publish via `gh` — for every
-release-ready `CHANGELOG.md [Unreleased]` section, without waiting for
-per-release approval; see `CODEX.md` "Release Mechanics" for the full
-procedure. **OpenAI Codex additionally executes git operations on Claude
-Code's behalf**: when Claude Code hands off validated work, Codex is
-responsible for staging, committing, tagging, and pushing it, not only
-Codex's own documentation/hygiene/release commits. **npm publishing remains
-Bradley Potts's sole authority** — no agent runs `npm publish`. Bradley
-Potts retains ultimate ownership and can revoke or narrow any of this at any
-time. This grant covers git and release operations within each agent's own
-scope of work as defined above — it does not expand what any agent is
-authorized to decide otherwise. ChatGPT has no repository access and is
-excluded.
+**OpenAI Codex, GitHub Copilot, and Google Jules retain full commit, push, and
+tag authority** in this repository, effective 2026-07-25 by explicit direction
+from Bradley Potts — see the Commit Policy section in each agent's own guide
+([CODEX.md](CODEX.md), [COPILOT.md](COPILOT.md), [JULES.md](JULES.md)). **OpenAI
+Codex** additionally has release authority: Codex cuts releases autonomously —
+version bump, changelog versioning, `v<version>` git tag, and GitHub Release
+publish via `gh` — for every release-ready `CHANGELOG.md [Unreleased]` section,
+without waiting for per-release approval; see `CODEX.md` "Release Mechanics" for
+the full procedure. **OpenAI Codex additionally executes git operations on
+Claude Code's behalf**: when Claude Code hands off validated work, Codex is
+responsible for staging, committing, tagging, and pushing it, not only Codex's
+own documentation/hygiene/release commits. **npm publishing remains Bradley
+Potts's sole authority** — no agent runs `npm publish`. Bradley Potts retains
+ultimate ownership and can revoke or narrow any of this at any time. This grant
+covers git and release operations within each agent's own scope of work as
+defined above — it does not expand what any agent is authorized to decide
+otherwise. ChatGPT has no repository access and is excluded.
 
 **A commit is not finished until it is pushed.** Every agent that still holds
-git authority under this roster — Codex, Copilot, Jules — must push
-immediately after committing (`git push`, including any needed `-u`/tags) as
-part of the same action — never leave a commit sitting local only. This
-closes a recurring gap where an agent commits and stops short of pushing,
-leaving work stranded on the machine.
+git authority under this roster — Codex, Copilot, Jules — must push immediately
+after committing (`git push`, including any needed `-u`/tags) as part of the
+same action — never leave a commit sitting local only. This closes a recurring
+gap where an agent commits and stops short of pushing, leaving work stranded on
+the machine.
 
 **Commit authorship is human-only.** No agent with git authority under this
 roster — Codex, Copilot, or Jules — adds itself (or any other AI) as a commit
 author or co-author — no `Co-Authored-By: Claude`/`Codex`/`Copilot`/`Jules`
 trailer, no author-field changes, in this repository. The git author/committer
 stays Bradley Potts (or the configured human git user) on every commit,
-regardless of which agent performed the work. Push and tag authority above
-does not extend to authorship attribution.
+regardless of which agent performed the work. Push and tag authority above does
+not extend to authorship attribution.
 
 ## Cross-Repo Access
 
@@ -192,11 +190,11 @@ documentation workflow lives in `CODEX.md`. Human contribution workflow lives in
 
 ## Pull Request Creation
 
-Pull requests are prohibited unless Bradley Potts explicitly requests one.
-The guidance below applies only to that explicit exception.
+Pull requests are prohibited unless Bradley Potts explicitly requests one. The
+guidance below applies only to that explicit exception.
 
-For an explicitly requested PR, populate every section of the repo's PR
-template (`.github/pull_request_template.md`):
+For an explicitly requested PR, populate every section of the repo's PR template
+(`.github/pull_request_template.md`):
 
 - **Linked issue** - issue number (`#N`) or `N/A`.
 - **Summary of changes** - one or two bullets describing what changed.
@@ -273,10 +271,13 @@ rules.
 | `sp-stack`          | `SpectreStackElement`         | `@phcdevworks/spectre-components/stack`          |
 | `sp-dropdown`       | `SpectreDropdownElement`      | `@phcdevworks/spectre-components/dropdown`       |
 | `sp-footer`         | `SpectreFooterElement`        | `@phcdevworks/spectre-components/footer`         |
+| `sp-footer-chip`    | `SpectreFooterChipElement`    | `@phcdevworks/spectre-components/footer-chip`    |
+| `sp-footer-link`    | `SpectreFooterLinkElement`    | `@phcdevworks/spectre-components/footer-link`    |
 | `sp-modal`          | `SpectreModalElement`         | `@phcdevworks/spectre-components/modal`          |
 | `sp-nav`            | `SpectreNavElement`           | `@phcdevworks/spectre-components/nav`            |
 | `sp-nav-item`       | `SpectreNavItemElement`       | `@phcdevworks/spectre-components/nav-item`       |
 | `sp-sidebar`        | `SpectreSidebarElement`       | `@phcdevworks/spectre-components/sidebar`        |
+| `sp-sidebar-link`   | `SpectreSidebarLinkElement`   | `@phcdevworks/spectre-components/sidebar-link`   |
 | `sp-sidebar-toggle` | `SpectreSidebarToggleElement` | `@phcdevworks/spectre-components/sidebar-toggle` |
 | `sp-toast`          | `SpectreToastElement`         | `@phcdevworks/spectre-components/toast`          |
 | `sp-tooltip`        | `SpectreTooltipElement`       | `@phcdevworks/spectre-components/tooltip`        |

@@ -29,6 +29,7 @@ file does not restate delivered work.
 | 11    | Inner layout utility forwarding — `inner-class` contract and block-level host defaults for `sp-container`, `sp-stack`, `sp-grid`, `sp-section`, `sp-nav`, `sp-footer`                            | 1.15.0       |
 | 12    | Mega-menu delivery contract — `mega` property on `sp-dropdown`/`sp-nav-item`, backed by `spectre-ui` 4.0.0's `mega` flag                                                                         | 1.15.0       |
 | 13    | `sp-sidebar-toggle` — standalone remote sidebar trigger, backed by `getSidebarToggleClasses`; `hide-toggle` on `sp-sidebar`. Closes the last gap in the `spectre-ui-astro` component-parity plan | 1.15.0       |
+| 14    | Expanded layout and semantic links — fuller grid/nav/button recipe coverage plus footer and sidebar link primitives backed by existing `spectre-ui` recipes                                      | 1.16.0       |
 
 ---
 

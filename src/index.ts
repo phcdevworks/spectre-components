@@ -24,10 +24,13 @@ import { defineSpectreSection } from './components/section'
 import { defineSpectreStack } from './components/stack'
 import { defineSpectreDropdown } from './components/dropdown'
 import { defineSpectreFooter } from './components/footer'
+import { defineSpectreFooterChip } from './components/footer-chip'
+import { defineSpectreFooterLink } from './components/footer-link'
 import { defineSpectreModal } from './components/modal'
 import { defineSpectreNav } from './components/nav'
 import { defineSpectreNavItem } from './components/nav-item'
 import { defineSpectreSidebar } from './components/sidebar'
+import { defineSpectreSidebarLink } from './components/sidebar-link'
 import { defineSpectreSidebarToggle } from './components/sidebar-toggle'
 import { defineSpectreToast } from './components/toast'
 import { defineSpectreTooltip } from './components/tooltip'
@@ -58,10 +61,13 @@ export function defineSpectreComponents(): void {
   defineSpectreStack()
   defineSpectreDropdown()
   defineSpectreFooter()
+  defineSpectreFooterChip()
+  defineSpectreFooterLink()
   defineSpectreModal()
   defineSpectreNav()
   defineSpectreNavItem()
   defineSpectreSidebar()
+  defineSpectreSidebarLink()
   defineSpectreSidebarToggle()
   defineSpectreToast()
   defineSpectreTooltip()

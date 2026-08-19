@@ -1,312 +1,332 @@
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { defineSpectreButton, SpectreButtonElement } from '../src';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { defineSpectreButton, SpectreButtonElement } from '../src'
 
 describe('sp-button', () => {
   beforeAll(() => {
-    defineSpectreButton();
-  });
+    defineSpectreButton()
+  })
 
   afterEach(() => {
-    document.body.innerHTML = '';
-  });
+    document.body.innerHTML = ''
+  })
 
   it('renders a native button with Spectre UI classes', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.variant = 'secondary';
-    element.size = 'lg';
-    element.append(document.createTextNode('Save changes'));
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.variant = 'secondary'
+    element.size = 'lg'
+    element.append(document.createTextNode('Save changes'))
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
+    const button = element.querySelector('button')
 
-    expect(button).not.toBeNull();
-    expect(button?.className).toContain('sp-btn');
-    expect(button?.className).toContain('sp-btn--secondary');
-    expect(button?.className).toContain('sp-btn--lg');
-    expect(button?.textContent?.trim()).toBe('Save changes');
-    expect(button?.getAttribute('aria-label')).toBeNull();
-  });
+    expect(button).not.toBeNull()
+    expect(button?.className).toContain('sp-btn')
+    expect(button?.className).toContain('sp-btn--secondary')
+    expect(button?.className).toContain('sp-btn--lg')
+    expect(button?.textContent?.trim()).toBe('Save changes')
+    expect(button?.getAttribute('aria-label')).toBeNull()
+  })
+
+  it('defaults to compact=false and applies the compact class when set', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.compact).toBe(false)
+
+    element.compact = true
+    await element.updateComplete
+
+    const button = element.querySelector('button')
+    expect(button?.className).toContain('sp-btn--compact')
+  })
 
   it('disables the native button while loading', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.loading = true;
-    element.loadingLabel = 'Submitting';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.loading = true
+    element.loadingLabel = 'Submitting'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    const loadingLabel = button?.querySelector('[data-sp-button-loading-label]');
+    const button = element.querySelector('button')
+    const loadingLabel = button?.querySelector('[data-sp-button-loading-label]')
 
-    expect(button?.disabled).toBe(true);
-    expect(button?.getAttribute('aria-busy')).toBe('true');
-    expect(button?.className).toContain('sp-btn--loading');
-    expect(loadingLabel?.textContent?.trim()).toBe('Submitting');
-    expect(loadingLabel?.className).toContain('sp-label');
-  });
+    expect(button?.disabled).toBe(true)
+    expect(button?.getAttribute('aria-busy')).toBe('true')
+    expect(button?.className).toContain('sp-btn--loading')
+    expect(loadingLabel?.textContent?.trim()).toBe('Submitting')
+    expect(loadingLabel?.className).toContain('sp-label')
+  })
 
   it('falls back to label when no projected content exists', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.label = 'Open menu';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.label = 'Open menu'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    const fallbackLabel = button?.querySelector('[data-sp-button-label-fallback]');
+    const button = element.querySelector('button')
+    const fallbackLabel = button?.querySelector(
+      '[data-sp-button-label-fallback]'
+    )
 
-    expect(fallbackLabel?.textContent?.trim()).toBe('Open menu');
-    expect(fallbackLabel?.className).toContain('sp-label');
-  });
+    expect(fallbackLabel?.textContent?.trim()).toBe('Open menu')
+    expect(fallbackLabel?.className).toContain('sp-label')
+  })
 
   it('forwards aria-label even when there is visible text', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.setAttribute('aria-label', 'Icon action');
-    element.label = 'Visible text';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.setAttribute('aria-label', 'Icon action')
+    element.label = 'Visible text'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
+    const button = element.querySelector('button')
 
-    expect(button?.textContent?.trim()).toBe('Visible text');
-    expect(button?.getAttribute('aria-label')).toBe('Icon action');
-  });
+    expect(button?.textContent?.trim()).toBe('Visible text')
+    expect(button?.getAttribute('aria-label')).toBe('Icon action')
+  })
 
   it('updates projected content when host content changes later', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.label = 'Fallback';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.label = 'Fallback'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    element.append(document.createTextNode('Publish'));
-    await Promise.resolve();
-    await element.updateComplete;
+    element.append(document.createTextNode('Publish'))
+    await Promise.resolve()
+    await element.updateComplete
 
-    const button = element.querySelector('button');
+    const button = element.querySelector('button')
 
-    expect(button?.textContent?.trim()).toBe('Publish');
-    expect(button?.getAttribute('aria-label')).toBeNull();
-  });
+    expect(button?.textContent?.trim()).toBe('Publish')
+    expect(button?.getAttribute('aria-label')).toBeNull()
+  })
 
   it('forwards the form attribute to the native button', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.form = 'test-form';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.form = 'test-form'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    expect(button?.getAttribute('form')).toBe('test-form');
-  });
+    const button = element.querySelector('button')
+    expect(button?.getAttribute('form')).toBe('test-form')
+  })
 
   it('forwards id to the native button', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.id = 'submit-btn';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.id = 'submit-btn'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    expect(button?.id).toBe('submit-btn');
-    expect(element.getAttribute('id')).toBe('submit-btn');
+    const button = element.querySelector('button')
+    expect(button?.id).toBe('submit-btn')
+    expect(element.getAttribute('id')).toBe('submit-btn')
     // Ensure the id is not on the host element's actual DOM attributes
-    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false);
-  });
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false)
+  })
 
   it('forwards aria-labelledby and aria-describedby', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.setAttribute('aria-labelledby', 'label-id');
-    element.setAttribute('aria-describedby', 'desc-id');
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.setAttribute('aria-labelledby', 'label-id')
+    element.setAttribute('aria-describedby', 'desc-id')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    expect(button?.getAttribute('aria-labelledby')).toBe('label-id');
-    expect(button?.getAttribute('aria-describedby')).toBe('desc-id');
-  });
+    const button = element.querySelector('button')
+    expect(button?.getAttribute('aria-labelledby')).toBe('label-id')
+    expect(button?.getAttribute('aria-describedby')).toBe('desc-id')
+  })
 
   it('handles focus and blur correctly', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    const onFocus = vi.fn();
-    const onBlur = vi.fn();
+    const button = element.querySelector('button')
+    const onFocus = vi.fn()
+    const onBlur = vi.fn()
 
-    button?.addEventListener('focus', onFocus);
-    button?.addEventListener('blur', onBlur);
+    button?.addEventListener('focus', onFocus)
+    button?.addEventListener('blur', onBlur)
 
-    element.focus();
-    expect(onFocus).toHaveBeenCalled();
+    element.focus()
+    expect(onFocus).toHaveBeenCalled()
 
-    element.blur();
-    expect(onBlur).toHaveBeenCalled();
-  });
+    element.blur()
+    expect(onBlur).toHaveBeenCalled()
+  })
 
   it('forwards name, value, title, and autofocus to the native button', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.name = 'submit-action';
-    element.value = 'save';
-    element.title = 'Click to save changes';
-    element.autofocus = true;
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.name = 'submit-action'
+    element.value = 'save'
+    element.title = 'Click to save changes'
+    element.autofocus = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    expect(button?.getAttribute('name')).toBe('submit-action');
-    expect(button?.getAttribute('value')).toBe('save');
-    expect(button?.getAttribute('title')).toBe('Click to save changes');
-    expect(button?.hasAttribute('autofocus')).toBe(true);
-  });
+    const button = element.querySelector('button')
+    expect(button?.getAttribute('name')).toBe('submit-action')
+    expect(button?.getAttribute('value')).toBe('save')
+    expect(button?.getAttribute('title')).toBe('Click to save changes')
+    expect(button?.hasAttribute('autofocus')).toBe(true)
+  })
 
   it('correctly handles title attribute on the host element', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.setAttribute('title', 'Initial Title');
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.setAttribute('title', 'Initial Title')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    expect(button?.getAttribute('title')).toBe('Initial Title');
-    expect(element.getAttribute('title')).toBe('Initial Title');
-    expect(HTMLElement.prototype.hasAttribute.call(element, 'title')).toBe(false);
+    const button = element.querySelector('button')
+    expect(button?.getAttribute('title')).toBe('Initial Title')
+    expect(element.getAttribute('title')).toBe('Initial Title')
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'title')).toBe(
+      false
+    )
 
-    element.title = 'Updated Title';
-    await element.updateComplete;
-    expect(button?.getAttribute('title')).toBe('Updated Title');
-    expect(element.getAttribute('title')).toBe('Updated Title');
-    expect(HTMLElement.prototype.hasAttribute.call(element, 'title')).toBe(false);
+    element.title = 'Updated Title'
+    await element.updateComplete
+    expect(button?.getAttribute('title')).toBe('Updated Title')
+    expect(element.getAttribute('title')).toBe('Updated Title')
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'title')).toBe(
+      false
+    )
 
-    element.removeAttribute('title');
-    await element.updateComplete;
-    expect(button?.hasAttribute('title')).toBe(false);
-    expect(element.title).toBe('');
-  });
+    element.removeAttribute('title')
+    await element.updateComplete
+    expect(button?.hasAttribute('title')).toBe(false)
+    expect(element.title).toBe('')
+  })
 
   it('preserves content when toggling loading state', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.append(document.createTextNode('Original Content'));
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.append(document.createTextNode('Original Content'))
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let button = element.querySelector('button');
-    expect(button?.textContent?.trim()).toBe('Original Content');
+    let button = element.querySelector('button')
+    expect(button?.textContent?.trim()).toBe('Original Content')
 
     // Toggle loading
-    element.loading = true;
-    await element.updateComplete;
-    button = element.querySelector('button');
-    expect(button?.textContent?.trim()).toBe('Loading'); // Default loading label
-    expect(button?.className).toContain('sp-btn--loading');
+    element.loading = true
+    await element.updateComplete
+    button = element.querySelector('button')
+    expect(button?.textContent?.trim()).toBe('Loading') // Default loading label
+    expect(button?.className).toContain('sp-btn--loading')
 
     // Toggle back
-    element.loading = false;
-    await element.updateComplete;
-    button = element.querySelector('button');
-    expect(button?.textContent?.trim()).toBe('Original Content');
-    expect(button?.className).not.toContain('sp-btn--loading');
-  });
+    element.loading = false
+    await element.updateComplete
+    button = element.querySelector('button')
+    expect(button?.textContent?.trim()).toBe('Original Content')
+    expect(button?.className).not.toContain('sp-btn--loading')
+  })
 
   it('tightens loadingLabel fallback', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.loading = true;
-    element.loadingLabel = '  '; // Empty/whitespace
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.loading = true
+    element.loadingLabel = '  ' // Empty/whitespace
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let button = element.querySelector('button');
-    expect(button?.textContent?.trim()).toBe('Loading');
+    let button = element.querySelector('button')
+    expect(button?.textContent?.trim()).toBe('Loading')
 
-    element.loadingLabel = 'Processing...';
-    await element.updateComplete;
-    button = element.querySelector('button');
-    expect(button?.textContent?.trim()).toBe('Processing...');
+    element.loadingLabel = 'Processing...'
+    await element.updateComplete
+    button = element.querySelector('button')
+    expect(button?.textContent?.trim()).toBe('Processing...')
 
     // @ts-expect-error -- exercising runtime fallback for invalid consumer value
-    element.loadingLabel = null;
-    await element.updateComplete;
-    button = element.querySelector('button');
-    expect(button?.textContent?.trim()).toBe('Loading');
-  });
+    element.loadingLabel = null
+    await element.updateComplete
+    button = element.querySelector('button')
+    expect(button?.textContent?.trim()).toBe('Loading')
+  })
 
   it('renders an empty value attribute when value is explicitly an empty string', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.value = '';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.value = ''
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const button = element.querySelector('button');
-    expect(button?.hasAttribute('value')).toBe(true);
-    expect(button?.getAttribute('value')).toBe('');
-  });
+    const button = element.querySelector('button')
+    expect(button?.hasAttribute('value')).toBe(true)
+    expect(button?.getAttribute('value')).toBe('')
+  })
 
   it('renders a native anchor when href is set', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.href = '/pricing';
-    element.target = '_blank';
-    element.rel = 'noopener';
-    element.variant = 'secondary';
-    element.append(document.createTextNode('View pricing'));
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.href = '/pricing'
+    element.target = '_blank'
+    element.rel = 'noopener'
+    element.variant = 'secondary'
+    element.append(document.createTextNode('View pricing'))
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.querySelector('button')).toBeNull();
+    expect(element.querySelector('button')).toBeNull()
 
-    const link = element.querySelector('a');
-    expect(link).not.toBeNull();
-    expect(link?.getAttribute('href')).toBe('/pricing');
-    expect(link?.getAttribute('target')).toBe('_blank');
-    expect(link?.getAttribute('rel')).toBe('noopener');
-    expect(link?.className).toContain('sp-btn');
-    expect(link?.className).toContain('sp-btn--secondary');
-    expect(link?.textContent?.trim()).toBe('View pricing');
-  });
+    const link = element.querySelector('a')
+    expect(link).not.toBeNull()
+    expect(link?.getAttribute('href')).toBe('/pricing')
+    expect(link?.getAttribute('target')).toBe('_blank')
+    expect(link?.getAttribute('rel')).toBe('noopener')
+    expect(link?.className).toContain('sp-btn')
+    expect(link?.className).toContain('sp-btn--secondary')
+    expect(link?.textContent?.trim()).toBe('View pricing')
+  })
 
   it('falls back to a disabled native button when href is set but disabled is true', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.href = '/pricing';
-    element.disabled = true;
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.href = '/pricing'
+    element.disabled = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.querySelector('a')).toBeNull();
+    expect(element.querySelector('a')).toBeNull()
 
-    const button = element.querySelector('button');
-    expect(button).not.toBeNull();
-    expect(button?.disabled).toBe(true);
-    expect(button?.getAttribute('aria-disabled')).toBe('true');
-  });
+    const button = element.querySelector('button')
+    expect(button).not.toBeNull()
+    expect(button?.disabled).toBe(true)
+    expect(button?.getAttribute('aria-disabled')).toBe('true')
+  })
 
   it('handles focus and blur on the rendered anchor', async () => {
-    const element = document.createElement('sp-button') as SpectreButtonElement;
-    element.href = '/pricing';
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.href = '/pricing'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const link = element.querySelector('a');
-    const onFocus = vi.fn();
-    const onBlur = vi.fn();
+    const link = element.querySelector('a')
+    const onFocus = vi.fn()
+    const onBlur = vi.fn()
 
-    link?.addEventListener('focus', onFocus);
-    link?.addEventListener('blur', onBlur);
+    link?.addEventListener('focus', onFocus)
+    link?.addEventListener('blur', onBlur)
 
-    element.focus();
-    expect(onFocus).toHaveBeenCalled();
+    element.focus()
+    expect(onFocus).toHaveBeenCalled()
 
-    element.blur();
-    expect(onBlur).toHaveBeenCalled();
-  });
-});
+    element.blur()
+    expect(onBlur).toHaveBeenCalled()
+  })
+})
