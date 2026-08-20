@@ -1,14 +1,23 @@
 import {
   spectreGridColumns,
   spectreGridGaps,
+  spectreGridAligns,
   type SpectreGridColumns,
   type SpectreGridGap,
-} from '../../utils/form';
+  type SpectreGridAlign
+} from '../../utils/form'
 
 export {
   defineSpectreGrid,
   SpectreGridElement,
-  type SpectreGridProps,
-} from './sp-grid';
+  type SpectreGridProps
+} from './sp-grid'
 
-export { spectreGridColumns, spectreGridGaps, type SpectreGridColumns, type SpectreGridGap };
+export {
+  spectreGridColumns,
+  spectreGridGaps,
+  spectreGridAligns,
+  type SpectreGridColumns,
+  type SpectreGridGap,
+  type SpectreGridAlign
+}

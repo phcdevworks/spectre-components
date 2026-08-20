@@ -9,14 +9,13 @@ hygiene, validation review, handoff, and configuration standardization agent for
 Full roster and authority table: [AGENTS.md](AGENTS.md). Codex keeps Claude
 Code's work production-ready. Human final review, release decisions, tagging,
 and publishing remain with Bradley Potts. Codex has commit, push, and tag
-authority for its own scope of work — validate changes, then stage, commit,
-and push.
+authority for its own scope of work — validate changes, then stage, commit, and
+push.
 
-Codex is also responsible for executing git operations on Claude Code's
-behalf in this repo, now that Claude Code has zero git access: when Claude
-Code hands off validated work, Codex — not Claude Code — stages, commits,
-tags, and pushes it, in addition to Codex's own documentation and hygiene
-commits.
+Codex is also responsible for executing git operations on Claude Code's behalf
+in this repo, now that Claude Code has zero git access: when Claude Code hands
+off validated work, Codex — not Claude Code — stages, commits, tags, and pushes
+it, in addition to Codex's own documentation and hygiene commits.
 
 ## Operating Principles
 
@@ -180,27 +179,33 @@ Use this checklist before cutting every release (tag + GitHub Release).
    `**Release Title:** <short title>`, where `<short title>` is a concise
    summary of what shipped without a roadmap phase or version prefix — the
    version remains in the changelog heading and git tag. Every release must
-   still belong to a numbered roadmap phase. If no phase is active, add the
-   next numbered phase to `ROADMAP.md` before preparing the release.
+   still belong to a numbered roadmap phase. If no phase is active, add the next
+   numbered phase to `ROADMAP.md` before preparing the release. Confirm a
+   `Contract change type: <additive|behavioral change|breaking>` classification
+   line is present and accurate for the release.
 3. Compare links at the bottom of `CHANGELOG.md` are updated.
 4. Shared validation gate passes on the release-ready state.
 5. Stage and commit the version bump and changelog update.
-6. Create the git tag: `git tag v<version>` (matching `package.json`
-   exactly), then push the commit and tag.
-7. Publish the GitHub Release from that tag: `gh release create v<version>
-   --title "<short title>" --notes-file` (extract the new version's changelog
-   section, or `--notes` inline for a short release). Keep the `v` prefix on
-   the tag, but do not include the version or roadmap phase in the release
-   title.
+6. Create the git tag: `git tag v<version>` (matching `package.json` exactly),
+   then push the commit and tag.
+7. Publish the GitHub Release from that tag:
+   `gh release create v<version> --title "<short title>" --notes-file`. The
+   notes file must contain the full versioned `CHANGELOG.md` entry verbatim
+   except for the version heading and `Release Title` line, which GitHub already
+   displays. Preserve the `Contract change type:` line, section headings, and
+   every bullet. Never summarize, condense, paraphrase, add to, or omit the
+   remaining changelog content — `--notes` inline freeform text is never used,
+   even for a short release. Keep the `v` prefix on the tag, but do not include
+   the version or roadmap phase in the release title.
 8. `npm publish` is **not** run by Codex — that stays with Bradley Potts.
 
 ### Handoff
 
-- [ ] The commit, tag, and GitHub Release are complete (or, if blocked,
-      exactly which step failed and why).
-- [ ] A clear summary of changed files, validation results, classification,
-      and any unresolved risk is prepared for Bradley Potts, including the
-      npm publish step still pending his action.
+- [ ] The commit, tag, and GitHub Release are complete (or, if blocked, exactly
+      which step failed and why).
+- [ ] A clear summary of changed files, validation results, classification, and
+      any unresolved risk is prepared for Bradley Potts, including the npm
+      publish step still pending his action.
 
 ## Documentation Audit Procedure
 
@@ -227,8 +232,8 @@ overwrite changes it did not make. Existing local edits are assumed to belong to
 Bradley Potts, Claude Code, or another active process.
 
 Codex validates changes, then stages, commits, and pushes them within its own
-scope of work. Codex does not publish or merge PRs; those stay gated per
-"Role" above.
+scope of work. Codex does not publish or merge PRs; those stay gated per "Role"
+above.
 
 ## Source Of Truth Hierarchy
 

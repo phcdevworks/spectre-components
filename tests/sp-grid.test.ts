@@ -129,6 +129,38 @@ describe('sp-grid', () => {
     expect(div?.className).toContain('sp-grid--row-gap-lg')
   })
 
+  it('defaults to align=undefined and applies no align class', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.align).toBeUndefined()
+    const div = element.querySelector('div[data-sp-grid-native]')
+    expect(div?.className).not.toContain('sp-grid--align-')
+  })
+
+  it('reflects a valid align onto the div classes', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    element.align = 'baseline'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+    expect(div?.className).toContain('sp-grid--align-baseline')
+  })
+
+  it('falls back to align=undefined for an invalid value', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    // @ts-expect-error - testing invalid value
+    element.align = 'not-an-align'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.align).toBeUndefined()
+  })
+
   it('reflects offset, rowSpan, rowOffset, and order onto the div classes', async () => {
     const element = document.createElement('sp-grid') as SpectreGridElement
     element.offset = 2
@@ -221,5 +253,19 @@ describe('sp-grid', () => {
     expect(div?.className).not.toContain('not-allowed')
     expect(div?.className).not.toContain('host-class')
     expect(element.className).toBe('host-class')
+  })
+
+  it('accepts BEM element and modifier segments in innerClass', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    element.innerClass =
+      'sp-grid-template--edge-fluid-edge sp-dropdown__menu--mega'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+
+    expect(div?.className).toContain('sp-grid-template--edge-fluid-edge')
+    expect(div?.className).toContain('sp-dropdown__menu--mega')
   })
 })

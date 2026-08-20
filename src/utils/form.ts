@@ -229,6 +229,20 @@ export function isGridGap(value: unknown): value is SpectreGridGap {
   return (spectreGridGaps as readonly string[]).includes(value as string)
 }
 
+export const spectreGridAligns = [
+  'start',
+  'center',
+  'end',
+  'baseline',
+  'stretch'
+] as const
+
+export type SpectreGridAlign = (typeof spectreGridAligns)[number]
+
+export function isGridAlign(value: unknown): value is SpectreGridAlign {
+  return (spectreGridAligns as readonly string[]).includes(value as string)
+}
+
 export const spectreGridSpans = [
   1,
   2,
@@ -489,6 +503,14 @@ export function isStackAlign(value: unknown): value is SpectreStackAlign {
   return (spectreStackAligns as readonly string[]).includes(value as string)
 }
 
+export const spectreStackGaps = ['sm', 'md', 'lg'] as const
+
+export type SpectreStackGap = (typeof spectreStackGaps)[number]
+
+export function isStackGap(value: unknown): value is SpectreStackGap {
+  return (spectreStackGaps as readonly string[]).includes(value as string)
+}
+
 export const spectreDropdownPlacements = [
   'bottom-start',
   'bottom-end',
@@ -636,7 +658,8 @@ export function normalizeInt(
   return value
 }
 
-const spectreUtilityClassPattern = /^sp-[a-z0-9]+(?:-[a-z0-9]+)*$/
+const spectreUtilityClassPattern =
+  /^sp-[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$/
 
 export function sanitizeUtilityClasses(
   value: string | null | undefined

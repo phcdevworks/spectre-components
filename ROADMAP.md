@@ -30,6 +30,7 @@ file does not restate delivered work.
 | 12    | Mega-menu delivery contract — `mega` property on `sp-dropdown`/`sp-nav-item`, backed by `spectre-ui` 4.0.0's `mega` flag                                                                         | 1.15.0       |
 | 13    | `sp-sidebar-toggle` — standalone remote sidebar trigger, backed by `getSidebarToggleClasses`; `hide-toggle` on `sp-sidebar`. Closes the last gap in the `spectre-ui-astro` component-parity plan | 1.15.0       |
 | 14    | Expanded layout and semantic links — fuller grid/nav/button recipe coverage plus footer and sidebar link primitives backed by existing `spectre-ui` recipes                                      | 1.16.0       |
+| 15    | Layout and utility contract parity — grid alignment, stack gaps, button/card inner classes, BEM utility sanitization, and explicit card padding opt-out                                          | 1.17.0       |
 
 ---
 

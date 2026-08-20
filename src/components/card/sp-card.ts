@@ -2,9 +2,22 @@ import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
-import { isCardVariant, type SpectreCardVariant } from '../../utils/form'
+import {
+  isCardVariant,
+  sanitizeUtilityClasses,
+  type SpectreCardVariant
+} from '../../utils/form'
 
 import { getCardClasses, type CardVariant } from '@phcdevworks/spectre-ui'
+
+const paddedConverter = {
+  fromAttribute(value: string | null): boolean {
+    return value !== 'false'
+  },
+  toAttribute(value: boolean): string | null {
+    return value ? null : 'false'
+  }
+}
 
 export interface SpectreCardProps {
   ariaLabel?: string | null
@@ -13,6 +26,7 @@ export interface SpectreCardProps {
   disabled?: boolean | undefined
   fullHeight?: boolean | undefined
   id?: string | null | undefined
+  innerClass?: string | undefined
   interactive?: boolean | undefined
   loading?: boolean | undefined
   padded?: boolean | undefined
@@ -27,14 +41,16 @@ export class SpectreCardElement
   static properties = {
     disabled: { type: Boolean, reflect: true },
     fullHeight: { attribute: 'full-height', type: Boolean, reflect: true },
+    innerClass: { attribute: 'inner-class', type: String },
     interactive: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
-    padded: { type: Boolean, reflect: true },
+    padded: { converter: paddedConverter, reflect: true },
     variant: { type: String, reflect: true }
   }
 
   disabled: boolean | undefined = false
   fullHeight: boolean | undefined = false
+  innerClass: string | undefined = undefined
   interactive: boolean | undefined = false
   loading: boolean | undefined = false
   padded: boolean | undefined = true
@@ -95,7 +111,7 @@ export class SpectreCardElement
   }
 
   private get cardClasses(): string {
-    return getCardClasses({
+    const recipeClasses = getCardClasses({
       disabled: this.isDisabled,
       fullHeight: this.fullHeight ?? false,
       interactive: this.interactive ?? false,
@@ -103,6 +119,8 @@ export class SpectreCardElement
       padded: this.padded ?? true,
       variant: this.variant as CardVariant
     })
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
   }
 
   override render() {

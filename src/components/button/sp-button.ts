@@ -6,6 +6,7 @@ import {
   isButtonType,
   isButtonVariant,
   isInputSize,
+  sanitizeUtilityClasses,
   type SpectreButtonType,
   type SpectreButtonVariant,
   type SpectreInputSize
@@ -32,6 +33,7 @@ export interface SpectreButtonProps {
   href?: string | undefined
   iconOnly?: boolean | undefined
   id?: string | null | undefined
+  innerClass?: string | undefined
   label?: string | undefined
   loading?: boolean | undefined
   loadingLabel?: string | undefined
@@ -57,6 +59,7 @@ export class SpectreButtonElement
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     href: { type: String, reflect: true },
     iconOnly: { attribute: 'icon-only', type: Boolean, reflect: true },
+    innerClass: { attribute: 'inner-class', type: String },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
     loadingLabel: { attribute: 'loading-label', type: String, reflect: true },
@@ -76,6 +79,7 @@ export class SpectreButtonElement
   fullWidth: boolean | undefined = false
   href: string | undefined
   iconOnly: boolean | undefined = false
+  innerClass: string | undefined = undefined
   label: string | undefined
   loading: boolean | undefined = false
   loadingLabel: string | undefined = 'Loading'
@@ -193,7 +197,7 @@ export class SpectreButtonElement
   }
 
   private get buttonClasses(): string {
-    return getButtonClasses({
+    const recipeClasses = getButtonClasses({
       compact: this.compact ?? false,
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
@@ -203,6 +207,8 @@ export class SpectreButtonElement
       size: this.size as ButtonSize,
       variant: this.variant as ButtonVariant
     })
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
   }
 
   private get visibleLabelFallback(): string | undefined {

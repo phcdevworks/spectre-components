@@ -1,6 +1,6 @@
 # Spectre Components Execution Todo
 
-Phases 1 through 14 are complete — see [ROADMAP.md](ROADMAP.md) for the full
+Phases 1 through 15 are complete — see [ROADMAP.md](ROADMAP.md) for the full
 delivery history and [CHANGELOG.md](CHANGELOG.md) for release-by-release detail.
 
 New component or contract work here is demand-driven: it opens only when

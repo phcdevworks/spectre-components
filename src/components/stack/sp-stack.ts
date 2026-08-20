@@ -6,17 +6,20 @@ import {
   isStackAlign,
   isStackBasis,
   isStackDirection,
+  isStackGap,
   sanitizeUtilityClasses,
   type SpectreStackAlign,
   type SpectreStackBasis,
-  type SpectreStackDirection
+  type SpectreStackDirection,
+  type SpectreStackGap
 } from '../../utils/form'
 
 import {
   getStackClasses,
   type StackAlign,
   type StackBasis,
-  type StackDirection
+  type StackDirection,
+  type StackGap
 } from '@phcdevworks/spectre-ui'
 
 export interface SpectreStackProps {
@@ -26,6 +29,7 @@ export interface SpectreStackProps {
   ariaDescribedBy?: string | null
   basis?: SpectreStackBasis | undefined
   direction?: SpectreStackDirection | undefined
+  gap?: SpectreStackGap | undefined
   id?: string | null | undefined
   innerClass?: string | undefined
   title?: string | null | undefined
@@ -39,12 +43,14 @@ export class SpectreStackElement
     align: { type: String, reflect: true },
     basis: { type: String, reflect: true },
     direction: { type: String, reflect: true },
+    gap: { type: String, reflect: true },
     innerClass: { attribute: 'inner-class', type: String }
   }
 
   align: SpectreStackAlign | undefined = 'center'
   basis: SpectreStackBasis | undefined = undefined
   direction: SpectreStackDirection | undefined = 'vertical'
+  gap: SpectreStackGap | undefined = 'md'
   innerClass: string | undefined = undefined
 
   override get id(): string {
@@ -102,18 +108,23 @@ export class SpectreStackElement
     ) {
       this.align = 'center'
     }
+    if (
+      changedProperties.has('gap') &&
+      (this.gap == null || !isStackGap(this.gap))
+    ) {
+      this.gap = 'md'
+    }
   }
 
   private get stackClasses(): string {
     const recipeClasses = getStackClasses({
       align: this.align as StackAlign,
       direction: this.direction as StackDirection,
+      gap: this.gap as StackGap,
       ...(this.basis != null ? { basis: this.basis as StackBasis } : {})
     })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
-    return utilityClasses
-      ? `${recipeClasses} ${utilityClasses}`
-      : recipeClasses
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
   }
 
   override render() {

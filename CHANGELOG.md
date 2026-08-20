@@ -6,6 +6,44 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.17.0] - 2026-08-20
+
+**Release Title:** Layout and Utility Contract Parity
+
+Contract change type: additive
+
+### Added
+
+- Bumped `@phcdevworks/spectre-tokens` to `^4.5.0` and `@phcdevworks/spectre-ui`
+  to `^4.3.0`, and caught up to the new recipe surface those releases shipped:
+  - `sp-grid` — new `align` property (`start`/`center`/`end`/`baseline`/
+    `stretch`), surfacing `getGridClasses`' `align` option added in `spectre-ui`
+    4.2.0. Requested by `spectre-ui`.
+  - `sp-button` and `sp-card` — new `inner-class` property, matching the
+    existing `sp-grid`/`sp-stack`/`sp-section`/`sp-container`/`sp-nav`/
+    `sp-footer` coverage. Requested by a downstream integration.
+  - `sp-stack` — new `gap` property (`sm`/`md`/`lg`, default `md`), surfacing
+    `getStackClasses`' `gap` option added in `spectre-ui` 4.3.0. Filed by this
+    repo against `spectre-ui`.
+- `spectreGridAligns`/`SpectreGridAlign` are now re-exported from `./grid` and
+  the package root (previously defined in `src/utils/form.ts` and used
+  internally by `sp-grid`, but never re-exported alongside the other grid
+  constants/types — a gap from the `align` prop's original landing).
+- `inner-class`'s sanitizer now accepts one `__element` and one `--modifier` BEM
+  segment after the base utility token (e.g. `sp-dropdown__menu--mega`,
+  `sp-btn--primary`), previously silently dropped. Requested by a downstream
+  integration.
+
+### Fixed
+
+- `sp-card`'s `padded` property now uses a custom attribute converter instead of
+  the stock boolean converter, so `<sp-card padded="false">` is honored from
+  markup. Previously any present `padded` attribute — including the literal
+  string `"false"` — coerced to `true`, the standard HTML boolean-attribute
+  behavior but not what the attribute's own documented default implied. Property
+  usage (`element.padded = false`) already worked and is unchanged. Requested by
+  a downstream integration.
+
 ## [1.16.0] - 2026-08-19
 
 **Release Title:** Expanded Layout and Semantic Links
@@ -687,7 +725,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.16.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.17.0...HEAD
+[1.17.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.16.0...v1.17.0
 [1.16.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.15.0...v1.16.0
 [1.15.0]:

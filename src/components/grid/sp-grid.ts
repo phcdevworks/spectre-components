@@ -3,6 +3,7 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isGridAlign,
   isGridColumns,
   isGridExplicitTemplateOptions,
   isGridFixedTracksOptions,
@@ -15,6 +16,7 @@ import {
   isGridSpan,
   isGridSpanOptions,
   sanitizeUtilityClasses,
+  type SpectreGridAlign,
   type SpectreGridColumns,
   type SpectreGridExplicitTemplateOptions,
   type SpectreGridFixedTracksOptions,
@@ -30,6 +32,7 @@ import {
 
 import {
   getGridClasses,
+  type GridAlign,
   type GridColumns,
   type GridExplicitTemplateOptions,
   type GridFixedTracksOptions,
@@ -45,6 +48,7 @@ import {
 import { normalizeInt } from '../../utils/form'
 
 export interface SpectreGridProps {
+  align?: SpectreGridAlign | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -70,6 +74,7 @@ export class SpectreGridElement
   implements SpectreGridProps
 {
   static properties = {
+    align: { type: String, reflect: true },
     columns: { type: Number, reflect: true },
     columnGap: { attribute: 'column-gap', type: String, reflect: true },
     explicitTemplate: { attribute: 'explicit-template', type: Object },
@@ -85,6 +90,7 @@ export class SpectreGridElement
     span: { type: Object }
   }
 
+  align: SpectreGridAlign | undefined = undefined
   columns: SpectreGridColumns | undefined = 1
   columnGap: SpectreGridGap | undefined = undefined
   explicitTemplate: SpectreGridExplicitTemplateOptions | undefined = undefined
@@ -135,6 +141,13 @@ export class SpectreGridElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('align') &&
+      this.align != null &&
+      !isGridAlign(this.align)
+    ) {
+      this.align = undefined
+    }
     if (changedProperties.has('columns')) {
       const normalized = normalizeInt(this.columns, undefined, 1)
       this.columns =
@@ -229,6 +242,7 @@ export class SpectreGridElement
     const recipeClasses = getGridClasses({
       columns: this.columns as GridColumns,
       gap: this.gap as GridGap,
+      ...(this.align !== undefined && { align: this.align as GridAlign }),
       ...(this.columnGap !== undefined && {
         columnGap: this.columnGap as GridGap
       }),

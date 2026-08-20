@@ -329,4 +329,16 @@ describe('sp-button', () => {
     element.blur()
     expect(onBlur).toHaveBeenCalled()
   })
+
+  it('appends sanitized inner-class utility classes to the native button', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.setAttribute('inner-class', 'sp-btn--primary not_valid')
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const button = element.querySelector('button')
+    expect(button?.className).toContain('sp-btn--primary')
+    expect(button?.className).not.toContain('not_valid')
+  })
 })

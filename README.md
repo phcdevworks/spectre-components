@@ -16,7 +16,7 @@ consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.16.0                              |
+| Current version/status | 1.17.0                              |
 
 ## Standard Workflow
 
@@ -348,6 +348,7 @@ when the button needs to navigate rather than submit/act.
 | `full-width`       | boolean                                                               | `false`   | Spans full container width                                                    |
 | `pill`             | boolean                                                               | `false`   | Pill / fully-rounded corners                                                  |
 | `compact`          | boolean                                                               | `false`   | Denser padding/height variant                                                 |
+| `inner-class`      | string                                                                | —         | Spectre utility classes applied to the native `<button>`/`<a>`                |
 | `name`             | string                                                                | —         | Form field name                                                               |
 | `value`            | string                                                                | `''`      | Submitted value                                                               |
 | `form`             | string                                                                | —         | Associates with a form by ID                                                  |
@@ -602,15 +603,16 @@ Renders a `<div>` container backed by the Spectre card recipe.
 
 **Attributes**
 
-| Attribute                 | Type                                   | Default    | Description                     |
-| ------------------------- | -------------------------------------- | ---------- | ------------------------------- |
-| `variant`                 | `elevated \| flat \| outline \| ghost` | `elevated` | Visual style                    |
-| `padded`                  | boolean                                | `true`     | Applies card padding            |
-| `full-height`             | boolean                                | `false`    | Spans full container height     |
-| `interactive`             | boolean                                | `false`    | Applies interactive styling     |
-| `disabled`                | boolean                                | `false`    | Disabled visual state           |
-| `loading`                 | boolean                                | `false`    | Busy visual state               |
-| `id` / `title` / `aria-*` | string                                 | —          | Forwarded to the native `<div>` |
+| Attribute                 | Type                                   | Default    | Description                                                 |
+| ------------------------- | -------------------------------------- | ---------- | ----------------------------------------------------------- |
+| `variant`                 | `elevated \| flat \| outline \| ghost` | `elevated` | Visual style                                                |
+| `padded`                  | boolean                                | `true`     | Applies card padding; `padded="false"` opts out from markup |
+| `full-height`             | boolean                                | `false`    | Spans full container height                                 |
+| `interactive`             | boolean                                | `false`    | Applies interactive styling                                 |
+| `disabled`                | boolean                                | `false`    | Disabled visual state                                       |
+| `loading`                 | boolean                                | `false`    | Busy visual state                                           |
+| `inner-class`             | string                                 | —          | Spectre utility classes applied to the native `<div>`       |
+| `id` / `title` / `aria-*` | string                                 | —          | Forwarded to the native `<div>`                             |
 
 **Content projection** — children become the card content.
 
@@ -865,6 +867,7 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 | ------------------------- | ---------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------- |
 | `columns`                 | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                                            | `1`     | Number of grid columns                                                          |
 | `gap`                     | `sm \| md \| lg`                                                                         | `md`    | Gap between grid items                                                          |
+| `align`                   | `start \| center \| end \| baseline \| stretch`                                          | —       | Cross-axis alignment of grid items                                              |
 | `span`                    | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only)                             | —       | Column span for a grid item, single value or per-breakpoint                     |
 | `column-gap`              | `sm \| md \| lg` (JS: `columnGap`)                                                       | —       | Overrides `gap` on the column axis only                                         |
 | `row-gap`                 | `sm \| md \| lg` (JS: `rowGap`)                                                          | —       | Overrides `gap` on the row axis only                                            |
@@ -916,6 +919,7 @@ Renders a `<div>` flex stack backed by the Spectre stack recipe.
 | `direction`               | `vertical \| horizontal` | `vertical` | Stack axis                                            |
 | `basis`                   | `sidebar`                | —          | Reserves sidebar-sized basis on items                 |
 | `align`                   | `center \| stretch`      | `center`   | Cross-axis alignment                                  |
+| `gap`                     | `sm \| md \| lg`         | `md`       | Gap between stack items                               |
 | `inner-class`             | string                   | —          | Spectre utility classes applied to the native `<div>` |
 | `id` / `title` / `aria-*` | string                   | —          | Forwarded to the native `<div>`                       |
 
@@ -1362,10 +1366,11 @@ defineSpectreComponents() // registers all sp-* elements
 `SpectreTagProps`, `SpectrePricingCardProps`
 
 **Layout constants and types**: `spectreContainerMaxWidths`,
-`spectreGridColumns`, `spectreGridGaps`, `spectreStackAligns`,
-`spectreStackBases`, `spectreStackDirections`, `SpectreContainerMaxWidth`,
-`SpectreGridColumns`, `SpectreGridGap`, `SpectreStackAlign`,
-`SpectreStackBasis`, `SpectreStackDirection`, `SpectreContainerProps`,
+`spectreGridColumns`, `spectreGridGaps`, `spectreGridAligns`,
+`spectreStackAligns`, `spectreStackBases`, `spectreStackDirections`,
+`spectreStackGaps`, `SpectreContainerMaxWidth`, `SpectreGridColumns`,
+`SpectreGridGap`, `SpectreGridAlign`, `SpectreStackAlign`, `SpectreStackBasis`,
+`SpectreStackDirection`, `SpectreStackGap`, `SpectreContainerProps`,
 `SpectreGridProps`, `SpectreSectionProps`, `SpectreStackProps`
 
 **Interactive constants and types**: `spectreDropdownPlacements`,
@@ -1442,7 +1447,7 @@ npm install
 npm run check        # full release validation gate
 ```
 
-Requires Node.js `^22.13.0 || >=24.0.0` and npm `11.16.0`.
+Requires Node.js `^22.13.0 || >=24.0.0` and npm `12.0.2`.
 
 | Command                    | Purpose                                                                                               |
 | -------------------------- | ----------------------------------------------------------------------------------------------------- |
