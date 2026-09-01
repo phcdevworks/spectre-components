@@ -96,6 +96,24 @@ describe('sp-text', () => {
     expect(element.variant).toBe('default')
   })
 
+  it('accepts onInverse/onInverseMuted variants', async () => {
+    const element = document.createElement('sp-text') as SpectreTextElement
+    element.variant = 'onInverse'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.variant).toBe('onInverse')
+    const native = element.querySelector('[data-sp-text-native]')
+    expect(native?.className).toContain('sp-text--on-inverse')
+
+    element.variant = 'onInverseMuted'
+    await element.updateComplete
+
+    expect(element.variant).toBe('onInverseMuted')
+    expect(native?.className).toContain('sp-text--on-inverse-muted')
+  })
+
   it('falls back to family=undefined for an invalid family', async () => {
     const element = document.createElement('sp-text') as SpectreTextElement
     // @ts-expect-error - testing invalid value

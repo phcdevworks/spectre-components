@@ -29,6 +29,18 @@ describe('sp-button', () => {
     expect(button?.getAttribute('aria-label')).toBeNull()
   })
 
+  it('accepts the inverse variant', async () => {
+    const element = document.createElement('sp-button') as SpectreButtonElement
+    element.variant = 'inverse'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.variant).toBe('inverse')
+    const button = element.querySelector('button')
+    expect(button?.className).toContain('sp-btn--inverse')
+  })
+
   it('defaults to compact=false and applies the compact class when set', async () => {
     const element = document.createElement('sp-button') as SpectreButtonElement
     document.body.append(element)

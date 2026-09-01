@@ -6,6 +6,55 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.18.0] - 2026-08-31
+
+**Release Title:** Card, Grid, and Inverse Surface Variants
+
+Contract change type: additive
+
+### Added
+
+- `sp-button` and `sp-badge` — `variant` now also accepts `'inverse'`,
+  surfacing `getButtonClasses()`'s `.sp-btn--inverse` and
+  `getBadgeClasses()`'s `.sp-badge--inverse`, published in `spectre-ui@5.0.0`.
+- `sp-text` — `variant` now also accepts `'onInverse'`/`'onInverseMuted'`,
+  surfacing `getTextClasses()`'s `.sp-text--on-inverse`/`-muted`, published in
+  `spectre-ui@5.0.0`.
+
+  All three close a runtime-allowlist gap reported by a downstream integration:
+  the generated CSS and upstream recipe types already supported these
+  inverse/on-dark values, but this package's `src/utils/form.ts` allowlists
+  rejected them at runtime. `.sp-link--on-inverse` and `.sp-surface--inverse`
+  remain bare utility classes with no dedicated component — consistent with
+  `.sp-prose`, they're applied via the existing `inner-class` prop rather than
+  needing their own wrapper.
+- `sp-card` — `padded` now also accepts `'sm'`/`'md'`/`'lg'` (in addition to
+  `boolean`), surfacing the `component.card.padding` size-scale token and the
+  `getCardClasses()` change published in `spectre-ui@5.0.0`. `true`/`'md'`
+  render the existing `.sp-card--padded` class (no visual change); `'sm'`/
+  `'lg'` render new `.sp-card--padded-sm`/`-lg` classes. Requested by a
+  downstream integration.
+- `sp-grid` — new `role` attribute/property, reflected directly onto the
+  native `<div>` container. Unblocks a table-shaped grid (e.g. a comparison
+  matrix) using `role="table"`; row/cell roles on projected children remain
+  the consumer's responsibility since `sp-grid` renders all light-DOM
+  children into a single native container. Requested by a downstream
+  integration.
+
+### Changed
+
+- Refreshed the TypeScript ESLint development tooling and lockfile entries.
+- Bumped `@phcdevworks/spectre-tokens` to `^4.7.0` and `@phcdevworks/spectre-ui`
+  to `^5.0.0`. `spectre-ui@5.0.0` shipped two breaking recipe changes —
+  `getCardClasses()`/`getSpinnerClasses()` now add their `padded`/`loading`
+  modifier class only when the option is explicitly passed instead of
+  defaulting it, and `getTestimonialClasses()` now defaults `variant` to
+  `'elevated'` (was `'outline'`) — neither requires a source change here:
+  `sp-card`, `sp-spinner`, and `sp-testimonial` already resolve their own
+  property defaults and pass explicit values into every recipe call, per
+  this repo's existing component-owns-defaults contract. Verified with the
+  full `npm run check` gate.
+
 ## [1.17.0] - 2026-08-20
 
 **Release Title:** Layout and Utility Contract Parity
@@ -102,7 +151,7 @@ Contract change type: behavioral change
   remote `sp-sidebar` via a `for` id reference, staying in sync (via
   `sp-open`/`sp-close`) with the target's own built-in toggle, backdrop, `Esc`,
   or a second `sp-sidebar-toggle` targeting the same sidebar. Closes the last
-  gap in the `spectre-ui-astro` component-parity plan (`SpSidebarToggle`).
+  gap in a downstream component-parity plan.
 - `sp-sidebar` — new `hide-toggle` boolean property to suppress the built-in
   toggle button, for use alongside a standalone `sp-sidebar-toggle` placed
   elsewhere on the page.
@@ -180,8 +229,8 @@ Contract change type: additive
 - `sp-text` — new text primitive backed by `getTextClasses` in
   `@phcdevworks/spectre-ui`. Renders `h1`–`h6`, `p`, or `span` via the `level`
   property (defaults to `p`) with `size`, `variant`, and `family` properties
-  mapped to the recipe's options. Requested by `spectre-base` while converting
-  `spectre-theme/` PHP templates off hand-rolled CSS onto `sp-*` components.
+  mapped to the recipe's options. Requested by a downstream integration while
+  converting PHP templates off hand-rolled CSS onto `sp-*` components.
 
 ## [1.10.0] - 2026-07-27
 
@@ -236,8 +285,8 @@ Contract change type: additive
 ### Added
 
 - `sp-footer` - thin wrapper backed by `getFooterClasses`. Supports `bordered`
-  and `full-width`. Closes the final gap against
-  `@phcdevworks/spectre-ui-astro`.
+  and `full-width`. Closes the final gap identified by a downstream
+  integration.
 
 ## [1.7.0] - 2026-07-02
 
@@ -281,10 +330,10 @@ Contract change type: additive
   Shows on trigger `mouseenter`/`focusin` and hides on `mouseleave`/`focusout`.
   Dispatches `sp-show` and `sp-hide`.
 
-  These six close the remaining component-coverage gap against
-  `@phcdevworks/spectre-ui-astro`, using its `.astro` adapters as the reference
-  for recipe options and markup structure, with interactivity implemented as
-  native Lit element state rather than ported scripts.
+  These six close the remaining component-coverage gap identified by a
+  downstream integration, using its adapters as the reference for recipe
+  options and markup structure, with interactivity implemented as native Lit
+  element state rather than ported scripts.
 
 ## [1.6.0] - 2026-07-01
 
@@ -312,10 +361,10 @@ Contract change type: additive
   `spectreStackBases`, `spectreStackDirections`, `SpectreStackAlign`,
   `SpectreStackBasis`, and `SpectreStackDirection`.
 
-  These four close part of the component-coverage gap against
-  `@phcdevworks/spectre-ui-astro`, using its `.astro` adapters as the reference
-  for recipe options and markup structure (interactivity, where applicable in
-  later additions, is implemented as native Lit element state rather than ported
+  These four close part of the component-coverage gap identified by a
+  downstream integration, using its adapters as the reference for recipe
+  options and markup structure (interactivity, where applicable in later
+  additions, is implemented as native Lit element state rather than ported
   scripts).
 
 ### Fixed
@@ -725,7 +774,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.17.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.18.0...HEAD
+[1.18.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.17.0...v1.18.0
 [1.17.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.16.0...v1.17.0
 [1.16.0]:

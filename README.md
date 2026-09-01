@@ -16,7 +16,7 @@ consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.17.0                              |
+| Current version/status | 1.18.0                              |
 
 ## Standard Workflow
 
@@ -335,7 +335,7 @@ when the button needs to navigate rather than submit/act.
 
 | Attribute          | Type                                                                  | Default   | Description                                                                   |
 | ------------------ | --------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
-| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent` | `primary` | Visual style                                                                  |
+| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent \| inverse` | `primary` | Visual style                                                                  |
 | `size`             | `sm \| md \| lg`                                                      | `md`      | Control size                                                                  |
 | `type`             | `button \| submit \| reset`                                           | `button`  | Native button type (ignored when rendered as a link)                          |
 | `href`             | string                                                                | —         | Renders `<a href>` instead of `<button>` (unless `disabled`/`loading`)        |
@@ -584,7 +584,7 @@ Renders a `<span>` display primitive backed by the Spectre badge recipe.
 
 | Attribute                 | Type                                                                                                           | Default   | Description                      |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------- | --------- | -------------------------------- |
-| `variant`                 | `primary \| secondary \| ghost \| danger \| success \| warning \| info \| accent \| cta \| neutral \| outline` | `primary` | Visual style                     |
+| `variant`                 | `primary \| secondary \| ghost \| danger \| success \| warning \| info \| accent \| cta \| neutral \| outline \| inverse` | `primary` | Visual style                     |
 | `size`                    | `sm \| md \| lg`                                                                                               | `md`      | Badge size                       |
 | `disabled`                | boolean                                                                                                        | `false`   | Disabled visual state            |
 | `loading`                 | boolean                                                                                                        | `false`   | Busy visual state                |
@@ -606,7 +606,7 @@ Renders a `<div>` container backed by the Spectre card recipe.
 | Attribute                 | Type                                   | Default    | Description                                                 |
 | ------------------------- | -------------------------------------- | ---------- | ----------------------------------------------------------- |
 | `variant`                 | `elevated \| flat \| outline \| ghost` | `elevated` | Visual style                                                |
-| `padded`                  | boolean                                | `true`     | Applies card padding; `padded="false"` opts out from markup |
+| `padded`                  | `boolean \| 'sm' \| 'md' \| 'lg'`      | `true`     | Card padding step; `false` opts out, `true`/`"md"` is default |
 | `full-height`             | boolean                                | `false`    | Spans full container height                                 |
 | `interactive`             | boolean                                | `false`    | Applies interactive styling                                 |
 | `disabled`                | boolean                                | `false`    | Disabled visual state                                       |
@@ -879,11 +879,17 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 | `fixed-tracks`            | `{ count: 1\|2\|3\|4 }` (JS: `fixedTracks`)                                              | —       | Fixed-width repeated tracks (`--sp-space-240`), replaces `columns`              |
 | `explicit-template`       | `{ template: 'edge-fluid-edge'\|'label-fluid-fluid', weight? }` (JS: `explicitTemplate`) | —       | Named asymmetric column shape; replaces `columns`/`leadingTracks`/`fixedTracks` |
 | `inner-class`             | string                                                                                   | —       | Spectre utility classes applied to the native `<div>`                           |
-| `id` / `title` / `aria-*` | string                                                                                   | —       | Forwarded to the native `<div>`                                                 |
+| `id` / `title` / `aria-*` / `role` | string                                                                          | —       | Forwarded to the native `<div>`                                                 |
 
 `leading-tracks`, `fixed-tracks`, `explicit-template`, and any per-breakpoint
 `{ base?, md?, lg? }` shape are JS-property-only (set via the DOM property, not
 an HTML attribute string).
+
+Setting `role` (e.g. `role="table"`) reflects it directly onto the native
+`<div>`. `sp-grid` renders its light-DOM children into that single container,
+so a table-shaped `role` structure (`role="row"`/`role="cell"` on children)
+is the consumer's responsibility — `sp-grid` does not synthesize row/cell
+roles for projected content.
 
 **Content projection** — children become grid items.
 
@@ -1295,7 +1301,7 @@ switches with `level` while the recipe call and styling stay the same.
 | ------------------------- | --------------------------------------------------------------- | --------- | ---------------------------------------- |
 | `level`                   | `h1 \| h2 \| h3 \| h4 \| h5 \| h6 \| p \| span`                 | `p`       | Rendered element tag                     |
 | `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl \| 5xl \| 6xl` | `md`      | Text size scale                          |
-| `variant`                 | `default \| muted \| subtle \| meta \| brand`                   | `default` | Text color role                          |
+| `variant`                 | `default \| muted \| subtle \| meta \| brand \| onInverse \| onInverseMuted` | `default` | Text color role           |
 | `family`                  | `sans \| serif \| mono`                                         | —         | Optional font family override            |
 | `transform`               | `none \| uppercase \| lowercase \| capitalize`                  | —         | Optional text transform                  |
 | `id` / `title` / `aria-*` | string                                                          | —         | Forwarded to the rendered native element |

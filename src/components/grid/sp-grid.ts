@@ -62,6 +62,7 @@ export interface SpectreGridProps {
   leadingTracks?: SpectreGridLeadingTracksOptions | undefined
   offset?: SpectreGridOffset | SpectreGridOffsetOptions | undefined
   order?: SpectreGridOrder | SpectreGridOrderOptions | undefined
+  role?: string | null | undefined
   rowGap?: SpectreGridGap | undefined
   rowOffset?: SpectreGridOffset | SpectreGridOffsetOptions | undefined
   rowSpan?: SpectreGridSpan | SpectreGridSpanOptions | undefined
@@ -121,8 +122,63 @@ export class SpectreGridElement
     super.title = value
   }
 
+  private _role: string | null = null
+
+  override get role(): string | null {
+    return this._role
+  }
+
+  override set role(value: string | null | undefined) {
+    const normalizedValue = value?.trim() || null
+    if (this._role === normalizedValue) {
+      return
+    }
+    this._role = normalizedValue
+    if (HTMLElement.prototype.hasAttribute.call(this, 'role')) {
+      HTMLElement.prototype.removeAttribute.call(this, 'role')
+    }
+    this.requestUpdate()
+  }
+
+  override getAttribute(qualifiedName: string): string | null {
+    if (qualifiedName === 'role') {
+      return this.role
+    }
+    return super.getAttribute(qualifiedName)
+  }
+
+  override hasAttribute(qualifiedName: string): boolean {
+    if (qualifiedName === 'role') {
+      return this.role !== null
+    }
+    return super.hasAttribute(qualifiedName)
+  }
+
+  override setAttribute(qualifiedName: string, value: string): void {
+    if (qualifiedName === 'role') {
+      this.role = value
+      return
+    }
+    super.setAttribute(qualifiedName, value)
+  }
+
+  override removeAttribute(qualifiedName: string): void {
+    if (qualifiedName === 'role') {
+      this.role = null
+      return
+    }
+    super.removeAttribute(qualifiedName)
+  }
+
   override connectedCallback(): void {
+    const initialRole = HTMLElement.prototype.getAttribute.call(this, 'role')
+    if (initialRole !== null) {
+      HTMLElement.prototype.removeAttribute.call(this, 'role')
+    }
     super.connectedCallback()
+    if (initialRole !== null) {
+      this.role = initialRole
+    }
     this.style.display ||= 'block'
   }
 
@@ -284,6 +340,7 @@ export class SpectreGridElement
       class="${this.gridClasses}"
       data-sp-grid-native
       id="${ifDefined(this.id || undefined)}"
+      role="${ifDefined(this.role ?? undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
       ${this.hasProjectedContent ? this.projectedContent : nothing}

@@ -3,19 +3,35 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isCardPaddingSize,
   isCardVariant,
   sanitizeUtilityClasses,
+  type SpectreCardPaddingSize,
   type SpectreCardVariant
 } from '../../utils/form'
 
 import { getCardClasses, type CardVariant } from '@phcdevworks/spectre-ui'
 
+type SpectreCardPadded = boolean | SpectreCardPaddingSize
+
 const paddedConverter = {
-  fromAttribute(value: string | null): boolean {
-    return value !== 'false'
+  fromAttribute(value: string | null): SpectreCardPadded {
+    if (value === 'false') {
+      return false
+    }
+    if (value != null && isCardPaddingSize(value)) {
+      return value
+    }
+    return true
   },
-  toAttribute(value: boolean): string | null {
-    return value ? null : 'false'
+  toAttribute(value: SpectreCardPadded): string | null {
+    if (value === false) {
+      return 'false'
+    }
+    if (value === true) {
+      return null
+    }
+    return value
   }
 }
 
@@ -29,7 +45,7 @@ export interface SpectreCardProps {
   innerClass?: string | undefined
   interactive?: boolean | undefined
   loading?: boolean | undefined
-  padded?: boolean | undefined
+  padded?: SpectreCardPadded | undefined
   title?: string | null | undefined
   variant?: SpectreCardVariant | undefined
 }
@@ -53,7 +69,7 @@ export class SpectreCardElement
   innerClass: string | undefined = undefined
   interactive: boolean | undefined = false
   loading: boolean | undefined = false
-  padded: boolean | undefined = true
+  padded: SpectreCardPadded | undefined = true
   variant: SpectreCardVariant | undefined = 'elevated'
 
   override get id(): string {
@@ -99,7 +115,11 @@ export class SpectreCardElement
     if (changedProperties.has('loading') && this.loading == null) {
       this.loading = false
     }
-    if (changedProperties.has('padded') && this.padded == null) {
+    if (
+      changedProperties.has('padded') &&
+      (this.padded == null ||
+        (typeof this.padded !== 'boolean' && !isCardPaddingSize(this.padded)))
+    ) {
       this.padded = true
     }
     if (

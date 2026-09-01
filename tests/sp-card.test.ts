@@ -200,6 +200,41 @@ describe('sp-card', () => {
     expect(element.padded).toBe(true)
   })
 
+  it('accepts sm/md/lg padded size-scale values via attribute', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    element.setAttribute('padded', 'sm')
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.padded).toBe('sm')
+    const div = element.querySelector('div')
+    expect(div?.className).toContain('sp-card--padded-sm')
+  })
+
+  it('accepts sm/md/lg padded size-scale values via property', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    element.padded = 'lg'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.padded).toBe('lg')
+    const div = element.querySelector('div')
+    expect(div?.className).toContain('sp-card--padded-lg')
+  })
+
+  it('falls back to padded=true for an invalid padded size value', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    // @ts-expect-error - testing invalid value
+    element.padded = 'xl'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.padded).toBe(true)
+  })
+
   it('appends sanitized inner-class utility classes to the native div', async () => {
     const element = document.createElement('sp-card') as SpectreCardElement
     element.setAttribute('inner-class', 'sp-card__media--bleed not_valid')

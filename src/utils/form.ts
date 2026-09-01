@@ -18,7 +18,8 @@ export const spectreButtonVariants = [
   'danger',
   'success',
   'cta',
-  'accent'
+  'accent',
+  'inverse'
 ] as const
 
 export type SpectreButtonVariant = (typeof spectreButtonVariants)[number]
@@ -67,7 +68,8 @@ export const spectreBadgeVariants = [
   'ghost',
   'outline',
   'accent',
-  'cta'
+  'cta',
+  'inverse'
 ] as const
 
 export type SpectreBadgeVariant = (typeof spectreBadgeVariants)[number]
@@ -101,6 +103,18 @@ export type SpectreCardVariant = (typeof spectreCardVariants)[number]
 
 export function isCardVariant(value: unknown): value is SpectreCardVariant {
   return (spectreCardVariants as readonly string[]).includes(value as string)
+}
+
+export const spectreCardPaddingSizes = ['sm', 'md', 'lg'] as const
+
+export type SpectreCardPaddingSize = (typeof spectreCardPaddingSizes)[number]
+
+export function isCardPaddingSize(
+  value: unknown
+): value is SpectreCardPaddingSize {
+  return (spectreCardPaddingSizes as readonly string[]).includes(
+    value as string
+  )
 }
 
 export const spectreIconBoxVariants = [
@@ -595,7 +609,9 @@ export const spectreTextVariants = [
   'muted',
   'subtle',
   'meta',
-  'brand'
+  'brand',
+  'onInverse',
+  'onInverseMuted'
 ] as const
 
 export type SpectreTextVariant = (typeof spectreTextVariants)[number]

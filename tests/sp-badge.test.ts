@@ -58,6 +58,18 @@ describe('sp-badge', () => {
     expect(element.variant).toBe('primary');
   });
 
+  it('accepts the inverse variant', async () => {
+    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    element.variant = 'inverse';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.variant).toBe('inverse');
+    const span = element.querySelector('span');
+    expect(span?.className).toContain('sp-badge--inverse');
+  });
+
   it('falls back to size=md for an invalid size', async () => {
     const element = document.createElement('sp-badge') as SpectreBadgeElement;
     // @ts-expect-error - testing invalid value

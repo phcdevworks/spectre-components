@@ -268,4 +268,63 @@ describe('sp-grid', () => {
     expect(div?.className).toContain('sp-grid-template--edge-fluid-edge')
     expect(div?.className).toContain('sp-dropdown__menu--mega')
   })
+
+  it('forwards a role attribute to the native div, not the host', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    element.setAttribute('role', 'table')
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+
+    expect(div?.getAttribute('role')).toBe('table')
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'role')).toBe(
+      false
+    )
+    expect(element.getAttribute('role')).toBe('table')
+  })
+
+  it('forwards a role set via the property to the native div', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    element.role = 'table'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+    expect(div?.getAttribute('role')).toBe('table')
+  })
+
+  it('omits role on the native div when unset', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+    expect(div?.hasAttribute('role')).toBe(false)
+  })
+
+  it('removes role from the native div when cleared via removeAttribute', async () => {
+    const element = document.createElement('sp-grid') as SpectreGridElement
+    element.setAttribute('role', 'table')
+
+    document.body.append(element)
+    await element.updateComplete
+    element.removeAttribute('role')
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+    expect(div?.hasAttribute('role')).toBe(false)
+    expect(element.role).toBeNull()
+  })
+
+  it('picks up a role attribute present in markup before upgrade', async () => {
+    document.body.innerHTML = '<sp-grid role="table"></sp-grid>'
+    const element = document.querySelector('sp-grid') as SpectreGridElement
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+    expect(div?.getAttribute('role')).toBe('table')
+  })
 })
