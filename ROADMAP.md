@@ -32,6 +32,7 @@ file does not restate delivered work.
 | 14    | Expanded layout and semantic links — fuller grid/nav/button recipe coverage plus footer and sidebar link primitives backed by existing `spectre-ui` recipes                                      | 1.16.0       |
 | 15    | Layout and utility contract parity — grid alignment, stack gaps, button/card inner classes, BEM utility sanitization, and explicit card padding opt-out                                          | 1.17.0       |
 | 16    | Card, grid, and inverse surface variants — size-scale card padding, native grid role forwarding, inverse/on-inverse roles, and Spectre 5 recipe alignment                                        | 1.18.0       |
+| 17 | Content lifecycle and form reliability — projection fixes, native radio form ownership, grid role coverage, browser CI, packed export checks, and validated dependency updates | 1.19.0 |
 
 ---
 

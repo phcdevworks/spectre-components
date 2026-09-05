@@ -6,9 +6,13 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
-### Fixed
+## [1.19.0] - 2026-09-05
+
+**Release Title:** Content Lifecycle and Form Reliability
 
 Contract change type: behavioral change
+
+### Fixed
 
 - `sp-dropdown` no longer reprojects its own wrapper when content is appended
   after rendering. Existing trigger and menu nodes survive appends and reconnection.
@@ -16,6 +20,29 @@ Contract change type: behavioral change
   or the element reconnects and updates.
 - `sp-radio` synchronizes checked state only among same-named radios with the
   same native form owner, including explicit `form` associations and changes.
+- Contract validation totals now count each reported check once.
+
+### Added
+
+- Regression coverage for dropdown and tooltip content lifecycle and radio form
+  ownership, including a native browser test in a separate CI job.
+- Packed-package validation of all 36 entry points through ESM and CommonJS
+  resolution, including declared runtime exports and declaration targets.
+- Regression coverage confirming that `sp-grid` preserves consumer-authored
+  `role="row"`, `role="columnheader"`, and `role="cell"` on projected children.
+  The existing plain-HTML pattern requires no additional component API.
+
+### Changed
+
+- Update Spectre dependencies to `spectre-tokens@^4.8.0` and
+  `spectre-ui@^5.0.1`, and refresh development dependencies, including Vitest 5.
+- Override the build dependency `esbuild` to `0.28.2` to address the affected
+  Windows development-server versions. Package and browser validation pass with
+  the patched build dependency.
+- Refresh the textarea screenshot baseline for the upgraded browser’s native
+  resize handles; the remaining visual baselines are unchanged.
+- Separate optional screenshot tests from browser behavior tests and document
+  the updated contributor validation workflow.
 
 ## [1.18.0] - 2026-08-31
 
@@ -785,7 +812,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.18.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.19.0...HEAD
+[1.19.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.18.0...v1.19.0
 [1.18.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.17.0...v1.18.0
 [1.17.0]:

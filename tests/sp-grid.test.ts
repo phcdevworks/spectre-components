@@ -327,4 +327,35 @@ describe('sp-grid', () => {
     const div = element.querySelector('div[data-sp-grid-native]')
     expect(div?.getAttribute('role')).toBe('table')
   })
+
+  it('preserves plain role="row"/role="cell" attributes on projected children for a table-shaped grid', async () => {
+    document.body.innerHTML = `
+      <sp-grid role="table">
+        <div role="row">
+          <div role="columnheader">Name</div>
+          <div role="columnheader">Plan</div>
+        </div>
+        <div role="row">
+          <div role="cell">Example</div>
+          <div role="cell">Pro</div>
+        </div>
+      </sp-grid>
+    `
+    const element = document.querySelector('sp-grid') as SpectreGridElement
+    await element.updateComplete
+
+    const div = element.querySelector('div[data-sp-grid-native]')
+    expect(div?.getAttribute('role')).toBe('table')
+
+    const rows = element.querySelectorAll('[role="row"]')
+    expect(rows).toHaveLength(2)
+
+    const headers = element.querySelectorAll('[role="columnheader"]')
+    expect(headers).toHaveLength(2)
+
+    const cells = element.querySelectorAll('[role="cell"]')
+    expect(cells).toHaveLength(2)
+    expect(cells[0]?.textContent).toBe('Example')
+    expect(cells[1]?.textContent).toBe('Pro')
+  })
 })
