@@ -1460,8 +1460,10 @@ Requires Node.js `^22.13.0 || >=24.0.0` and npm `12.0.2`.
 | `npm run check`            | Full validation (lint → typecheck → test → build → export, contract, invariant, and ecosystem checks) |
 | `npm run build`            | Compile ESM + CJS with declarations into `dist/`                                                      |
 | `npm test`                 | Run Vitest suite under happy-dom                                                                      |
+| `npm run test:browser` | Run native browser behavior regressions (also run in CI) |
+| `npm run test:visual` | Run opt-in screenshot regressions |
 | `npm run lint`             | ESLint                                                                                                |
-| `npm run check:exports`    | Verify built subpath exports resolve correctly                                                        |
+| `npm run check:exports`    | Verify packed ESM/CommonJS entry points and declaration targets                                                        |
 | `npm run check:contract`   | Verify built exports match `components.contract.json`                                                 |
 | `npm run check:invariants` | Verify light-DOM and no-hardcoded-visual invariants                                                   |
 | `npm run check:ecosystem`  | Validate `spectre.manifest.json`                                                                      |

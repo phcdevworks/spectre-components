@@ -243,7 +243,8 @@
     "check:contract": "node --experimental-strip-types scripts/check-contract.ts",
     "check:invariants": "node --experimental-strip-types scripts/check-invariants.ts",
     "check:version-sync": "node --experimental-strip-types scripts/check-readme-version.ts",
-    "check:ecosystem": "spectre-manifest-validate spectre.manifest.json && spectre-manifest-check spectre.manifest.json ."
+    "check:ecosystem": "spectre-manifest-validate spectre.manifest.json && spectre-manifest-check spectre.manifest.json .",
+    "test:browser": "playwright test --config playwright.browser.config.ts"
   },
   "publishConfig": {
     "access": "public"
@@ -277,6 +278,9 @@
     "vitest": "^4.1.11"
   },
   "allowScripts": {
-    "esbuild@0.27.7": true
+    "esbuild@0.28.2": true
+  },
+  "overrides": {
+    "esbuild": "0.28.2"
   }
 }

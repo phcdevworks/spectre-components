@@ -114,6 +114,7 @@ npm run typecheck
 npm run check
 npm run check:exports
 npm run verify:app          # local Vite preview of every component (verification_app.ts)
+npm run test:browser        # native browser behavior regressions; separate CI job
 npm run test:visual         # Playwright visual regression, local opt-in (not part of npm run check)
 npm run test:visual:update  # regenerate visual baselines after an intentional visual change
 ```

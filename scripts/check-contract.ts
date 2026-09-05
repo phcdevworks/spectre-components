@@ -64,14 +64,12 @@ async function checkDistFile(
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
     fail(`${label} (${distFile}): could not import - ${message}`)
-    failed += values.length - 1
     return
   }
 
   for (const name of values) {
     if (mod[name] !== undefined) {
       ok(`${label}: ${name}`)
-      passed++
     } else {
       fail(`${label}: missing export "${name}"`)
     }
@@ -101,7 +99,6 @@ for (const component of contract.components) {
   const absPath = join(root, component.distFile)
   if (existsSync(absPath)) {
     ok(`${component.tag}: dist file exists (${component.distFile})`)
-    passed++
   } else {
     fail(`${component.tag}: dist file missing (${component.distFile})`)
   }

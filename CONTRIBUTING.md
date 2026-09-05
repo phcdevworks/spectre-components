@@ -229,3 +229,22 @@ By participating in this project, you agree to follow the
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
+
+## Browser and Package Validation
+
+`npm run test:browser` runs behavior regressions in a real browser, including
+native form ownership. CI runs this command in a separate job. Install its
+browser locally with `npx playwright install chromium` before the first run.
+Add behavior regressions under `browser-tests/`.
+
+`npm run test:visual` remains an opt-in screenshot suite under `visual-tests/`.
+Screenshot baselines do not gate browser behavior checks.
+
+`npm run check:exports` packs the built package into a temporary consumer and
+checks every public entry point through ESM and CommonJS package resolution,
+including declared symbols and declaration files. It runs as part of
+`npm run check`; temporary files are removed after validation.
+
+The build dependency `esbuild` is overridden to `0.28.2` to avoid the affected
+Windows development-server versions. Revisit the override when the build tool
+accepts a patched version directly; validate builds and browser tests on changes.

@@ -25,10 +25,12 @@
     "tests",
     "scripts",
     "visual-tests",
+    "browser-tests",
     "vitest.config.ts",
     "tsup.config.ts",
     "eslint.config.ts",
     "playwright.config.ts",
+    "playwright.browser.config.ts",
     "verification_app.ts"
   ],
   "exclude": ["node_modules", "dist"]
