@@ -6,6 +6,17 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Fixed
+
+Contract change type: behavioral change
+
+- `sp-dropdown` no longer reprojects its own wrapper when content is appended
+  after rendering. Existing trigger and menu nodes survive appends and reconnection.
+- `sp-tooltip` preserves its trigger and tooltip nodes when content is appended
+  or the element reconnects and updates.
+- `sp-radio` synchronizes checked state only among same-named radios with the
+  same native form owner, including explicit `form` associations and changes.
+
 ## [1.18.0] - 2026-08-31
 
 **Release Title:** Card, Grid, and Inverse Surface Variants

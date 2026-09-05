@@ -153,7 +153,9 @@ export class SpectreRadioElement
     super.updated(changedProperties)
 
     if (
-      (changedProperties.has('checked') || changedProperties.has('name')) &&
+      (changedProperties.has('checked') ||
+        changedProperties.has('name') ||
+        changedProperties.has('form')) &&
       this.checked &&
       this.name
     ) {
@@ -171,8 +173,14 @@ export class SpectreRadioElement
       'sp-radio'
     ) as NodeListOf<SpectreRadioElement>
 
+    const form = this.nativeInput?.form
     radios.forEach((radio) => {
-      if (radio !== this && radio.name === this.name && radio.checked) {
+      if (
+        radio !== this &&
+        radio.name === this.name &&
+        radio.nativeInput?.form === form &&
+        radio.checked
+      ) {
         radio.checked = false
       }
     })

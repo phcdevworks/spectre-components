@@ -350,6 +350,32 @@ describe('sp-radio', () => {
   });
 
   describe('group synchronization', () => {
+    it(
+      'keeps same-named radios in different forms independent',
+      async () => {
+        const formA = document.createElement('form')
+        const formB = document.createElement('form')
+        formA.id = 'form-a'
+        formB.id = 'form-b'
+        const a = document.createElement('sp-radio') as SpectreRadioElement
+        const b = document.createElement('sp-radio') as SpectreRadioElement
+        a.name = b.name = 'choice'
+        document.body.append(formA, formB)
+        formA.append(a)
+        formB.append(b)
+        await Promise.all([a.updateComplete, b.updateComplete])
+        a.checked = true
+        await a.updateComplete
+        b.checked = true
+        await b.updateComplete
+        await a.updateComplete
+        expect(a.checked).toBe(true)
+        expect(b.checked).toBe(true)
+        expect(a.querySelector('input')?.checked).toBe(true)
+        expect(b.querySelector('input')?.checked).toBe(true)
+      }
+    )
+
     it('unchecks other radios in the same group when checked programmatically', async () => {
       const radio1 = document.createElement('sp-radio') as SpectreRadioElement;
       radio1.name = 'group_sync_1';

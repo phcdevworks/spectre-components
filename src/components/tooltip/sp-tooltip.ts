@@ -65,8 +65,21 @@ export class SpectreTooltipElement
     const nextTooltipContent: Node[] = []
     const nextTriggerContent: Node[] = []
 
-    this.childNodes.forEach((node) => {
-      if (this.isInternalNode(node)) {
+    // Retain authored nodes already projected into native containers. Reading
+    // those containers wholesale would also capture Lit's own template nodes.
+    const sourceNodes = [
+      ...this.triggerContent.filter((node) => this.contains(node)),
+      ...this.tooltipContent.filter((node) => this.contains(node)),
+      ...Array.from(this.childNodes).filter(
+        (node) =>
+          !this.hasUpdated ||
+          node.nodeType !== Node.TEXT_NODE ||
+          node.textContent?.trim()
+      )
+    ]
+
+    new Set(sourceNodes).forEach((node) => {
+      if (node.nodeType === Node.COMMENT_NODE || this.isInternalNode(node)) {
         return
       }
       const isTooltipSlot =

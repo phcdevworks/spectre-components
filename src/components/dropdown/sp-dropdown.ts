@@ -68,6 +68,7 @@ export class SpectreDropdownElement
     }
     const el = node as Element
     return (
+      el.hasAttribute('data-sp-dropdown-native') ||
       el.hasAttribute('data-sp-dropdown-menu') ||
       el.hasAttribute('data-sp-dropdown-trigger')
     )
@@ -77,8 +78,21 @@ export class SpectreDropdownElement
     const nextTriggerContent: Node[] = []
     const nextMenuContent: Node[] = []
 
-    this.childNodes.forEach((node) => {
-      if (this.isInternalNode(node)) {
+    // Retain authored nodes already projected into native containers. Reading
+    // those containers wholesale would also capture Lit's own template nodes.
+    const sourceNodes = [
+      ...this.triggerContent.filter((node) => this.contains(node)),
+      ...this.menuContent.filter((node) => this.contains(node)),
+      ...Array.from(this.childNodes).filter(
+        (node) =>
+          !this.hasUpdated ||
+          node.nodeType !== Node.TEXT_NODE ||
+          node.textContent?.trim()
+      )
+    ]
+
+    new Set(sourceNodes).forEach((node) => {
+      if (node.nodeType === Node.COMMENT_NODE || this.isInternalNode(node)) {
         return
       }
       const isTriggerSlot =
@@ -238,6 +252,7 @@ export class SpectreDropdownElement
   override render() {
     return html`<div
       class="${this.dropdownClasses}"
+      data-sp-dropdown-native
       id="${ifDefined(this.id || undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
