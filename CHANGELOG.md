@@ -6,6 +6,11 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Changed
+
+- Standardized the package summary against the approved PHCDevworks product
+  description.
+
 ## [1.19.0] - 2026-09-05
 
 **Release Title:** Content Lifecycle and Form Reliability
