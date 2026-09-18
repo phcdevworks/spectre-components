@@ -54,3 +54,15 @@ Acceptance criteria:
   orchestration here.
 - Do not add speculative components without upstream recipe support and explicit
   approval.
+
+## Card Edge Accents
+
+- [ ] Add an optional, backward-compatible card edge-accent API after the
+      corresponding `spectre-tokens` values and `spectre-ui` recipe contract
+      are published. With Bradley Potts's approval for the public-property
+      addition, expose validated accent color and `top | right | bottom | left`
+      position properties/attributes, pass them to `getCardClasses`, preserve
+      current output when omitted, and update component contract coverage,
+      documentation, tests, and examples. The upstream request was filed on
+      2026-09-18 in
+      [spectre-ui/TODO.md](../spectre-ui/TODO.md#requested-by-downstream).
