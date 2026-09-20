@@ -6,6 +6,12 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.20.0] - 2026-09-20
+
+**Release Title:** Accent Rails and Viewport Menus
+
+Contract change type: additive
+
 ### Added
 
 - `sp-badge` gains an `innerClass`/`inner-class` public property, matching the
@@ -849,7 +855,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.19.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.20.0...HEAD
+[1.20.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.19.0...v1.20.0
 [1.19.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.18.0...v1.19.0
 [1.18.0]:
