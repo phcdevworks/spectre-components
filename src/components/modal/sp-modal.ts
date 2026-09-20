@@ -2,10 +2,18 @@ import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
+import {
+  isAccentColor,
+  isAccentEdge,
+  type SpectreAccentColor,
+  type SpectreAccentEdge
+} from '../../utils/form'
 
 import {
   getModalClasses,
-  getModalOverlayClasses
+  getModalOverlayClasses,
+  type ModalAccentColor,
+  type ModalAccentEdge
 } from '@phcdevworks/spectre-ui'
 
 const FOCUSABLE_SELECTOR = [
@@ -18,6 +26,8 @@ const FOCUSABLE_SELECTOR = [
 ].join(',')
 
 export interface SpectreModalProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -32,10 +42,14 @@ export class SpectreModalElement
   implements SpectreModalProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     open: { type: Boolean, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   fullWidth: boolean | undefined = false
   open: boolean | undefined = false
 
@@ -75,6 +89,20 @@ export class SpectreModalElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('fullWidth') && this.fullWidth == null) {
       this.fullWidth = false
     }
@@ -177,6 +205,12 @@ export class SpectreModalElement
 
   private get modalClasses(): string {
     return getModalClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as ModalAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as ModalAccentColor
+      }),
       open: this.open ?? false,
       fullWidth: this.fullWidth ?? false
     })

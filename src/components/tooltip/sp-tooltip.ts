@@ -4,13 +4,23 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreBaseElement } from '../../utils/base'
 import { hasMeaningfulContent } from '../../utils/dom'
 import {
+  isAccentColor,
+  isAccentEdge,
   isTooltipPlacement,
+  type SpectreAccentColor,
+  type SpectreAccentEdge,
   type SpectreTooltipPlacement
 } from '../../utils/form'
 
-import { getTooltipClasses } from '@phcdevworks/spectre-ui'
+import {
+  getTooltipClasses,
+  type TooltipAccentColor,
+  type TooltipAccentEdge
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreTooltipProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   id?: string | null | undefined
   placement?: SpectreTooltipPlacement | undefined
@@ -23,10 +33,14 @@ export class SpectreTooltipElement
   implements SpectreTooltipProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     placement: { type: String, reflect: true },
     visible: { type: Boolean, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   placement: SpectreTooltipPlacement | undefined = 'top'
   visible: boolean | undefined = false
 
@@ -152,6 +166,20 @@ export class SpectreTooltipElement
     changedProperties: Map<PropertyKey, unknown>
   ): void {
     if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
+    if (
       changedProperties.has('placement') &&
       (this.placement == null || !isTooltipPlacement(this.placement))
     ) {
@@ -180,6 +208,12 @@ export class SpectreTooltipElement
 
   private get tooltipClasses(): string {
     return getTooltipClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as TooltipAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as TooltipAccentColor
+      }),
       placement: this.placement as SpectreTooltipPlacement,
       visible: this.visible ?? false
     })

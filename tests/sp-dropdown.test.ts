@@ -215,4 +215,94 @@ describe('sp-dropdown', () => {
     await element.updateComplete
     expect(element.open).toBe(false)
   })
+
+  it('defaults viewport to false and omits the viewport classes', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const wrapper = element.querySelector('div.sp-dropdown')
+    const menu = element.querySelector('[data-sp-dropdown-menu]')
+
+    expect(element.viewport).toBe(false)
+    expect(wrapper?.className).not.toContain('sp-dropdown--viewport')
+    expect(menu?.className).not.toContain('sp-dropdown__menu--viewport')
+  })
+
+  it('reflects viewport onto the wrapper and menu classes', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    element.viewport = true
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const wrapper = element.querySelector('div.sp-dropdown')
+    const menu = element.querySelector('[data-sp-dropdown-menu]')
+
+    expect(wrapper?.className).toContain('sp-dropdown--viewport')
+    expect(menu?.className).toContain('sp-dropdown__menu--viewport')
+  })
+
+  it('opens and closes normally when viewport is enabled', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    element.viewport = true
+    document.body.append(element)
+    await element.updateComplete
+
+    const trigger = element.querySelector<HTMLButtonElement>(
+      '[data-sp-dropdown-trigger]'
+    )
+
+    trigger?.click()
+    await element.updateComplete
+    expect(element.open).toBe(true)
+
+    trigger?.click()
+    await element.updateComplete
+    expect(element.open).toBe(false)
+  })
+
+  it('renders no accent classes on the menu when accent is omitted', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const menu = element.querySelector('[data-sp-dropdown-menu]')
+    expect(menu?.className).not.toContain('sp-dropdown__menu--accent')
+  })
+
+  it('applies the accent edge and defaults accentColor to brand on the menu', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    element.accent = 'right'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const menu = element.querySelector('[data-sp-dropdown-menu]')
+    expect(menu?.className).toContain('sp-dropdown__menu--accent-right')
+    expect(menu?.className).toContain('sp-dropdown__menu--accent-brand')
+  })
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement(
+      'sp-dropdown'
+    ) as SpectreDropdownElement
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accent).toBeUndefined()
+  })
 })

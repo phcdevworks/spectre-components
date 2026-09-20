@@ -582,14 +582,17 @@ Renders a `<span>` display primitive backed by the Spectre badge recipe.
 
 **Attributes**
 
-| Attribute                 | Type                                                                                                           | Default   | Description                      |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------- | --------- | -------------------------------- |
-| `variant`                 | `primary \| secondary \| ghost \| danger \| success \| warning \| info \| accent \| cta \| neutral \| outline \| inverse` | `primary` | Visual style                     |
-| `size`                    | `sm \| md \| lg`                                                                                               | `md`      | Badge size                       |
-| `disabled`                | boolean                                                                                                        | `false`   | Disabled visual state            |
-| `loading`                 | boolean                                                                                                        | `false`   | Busy visual state                |
-| `full-width`              | boolean                                                                                                        | `false`   | Spans full container width       |
-| `id` / `title` / `aria-*` | string                                                                                                         | —         | Forwarded to the native `<span>` |
+| Attribute                 | Type                                                                                                                      | Default   | Description                                                                                                              |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `variant`                 | `primary \| secondary \| ghost \| danger \| success \| warning \| info \| accent \| cta \| neutral \| outline \| inverse` | `primary` | Visual style                                                                                                             |
+| `size`                    | `sm \| md \| lg`                                                                                                          | `md`      | Badge size                                                                                                               |
+| `accent-rail`             | `top \| right \| bottom \| left`                                                                                          | —         | Optional decorative edge-rail; omitted renders no rail. Distinct from `variant: 'accent'`, an unrelated single-tone fill |
+| `accent-rail-color`       | `neutral \| brand \| info \| success \| warning \| danger \| cta`                                                         | `brand`   | Accent rail color; only applied when `accent-rail` is set                                                                |
+| `disabled`                | boolean                                                                                                                   | `false`   | Disabled visual state                                                                                                    |
+| `loading`                 | boolean                                                                                                                   | `false`   | Busy visual state                                                                                                        |
+| `full-width`              | boolean                                                                                                                   | `false`   | Spans full container width                                                                                               |
+| `inner-class`             | string                                                                                                                    | —         | Spectre utility classes applied to the native `<span>`                                                                   |
+| `id` / `title` / `aria-*` | string                                                                                                                    | —         | Forwarded to the native `<span>`                                                                                         |
 
 **Content projection** — children become the badge content.
 
@@ -603,16 +606,18 @@ Renders a `<div>` container backed by the Spectre card recipe.
 
 **Attributes**
 
-| Attribute                 | Type                                   | Default    | Description                                                 |
-| ------------------------- | -------------------------------------- | ---------- | ----------------------------------------------------------- |
-| `variant`                 | `elevated \| flat \| outline \| ghost` | `elevated` | Visual style                                                |
-| `padded`                  | `boolean \| 'sm' \| 'md' \| 'lg'`      | `true`     | Card padding step; `false` opts out, `true`/`"md"` is default |
-| `full-height`             | boolean                                | `false`    | Spans full container height                                 |
-| `interactive`             | boolean                                | `false`    | Applies interactive styling                                 |
-| `disabled`                | boolean                                | `false`    | Disabled visual state                                       |
-| `loading`                 | boolean                                | `false`    | Busy visual state                                           |
-| `inner-class`             | string                                 | —          | Spectre utility classes applied to the native `<div>`       |
-| `id` / `title` / `aria-*` | string                                 | —          | Forwarded to the native `<div>`                             |
+| Attribute                 | Type                                                              | Default    | Description                                                   |
+| ------------------------- | ----------------------------------------------------------------- | ---------- | ------------------------------------------------------------- |
+| `variant`                 | `elevated \| flat \| outline \| ghost`                            | `elevated` | Visual style                                                  |
+| `padded`                  | `boolean \| 'sm' \| 'md' \| 'lg'`                                 | `true`     | Card padding step; `false` opts out, `true`/`"md"` is default |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —          | Optional decorative edge-rail; omitted renders no rail        |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand`    | Accent rail color; only applied when `accent` is set          |
+| `full-height`             | boolean                                                           | `false`    | Spans full container height                                   |
+| `interactive`             | boolean                                                           | `false`    | Applies interactive styling                                   |
+| `disabled`                | boolean                                                           | `false`    | Disabled visual state                                         |
+| `loading`                 | boolean                                                           | `false`    | Busy visual state                                             |
+| `inner-class`             | string                                                            | —          | Spectre utility classes applied to the native `<div>`         |
+| `id` / `title` / `aria-*` | string                                                            | —          | Forwarded to the native `<div>`                               |
 
 **Content projection** — children become the card content.
 
@@ -673,14 +678,16 @@ recipe.
 
 **Attributes**
 
-| Attribute                 | Type                                   | Default    | Description                     |
-| ------------------------- | -------------------------------------- | ---------- | ------------------------------- |
-| `variant`                 | `elevated \| flat \| outline \| ghost` | `elevated` | Visual style                    |
-| `full-height`             | boolean                                | `false`    | Spans full container height     |
-| `interactive`             | boolean                                | `false`    | Applies interactive styling     |
-| `disabled`                | boolean                                | `false`    | Disabled visual state           |
-| `loading`                 | boolean                                | `false`    | Busy visual state               |
-| `id` / `title` / `aria-*` | string                                 | —          | Forwarded to the native `<div>` |
+| Attribute                 | Type                                                              | Default    | Description                                            |
+| ------------------------- | ----------------------------------------------------------------- | ---------- | ------------------------------------------------------ |
+| `variant`                 | `elevated \| flat \| outline \| ghost`                            | `elevated` | Visual style                                           |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —          | Optional decorative edge-rail; omitted renders no rail |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand`    | Accent rail color; only applied when `accent` is set   |
+| `full-height`             | boolean                                                           | `false`    | Spans full container height                            |
+| `interactive`             | boolean                                                           | `false`    | Applies interactive styling                            |
+| `disabled`                | boolean                                                           | `false`    | Disabled visual state                                  |
+| `loading`                 | boolean                                                           | `false`    | Busy visual state                                      |
+| `id` / `title` / `aria-*` | string                                                            | —          | Forwarded to the native `<div>`                        |
 
 **Content projection** — children become the testimonial content.
 
@@ -796,14 +803,16 @@ recipe.
 
 **Attributes**
 
-| Attribute                 | Type    | Default | Description                     |
-| ------------------------- | ------- | ------- | ------------------------------- |
-| `featured`                | boolean | `false` | Highlights the card as featured |
-| `interactive`             | boolean | `false` | Applies interactive styling     |
-| `disabled`                | boolean | `false` | Disabled visual state           |
-| `loading`                 | boolean | `false` | Busy visual state               |
-| `full-height`             | boolean | `false` | Spans full container height     |
-| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<div>` |
+| Attribute                 | Type                                                              | Default | Description                                            |
+| ------------------------- | ----------------------------------------------------------------- | ------- | ------------------------------------------------------ |
+| `featured`                | boolean                                                           | `false` | Highlights the card as featured                        |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —       | Optional decorative edge-rail; omitted renders no rail |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied when `accent` is set   |
+| `interactive`             | boolean                                                           | `false` | Applies interactive styling                            |
+| `disabled`                | boolean                                                           | `false` | Disabled visual state                                  |
+| `loading`                 | boolean                                                           | `false` | Busy visual state                                      |
+| `full-height`             | boolean                                                           | `false` | Spans full container height                            |
+| `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the native `<div>`                        |
 
 **Content projection** — children become the pricing card content (heading,
 price, feature list, call-to-action, etc.).
@@ -941,12 +950,14 @@ Renders a `<footer>` backed by the Spectre footer recipe.
 
 **Attributes**
 
-| Attribute                 | Type    | Default | Description                                              |
-| ------------------------- | ------- | ------- | -------------------------------------------------------- |
-| `bordered`                | boolean | `false` | Adds a top border                                        |
-| `full-width`              | boolean | `false` | Spans full container width                               |
-| `inner-class`             | string  | —       | Spectre utility classes applied to the native `<footer>` |
-| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native `<footer>`                       |
+| Attribute                 | Type                                                              | Default | Description                                              |
+| ------------------------- | ----------------------------------------------------------------- | ------- | -------------------------------------------------------- |
+| `bordered`                | boolean                                                           | `false` | Adds a top border                                        |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —       | Optional decorative edge-rail; omitted renders no rail   |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied when `accent` is set     |
+| `full-width`              | boolean                                                           | `false` | Spans full container width                               |
+| `inner-class`             | string                                                            | —       | Spectre utility classes applied to the native `<footer>` |
+| `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the native `<footer>`                       |
 
 **Content projection** — children become the footer content (links, legal text,
 etc.).
@@ -1007,14 +1018,16 @@ Renders a `<nav>` backed by the Spectre nav recipe.
 
 **Attributes**
 
-| Attribute                 | Type                     | Default | Description                                           |
-| ------------------------- | ------------------------ | ------- | ----------------------------------------------------- |
-| `bordered`                | boolean                  | `false` | Adds a bottom border                                  |
-| `sticky`                  | boolean                  | `false` | Sticks the nav to the viewport                        |
-| `full-width`              | boolean                  | `false` | Spans full container width                            |
-| `align`                   | `start \| center \| end` | —       | Horizontal alignment of nav content within the bar    |
-| `inner-class`             | string                   | —       | Spectre utility classes applied to the native `<nav>` |
-| `id` / `title` / `aria-*` | string                   | —       | Forwarded to the native `<nav>`                       |
+| Attribute                 | Type                                                              | Default | Description                                            |
+| ------------------------- | ----------------------------------------------------------------- | ------- | ------------------------------------------------------ |
+| `bordered`                | boolean                                                           | `false` | Adds a bottom border                                   |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —       | Optional decorative edge-rail; omitted renders no rail |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied when `accent` is set   |
+| `sticky`                  | boolean                                                           | `false` | Sticks the nav to the viewport                         |
+| `full-width`              | boolean                                                           | `false` | Spans full container width                             |
+| `align`                   | `start \| center \| end`                                          | —       | Horizontal alignment of nav content within the bar     |
+| `inner-class`             | string                                                            | —       | Spectre utility classes applied to the native `<nav>`  |
+| `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the native `<nav>`                        |
 
 **Content projection** — children become the nav content (links, brand mark,
 etc.).
@@ -1184,14 +1197,17 @@ recipes.
 
 **Attributes**
 
-| Attribute                 | Type                                                 | Default        | Description                                                                                         |
-| ------------------------- | ---------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------- |
-| `open`                    | boolean                                              | `false`        | Open/closed menu state                                                                              |
-| `placement`               | `bottom-start \| bottom-end \| top-start \| top-end` | `bottom-start` | Menu position relative to trigger                                                                   |
-| `full-width`              | boolean                                              | `false`        | Spans full container width                                                                          |
-| `mega`                    | boolean                                              | `false`        | Anchors the menu to the nearest positioned ancestor instead of the trigger, spanning its full width |
-| `trigger-label`           | string                                               | `Toggle menu`  | Visible/accessible trigger text when no `slot="trigger"` content is projected                       |
-| `id` / `title` / `aria-*` | string                                               | —              | Forwarded to the trigger button                                                                     |
+| Attribute                 | Type                                                              | Default        | Description                                                                                          |
+| ------------------------- | ----------------------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------- |
+| `open`                    | boolean                                                           | `false`        | Open/closed menu state                                                                               |
+| `placement`               | `bottom-start \| bottom-end \| top-start \| top-end`              | `bottom-start` | Menu position relative to trigger                                                                    |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —              | Optional decorative edge-rail on the menu; omitted renders no rail                                   |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand`        | Accent rail color; only applied when `accent` is set                                                 |
+| `full-width`              | boolean                                                           | `false`        | Spans full container width                                                                           |
+| `mega`                    | boolean                                                           | `false`        | Anchors the menu to the nearest positioned ancestor instead of the trigger, spanning its full width  |
+| `viewport`                | boolean                                                           | `false`        | Breaks the menu out to the full browser viewport width; takes precedence over `mega` if both are set |
+| `trigger-label`           | string                                                            | `Toggle menu`  | Visible/accessible trigger text when no `slot="trigger"` content is projected                        |
+| `id` / `title` / `aria-*` | string                                                            | —              | Forwarded to the trigger button                                                                      |
 
 **Content projection** — an element with `slot="trigger"` becomes the trigger
 button content; all other children become the menu content.
@@ -1213,11 +1229,13 @@ Renders a full-screen overlay and dialog, backed by the Spectre modal recipes.
 
 **Attributes**
 
-| Attribute                 | Type    | Default | Description                            |
-| ------------------------- | ------- | ------- | -------------------------------------- |
-| `open`                    | boolean | `false` | Open/closed dialog state               |
-| `full-width`              | boolean | `false` | Spans full container width             |
-| `id` / `title` / `aria-*` | string  | —       | Forwarded to the native dialog element |
+| Attribute                 | Type                                                              | Default | Description                                            |
+| ------------------------- | ----------------------------------------------------------------- | ------- | ------------------------------------------------------ |
+| `open`                    | boolean                                                           | `false` | Open/closed dialog state                               |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —       | Optional decorative edge-rail; omitted renders no rail |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied when `accent` is set   |
+| `full-width`              | boolean                                                           | `false` | Spans full container width                             |
+| `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the native dialog element                 |
 
 **Content projection** — children become the dialog content.
 
@@ -1239,13 +1257,15 @@ recipes, with an imperative show/dismiss API.
 
 **Attributes**
 
-| Attribute                 | Type                                   | Default | Description                         |
-| ------------------------- | -------------------------------------- | ------- | ----------------------------------- |
-| `variant`                 | `info \| success \| warning \| danger` | `info`  | Visual style                        |
-| `dismissed`               | boolean                                | `false` | Dismissed visual state              |
-| `full-width`              | boolean                                | `false` | Spans full container width          |
-| `auto-dismiss`            | number                                 | —       | Milliseconds before auto-dismissing |
-| `id` / `title` / `aria-*` | string                                 | —       | Forwarded to the native `<div>`     |
+| Attribute                 | Type                                                              | Default | Description                                            |
+| ------------------------- | ----------------------------------------------------------------- | ------- | ------------------------------------------------------ |
+| `variant`                 | `info \| success \| warning \| danger`                            | `info`  | Visual style                                           |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —       | Optional decorative edge-rail; omitted renders no rail |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied when `accent` is set   |
+| `dismissed`               | boolean                                                           | `false` | Dismissed visual state                                 |
+| `full-width`              | boolean                                                           | `false` | Spans full container width                             |
+| `auto-dismiss`            | number                                                            | —       | Milliseconds before auto-dismissing                    |
+| `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the native `<div>`                        |
 
 **Content projection** — an element with `slot="icon"` becomes the toast icon;
 all other children become the toast body content.
@@ -1270,11 +1290,13 @@ tooltip recipe.
 
 **Attributes**
 
-| Attribute                 | Type                             | Default | Description                          |
-| ------------------------- | -------------------------------- | ------- | ------------------------------------ |
-| `placement`               | `top \| bottom \| left \| right` | `top`   | Tooltip position relative to trigger |
-| `visible`                 | boolean                          | `false` | Visible/hidden tooltip state         |
-| `id` / `title` / `aria-*` | string                           | —       | Forwarded to the tooltip body        |
+| Attribute                 | Type                                                              | Default | Description                                            |
+| ------------------------- | ----------------------------------------------------------------- | ------- | ------------------------------------------------------ |
+| `placement`               | `top \| bottom \| left \| right`                                  | `top`   | Tooltip position relative to trigger                   |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —       | Optional decorative edge-rail; omitted renders no rail |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied when `accent` is set   |
+| `visible`                 | boolean                                                           | `false` | Visible/hidden tooltip state                           |
+| `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the tooltip body                          |
 
 **Content projection** — an element with `slot="tooltip"` becomes the tooltip
 body; all other children become the trigger content.

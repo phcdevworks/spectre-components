@@ -128,6 +128,39 @@ describe('sp-toast', () => {
     expect(element.dismissed).toBe(true)
   })
 
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement('sp-toast') as SpectreToastElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('[data-sp-toast-native]')
+    expect(div?.className).not.toContain('sp-toast--accent')
+  })
+
+  it('applies the accent edge and accentColor together', async () => {
+    const element = document.createElement('sp-toast') as SpectreToastElement
+    element.accent = 'left'
+    element.accentColor = 'danger'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('[data-sp-toast-native]')
+    expect(div?.className).toContain('sp-toast--accent-left')
+    expect(div?.className).toContain('sp-toast--accent-danger')
+  })
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement('sp-toast') as SpectreToastElement
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accent).toBeUndefined()
+  })
+
   it('reflects full-width onto the div classes', async () => {
     const element = document.createElement('sp-toast') as SpectreToastElement
     element.fullWidth = true

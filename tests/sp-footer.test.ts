@@ -94,6 +94,42 @@ describe('sp-footer', () => {
     expect(getComputedStyle(element).display).toBe('block')
   })
 
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement('sp-footer') as SpectreFooterElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const footer = element.querySelector('footer')
+    expect(footer?.className).not.toContain('sp-footer--accent')
+  })
+
+  it('applies the accent edge and accentColor together', async () => {
+    const element = document.createElement('sp-footer') as SpectreFooterElement
+    element.accent = 'top'
+    element.accentColor = 'success'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const footer = element.querySelector('footer')
+    expect(footer?.className).toContain('sp-footer--accent-top')
+    expect(footer?.className).toContain('sp-footer--accent-success')
+  })
+
+  it('falls back to no accentColor for an invalid value', async () => {
+    const element = document.createElement('sp-footer') as SpectreFooterElement
+    element.accent = 'top'
+    // @ts-expect-error - testing invalid value
+    element.accentColor = 'not-a-color'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accentColor).toBeUndefined()
+    const footer = element.querySelector('footer')
+    expect(footer?.className).toContain('sp-footer--accent-brand')
+  })
+
   it('applies innerClass to the native footer without touching the host class', async () => {
     const element = document.createElement('sp-footer') as SpectreFooterElement
     element.className = 'host-class'

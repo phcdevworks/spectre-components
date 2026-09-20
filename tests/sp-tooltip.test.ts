@@ -111,4 +111,42 @@ describe('sp-tooltip', () => {
     expect(tooltip?.className).toContain('sp-tooltip--right')
     expect(tooltip?.className).toContain('sp-tooltip--visible')
   })
+
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement(
+      'sp-tooltip'
+    ) as SpectreTooltipElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const tooltip = element.querySelector('[data-sp-tooltip-native]')
+    expect(tooltip?.className).not.toContain('sp-tooltip--accent')
+  })
+
+  it('applies the accent edge and defaults accentColor to brand', async () => {
+    const element = document.createElement(
+      'sp-tooltip'
+    ) as SpectreTooltipElement
+    element.accent = 'bottom'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const tooltip = element.querySelector('[data-sp-tooltip-native]')
+    expect(tooltip?.className).toContain('sp-tooltip--accent-bottom')
+    expect(tooltip?.className).toContain('sp-tooltip--accent-brand')
+  })
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement(
+      'sp-tooltip'
+    ) as SpectreTooltipElement
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accent).toBeUndefined()
+  })
 })

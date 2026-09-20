@@ -137,6 +137,38 @@ describe('sp-modal', () => {
     expect(document.activeElement).toBe(trigger)
   })
 
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement('sp-modal') as SpectreModalElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const dialog = element.querySelector('[data-sp-modal-native]')
+    expect(dialog?.className).not.toContain('sp-modal--accent')
+  })
+
+  it('applies the accent edge and defaults accentColor to brand', async () => {
+    const element = document.createElement('sp-modal') as SpectreModalElement
+    element.accent = 'left'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const dialog = element.querySelector('[data-sp-modal-native]')
+    expect(dialog?.className).toContain('sp-modal--accent-left')
+    expect(dialog?.className).toContain('sp-modal--accent-brand')
+  })
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement('sp-modal') as SpectreModalElement
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accent).toBeUndefined()
+  })
+
   it('forwards ARIA attributes to the native dialog', async () => {
     const element = document.createElement('sp-modal') as SpectreModalElement
     element.setAttribute('aria-label', 'Delete item')

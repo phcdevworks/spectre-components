@@ -129,6 +129,38 @@ describe('sp-nav', () => {
     expect(getComputedStyle(element).display).toBe('block')
   })
 
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const nav = element.querySelector('nav')
+    expect(nav?.className).not.toContain('sp-nav--accent')
+  })
+
+  it('applies the accent edge and defaults accentColor to brand', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    element.accent = 'bottom'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const nav = element.querySelector('nav')
+    expect(nav?.className).toContain('sp-nav--accent-bottom')
+    expect(nav?.className).toContain('sp-nav--accent-brand')
+  })
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement('sp-nav') as SpectreNavElement
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accent).toBeUndefined()
+  })
+
   it('applies innerClass to the native nav without touching the host class', async () => {
     const element = document.createElement('sp-nav') as SpectreNavElement
     element.className = 'host-class'

@@ -3,14 +3,25 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isAccentColor,
+  isAccentEdge,
   isNavAlign,
   sanitizeUtilityClasses,
+  type SpectreAccentColor,
+  type SpectreAccentEdge,
   type SpectreNavAlign
 } from '../../utils/form'
 
-import { getNavClasses, type NavAlign } from '@phcdevworks/spectre-ui'
+import {
+  getNavClasses,
+  type NavAccentColor,
+  type NavAccentEdge,
+  type NavAlign
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreNavProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   align?: SpectreNavAlign | undefined
   ariaLabel?: string | null
   bordered?: boolean | undefined
@@ -26,6 +37,8 @@ export class SpectreNavElement
   implements SpectreNavProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     align: { type: String, reflect: true },
     bordered: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
@@ -33,6 +46,8 @@ export class SpectreNavElement
     sticky: { type: Boolean, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   align: SpectreNavAlign | undefined = undefined
   bordered: boolean | undefined = false
   fullWidth: boolean | undefined = false
@@ -75,6 +90,20 @@ export class SpectreNavElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('bordered') && this.bordered == null) {
       this.bordered = false
     }
@@ -95,6 +124,12 @@ export class SpectreNavElement
 
   private get navClasses(): string {
     const recipeClasses = getNavClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as NavAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as NavAccentColor
+      }),
       bordered: this.bordered ?? false,
       fullWidth: this.fullWidth ?? false,
       sticky: this.sticky ?? false,

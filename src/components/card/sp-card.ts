@@ -3,14 +3,23 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isAccentColor,
+  isAccentEdge,
   isCardPaddingSize,
   isCardVariant,
   sanitizeUtilityClasses,
+  type SpectreAccentColor,
+  type SpectreAccentEdge,
   type SpectreCardPaddingSize,
   type SpectreCardVariant
 } from '../../utils/form'
 
-import { getCardClasses, type CardVariant } from '@phcdevworks/spectre-ui'
+import {
+  getCardClasses,
+  type CardAccentColor,
+  type CardAccentEdge,
+  type CardVariant
+} from '@phcdevworks/spectre-ui'
 
 type SpectreCardPadded = boolean | SpectreCardPaddingSize
 
@@ -36,6 +45,8 @@ const paddedConverter = {
 }
 
 export interface SpectreCardProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -55,6 +66,8 @@ export class SpectreCardElement
   implements SpectreCardProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullHeight: { attribute: 'full-height', type: Boolean, reflect: true },
     innerClass: { attribute: 'inner-class', type: String },
@@ -64,6 +77,8 @@ export class SpectreCardElement
     variant: { type: String, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   disabled: boolean | undefined = false
   fullHeight: boolean | undefined = false
   innerClass: string | undefined = undefined
@@ -103,6 +118,20 @@ export class SpectreCardElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('disabled') && this.disabled == null) {
       this.disabled = false
     }
@@ -132,6 +161,12 @@ export class SpectreCardElement
 
   private get cardClasses(): string {
     const recipeClasses = getCardClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as CardAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as CardAccentColor
+      }),
       disabled: this.isDisabled,
       fullHeight: this.fullHeight ?? false,
       interactive: this.interactive ?? false,

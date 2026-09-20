@@ -4,16 +4,24 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreBaseElement } from '../../utils/base'
 import { hasMeaningfulContent } from '../../utils/dom'
 import {
+  isAccentColor,
+  isAccentEdge,
   isDropdownPlacement,
+  type SpectreAccentColor,
+  type SpectreAccentEdge,
   type SpectreDropdownPlacement
 } from '../../utils/form'
 
 import {
   getDropdownClasses,
-  getDropdownMenuClasses
+  getDropdownMenuClasses,
+  type DropdownAccentColor,
+  type DropdownAccentEdge
 } from '@phcdevworks/spectre-ui'
 
 export interface SpectreDropdownProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   fullWidth?: boolean | undefined
   id?: string | null | undefined
@@ -22,6 +30,7 @@ export interface SpectreDropdownProps {
   placement?: SpectreDropdownPlacement | undefined
   title?: string | null | undefined
   triggerLabel?: string | undefined
+  viewport?: boolean | undefined
 }
 
 export class SpectreDropdownElement
@@ -29,18 +38,24 @@ export class SpectreDropdownElement
   implements SpectreDropdownProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     mega: { type: Boolean, reflect: true },
     open: { type: Boolean, reflect: true },
     placement: { type: String, reflect: true },
-    triggerLabel: { attribute: 'trigger-label', type: String }
+    triggerLabel: { attribute: 'trigger-label', type: String },
+    viewport: { type: Boolean, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   fullWidth: boolean | undefined = false
   mega: boolean | undefined = false
   open: boolean | undefined = false
   placement: SpectreDropdownPlacement | undefined = 'bottom-start'
   triggerLabel: string | undefined = 'Toggle menu'
+  viewport: boolean | undefined = false
 
   private triggerContent: Node[] = []
   private menuContent: Node[] = []
@@ -170,6 +185,20 @@ export class SpectreDropdownElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('fullWidth') && this.fullWidth == null) {
       this.fullWidth = false
     }
@@ -187,6 +216,9 @@ export class SpectreDropdownElement
     }
     if (changedProperties.has('triggerLabel') && !this.triggerLabel) {
       this.triggerLabel = 'Toggle menu'
+    }
+    if (changedProperties.has('viewport') && this.viewport == null) {
+      this.viewport = false
     }
   }
 
@@ -237,15 +269,23 @@ export class SpectreDropdownElement
   private get dropdownClasses(): string {
     return getDropdownClasses({
       fullWidth: this.fullWidth ?? false,
-      mega: this.mega ?? false
+      mega: this.mega ?? false,
+      viewport: this.viewport ?? false
     })
   }
 
   private get menuClasses(): string {
     return getDropdownMenuClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as DropdownAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as DropdownAccentColor
+      }),
       mega: this.mega ?? false,
       open: this.open ?? false,
-      placement: this.placement as SpectreDropdownPlacement
+      placement: this.placement as SpectreDropdownPlacement,
+      viewport: this.viewport ?? false
     })
   }
 

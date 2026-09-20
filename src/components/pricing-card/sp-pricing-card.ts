@@ -2,10 +2,22 @@ import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
+import {
+  isAccentColor,
+  isAccentEdge,
+  type SpectreAccentColor,
+  type SpectreAccentEdge
+} from '../../utils/form'
 
-import { getPricingCardClasses } from '@phcdevworks/spectre-ui'
+import {
+  getPricingCardClasses,
+  type PricingCardAccentColor,
+  type PricingCardAccentEdge
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectrePricingCardProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -23,6 +35,8 @@ export class SpectrePricingCardElement
   implements SpectrePricingCardProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     featured: { type: Boolean, reflect: true },
     fullHeight: { attribute: 'full-height', type: Boolean, reflect: true },
@@ -30,6 +44,8 @@ export class SpectrePricingCardElement
     loading: { type: Boolean, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   disabled: boolean | undefined = false
   featured: boolean | undefined = false
   fullHeight: boolean | undefined = false
@@ -67,6 +83,20 @@ export class SpectrePricingCardElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('disabled') && this.disabled == null) {
       this.disabled = false
     }
@@ -86,6 +116,12 @@ export class SpectrePricingCardElement
 
   private get pricingCardClasses(): string {
     return getPricingCardClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as PricingCardAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as PricingCardAccentColor
+      }),
       disabled: this.isDisabled,
       featured: this.featured ?? false,
       fullHeight: this.fullHeight ?? false,

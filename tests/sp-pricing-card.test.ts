@@ -138,6 +138,44 @@ describe('sp-pricing-card', () => {
     expect(element.fullHeight).toBe(false)
   })
 
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement(
+      'sp-pricing-card'
+    ) as SpectrePricingCardElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('[data-sp-pricing-card-native]')
+    expect(div?.className).not.toContain('sp-pricing-card--accent')
+  })
+
+  it('applies the accent edge and defaults accentColor to brand', async () => {
+    const element = document.createElement(
+      'sp-pricing-card'
+    ) as SpectrePricingCardElement
+    element.accent = 'top'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('[data-sp-pricing-card-native]')
+    expect(div?.className).toContain('sp-pricing-card--accent-top')
+    expect(div?.className).toContain('sp-pricing-card--accent-brand')
+  })
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement(
+      'sp-pricing-card'
+    ) as SpectrePricingCardElement
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accent).toBeUndefined()
+  })
+
   it('reflects the loading state to the aria-busy attribute', async () => {
     const element = document.createElement(
       'sp-pricing-card'

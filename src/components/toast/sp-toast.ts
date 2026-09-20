@@ -4,14 +4,25 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreBaseElement } from '../../utils/base'
 import { hasMeaningfulContent } from '../../utils/dom'
 import {
+  isAccentColor,
+  isAccentEdge,
   isToastVariant,
   normalizeInt,
+  type SpectreAccentColor,
+  type SpectreAccentEdge,
   type SpectreToastVariant
 } from '../../utils/form'
 
-import { getToastClasses, getToastIconClasses } from '@phcdevworks/spectre-ui'
+import {
+  getToastClasses,
+  getToastIconClasses,
+  type ToastAccentColor,
+  type ToastAccentEdge
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreToastProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   autoDismiss?: number | undefined
   dismissed?: boolean | undefined
@@ -26,12 +37,16 @@ export class SpectreToastElement
   implements SpectreToastProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     autoDismiss: { attribute: 'auto-dismiss', type: Number },
     dismissed: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     variant: { type: String, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   autoDismiss: number | undefined
   dismissed: boolean | undefined = false
   fullWidth: boolean | undefined = false
@@ -149,6 +164,20 @@ export class SpectreToastElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('dismissed') && this.dismissed == null) {
       this.dismissed = false
     }
@@ -209,6 +238,12 @@ export class SpectreToastElement
 
   private get toastClasses(): string {
     return getToastClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as ToastAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as ToastAccentColor
+      }),
       variant: this.variant as SpectreToastVariant,
       dismissed: this.dismissed ?? false,
       fullWidth: this.fullWidth ?? false

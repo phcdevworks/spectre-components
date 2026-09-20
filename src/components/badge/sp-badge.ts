@@ -3,25 +3,35 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isAccentColor,
+  isAccentEdge,
   isBadgeVariant,
   isInputSize,
+  sanitizeUtilityClasses,
+  type SpectreAccentColor,
+  type SpectreAccentEdge,
   type SpectreBadgeVariant,
   type SpectreInputSize
 } from '../../utils/form'
 
 import {
   getBadgeClasses,
+  type BadgeAccentRailColor,
+  type BadgeAccentRailEdge,
   type BadgeVariant,
   type BadgeSize
 } from '@phcdevworks/spectre-ui'
 
 export interface SpectreBadgeProps {
+  accentRail?: SpectreAccentEdge | undefined
+  accentRailColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
   disabled?: boolean | undefined
   fullWidth?: boolean | undefined
   id?: string | null | undefined
+  innerClass?: string | undefined
   loading?: boolean | undefined
   size?: SpectreInputSize | undefined
   title?: string | null | undefined
@@ -33,15 +43,25 @@ export class SpectreBadgeElement
   implements SpectreBadgeProps
 {
   static properties = {
+    accentRail: { attribute: 'accent-rail', type: String, reflect: true },
+    accentRailColor: {
+      attribute: 'accent-rail-color',
+      type: String,
+      reflect: true
+    },
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    innerClass: { attribute: 'inner-class', type: String },
     loading: { type: Boolean, reflect: true },
     size: { type: String, reflect: true },
     variant: { type: String, reflect: true }
   }
 
+  accentRail: SpectreAccentEdge | undefined = undefined
+  accentRailColor: SpectreAccentColor | undefined = undefined
   disabled: boolean | undefined = false
   fullWidth: boolean | undefined = false
+  innerClass: string | undefined = undefined
   loading: boolean | undefined = false
   size: SpectreInputSize | undefined = 'md'
   variant: SpectreBadgeVariant | undefined = 'primary'
@@ -77,6 +97,20 @@ export class SpectreBadgeElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accentRail') &&
+      this.accentRail != null &&
+      !isAccentEdge(this.accentRail)
+    ) {
+      this.accentRail = undefined
+    }
+    if (
+      changedProperties.has('accentRailColor') &&
+      this.accentRailColor != null &&
+      !isAccentColor(this.accentRailColor)
+    ) {
+      this.accentRailColor = undefined
+    }
     if (changedProperties.has('disabled') && this.disabled == null) {
       this.disabled = false
     }
@@ -101,13 +135,21 @@ export class SpectreBadgeElement
   }
 
   private get badgeClasses(): string {
-    return getBadgeClasses({
+    const recipeClasses = getBadgeClasses({
+      ...(this.accentRail !== undefined && {
+        accentRail: this.accentRail as BadgeAccentRailEdge
+      }),
+      ...(this.accentRailColor !== undefined && {
+        accentRailColor: this.accentRailColor as BadgeAccentRailColor
+      }),
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
       loading: this.loading ?? false,
       size: this.size as BadgeSize,
       variant: this.variant as BadgeVariant
     })
+    const utilityClasses = sanitizeUtilityClasses(this.innerClass)
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
   }
 
   override render() {

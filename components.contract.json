@@ -162,9 +162,16 @@
         "values": [
           "defineSpectreCard",
           "SpectreCardElement",
-          "spectreCardVariants"
+          "spectreCardVariants",
+          "spectreCardAccentEdges",
+          "spectreCardAccentColors"
         ],
-        "types": ["SpectreCardProps", "SpectreCardVariant"]
+        "types": [
+          "SpectreCardProps",
+          "SpectreCardVariant",
+          "SpectreCardAccentEdge",
+          "SpectreCardAccentColor"
+        ]
       },
       "contracts": {
         "renderMode": "light-dom",

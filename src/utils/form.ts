@@ -117,6 +117,30 @@ export function isCardPaddingSize(
   )
 }
 
+export const spectreAccentEdges = ['top', 'right', 'bottom', 'left'] as const
+
+export type SpectreAccentEdge = (typeof spectreAccentEdges)[number]
+
+export function isAccentEdge(value: unknown): value is SpectreAccentEdge {
+  return (spectreAccentEdges as readonly string[]).includes(value as string)
+}
+
+export const spectreAccentColors = [
+  'neutral',
+  'brand',
+  'info',
+  'success',
+  'warning',
+  'danger',
+  'cta'
+] as const
+
+export type SpectreAccentColor = (typeof spectreAccentColors)[number]
+
+export function isAccentColor(value: unknown): value is SpectreAccentColor {
+  return (spectreAccentColors as readonly string[]).includes(value as string)
+}
+
 export const spectreIconBoxVariants = [
   'primary',
   'secondary',

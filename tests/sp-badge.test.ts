@@ -144,6 +144,50 @@ describe('sp-badge', () => {
     expect(element.loading).toBe(false);
   });
 
+  it('appends sanitized inner-class utility classes to the native span', async () => {
+    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    element.setAttribute('inner-class', 'sp-badge__icon--offset not_valid');
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const span = element.querySelector('span');
+    expect(span?.className).toContain('sp-badge__icon--offset');
+    expect(span?.className).not.toContain('not_valid');
+  });
+
+  it('renders no accent rail classes when accentRail is omitted', async () => {
+    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const span = element.querySelector('span');
+    expect(span?.className).not.toContain('sp-badge--accent-rail');
+  });
+
+  it('applies the accentRail edge and defaults accentRailColor to brand', async () => {
+    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    element.accentRail = 'left';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const span = element.querySelector('span');
+    expect(span?.className).toContain('sp-badge--accent-rail-left');
+    expect(span?.className).toContain('sp-badge--accent-rail-brand');
+  });
+
+  it('falls back to no accentRail for an invalid edge', async () => {
+    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    // @ts-expect-error - testing invalid value
+    element.accentRail = 'diagonal';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.accentRail).toBeUndefined();
+  });
+
   it('reflects the loading state to the aria-busy attribute', async () => {
     const element = document.createElement('sp-badge') as SpectreBadgeElement;
     element.loading = true;

@@ -2,11 +2,23 @@ import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
-import { sanitizeUtilityClasses } from '../../utils/form'
+import {
+  isAccentColor,
+  isAccentEdge,
+  sanitizeUtilityClasses,
+  type SpectreAccentColor,
+  type SpectreAccentEdge
+} from '../../utils/form'
 
-import { getFooterClasses } from '@phcdevworks/spectre-ui'
+import {
+  getFooterClasses,
+  type FooterAccentColor,
+  type FooterAccentEdge
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreFooterProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   bordered?: boolean | undefined
   fullWidth?: boolean | undefined
@@ -20,11 +32,15 @@ export class SpectreFooterElement
   implements SpectreFooterProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     bordered: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     innerClass: { attribute: 'inner-class', type: String }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   bordered: boolean | undefined = false
   fullWidth: boolean | undefined = false
   innerClass: string | undefined = undefined
@@ -65,6 +81,20 @@ export class SpectreFooterElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('bordered') && this.bordered == null) {
       this.bordered = false
     }
@@ -75,6 +105,12 @@ export class SpectreFooterElement
 
   private get footerClasses(): string {
     const recipeClasses = getFooterClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as FooterAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as FooterAccentColor
+      }),
       bordered: this.bordered ?? false,
       fullWidth: this.fullWidth ?? false
     })

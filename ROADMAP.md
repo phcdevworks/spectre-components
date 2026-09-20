@@ -33,6 +33,7 @@ file does not restate delivered work.
 | 15    | Layout and utility contract parity — grid alignment, stack gaps, button/card inner classes, BEM utility sanitization, and explicit card padding opt-out                                          | 1.17.0       |
 | 16    | Card, grid, and inverse surface variants — size-scale card padding, native grid role forwarding, inverse/on-inverse roles, and Spectre 5 recipe alignment                                        | 1.18.0       |
 | 17 | Content lifecycle and form reliability — projection fixes, native radio form ownership, grid role coverage, browser CI, packed export checks, and validated dependency updates | 1.19.0 |
+| 18 | `sp-badge` `innerClass`/`inner-class` utility hook parity, requested by a downstream integration; `sp-card` `accent`/`accentColor` decorative edge-rail properties backed by `getCardClasses` (`spectre-ui` 5.1.0), requested by downstream integrations on 2026-09-18; accent-rail parity sweep extending the same `accent`/`accentColor` contract to `sp-nav`, `sp-footer`, `sp-modal`, `sp-toast`, `sp-tooltip`, `sp-dropdown`, `sp-testimonial`, `sp-pricing-card`, and `sp-badge` (`accentRail`/`accentRailColor`); `sp-dropdown` `viewport` full-bleed menu-width tier, all backed by `spectre-ui` 5.2.0 | Unreleased |
 
 ---
 

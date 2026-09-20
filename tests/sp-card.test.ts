@@ -247,6 +247,68 @@ describe('sp-card', () => {
     expect(div?.className).not.toContain('not_valid')
   })
 
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div')
+    expect(div?.className).not.toContain('sp-card--accent')
+  })
+
+  it('applies the accent edge and defaults accentColor to brand', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    element.accent = 'left'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div')
+    expect(div?.className).toContain('sp-card--accent-left')
+    expect(div?.className).toContain('sp-card--accent-brand')
+  })
+
+  it('applies the requested accentColor alongside the accent edge', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    element.accent = 'bottom'
+    element.accentColor = 'danger'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('div')
+    expect(div?.className).toContain('sp-card--accent-bottom')
+    expect(div?.className).toContain('sp-card--accent-danger')
+  })
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accent).toBeUndefined()
+    const div = element.querySelector('div')
+    expect(div?.className).not.toContain('sp-card--accent')
+  })
+
+  it('falls back to no accentColor for an invalid accent color, keeping the accent edge', async () => {
+    const element = document.createElement('sp-card') as SpectreCardElement
+    element.accent = 'top'
+    // @ts-expect-error - testing invalid value
+    element.accentColor = 'not-a-color'
+
+    document.body.append(element)
+    await element.updateComplete
+
+    expect(element.accentColor).toBeUndefined()
+    const div = element.querySelector('div')
+    expect(div?.className).toContain('sp-card--accent-top')
+    expect(div?.className).toContain('sp-card--accent-brand')
+  })
+
   it('reflects the loading state to the aria-busy attribute', async () => {
     const element = document.createElement('sp-card') as SpectreCardElement
     element.loading = true

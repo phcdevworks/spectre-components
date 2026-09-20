@@ -3,16 +3,24 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isAccentColor,
+  isAccentEdge,
   isTestimonialVariant,
+  type SpectreAccentColor,
+  type SpectreAccentEdge,
   type SpectreTestimonialVariant
 } from '../../utils/form'
 
 import {
   getTestimonialClasses,
+  type TestimonialAccentColor,
+  type TestimonialAccentEdge,
   type TestimonialRecipeOptions
 } from '@phcdevworks/spectre-ui'
 
 export interface SpectreTestimonialProps {
+  accent?: SpectreAccentEdge | undefined
+  accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -30,6 +38,8 @@ export class SpectreTestimonialElement
   implements SpectreTestimonialProps
 {
   static properties = {
+    accent: { type: String, reflect: true },
+    accentColor: { attribute: 'accent-color', type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullHeight: { attribute: 'full-height', type: Boolean, reflect: true },
     interactive: { type: Boolean, reflect: true },
@@ -37,6 +47,8 @@ export class SpectreTestimonialElement
     variant: { type: String, reflect: true }
   }
 
+  accent: SpectreAccentEdge | undefined = undefined
+  accentColor: SpectreAccentColor | undefined = undefined
   disabled: boolean | undefined = false
   fullHeight: boolean | undefined = false
   interactive: boolean | undefined = false
@@ -74,6 +86,20 @@ export class SpectreTestimonialElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('accent') &&
+      this.accent != null &&
+      !isAccentEdge(this.accent)
+    ) {
+      this.accent = undefined
+    }
+    if (
+      changedProperties.has('accentColor') &&
+      this.accentColor != null &&
+      !isAccentColor(this.accentColor)
+    ) {
+      this.accentColor = undefined
+    }
     if (changedProperties.has('disabled') && this.disabled == null) {
       this.disabled = false
     }
@@ -96,6 +122,12 @@ export class SpectreTestimonialElement
 
   private get testimonialClasses(): string {
     return getTestimonialClasses({
+      ...(this.accent !== undefined && {
+        accent: this.accent as TestimonialAccentEdge
+      }),
+      ...(this.accentColor !== undefined && {
+        accentColor: this.accentColor as TestimonialAccentColor
+      }),
       disabled: this.isDisabled,
       fullHeight: this.fullHeight ?? false,
       interactive: this.interactive ?? false,

@@ -165,6 +165,38 @@ describe('sp-testimonial', () => {
     expect(element.disabled).toBe(false);
   });
 
+  it('renders no accent classes when accent is omitted', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+    expect(div?.className).not.toContain('sp-testimonial--accent');
+  });
+
+  it('applies the accent edge and defaults accentColor to brand', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    element.accent = 'top';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    const div = element.querySelector('div');
+    expect(div?.className).toContain('sp-testimonial--accent-top');
+    expect(div?.className).toContain('sp-testimonial--accent-brand');
+  });
+
+  it('falls back to no accent for an invalid accent edge', async () => {
+    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    // @ts-expect-error - testing invalid value
+    element.accent = 'diagonal';
+
+    document.body.append(element);
+    await element.updateComplete;
+
+    expect(element.accent).toBeUndefined();
+  });
+
   it('reflects the loading state to the aria-busy attribute', async () => {
     const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
     element.loading = true;

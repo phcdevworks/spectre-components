@@ -6,6 +6,38 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+### Added
+
+- `sp-badge` gains an `innerClass`/`inner-class` public property, matching the
+  existing sanitized utility-hook pattern on `sp-card` and other projectable
+  components. Only accepted `sp-*` utility classes reach the native badge
+  element; the host class is untouched.
+- `sp-card` gains `accent`/`accentColor` (`accent-color` attribute) public
+  properties for an optional decorative edge-rail, backed by
+  `getCardClasses`'s `accent`/`accentColor` options
+  (`@phcdevworks/spectre-ui` 5.1.0). Omitting `accent` renders no rail and
+  leaves existing card output unchanged; an invalid `accent` or
+  `accentColor` value falls back to no rail / the `brand` default rather
+  than throwing.
+- Accent-rail parity sweep: `sp-nav`, `sp-footer`, `sp-modal`, `sp-toast`,
+  `sp-tooltip`, `sp-dropdown` (applied to the menu), `sp-testimonial`, and
+  `sp-pricing-card` all gain the same `accent`/`accentColor` (`accent-color`
+  attribute) properties as `sp-card`, backed by each component's matching
+  `spectre-ui` 5.2.0 recipe option. `sp-badge` gains the equivalent
+  `accentRail`/`accentRailColor` (`accent-rail`/`accent-rail-color`
+  attributes) properties instead — named distinctly because
+  `variant: 'accent'` already names badge's unrelated single-tone
+  brand-accent fill. All nine follow the same top/right/bottom/left edge and
+  neutral/brand/info/success/warning/danger/cta color contract; omission
+  renders no rail and an invalid value falls back rather than throwing.
+- `sp-dropdown` gains a `viewport` boolean property, backed by
+  `getDropdownClasses`/`getDropdownMenuClasses`'s `viewport` option
+  (`@phcdevworks/spectre-ui` 5.2.0): a third menu-width tier alongside the
+  default (trigger width) and `mega` (nearest positioned ancestor width)
+  that breaks the menu out to the full browser viewport width, fixing a wide
+  `mega` menu overflowing past the edge of a width-constrained nav. Takes
+  precedence over `mega` if both are set.
+
 ### Changed
 
 - Standardized the package summary against the approved PHCDevworks product
