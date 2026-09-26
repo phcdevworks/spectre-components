@@ -1,214 +1,246 @@
-import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { defineSpectreTestimonial, SpectreTestimonialElement } from '../src';
+import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { defineSpectreTestimonial, SpectreTestimonialElement } from '../src'
 
 describe('sp-testimonial', () => {
   beforeAll(() => {
-    defineSpectreTestimonial();
-  });
+    defineSpectreTestimonial()
+  })
 
   afterEach(() => {
-    document.body.innerHTML = '';
-  });
+    document.body.innerHTML = ''
+  })
 
   it('renders a native div with the Spectre testimonial class and projected content', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    const quote = document.createElement('p');
-    quote.textContent = 'Great product!';
-    element.append(quote);
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    const quote = document.createElement('p')
+    quote.textContent = 'Great product!'
+    element.append(quote)
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div).not.toBeNull();
-    expect(div?.className).toContain('sp-testimonial');
-    expect(div?.textContent).toContain('Great product!');
-  });
+    expect(div).not.toBeNull()
+    expect(div?.className).toContain('sp-testimonial')
+    expect(div?.textContent).toContain('Great product!')
+  })
 
   it('renders nothing when given only whitespace text content', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    element.append(document.createTextNode('   \n   '));
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    element.append(document.createTextNode('   \n   '))
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div?.textContent?.trim()).toBe('');
-    expect(div?.querySelector('*')).toBeNull();
-  });
+    expect(div?.textContent?.trim()).toBe('')
+    expect(div?.querySelector('*')).toBeNull()
+  })
 
   it('treats an empty slotted element as meaningful content', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    const emptyCite = document.createElement('cite');
-    element.append(emptyCite);
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    const emptyCite = document.createElement('cite')
+    element.append(emptyCite)
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div?.querySelector('cite')).not.toBeNull();
-  });
+    expect(div?.querySelector('cite')).not.toBeNull()
+  })
 
   it('preserves nested interactive elements in projected content', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
     element.innerHTML =
-      '<blockquote>Great product.</blockquote><a href="/reviews/1">Read full review</a>';
+      '<blockquote>Great product.</blockquote><a href="/reviews/1">Read full review</a>'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div?.querySelector('a[href="/reviews/1"]')).not.toBeNull();
-  });
+    expect(div?.querySelector('a[href="/reviews/1"]')).not.toBeNull()
+  })
 
   it('preserves long quote content without truncation', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    const longText = 'Lorem ipsum '.repeat(200).trim();
-    const quote = document.createElement('blockquote');
-    quote.textContent = longText;
-    element.append(quote);
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    const longText = 'Lorem ipsum '.repeat(200).trim()
+    const quote = document.createElement('blockquote')
+    quote.textContent = longText
+    element.append(quote)
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div?.querySelector('blockquote')?.textContent).toBe(longText);
-  });
+    expect(div?.querySelector('blockquote')?.textContent).toBe(longText)
+  })
 
   it('defaults to variant=elevated', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.variant).toBe('elevated');
-  });
+    expect(element.variant).toBe('elevated')
+  })
 
   it('reflects a valid variant onto the div classes', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    element.variant = 'flat';
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    element.variant = 'flat'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div?.className).toContain('flat');
-  });
+    expect(div?.className).toContain('flat')
+  })
 
   it('falls back to variant=elevated for an invalid variant', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
     // @ts-expect-error - testing invalid value
-    element.variant = 'not-a-variant';
+    element.variant = 'not-a-variant'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.variant).toBe('elevated');
-  });
+    expect(element.variant).toBe('elevated')
+  })
 
   it('forwards the consumer-facing id to the native div only', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    element.id = 'testimonial-1';
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    element.id = 'testimonial-1'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(element.getAttribute('id')).toBe('testimonial-1');
-    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false);
-    expect(div?.id).toBe('testimonial-1');
-  });
+    expect(element.getAttribute('id')).toBe('testimonial-1')
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false)
+    expect(div?.id).toBe('testimonial-1')
+  })
 
   it('forwards ARIA attributes to the native div', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    element.setAttribute('aria-label', 'Customer testimonial');
-    element.setAttribute('aria-describedby', 'author-bio');
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    element.setAttribute('aria-label', 'Customer testimonial')
+    element.setAttribute('aria-describedby', 'author-bio')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div?.getAttribute('aria-label')).toBe('Customer testimonial');
-    expect(div?.getAttribute('aria-describedby')).toBe('author-bio');
-    expect(div?.getAttribute('role')).toBe('group');
-  });
+    expect(div?.getAttribute('aria-label')).toBe('Customer testimonial')
+    expect(div?.getAttribute('aria-describedby')).toBe('author-bio')
+    expect(div?.getAttribute('role')).toBe('group')
+  })
 
   it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
+    const div = element.querySelector('div')
 
-    expect(div?.hasAttribute('role')).toBe(false);
-  });
+    expect(div?.hasAttribute('role')).toBe(false)
+  })
 
   it('falls back to disabled=false and loading=false when null is assigned', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    document.body.append(element)
+    await element.updateComplete
 
-    element.disabled = true;
-    await element.updateComplete;
-    expect(element.disabled).toBe(true);
+    element.disabled = true
+    await element.updateComplete
+    expect(element.disabled).toBe(true)
 
     // @ts-expect-error - testing fallback
-    element.disabled = null;
-    await element.updateComplete;
-    expect(element.disabled).toBe(false);
-  });
+    element.disabled = null
+    await element.updateComplete
+    expect(element.disabled).toBe(false)
+  })
 
   it('renders no accent classes when accent is omitted', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
-    expect(div?.className).not.toContain('sp-testimonial--accent');
-  });
+    const div = element.querySelector('div')
+    expect(div?.className).not.toContain('sp-testimonial--accent')
+  })
 
   it('applies the accent edge and defaults accentColor to brand', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    element.accent = 'top';
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    element.accent = 'top'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('div');
-    expect(div?.className).toContain('sp-testimonial--accent-top');
-    expect(div?.className).toContain('sp-testimonial--accent-brand');
-  });
+    const div = element.querySelector('div')
+    expect(div?.className).toContain('sp-testimonial--accent-top')
+    expect(div?.className).toContain('sp-testimonial--accent-brand')
+  })
 
   it('falls back to no accent for an invalid accent edge', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
     // @ts-expect-error - testing invalid value
-    element.accent = 'diagonal';
+    element.accent = 'diagonal'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.accent).toBeUndefined();
-  });
+    expect(element.accent).toBeUndefined()
+  })
 
   it('reflects the loading state to the aria-busy attribute', async () => {
-    const element = document.createElement('sp-testimonial') as SpectreTestimonialElement;
-    element.loading = true;
+    const element = document.createElement(
+      'sp-testimonial'
+    ) as SpectreTestimonialElement
+    element.loading = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const div = element.querySelector('[data-sp-testimonial-native]');
-    expect(div?.getAttribute('aria-busy')).toBe('true');
+    const div = element.querySelector('[data-sp-testimonial-native]')
+    expect(div?.getAttribute('aria-busy')).toBe('true')
 
-    element.loading = false;
-    await element.updateComplete;
-    expect(div?.getAttribute('aria-busy')).toBe('false');
-  });
-});
+    element.loading = false
+    await element.updateComplete
+    expect(div?.getAttribute('aria-busy')).toBe('false')
+  })
+})

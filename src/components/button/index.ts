@@ -4,15 +4,15 @@ import {
   spectreButtonVariants,
   type SpectreInputSize,
   type SpectreButtonType,
-  type SpectreButtonVariant,
-} from '../../utils/form';
+  type SpectreButtonVariant
+} from '../../utils/form'
 
 export {
   defineSpectreButton,
   SpectreButtonElement,
   type SpectreButtonProps,
-  type SpectreButtonTarget,
-} from './sp-button';
+  type SpectreButtonTarget
+} from './sp-button'
 
 export {
   spectreInputSizes as spectreButtonSizes,
@@ -20,5 +20,5 @@ export {
   spectreButtonVariants,
   type SpectreInputSize as SpectreButtonSize,
   type SpectreButtonType,
-  type SpectreButtonVariant,
-};
+  type SpectreButtonVariant
+}

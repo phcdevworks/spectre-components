@@ -1,205 +1,205 @@
-import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { defineSpectreBadge, SpectreBadgeElement } from '../src';
+import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { defineSpectreBadge, SpectreBadgeElement } from '../src'
 
 describe('sp-badge', () => {
   beforeAll(() => {
-    defineSpectreBadge();
-  });
+    defineSpectreBadge()
+  })
 
   afterEach(() => {
-    document.body.innerHTML = '';
-  });
+    document.body.innerHTML = ''
+  })
 
   it('renders a native span with the Spectre badge class and projected content', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.append('New');
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.append('New')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
+    const span = element.querySelector('span')
 
-    expect(span).not.toBeNull();
-    expect(span?.className).toContain('sp-badge');
-    expect(span?.textContent).toContain('New');
-  });
+    expect(span).not.toBeNull()
+    expect(span?.className).toContain('sp-badge')
+    expect(span?.textContent).toContain('New')
+  })
 
   it('defaults to variant=primary and size=md', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.variant).toBe('primary');
-    expect(element.size).toBe('md');
-  });
+    expect(element.variant).toBe('primary')
+    expect(element.size).toBe('md')
+  })
 
   it('reflects a valid variant and size onto the span classes', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.variant = 'success';
-    element.size = 'sm';
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.variant = 'success'
+    element.size = 'sm'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
+    const span = element.querySelector('span')
 
-    expect(span?.className).toContain('success');
-    expect(span?.className).toContain('sm');
-  });
+    expect(span?.className).toContain('success')
+    expect(span?.className).toContain('sm')
+  })
 
   it('falls back to variant=primary for an invalid variant', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
     // @ts-expect-error - testing invalid value
-    element.variant = 'not-a-variant';
+    element.variant = 'not-a-variant'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.variant).toBe('primary');
-  });
+    expect(element.variant).toBe('primary')
+  })
 
   it('accepts the inverse variant', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.variant = 'inverse';
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.variant = 'inverse'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.variant).toBe('inverse');
-    const span = element.querySelector('span');
-    expect(span?.className).toContain('sp-badge--inverse');
-  });
+    expect(element.variant).toBe('inverse')
+    const span = element.querySelector('span')
+    expect(span?.className).toContain('sp-badge--inverse')
+  })
 
   it('falls back to size=md for an invalid size', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
     // @ts-expect-error - testing invalid value
-    element.size = 'xl';
+    element.size = 'xl'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.size).toBe('md');
-  });
+    expect(element.size).toBe('md')
+  })
 
   it('forwards the consumer-facing id to the native span only', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.id = 'badge-1';
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.id = 'badge-1'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
+    const span = element.querySelector('span')
 
-    expect(element.getAttribute('id')).toBe('badge-1');
-    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false);
-    expect(span?.id).toBe('badge-1');
-  });
+    expect(element.getAttribute('id')).toBe('badge-1')
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false)
+    expect(span?.id).toBe('badge-1')
+  })
 
   it('forwards ARIA attributes to the native span', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.setAttribute('aria-label', 'Status badge');
-    element.setAttribute('aria-describedby', 'desc-1');
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.setAttribute('aria-label', 'Status badge')
+    element.setAttribute('aria-describedby', 'desc-1')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
+    const span = element.querySelector('span')
 
-    expect(span?.getAttribute('aria-label')).toBe('Status badge');
-    expect(span?.getAttribute('aria-describedby')).toBe('desc-1');
-    expect(span?.getAttribute('role')).toBe('group');
-  });
+    expect(span?.getAttribute('aria-label')).toBe('Status badge')
+    expect(span?.getAttribute('aria-describedby')).toBe('desc-1')
+    expect(span?.getAttribute('role')).toBe('group')
+  })
 
   it('omits role when no aria-label or aria-labelledby is forwarded', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
+    const span = element.querySelector('span')
 
-    expect(span?.hasAttribute('role')).toBe(false);
-  });
+    expect(span?.hasAttribute('role')).toBe(false)
+  })
 
   it('falls back to disabled=false and loading=false when null is assigned', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    document.body.append(element)
+    await element.updateComplete
 
-    element.disabled = true;
-    await element.updateComplete;
-    expect(element.disabled).toBe(true);
-
-    // @ts-expect-error - testing fallback
-    element.disabled = null;
-    await element.updateComplete;
-    expect(element.disabled).toBe(false);
-
-    element.loading = true;
-    await element.updateComplete;
-    expect(element.loading).toBe(true);
+    element.disabled = true
+    await element.updateComplete
+    expect(element.disabled).toBe(true)
 
     // @ts-expect-error - testing fallback
-    element.loading = null;
-    await element.updateComplete;
-    expect(element.loading).toBe(false);
-  });
+    element.disabled = null
+    await element.updateComplete
+    expect(element.disabled).toBe(false)
+
+    element.loading = true
+    await element.updateComplete
+    expect(element.loading).toBe(true)
+
+    // @ts-expect-error - testing fallback
+    element.loading = null
+    await element.updateComplete
+    expect(element.loading).toBe(false)
+  })
 
   it('appends sanitized inner-class utility classes to the native span', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.setAttribute('inner-class', 'sp-badge__icon--offset not_valid');
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.setAttribute('inner-class', 'sp-badge__icon--offset not_valid')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
-    expect(span?.className).toContain('sp-badge__icon--offset');
-    expect(span?.className).not.toContain('not_valid');
-  });
+    const span = element.querySelector('span')
+    expect(span?.className).toContain('sp-badge__icon--offset')
+    expect(span?.className).not.toContain('not_valid')
+  })
 
   it('renders no accent rail classes when accentRail is omitted', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
-    expect(span?.className).not.toContain('sp-badge--accent-rail');
-  });
+    const span = element.querySelector('span')
+    expect(span?.className).not.toContain('sp-badge--accent-rail')
+  })
 
   it('applies the accentRail edge and defaults accentRailColor to brand', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.accentRail = 'left';
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.accentRail = 'left'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('span');
-    expect(span?.className).toContain('sp-badge--accent-rail-left');
-    expect(span?.className).toContain('sp-badge--accent-rail-brand');
-  });
+    const span = element.querySelector('span')
+    expect(span?.className).toContain('sp-badge--accent-rail-left')
+    expect(span?.className).toContain('sp-badge--accent-rail-brand')
+  })
 
   it('falls back to no accentRail for an invalid edge', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
     // @ts-expect-error - testing invalid value
-    element.accentRail = 'diagonal';
+    element.accentRail = 'diagonal'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.accentRail).toBeUndefined();
-  });
+    expect(element.accentRail).toBeUndefined()
+  })
 
   it('reflects the loading state to the aria-busy attribute', async () => {
-    const element = document.createElement('sp-badge') as SpectreBadgeElement;
-    element.loading = true;
+    const element = document.createElement('sp-badge') as SpectreBadgeElement
+    element.loading = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const span = element.querySelector('[data-sp-badge-native]');
-    expect(span?.getAttribute('aria-busy')).toBe('true');
+    const span = element.querySelector('[data-sp-badge-native]')
+    expect(span?.getAttribute('aria-busy')).toBe('true')
 
-    element.loading = false;
-    await element.updateComplete;
-    expect(span?.getAttribute('aria-busy')).toBe('false');
-  });
-});
+    element.loading = false
+    await element.updateComplete
+    expect(span?.getAttribute('aria-busy')).toBe('false')
+  })
+})

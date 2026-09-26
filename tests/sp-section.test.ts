@@ -1,78 +1,88 @@
-import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { defineSpectreSection, SpectreSectionElement } from '../src';
+import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { defineSpectreSection, SpectreSectionElement } from '../src'
 
 describe('sp-section', () => {
   beforeAll(() => {
-    defineSpectreSection();
-  });
+    defineSpectreSection()
+  })
 
   afterEach(() => {
-    document.body.innerHTML = '';
-  });
+    document.body.innerHTML = ''
+  })
 
   it('renders a native section with the Spectre section class and projected content', async () => {
-    const element = document.createElement('sp-section') as SpectreSectionElement;
-    const heading = document.createElement('h2');
-    heading.textContent = 'Section heading';
-    element.append(heading);
+    const element = document.createElement(
+      'sp-section'
+    ) as SpectreSectionElement
+    const heading = document.createElement('h2')
+    heading.textContent = 'Section heading'
+    element.append(heading)
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const section = element.querySelector('section');
+    const section = element.querySelector('section')
 
-    expect(section).not.toBeNull();
-    expect(section?.className).toContain('sp-section');
-    expect(section?.textContent).toContain('Section heading');
-  });
+    expect(section).not.toBeNull()
+    expect(section?.className).toContain('sp-section')
+    expect(section?.textContent).toContain('Section heading')
+  })
 
   it('forwards the consumer-facing id to the native section only', async () => {
-    const element = document.createElement('sp-section') as SpectreSectionElement;
-    element.id = 'section-1';
+    const element = document.createElement(
+      'sp-section'
+    ) as SpectreSectionElement
+    element.id = 'section-1'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const section = element.querySelector('section');
+    const section = element.querySelector('section')
 
-    expect(element.getAttribute('id')).toBe('section-1');
-    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false);
-    expect(section?.id).toBe('section-1');
-  });
+    expect(element.getAttribute('id')).toBe('section-1')
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'id')).toBe(false)
+    expect(section?.id).toBe('section-1')
+  })
 
   it('forwards ARIA attributes to the native section', async () => {
-    const element = document.createElement('sp-section') as SpectreSectionElement;
-    element.setAttribute('aria-labelledby', 'section-heading');
+    const element = document.createElement(
+      'sp-section'
+    ) as SpectreSectionElement
+    element.setAttribute('aria-labelledby', 'section-heading')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const section = element.querySelector('section');
+    const section = element.querySelector('section')
 
-    expect(section?.getAttribute('aria-labelledby')).toBe('section-heading');
-  });
+    expect(section?.getAttribute('aria-labelledby')).toBe('section-heading')
+  })
 
   it('defaults the host to block display', async () => {
-    const element = document.createElement('sp-section') as SpectreSectionElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-section'
+    ) as SpectreSectionElement
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(getComputedStyle(element).display).toBe('block');
-  });
+    expect(getComputedStyle(element).display).toBe('block')
+  })
 
   it('applies innerClass to the native section without touching the host class', async () => {
-    const element = document.createElement('sp-section') as SpectreSectionElement;
-    element.className = 'host-class';
-    element.innerClass = 'sp-py-16 not-allowed';
+    const element = document.createElement(
+      'sp-section'
+    ) as SpectreSectionElement
+    element.className = 'host-class'
+    element.innerClass = 'sp-py-16 not-allowed'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const section = element.querySelector('section');
+    const section = element.querySelector('section')
 
-    expect(section?.className).toContain('sp-py-16');
-    expect(section?.className).not.toContain('not-allowed');
-    expect(section?.className).not.toContain('host-class');
-    expect(element.className).toBe('host-class');
-  });
-});
+    expect(section?.className).toContain('sp-py-16')
+    expect(section?.className).not.toContain('not-allowed')
+    expect(section?.className).not.toContain('host-class')
+    expect(element.className).toBe('host-class')
+  })
+})

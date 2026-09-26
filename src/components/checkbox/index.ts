@@ -1,5 +1,5 @@
 export {
   defineSpectreCheckbox,
   SpectreCheckboxElement,
-  type SpectreCheckboxProps,
-} from './sp-checkbox';
+  type SpectreCheckboxProps
+} from './sp-checkbox'

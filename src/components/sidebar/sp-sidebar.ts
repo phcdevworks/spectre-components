@@ -1,11 +1,15 @@
 import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
+import { applyPartClasses, childElements } from '../../utils/parts'
 import { SpectreProjectableElement } from '../../utils/projectable'
 
 import {
   getSidebarBackdropClasses,
   getSidebarClasses,
+  getSidebarGroupClasses,
+  getSidebarGroupSummaryClasses,
+  getSidebarHeaderClasses,
   getSidebarToggleClasses
 } from '@phcdevworks/spectre-ui'
 
@@ -138,6 +142,25 @@ export class SpectreSidebarElement
 
   private get sidebarClasses(): string {
     return getSidebarClasses({ bordered: this.bordered ?? false })
+  }
+
+  protected override updated(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    super.updated(changedProperties)
+    const elements = childElements(this.projectedContent)
+    applyPartClasses(elements, {
+      group: getSidebarGroupClasses(),
+      header: getSidebarHeaderClasses()
+    })
+    elements
+      .filter((element) => element.getAttribute('slot') === 'group')
+      .forEach((group) => {
+        const summary = group.querySelector(':scope > summary')
+        summary?.classList.add(
+          ...getSidebarGroupSummaryClasses().split(/\s+/).filter(Boolean)
+        )
+      })
   }
 
   override render() {

@@ -12,6 +12,7 @@ import {
 import { getTextareaClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreTextareaProps {
+  focused?: boolean | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -48,6 +49,7 @@ export class SpectreTextareaElement
   implements SpectreTextareaProps
 {
   static properties = {
+    focused: { type: Boolean, reflect: true },
     autocomplete: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     enterkeyhint: { type: String, reflect: true },
@@ -68,6 +70,8 @@ export class SpectreTextareaElement
     success: { type: Boolean, reflect: true },
     value: { type: String }
   }
+
+  focused: boolean | undefined = false
 
   override get autocapitalize(): string {
     return super.autocapitalize
@@ -193,6 +197,7 @@ export class SpectreTextareaElement
 
   private get textareaClasses(): string {
     return getTextareaClasses({
+      focused: this.focused ?? false,
       fullWidth: this.fullWidth ?? false,
       pill: this.pill ?? false,
       size: this.size as SpectreInputSize,

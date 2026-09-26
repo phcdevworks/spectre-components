@@ -30,6 +30,7 @@ plugins, templates, or general-purpose workflows.
 | ChatGPT        | Strategy, coordination, prompt design, and external review        | Support only             |
 | GitHub Copilot | Development assistance                                            | [COPILOT.md](COPILOT.md) |
 | Google Jules   | Bounded automated maintenance                                     | [JULES.md](JULES.md)     |
+| xAI Grok       | Development assistance                                            | [GROK.md](GROK.md)       |
 
 **Claude Code has zero git access in this repository, effective 2026-08-13 by
 explicit direction from Bradley Potts.** Claude Code must not run any git
@@ -44,10 +45,10 @@ Claude Code.
 tag authority** in this repository, effective 2026-07-25 by explicit direction
 from Bradley Potts — see the Commit Policy section in each agent's own guide
 ([CODEX.md](CODEX.md), [COPILOT.md](COPILOT.md), [JULES.md](JULES.md)). **OpenAI
-Codex** additionally has release authority: Codex cuts releases autonomously —
-version bump, changelog versioning, `v<version>` git tag, and GitHub Release
-publish via `gh` — for every release-ready `CHANGELOG.md [Unreleased]` section,
-without waiting for per-release approval; see `CODEX.md` "Release Mechanics" for
+Codex** additionally has release authority: Codex cuts a release — version bump, changelog versioning, `v<version>` git
+tag, and GitHub Release publish via `gh` — only when Bradley Potts says to get
+this repo ready for release; a plain commit request commits and pushes only,
+with no version bump, tag, or release; see `CODEX.md` "Release Mechanics" for
 the full procedure. **OpenAI Codex additionally executes git operations on
 Claude Code's behalf**: when Claude Code hands off validated work, Codex is
 responsible for staging, committing, tagging, and pushing it, not only Codex's
@@ -58,16 +59,22 @@ covers git and release operations within each agent's own scope of work as
 defined above — it does not expand what any agent is authorized to decide
 otherwise. ChatGPT has no repository access and is excluded.
 
+**xAI Grok (including Grok Bot, the same agent running automatically) has
+commit and push authority** here, effective 2026-09-26 by explicit direction
+from Bradley Potts — see [GROK.md](GROK.md) "Git Authority." Grok commits and
+pushes its own work only: it does not create or push tags, cut releases, merge
+pull requests, or publish packages.
+
 **A commit is not finished until it is pushed.** Every agent that still holds
-git authority under this roster — Codex, Copilot, Jules — must push immediately
+git authority under this roster — Codex, Copilot, Jules, Grok — must push immediately
 after committing (`git push`, including any needed `-u`/tags) as part of the
 same action — never leave a commit sitting local only. This closes a recurring
 gap where an agent commits and stops short of pushing, leaving work stranded on
 the machine.
 
 **Commit authorship is human-only.** No agent with git authority under this
-roster — Codex, Copilot, or Jules — adds itself (or any other AI) as a commit
-author or co-author — no `Co-Authored-By: Claude`/`Codex`/`Copilot`/`Jules`
+roster — Codex, Copilot, Jules, or Grok — adds itself (or any other AI) as a commit
+author or co-author — no `Co-Authored-By: Claude`/`Codex`/`Copilot`/`Jules`/`Grok`
 trailer, no author-field changes, in this repository. The git author/committer
 stays Bradley Potts (or the configured human git user) on every commit,
 regardless of which agent performed the work. Push and tag authority above does
@@ -245,43 +252,66 @@ rules.
 
 ## Current Components
 
-| Tag                 | Element class                 | Entry point                                      |
-| ------------------- | ----------------------------- | ------------------------------------------------ |
-| `sp-button`         | `SpectreButtonElement`        | `@phcdevworks/spectre-components/button`         |
-| `sp-input`          | `SpectreInputElement`         | `@phcdevworks/spectre-components/input`          |
-| `sp-textarea`       | `SpectreTextareaElement`      | `@phcdevworks/spectre-components/textarea`       |
-| `sp-select`         | `SpectreSelectElement`        | `@phcdevworks/spectre-components/select`         |
-| `sp-checkbox`       | `SpectreCheckboxElement`      | `@phcdevworks/spectre-components/checkbox`       |
-| `sp-radio`          | `SpectreRadioElement`         | `@phcdevworks/spectre-components/radio`          |
-| `sp-label`          | `SpectreLabelElement`         | `@phcdevworks/spectre-components/label`          |
-| `sp-fieldset`       | `SpectreFieldsetElement`      | `@phcdevworks/spectre-components/fieldset`       |
-| `sp-badge`          | `SpectreBadgeElement`         | `@phcdevworks/spectre-components/badge`          |
-| `sp-card`           | `SpectreCardElement`          | `@phcdevworks/spectre-components/card`           |
-| `sp-icon-box`       | `SpectreIconBoxElement`       | `@phcdevworks/spectre-components/icon-box`       |
-| `sp-rating`         | `SpectreRatingElement`        | `@phcdevworks/spectre-components/rating`         |
-| `sp-testimonial`    | `SpectreTestimonialElement`   | `@phcdevworks/spectre-components/testimonial`    |
-| `sp-alert`          | `SpectreAlertElement`         | `@phcdevworks/spectre-components/alert`          |
-| `sp-avatar`         | `SpectreAvatarElement`        | `@phcdevworks/spectre-components/avatar`         |
-| `sp-spinner`        | `SpectreSpinnerElement`       | `@phcdevworks/spectre-components/spinner`        |
-| `sp-tag`            | `SpectreTagElement`           | `@phcdevworks/spectre-components/tag`            |
-| `sp-pricing-card`   | `SpectrePricingCardElement`   | `@phcdevworks/spectre-components/pricing-card`   |
-| `sp-container`      | `SpectreContainerElement`     | `@phcdevworks/spectre-components/container`      |
-| `sp-grid`           | `SpectreGridElement`          | `@phcdevworks/spectre-components/grid`           |
-| `sp-section`        | `SpectreSectionElement`       | `@phcdevworks/spectre-components/section`        |
-| `sp-stack`          | `SpectreStackElement`         | `@phcdevworks/spectre-components/stack`          |
-| `sp-dropdown`       | `SpectreDropdownElement`      | `@phcdevworks/spectre-components/dropdown`       |
-| `sp-footer`         | `SpectreFooterElement`        | `@phcdevworks/spectre-components/footer`         |
-| `sp-footer-chip`    | `SpectreFooterChipElement`    | `@phcdevworks/spectre-components/footer-chip`    |
-| `sp-footer-link`    | `SpectreFooterLinkElement`    | `@phcdevworks/spectre-components/footer-link`    |
-| `sp-modal`          | `SpectreModalElement`         | `@phcdevworks/spectre-components/modal`          |
-| `sp-nav`            | `SpectreNavElement`           | `@phcdevworks/spectre-components/nav`            |
-| `sp-nav-item`       | `SpectreNavItemElement`       | `@phcdevworks/spectre-components/nav-item`       |
-| `sp-sidebar`        | `SpectreSidebarElement`       | `@phcdevworks/spectre-components/sidebar`        |
-| `sp-sidebar-link`   | `SpectreSidebarLinkElement`   | `@phcdevworks/spectre-components/sidebar-link`   |
-| `sp-sidebar-toggle` | `SpectreSidebarToggleElement` | `@phcdevworks/spectre-components/sidebar-toggle` |
-| `sp-toast`          | `SpectreToastElement`         | `@phcdevworks/spectre-components/toast`          |
-| `sp-tooltip`        | `SpectreTooltipElement`       | `@phcdevworks/spectre-components/tooltip`        |
-| `sp-text`           | `SpectreTextElement`          | `@phcdevworks/spectre-components/text`           |
+| Tag                       | Element class                      | Entry point                                            |
+| ------------------------- | ---------------------------------- | ------------------------------------------------------ |
+| `sp-button`               | `SpectreButtonElement`             | `@phcdevworks/spectre-components/button`               |
+| `sp-input`                | `SpectreInputElement`              | `@phcdevworks/spectre-components/input`                |
+| `sp-textarea`             | `SpectreTextareaElement`           | `@phcdevworks/spectre-components/textarea`             |
+| `sp-select`               | `SpectreSelectElement`             | `@phcdevworks/spectre-components/select`               |
+| `sp-checkbox`             | `SpectreCheckboxElement`           | `@phcdevworks/spectre-components/checkbox`             |
+| `sp-radio`                | `SpectreRadioElement`              | `@phcdevworks/spectre-components/radio`                |
+| `sp-label`                | `SpectreLabelElement`              | `@phcdevworks/spectre-components/label`                |
+| `sp-fieldset`             | `SpectreFieldsetElement`           | `@phcdevworks/spectre-components/fieldset`             |
+| `sp-badge`                | `SpectreBadgeElement`              | `@phcdevworks/spectre-components/badge`                |
+| `sp-card`                 | `SpectreCardElement`               | `@phcdevworks/spectre-components/card`                 |
+| `sp-icon-box`             | `SpectreIconBoxElement`            | `@phcdevworks/spectre-components/icon-box`             |
+| `sp-rating`               | `SpectreRatingElement`             | `@phcdevworks/spectre-components/rating`               |
+| `sp-testimonial`          | `SpectreTestimonialElement`        | `@phcdevworks/spectre-components/testimonial`          |
+| `sp-alert`                | `SpectreAlertElement`              | `@phcdevworks/spectre-components/alert`                |
+| `sp-avatar`               | `SpectreAvatarElement`             | `@phcdevworks/spectre-components/avatar`               |
+| `sp-spinner`              | `SpectreSpinnerElement`            | `@phcdevworks/spectre-components/spinner`              |
+| `sp-tag`                  | `SpectreTagElement`                | `@phcdevworks/spectre-components/tag`                  |
+| `sp-pricing-card`         | `SpectrePricingCardElement`        | `@phcdevworks/spectre-components/pricing-card`         |
+| `sp-container`            | `SpectreContainerElement`          | `@phcdevworks/spectre-components/container`            |
+| `sp-grid`                 | `SpectreGridElement`               | `@phcdevworks/spectre-components/grid`                 |
+| `sp-section`              | `SpectreSectionElement`            | `@phcdevworks/spectre-components/section`              |
+| `sp-stack`                | `SpectreStackElement`              | `@phcdevworks/spectre-components/stack`                |
+| `sp-dropdown`             | `SpectreDropdownElement`           | `@phcdevworks/spectre-components/dropdown`             |
+| `sp-footer`               | `SpectreFooterElement`             | `@phcdevworks/spectre-components/footer`               |
+| `sp-footer-chip`          | `SpectreFooterChipElement`         | `@phcdevworks/spectre-components/footer-chip`          |
+| `sp-footer-link`          | `SpectreFooterLinkElement`         | `@phcdevworks/spectre-components/footer-link`          |
+| `sp-modal`                | `SpectreModalElement`              | `@phcdevworks/spectre-components/modal`                |
+| `sp-nav`                  | `SpectreNavElement`                | `@phcdevworks/spectre-components/nav`                  |
+| `sp-nav-item`             | `SpectreNavItemElement`            | `@phcdevworks/spectre-components/nav-item`             |
+| `sp-sidebar`              | `SpectreSidebarElement`            | `@phcdevworks/spectre-components/sidebar`              |
+| `sp-sidebar-link`         | `SpectreSidebarLinkElement`        | `@phcdevworks/spectre-components/sidebar-link`         |
+| `sp-sidebar-toggle`       | `SpectreSidebarToggleElement`      | `@phcdevworks/spectre-components/sidebar-toggle`       |
+| `sp-toast`                | `SpectreToastElement`              | `@phcdevworks/spectre-components/toast`                |
+| `sp-tooltip`              | `SpectreTooltipElement`            | `@phcdevworks/spectre-components/tooltip`              |
+| `sp-text`                 | `SpectreTextElement`               | `@phcdevworks/spectre-components/text`                 |
+| `sp-tabs`                 | `SpectreTabsElement`               | `@phcdevworks/spectre-components/tabs`                 |
+| `sp-tab-panel`            | `SpectreTabPanelElement`           | `@phcdevworks/spectre-components/tab-panel`            |
+| `sp-accordion`            | `SpectreAccordionElement`          | `@phcdevworks/spectre-components/accordion`            |
+| `sp-accordion-item`       | `SpectreAccordionItemElement`      | `@phcdevworks/spectre-components/accordion-item`       |
+| `sp-breadcrumb`           | `SpectreBreadcrumbElement`         | `@phcdevworks/spectre-components/breadcrumb`           |
+| `sp-list-group`           | `SpectreListGroupElement`          | `@phcdevworks/spectre-components/list-group`           |
+| `sp-list-group-item`      | `SpectreListGroupItemElement`      | `@phcdevworks/spectre-components/list-group-item`      |
+| `sp-offcanvas`            | `SpectreOffcanvasElement`          | `@phcdevworks/spectre-components/offcanvas`            |
+| `sp-carousel`             | `SpectreCarouselElement`           | `@phcdevworks/spectre-components/carousel`             |
+| `sp-table`                | `SpectreTableElement`              | `@phcdevworks/spectre-components/table`                |
+| `sp-pagination`           | `SpectrePaginationElement`         | `@phcdevworks/spectre-components/pagination`           |
+| `sp-stepper`              | `SpectreStepperElement`            | `@phcdevworks/spectre-components/stepper`              |
+| `sp-card-bleed`           | `SpectreCardBleedElement`          | `@phcdevworks/spectre-components/card-bleed`           |
+| `sp-prose`                | `SpectreProseElement`              | `@phcdevworks/spectre-components/prose`                |
+| `sp-progress`             | `SpectreProgressElement`           | `@phcdevworks/spectre-components/progress`             |
+| `sp-switch`               | `SpectreSwitchElement`             | `@phcdevworks/spectre-components/switch`               |
+| `sp-range`                | `SpectreRangeElement`              | `@phcdevworks/spectre-components/range`                |
+| `sp-file-input`           | `SpectreFileInputElement`          | `@phcdevworks/spectre-components/file-input`           |
+| `sp-external-auth-button` | `SpectreExternalAuthButtonElement` | `@phcdevworks/spectre-components/external-auth-button` |
+| `sp-choice-card`          | `SpectreChoiceCardElement`         | `@phcdevworks/spectre-components/choice-card`          |
+| `sp-input-group`          | `SpectreInputGroupElement`         | `@phcdevworks/spectre-components/input-group`          |
+| `sp-popover`              | `SpectrePopoverElement`            | `@phcdevworks/spectre-components/popover`              |
+| `sp-datepicker`           | `SpectreDatepickerElement`         | `@phcdevworks/spectre-components/datepicker`           |
 
 ## Core Component Contract
 
@@ -311,8 +341,8 @@ approval from Bradley Potts recorded in a commit message or PR description.
   Svelte files. This package exports web components only.
 - Do not add routing, shell coordination, manifest behavior, service workers, or
   app initialization logic.
-- Do not add speculative new components without a backing recipe in
-  `@phcdevworks/spectre-ui` and explicit approval.
+- Do not add new components without a backing recipe published in
+  `@phcdevworks/spectre-ui`; with one, build them proactively.
 - Do not hardcode colors, spacing, shadows, border-radius, or any visual
   primitive. All visual decisions come from `@phcdevworks/spectre-tokens` and
   `@phcdevworks/spectre-ui`.

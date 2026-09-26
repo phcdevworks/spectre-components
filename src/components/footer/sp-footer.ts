@@ -1,6 +1,7 @@
 import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
+import { applyPartClasses } from '../../utils/parts'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isAccentColor,
@@ -12,6 +13,11 @@ import {
 
 import {
   getFooterClasses,
+  getFooterDividerClasses,
+  getFooterHeadingClasses,
+  getFooterLinksClasses,
+  getFooterMutedClasses,
+  getFooterTextClasses,
   type FooterAccentColor,
   type FooterAccentEdge
 } from '@phcdevworks/spectre-ui'
@@ -115,9 +121,26 @@ export class SpectreFooterElement
       fullWidth: this.fullWidth ?? false
     })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
-    return utilityClasses
-      ? `${recipeClasses} ${utilityClasses}`
-      : recipeClasses
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
+  }
+
+  // Footer parts usually sit inside authored columns, so markers are matched
+  // at any depth.
+  protected override updated(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    super.updated(changedProperties)
+    const native = this.querySelector('[data-sp-footer-native]')
+    if (!native) {
+      return
+    }
+    applyPartClasses(native.querySelectorAll('[slot]'), {
+      divider: getFooterDividerClasses(),
+      heading: getFooterHeadingClasses(),
+      links: getFooterLinksClasses(),
+      muted: getFooterMutedClasses(),
+      text: getFooterTextClasses()
+    })
   }
 
   override render() {

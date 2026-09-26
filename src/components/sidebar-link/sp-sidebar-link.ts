@@ -8,11 +8,17 @@ import {
 } from '../../utils/form'
 
 import {
+  hoverFocusStateProperties,
+  hoverFocusStates,
+  type SpectreHoverFocusStateProps
+} from '../../utils/states'
+
+import {
   getSidebarLinkClasses,
   type SidebarLinkLevel
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreSidebarLinkProps {
+export interface SpectreSidebarLinkProps extends SpectreHoverFocusStateProps {
   active?: boolean | undefined
   ariaLabel?: string | null
   disabled?: boolean | undefined
@@ -27,11 +33,15 @@ export class SpectreSidebarLinkElement
   implements SpectreSidebarLinkProps
 {
   static properties = {
+    ...hoverFocusStateProperties,
     active: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     href: { type: String },
     level: { type: String, reflect: true }
   }
+
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   active: boolean | undefined = false
   disabled: boolean | undefined = false
@@ -85,6 +95,7 @@ export class SpectreSidebarLinkElement
 
   private get sidebarLinkClasses(): string {
     return getSidebarLinkClasses({
+      ...hoverFocusStates(this),
       active: this.active ?? false,
       disabled: this.disabled ?? false,
       level: this.level as SidebarLinkLevel

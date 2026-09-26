@@ -1,8 +1,9 @@
-import { html } from 'lit'
+import { html, nothing, type TemplateResult } from 'lit'
 import { live } from 'lit/directives/live.js'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreBaseElement } from '../../utils/base'
+import { createUniqueId } from '../../utils/dom'
 import {
   spectreInputSizes,
   isInputSize,
@@ -13,7 +14,19 @@ import {
   normalizeInt
 } from '../../utils/form'
 
-import { getInputClasses } from '@phcdevworks/spectre-ui'
+import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
+  getInputClasses,
+  getInputErrorMessageClasses,
+  getInputHelperTextClasses,
+  getInputLabelClasses,
+  getInputWrapperClasses
+} from '@phcdevworks/spectre-ui'
 
 export {
   spectreInputSizes,
@@ -22,7 +35,7 @@ export {
   type SpectreInputType
 }
 
-export interface SpectreInputProps {
+export interface SpectreInputProps extends SpectreInteractionStateProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -31,11 +44,14 @@ export interface SpectreInputProps {
   autofocus?: boolean | null | undefined
   disabled?: boolean | undefined
   enterkeyhint?: string | undefined
+  errorMessage?: string | undefined
   form?: string | undefined
   fullWidth?: boolean | undefined
+  helperText?: string | undefined
   id?: string | null | undefined
   inputmode?: string | undefined
   invalid?: boolean | undefined
+  label?: string | undefined
   list?: string | undefined
   loading?: boolean | undefined
   max?: string | undefined
@@ -62,9 +78,13 @@ export class SpectreInputElement
   implements SpectreInputProps
 {
   static properties = {
+    ...interactionStateProperties,
     autocomplete: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     enterkeyhint: { type: String, reflect: true },
+    errorMessage: { attribute: 'error-message', type: String },
+    helperText: { attribute: 'helper-text', type: String },
+    label: { type: String },
     form: { type: String },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     inputmode: { type: String, reflect: true },
@@ -87,6 +107,10 @@ export class SpectreInputElement
     type: { type: String, reflect: true },
     value: { type: String }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   override get autocapitalize(): string {
     return super.autocapitalize
@@ -220,6 +244,7 @@ export class SpectreInputElement
 
   private get inputClasses(): string {
     return getInputClasses({
+      ...interactionStates(this),
       fullWidth: this.fullWidth ?? false,
       pill: this.pill ?? false,
       size: this.size as SpectreInputSize,
@@ -227,12 +252,39 @@ export class SpectreInputElement
         ? this.disabled
           ? 'disabled'
           : 'loading'
-        : this.invalid
+        : this.invalid || this.errorMessage
           ? 'error'
           : this.success
             ? 'success'
             : 'default'
     })
+  }
+
+  errorMessage: string | undefined = undefined
+  helperText: string | undefined = undefined
+  label: string | undefined = undefined
+
+  private readonly generatedId = createUniqueId('sp-input')
+
+  private get inputId(): string {
+    return this.id || this.generatedId
+  }
+
+  private get hasFieldChrome(): boolean {
+    return Boolean(this.label || this.helperText || this.errorMessage)
+  }
+
+  // An error message replaces the helper text while it is shown.
+  private get messageId(): string | undefined {
+    if (this.errorMessage) {
+      return `${this.inputId}-error`
+    }
+    return this.helperText ? `${this.inputId}-helper` : undefined
+  }
+
+  private get describedBy(): string | undefined {
+    const ids = [this.forwardedAriaDescribedBy, this.messageId].filter(Boolean)
+    return ids.length > 0 ? ids.join(' ') : undefined
   }
 
   private get nativeInput(): HTMLInputElement | null {
@@ -257,11 +309,54 @@ export class SpectreInputElement
     this.nativeInput?.blur()
   }
 
+  private renderMessage(): TemplateResult | typeof nothing {
+    if (this.errorMessage) {
+      return html`<p
+        aria-atomic="true"
+        aria-live="polite"
+        class="${getInputErrorMessageClasses()}"
+        id="${this.inputId}-error"
+      >
+        ${this.errorMessage}
+      </p>`
+    }
+    if (this.helperText) {
+      return html`<p
+        class="${getInputHelperTextClasses({ disabled: this.isDisabled })}"
+        id="${this.inputId}-helper"
+      >
+        ${this.helperText}
+      </p>`
+    }
+    return nothing
+  }
+
+  // Without a label or message the native input renders alone, as before.
   override render() {
+    if (!this.hasFieldChrome) {
+      return this.renderInput()
+    }
+    return html`<div class="${getInputWrapperClasses()}" data-sp-input-wrapper>
+      ${
+        this.label
+          ? html`<label
+              class="${getInputLabelClasses({ disabled: this.isDisabled })}"
+              for="${this.inputId}"
+              >${this.label}</label
+            >`
+          : nothing
+      }
+      ${this.renderInput()} ${this.renderMessage()}
+    </div>`
+  }
+
+  private renderInput(): TemplateResult {
     return html`<input
       aria-busy="${this.loading ? 'true' : 'false'}"
-      aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
-      aria-invalid="${ifDefined(this.invalid ? 'true' : undefined)}"
+      aria-describedby="${ifDefined(this.describedBy)}"
+      aria-invalid="${ifDefined(
+        this.invalid || this.errorMessage ? 'true' : undefined
+      )}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
       autocapitalize="${ifDefined(this.autocapitalize || undefined)}"
@@ -274,7 +369,7 @@ export class SpectreInputElement
       form="${ifDefined(this.form || undefined)}"
       ?readonly="${this.readonly}"
       ?required="${this.required}"
-      id="${ifDefined(this.id || undefined)}"
+      id="${ifDefined(this.hasFieldChrome ? this.inputId : this.id || undefined)}"
       inputmode="${ifDefined(this.inputmode || undefined)}"
       list="${ifDefined(this.list || undefined)}"
       max="${ifDefined(this.max || undefined)}"

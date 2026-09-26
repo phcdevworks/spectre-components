@@ -1,7 +1,8 @@
 import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable'
+import { SpectreBaseElement } from '../../utils/base'
+import { ProjectionController } from '../../utils/projection'
 import {
   isAccentColor,
   isAccentEdge,
@@ -12,13 +13,24 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
+  getTestimonialAuthorClasses,
+  getTestimonialAuthorInfoClasses,
+  getTestimonialAuthorNameClasses,
+  getTestimonialAuthorTitleClasses,
+  getTestimonialQuoteClasses,
   getTestimonialClasses,
   type TestimonialAccentColor,
   type TestimonialAccentEdge,
   type TestimonialRecipeOptions
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreTestimonialProps {
+export interface SpectreTestimonialProps extends SpectreInteractionStateProps {
   accent?: SpectreAccentEdge | undefined
   accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
@@ -34,10 +46,11 @@ export interface SpectreTestimonialProps {
 }
 
 export class SpectreTestimonialElement
-  extends SpectreProjectableElement
+  extends SpectreBaseElement
   implements SpectreTestimonialProps
 {
   static properties = {
+    ...interactionStateProperties,
     accent: { type: String, reflect: true },
     accentColor: { attribute: 'accent-color', type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -46,6 +59,10 @@ export class SpectreTestimonialElement
     loading: { type: Boolean, reflect: true },
     variant: { type: String, reflect: true }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   accent: SpectreAccentEdge | undefined = undefined
   accentColor: SpectreAccentColor | undefined = undefined
@@ -71,17 +88,9 @@ export class SpectreTestimonialElement
     super.title = value
   }
 
-  protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-testimonial-native]')
-  }
-
-  protected override isInternalNode(node: Node): boolean {
-    if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false
-    }
-    const el = node as Element
-    return el.hasAttribute('data-sp-testimonial-native')
-  }
+  private readonly projection = new ProjectionController(this, [
+    'data-sp-testimonial-native'
+  ])
 
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
@@ -122,6 +131,7 @@ export class SpectreTestimonialElement
 
   private get testimonialClasses(): string {
     return getTestimonialClasses({
+      ...interactionStates(this),
       ...(this.accent !== undefined && {
         accent: this.accent as TestimonialAccentEdge
       }),
@@ -136,6 +146,37 @@ export class SpectreTestimonialElement
     })
   }
 
+  private renderAuthor() {
+    const hasName = this.projection.has('author-name')
+    const hasTitle = this.projection.has('author-title')
+    if (!this.projection.has('author-image') && !hasName && !hasTitle) {
+      return nothing
+    }
+    return html`<div class="${getTestimonialAuthorClasses()}">
+      ${this.projection.nodes('author-image')}
+      ${
+        hasName || hasTitle
+          ? html`<div class="${getTestimonialAuthorInfoClasses()}">
+              ${
+                hasName
+                  ? html`<div class="${getTestimonialAuthorNameClasses()}">
+                      ${this.projection.nodes('author-name')}
+                    </div>`
+                  : nothing
+              }
+              ${
+                hasTitle
+                  ? html`<div class="${getTestimonialAuthorTitleClasses()}">
+                      ${this.projection.nodes('author-title')}
+                    </div>`
+                  : nothing
+              }
+            </div>`
+          : nothing
+      }
+    </div>`
+  }
+
   override render() {
     return html`<div
       aria-busy="${this.loading ? 'true' : 'false'}"
@@ -148,7 +189,14 @@ export class SpectreTestimonialElement
       role="${ifDefined(this.hasForwardedLabel ? 'group' : undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
-      ${this.hasProjectedContent ? this.projectedContent : nothing}
+      ${
+        this.projection.has('quote')
+          ? html`<div class="${getTestimonialQuoteClasses()}">
+              ${this.projection.nodes('quote')}
+            </div>`
+          : nothing
+      }
+      ${this.projection.nodes()} ${this.renderAuthor()}
     </div>`
   }
 }

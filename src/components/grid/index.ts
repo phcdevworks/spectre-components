@@ -2,9 +2,12 @@ import {
   spectreGridColumns,
   spectreGridGaps,
   spectreGridAligns,
+  spectreGridColStarts,
   type SpectreGridColumns,
   type SpectreGridGap,
-  type SpectreGridAlign
+  type SpectreGridAlign,
+  type SpectreGridColStart,
+  type SpectreGridColStartOptions
 } from '../../utils/form'
 
 export {
@@ -17,7 +20,10 @@ export {
   spectreGridColumns,
   spectreGridGaps,
   spectreGridAligns,
+  spectreGridColStarts,
   type SpectreGridColumns,
   type SpectreGridGap,
-  type SpectreGridAlign
+  type SpectreGridAlign,
+  type SpectreGridColStart,
+  type SpectreGridColStartOptions
 }

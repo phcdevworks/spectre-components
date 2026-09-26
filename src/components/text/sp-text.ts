@@ -4,19 +4,30 @@ import { literal, html as staticHtml } from 'lit/static-html.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isDisplayLevel,
+  isHeadingLevel,
   isTextFamily,
+  isTextPreset,
   isTextLevel,
   isTextSize,
   isTextTransform,
   isTextVariant,
+  type SpectreDisplayLevel,
+  type SpectreHeadingLevel,
   type SpectreTextFamily,
+  type SpectreTextPreset,
   type SpectreTextLevel,
   type SpectreTextSize,
   type SpectreTextTransform,
   type SpectreTextVariant
 } from '../../utils/form'
 
-import { getTextClasses } from '@phcdevworks/spectre-ui'
+import {
+  getDisplayClasses,
+  getHeadingClasses,
+  getLeadClasses,
+  getTextClasses
+} from '@phcdevworks/spectre-ui'
 
 const LEVEL_TAGS: Record<SpectreTextLevel, ReturnType<typeof literal>> = {
   h1: literal`h1`,
@@ -33,9 +44,12 @@ export interface SpectreTextProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
+  displayLevel?: SpectreDisplayLevel | undefined
   family?: SpectreTextFamily | undefined
+  headingLevel?: SpectreHeadingLevel | undefined
   id?: string | null | undefined
   level?: SpectreTextLevel | undefined
+  preset?: SpectreTextPreset | undefined
   size?: SpectreTextSize | undefined
   title?: string | null | undefined
   transform?: SpectreTextTransform | undefined
@@ -47,15 +61,21 @@ export class SpectreTextElement
   implements SpectreTextProps
 {
   static properties = {
+    displayLevel: { attribute: 'display-level', type: Number, reflect: true },
     family: { type: String, reflect: true },
+    headingLevel: { attribute: 'heading-level', type: String, reflect: true },
     level: { type: String, reflect: true },
+    preset: { type: String, reflect: true },
     size: { type: String, reflect: true },
     transform: { type: String, reflect: true },
     variant: { type: String, reflect: true }
   }
 
+  displayLevel: SpectreDisplayLevel | undefined = undefined
   family: SpectreTextFamily | undefined
+  headingLevel: SpectreHeadingLevel | undefined = undefined
   level: SpectreTextLevel | undefined = 'p'
+  preset: SpectreTextPreset | undefined = undefined
   size: SpectreTextSize | undefined = 'md'
   transform: SpectreTextTransform | undefined
   variant: SpectreTextVariant | undefined = 'default'
@@ -63,6 +83,30 @@ export class SpectreTextElement
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (
+      changedProperties.has('displayLevel') &&
+      this.displayLevel != null &&
+      !isDisplayLevel(this.displayLevel)
+    ) {
+      this.displayLevel = undefined
+    }
+
+    if (
+      changedProperties.has('headingLevel') &&
+      this.headingLevel != null &&
+      !isHeadingLevel(this.headingLevel)
+    ) {
+      this.headingLevel = undefined
+    }
+
+    if (
+      changedProperties.has('preset') &&
+      this.preset != null &&
+      !isTextPreset(this.preset)
+    ) {
+      this.preset = undefined
+    }
+
     if (changedProperties.has('family') && !isTextFamily(this.family)) {
       this.family = undefined
     }
@@ -117,20 +161,36 @@ export class SpectreTextElement
     return el.hasAttribute('data-sp-text-native')
   }
 
-  override render() {
-    const tag = LEVEL_TAGS[this.level ?? 'p']
-    const textClasses = getTextClasses({
+  // A typography preset replaces the text recipe: each sets its own size,
+  // weight, and color.
+  private get textClasses(): string {
+    const level = this.level ?? 'p'
+    switch (this.preset) {
+      case 'heading':
+        return getHeadingClasses({
+          level: this.headingLevel ?? (isHeadingLevel(level) ? level : 'h2')
+        })
+      case 'display':
+        return getDisplayClasses({ level: this.displayLevel ?? 1 })
+      case 'lead':
+        return getLeadClasses()
+    }
+    return getTextClasses({
       ...(this.family !== undefined && { family: this.family }),
       size: this.size ?? 'md',
       ...(this.transform !== undefined && { transform: this.transform }),
       variant: this.variant ?? 'default'
     })
+  }
+
+  override render() {
+    const tag = LEVEL_TAGS[this.level ?? 'p']
 
     return staticHtml`<${tag}
       aria-describedby="${ifDefined(this.forwardedAriaDescribedBy)}"
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
       aria-labelledby="${ifDefined(this.forwardedAriaLabelledBy)}"
-      class="${textClasses}"
+      class="${this.textClasses}"
       data-sp-text-native
       id="${ifDefined(this.id || undefined)}"
       title="${ifDefined(this.title || undefined)}"

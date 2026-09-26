@@ -1,5 +1,5 @@
 export {
   defineSpectreSelect,
   SpectreSelectElement,
-  type SpectreSelectProps,
-} from './sp-select';
+  type SpectreSelectProps
+} from './sp-select'

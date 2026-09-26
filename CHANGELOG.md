@@ -6,6 +6,102 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.21.0] - 2026-09-26
+
+**Release Title:** Expanded Components and Recipe Parity
+
+Contract change type: additive
+
+### Added
+
+- Broad component inventory (TODO.md "Requested by Downstream",
+  approved by Bradley Potts on 2026-09-24), backed by the matching
+  `@phcdevworks/spectre-ui` 5.3.0 recipes. Each implements the established
+  behavior contract, not another system's visuals, and has its own subpath
+  entry point:
+  - `sp-tabs` / `sp-tab-panel` — WAI-ARIA tabs with automatic activation,
+    roving `tabindex`, arrow/`Home`/`End` keys (vertical-aware), disabled-tab
+    skipping, `line`/`pill` variants, `vertical`, `full-width`, and a
+    `selected-index` property with an `sp-change` event.
+  - `sp-accordion` / `sp-accordion-item` — button/region disclosure items with
+    `open`, `disabled`, a `slot="header"` override, `sp-open`/`sp-close`
+    events, single-open behavior unless `multiple`, and `flush`.
+  - `sp-breadcrumb` — `<nav>`/`<ol>` trail from projected children, with
+    `aria-current="page"` on the last item and an optional decorative
+    `separator`.
+  - `sp-list-group` / `sp-list-group-item` — static `<li>`, link, or button
+    rows with `active`, `selected`, and `disabled` states, `flush`,
+    `horizontal`, `accent`/`accent-color`, and an `sp-select` event.
+  - `sp-offcanvas` — slide-in dialog with `start`/`end`/`top`/`bottom`
+    placement, a header title and close button, header/footer slots, focus
+    trap, `Esc`/backdrop dismissal, focus restoration, and `sp-close`.
+  - `sp-carousel` — WAI-ARIA carousel over the native scroll-snap viewport
+    (swipe stays in sync), with previous/next controls, indicators, arrow
+    keys, `loop`, `fade`, and `sp-change`. No autoplay.
+  - `sp-table` — styles an authored `<table>` (`size`, `striped`,
+    `hoverable`, `bordered`) inside the scroll wrapper, which becomes a
+    focusable region when labelled.
+  - `sp-pagination` — page range with ellipses (`page`, `total`, `siblings`),
+    `sm`/`md`/`lg` sizes, button or `href-template` link modes, and
+    `sp-change`.
+  - `sp-stepper` — `<ol>` of steps from projected children with
+    done/active/pending states derived from `current`, and `horizontal`/
+    `vertical` orientation.
+- `sp-alert` gains the `brand` variant, a `dismissible` close button
+  (`dismiss-label`, `sp-dismiss` event), and a `slot="icon"` leading icon
+  slot, backed by `getAlertIconClasses`/`getAlertDismissClasses`.
+- Browser regression coverage (`npm run test:browser`) for the new components'
+  structural recipe styles (item dividers, step connectors, breadcrumb
+  separators), carousel scrolling, and offcanvas focus.
+- Full `@phcdevworks/spectre-ui` 5.3.0 recipe parity. Every published recipe
+  helper now has a component consumer:
+  - New components: `sp-switch`, `sp-range`, `sp-file-input`,
+    `sp-input-group`, `sp-choice-card`, `sp-progress`, `sp-popover`,
+    `sp-datepicker` (inline calendar with WAI-ARIA date-grid keyboard support
+    and a hidden form input), `sp-external-auth-button`, `sp-card-bleed`, and
+    `sp-prose`, each with its own subpath entry point.
+  - New values: `sp-button` `warning`/`link`/`light`/`dark`, `sp-badge`
+    `brand`, `sp-spinner` `inverse`, `sp-toast` `neutral`, `sp-text`
+    `onSurface*` variants, `sp-container` `max-width="none|wide"`, and
+    `sp-stack` `basis="none"`.
+  - New options: `sp-badge` `dot`/`interactive`; `sp-rating`
+    `interactive`/`pill`/`full-width`; `sp-alert` `interactive`;
+    `sp-container` `padding`; `sp-section` `spacing`/`gap`; `sp-grid`
+    `col-start`; `sp-nav-item` `active` (with `aria-current="page"`) and
+    `disabled`, plus its dropdown's `viewport`, `full-width`, and
+    `accent`/`accent-color`.
+  - `sp-text` typography presets: `preset="heading|display|lead"` with
+    `heading-level` and `display-level`.
+  - Forced `hovered`/`focused`/`active` interaction states on every component
+    whose recipe supports them (`hovered`/`focused` only where the recipe has
+    no pressed state, and `focused` alone on `sp-select`/`sp-textarea`).
+  - Sub-part slots matching `spectre-ui-astro`: `sp-pricing-card`
+    `badge`/`price`/`description`/`header`/`footer`, `sp-testimonial`
+    `quote`/`author-image`/`author-name`/`author-title`, and `sp-input`
+    `label`/`helper-text`/`error-message`. The field wrapper renders only when
+    one of these is set, and an error message sets the error state and
+    `aria-invalid`.
+  - Opt-in `slot` part markers that apply class-only recipe parts in place:
+    `sp-footer` (`heading`, `text`, `muted`, `links`, `divider`), `sp-nav`
+    (`links`), `sp-sidebar` (`header`, `group` on a `<details>`), dropdown and
+    nav-item menus (`item`, `header`, `divider`), `sp-list-group-item`
+    (`heading`, `text`), and `sp-carousel` captions. `sp-table` rows opt in to
+    contextual colors with `data-variant`.
+- Browser regression coverage for input-group seams, the calendar grid, range
+  fill, progress width, popover visibility, and datepicker keyboard focus.
+
+### Changed
+
+- `sp-pricing-card` and `sp-testimonial` render slotted sub-parts; unslotted
+  content renders exactly as before.
+
+- Dependencies are now `@phcdevworks/spectre-tokens` `^4.11.0` and
+  `@phcdevworks/spectre-ui` `^5.3.0`. Checked `sp-checkbox` and `sp-radio`
+  controls now draw the upstream checkmark and dot; their visual baselines
+  were regenerated.
+- `sp-modal` uses the shared focus-trap helpers that `sp-offcanvas` also uses;
+  behavior is unchanged.
+
 ## [1.20.0] - 2026-09-20
 
 **Release Title:** Accent Rails and Viewport Menus
@@ -855,7 +951,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.20.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.21.0...HEAD
+[1.21.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.20.0...v1.21.0
 [1.20.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.19.0...v1.20.0
 [1.19.0]:

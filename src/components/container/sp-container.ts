@@ -4,13 +4,16 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isContainerMaxWidth,
+  isSpacingStep,
   sanitizeUtilityClasses,
-  type SpectreContainerMaxWidth
+  type SpectreContainerMaxWidth,
+  type SpectreSpacingStep
 } from '../../utils/form'
 
 import {
   getContainerClasses,
-  type ContainerMaxWidth
+  type ContainerMaxWidth,
+  type ContainerPadding
 } from '@phcdevworks/spectre-ui'
 
 export interface SpectreContainerProps {
@@ -20,6 +23,7 @@ export interface SpectreContainerProps {
   id?: string | null | undefined
   innerClass?: string | undefined
   maxWidth?: SpectreContainerMaxWidth | undefined
+  padding?: SpectreSpacingStep | undefined
   title?: string | null | undefined
 }
 
@@ -29,11 +33,13 @@ export class SpectreContainerElement
 {
   static properties = {
     innerClass: { attribute: 'inner-class', type: String },
-    maxWidth: { attribute: 'max-width', type: String, reflect: true }
+    maxWidth: { attribute: 'max-width', type: String, reflect: true },
+    padding: { type: String, reflect: true }
   }
 
   innerClass: string | undefined = undefined
   maxWidth: SpectreContainerMaxWidth | undefined = undefined
+  padding: SpectreSpacingStep | undefined = undefined
 
   override get id(): string {
     return super.id
@@ -78,18 +84,26 @@ export class SpectreContainerElement
     ) {
       this.maxWidth = undefined
     }
+    if (
+      changedProperties.has('padding') &&
+      this.padding != null &&
+      !isSpacingStep(this.padding)
+    ) {
+      this.padding = undefined
+    }
   }
 
   private get containerClasses(): string {
-    const recipeClasses = getContainerClasses(
-      this.maxWidth != null
-        ? { maxWidth: this.maxWidth as ContainerMaxWidth }
-        : {}
-    )
+    const recipeClasses = getContainerClasses({
+      ...(this.maxWidth != null && {
+        maxWidth: this.maxWidth as ContainerMaxWidth
+      }),
+      ...(this.padding != null && {
+        padding: this.padding as ContainerPadding
+      })
+    })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
-    return utilityClasses
-      ? `${recipeClasses} ${utilityClasses}`
-      : recipeClasses
+    return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
   }
 
   override render() {

@@ -6,7 +6,13 @@ import {
   spectreTextSizes,
   type SpectreTextSize,
   spectreTextVariants,
-  type SpectreTextVariant
+  type SpectreTextVariant,
+  spectreTextPresets,
+  type SpectreTextPreset,
+  spectreHeadingLevels,
+  type SpectreHeadingLevel,
+  spectreDisplayLevels,
+  type SpectreDisplayLevel
 } from '../../utils/form'
 
 export {
@@ -23,5 +29,11 @@ export {
   spectreTextSizes,
   type SpectreTextSize,
   spectreTextVariants,
-  type SpectreTextVariant
+  type SpectreTextVariant,
+  spectreTextPresets,
+  type SpectreTextPreset,
+  spectreHeadingLevels,
+  type SpectreHeadingLevel,
+  spectreDisplayLevels,
+  type SpectreDisplayLevel
 }

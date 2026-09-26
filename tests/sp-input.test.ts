@@ -1,348 +1,348 @@
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { defineSpectreInput, SpectreInputElement } from '../src';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { defineSpectreInput, SpectreInputElement } from '../src'
 
 describe('sp-input', () => {
   beforeAll(() => {
-    defineSpectreInput();
-  });
+    defineSpectreInput()
+  })
 
   afterEach(() => {
-    document.body.innerHTML = '';
-  });
+    document.body.innerHTML = ''
+  })
 
   it('renders a native input with Spectre UI classes', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.size = 'lg';
-    element.fullWidth = true;
-    element.placeholder = 'Email address';
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.size = 'lg'
+    element.fullWidth = true
+    element.placeholder = 'Email address'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
+    const input = element.querySelector('input')
 
-    expect(input).not.toBeNull();
-    expect(input?.className).toContain('sp-input');
-    expect(input?.className).toContain('sp-input--lg');
-    expect(input?.className).toContain('sp-input--full');
-    expect(input?.getAttribute('type')).toBe('text');
-    expect(input?.getAttribute('placeholder')).toBe('Email address');
-    expect(input?.getAttribute('aria-invalid')).toBeNull();
-  });
+    expect(input).not.toBeNull()
+    expect(input?.className).toContain('sp-input')
+    expect(input?.className).toContain('sp-input--lg')
+    expect(input?.className).toContain('sp-input--full')
+    expect(input?.getAttribute('type')).toBe('text')
+    expect(input?.getAttribute('placeholder')).toBe('Email address')
+    expect(input?.getAttribute('aria-invalid')).toBeNull()
+  })
 
   it('reflects disabled, readonly, and required state to the native input and handles dynamic updates', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.disabled = true;
-    element.readonly = true;
-    element.required = true;
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.disabled = true
+    element.readonly = true
+    element.required = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let input = element.querySelector('input');
+    let input = element.querySelector('input')
 
-    expect(input?.disabled).toBe(true);
-    expect(input?.readOnly).toBe(true);
-    expect(input?.required).toBe(true);
-    expect(input?.className).toContain('sp-input--disabled');
+    expect(input?.disabled).toBe(true)
+    expect(input?.readOnly).toBe(true)
+    expect(input?.required).toBe(true)
+    expect(input?.className).toContain('sp-input--disabled')
 
-    element.disabled = false;
-    element.readonly = false;
-    element.required = false;
-    await element.updateComplete;
+    element.disabled = false
+    element.readonly = false
+    element.required = false
+    await element.updateComplete
 
-    input = element.querySelector('input');
-    expect(input?.disabled).toBe(false);
-    expect(input?.readOnly).toBe(false);
-    expect(input?.required).toBe(false);
-    expect(input?.className).not.toContain('sp-input--disabled');
-  });
+    input = element.querySelector('input')
+    expect(input?.disabled).toBe(false)
+    expect(input?.readOnly).toBe(false)
+    expect(input?.required).toBe(false)
+    expect(input?.className).not.toContain('sp-input--disabled')
+  })
 
   it('applies invalid semantics without overriding the accessible name', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.invalid = true;
-    element.setAttribute('aria-label', 'Project name');
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.invalid = true
+    element.setAttribute('aria-label', 'Project name')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
+    const input = element.querySelector('input')
 
-    expect(input?.getAttribute('aria-invalid')).toBe('true');
-    expect(input?.getAttribute('aria-label')).toBe('Project name');
-    expect(input?.className).toContain('sp-input--error');
-  });
+    expect(input?.getAttribute('aria-invalid')).toBe('true')
+    expect(input?.getAttribute('aria-label')).toBe('Project name')
+    expect(input?.className).toContain('sp-input--error')
+  })
 
   it('supports initial value from attribute and property updates', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.setAttribute('value', 'initial@example.com');
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.setAttribute('value', 'initial@example.com')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let input = element.querySelector('input');
-    expect(input?.value).toBe('initial@example.com');
+    let input = element.querySelector('input')
+    expect(input?.value).toBe('initial@example.com')
 
-    element.value = 'next@example.com';
-    await element.updateComplete;
+    element.value = 'next@example.com'
+    await element.updateComplete
 
-    input = element.querySelector('input');
-    expect(input?.value).toBe('next@example.com');
-  });
+    input = element.querySelector('input')
+    expect(input?.value).toBe('next@example.com')
+  })
 
   it('applies the consumer-facing id to the native input without duplicating it on the host', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.setAttribute('id', 'email-address');
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.setAttribute('id', 'email-address')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let input = element.querySelector('input');
+    let input = element.querySelector('input')
 
-    expect(element.id).toBe('email-address');
-    expect(element.getAttribute('id')).toBe('email-address');
-    expect(superHasIdAttribute(element)).toBe(false);
-    expect(input?.id).toBe('email-address');
+    expect(element.id).toBe('email-address')
+    expect(element.getAttribute('id')).toBe('email-address')
+    expect(superHasIdAttribute(element)).toBe(false)
+    expect(input?.id).toBe('email-address')
 
-    element.id = 'billing-email';
-    await element.updateComplete;
+    element.id = 'billing-email'
+    await element.updateComplete
 
-    input = element.querySelector('input');
+    input = element.querySelector('input')
 
-    expect(element.id).toBe('billing-email');
-    expect(superHasIdAttribute(element)).toBe(false);
-    expect(input?.id).toBe('billing-email');
-  });
+    expect(element.id).toBe('billing-email')
+    expect(superHasIdAttribute(element)).toBe(false)
+    expect(input?.id).toBe('billing-email')
+  })
 
   it('keeps host value in sync while native input and change events bubble normally', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    const onInput = vi.fn();
-    const onChange = vi.fn();
+    const element = document.createElement('sp-input') as SpectreInputElement
+    const onInput = vi.fn()
+    const onChange = vi.fn()
 
-    element.addEventListener('input', onInput);
-    element.addEventListener('change', onChange);
+    element.addEventListener('input', onInput)
+    element.addEventListener('change', onChange)
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
+    const input = element.querySelector('input')
 
-    expect(input).not.toBeNull();
+    expect(input).not.toBeNull()
 
-    input!.value = 'typed value';
-    input!.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
-    await element.updateComplete;
+    input!.value = 'typed value'
+    input!.dispatchEvent(new Event('input', { bubbles: true, composed: true }))
+    await element.updateComplete
 
-    expect(element.value).toBe('typed value');
-    expect(onInput).toHaveBeenCalledTimes(1);
+    expect(element.value).toBe('typed value')
+    expect(onInput).toHaveBeenCalledTimes(1)
 
-    input!.dispatchEvent(new Event('change', { bubbles: true }));
-    await element.updateComplete;
+    input!.dispatchEvent(new Event('change', { bubbles: true }))
+    await element.updateComplete
 
-    expect(element.value).toBe('typed value');
-    expect(onChange).toHaveBeenCalledTimes(1);
-  });
+    expect(element.value).toBe('typed value')
+    expect(onChange).toHaveBeenCalledTimes(1)
+  })
 
   it('falls back safely for unsupported type and size values', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.type = 'file' as never;
-    element.size = 'xl' as never;
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.type = 'file' as never
+    element.size = 'xl' as never
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
+    const input = element.querySelector('input')
 
-    expect(element.type).toBe('text');
-    expect(element.size).toBe('md');
-    expect(input?.getAttribute('type')).toBe('text');
-    expect(input?.className).toContain('sp-input--md');
-  });
+    expect(element.type).toBe('text')
+    expect(element.size).toBe('md')
+    expect(input?.getAttribute('type')).toBe('text')
+    expect(input?.className).toContain('sp-input--md')
+  })
 
   it('forwards aria-labelledby and aria-describedby', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.setAttribute('aria-labelledby', 'label-id');
-    element.setAttribute('aria-describedby', 'desc-id');
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.setAttribute('aria-labelledby', 'label-id')
+    element.setAttribute('aria-describedby', 'desc-id')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
-    expect(input?.getAttribute('aria-labelledby')).toBe('label-id');
-    expect(input?.getAttribute('aria-describedby')).toBe('desc-id');
-  });
+    const input = element.querySelector('input')
+    expect(input?.getAttribute('aria-labelledby')).toBe('label-id')
+    expect(input?.getAttribute('aria-describedby')).toBe('desc-id')
+  })
 
   it('handles focus and blur correctly', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement('sp-input') as SpectreInputElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
-    const onFocus = vi.fn();
-    const onBlur = vi.fn();
+    const input = element.querySelector('input')
+    const onFocus = vi.fn()
+    const onBlur = vi.fn()
 
-    input?.addEventListener('focus', onFocus);
-    input?.addEventListener('blur', onBlur);
+    input?.addEventListener('focus', onFocus)
+    input?.addEventListener('blur', onBlur)
 
-    element.focus();
-    expect(onFocus).toHaveBeenCalled();
+    element.focus()
+    expect(onFocus).toHaveBeenCalled()
 
-    element.blur();
-    expect(onBlur).toHaveBeenCalled();
-  });
+    element.blur()
+    expect(onBlur).toHaveBeenCalled()
+  })
 
   it('forwards title and autofocus to the native input', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.title = 'Enter your email';
-    element.autofocus = true;
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.title = 'Enter your email'
+    element.autofocus = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
-    expect(input?.getAttribute('title')).toBe('Enter your email');
-    expect(input?.hasAttribute('autofocus')).toBe(true);
-  });
+    const input = element.querySelector('input')
+    expect(input?.getAttribute('title')).toBe('Enter your email')
+    expect(input?.hasAttribute('autofocus')).toBe(true)
+  })
 
   it('forwards the form attribute to the native input', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.form = 'test-form';
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.form = 'test-form'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
-    expect(input?.getAttribute('form')).toBe('test-form');
-  });
+    const input = element.querySelector('input')
+    expect(input?.getAttribute('form')).toBe('test-form')
+  })
 
   it('participates in ancestor form submission via FormData', async () => {
-    const form = document.createElement('form');
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.name = 'email';
-    element.value = 'user@example.com';
-    form.append(element);
-    document.body.append(form);
-    await element.updateComplete;
+    const form = document.createElement('form')
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.name = 'email'
+    element.value = 'user@example.com'
+    form.append(element)
+    document.body.append(form)
+    await element.updateComplete
 
-    const formData = new FormData(form);
-    expect(formData.get('email')).toBe('user@example.com');
-  });
+    const formData = new FormData(form)
+    expect(formData.get('email')).toBe('user@example.com')
+  })
 
   it('reports native required validity through the wrapper', async () => {
-    const form = document.createElement('form');
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.name = 'email';
-    element.required = true;
-    form.append(element);
-    document.body.append(form);
-    await element.updateComplete;
+    const form = document.createElement('form')
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.name = 'email'
+    element.required = true
+    form.append(element)
+    document.body.append(form)
+    await element.updateComplete
 
-    const input = element.querySelector('input') as HTMLInputElement;
+    const input = element.querySelector('input') as HTMLInputElement
 
-    expect(input.checkValidity()).toBe(false);
-    expect(form.checkValidity()).toBe(false);
+    expect(input.checkValidity()).toBe(false)
+    expect(form.checkValidity()).toBe(false)
 
-    element.value = 'user@example.com';
-    await element.updateComplete;
+    element.value = 'user@example.com'
+    await element.updateComplete
 
-    expect(input.checkValidity()).toBe(true);
-    expect(form.checkValidity()).toBe(true);
-  });
+    expect(input.checkValidity()).toBe(true)
+    expect(form.checkValidity()).toBe(true)
+  })
 
   it('applies success, loading, and pill classes correctly', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.success = true;
-    element.pill = true;
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.success = true
+    element.pill = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let input = element.querySelector('input');
-    expect(input?.className).toContain('sp-input--success');
-    expect(input?.className).toContain('sp-input--pill');
+    let input = element.querySelector('input')
+    expect(input?.className).toContain('sp-input--success')
+    expect(input?.className).toContain('sp-input--pill')
 
-    element.success = false;
-    element.loading = true;
-    await element.updateComplete;
+    element.success = false
+    element.loading = true
+    await element.updateComplete
 
-    input = element.querySelector('input');
-    expect(input?.className).toContain('sp-input--loading');
-    expect(input?.className).not.toContain('sp-input--success');
-    expect(input?.getAttribute('aria-busy')).toBe('true');
+    input = element.querySelector('input')
+    expect(input?.className).toContain('sp-input--loading')
+    expect(input?.className).not.toContain('sp-input--success')
+    expect(input?.getAttribute('aria-busy')).toBe('true')
 
-    element.loading = false;
-    await element.updateComplete;
-    input = element.querySelector('input');
-    expect(input?.getAttribute('aria-busy')).toBe('false');
-  });
+    element.loading = false
+    await element.updateComplete
+    input = element.querySelector('input')
+    expect(input?.getAttribute('aria-busy')).toBe('false')
+  })
 
   it('tightens maxlength and minlength validation', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
+    const element = document.createElement('sp-input') as SpectreInputElement
     // @ts-expect-error -- exercising runtime coercion for invalid consumer values
-    element.maxlength = 'invalid';
-    element.minlength = -5;
+    element.maxlength = 'invalid'
+    element.minlength = -5
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.maxlength).toBeUndefined();
-    expect(element.minlength).toBeUndefined();
+    expect(element.maxlength).toBeUndefined()
+    expect(element.minlength).toBeUndefined()
 
-    element.maxlength = 10;
-    await element.updateComplete;
-    expect(element.maxlength).toBe(10);
+    element.maxlength = 10
+    await element.updateComplete
+    expect(element.maxlength).toBe(10)
 
     // @ts-expect-error -- exercising runtime coercion for invalid consumer values
-    element.maxlength = null;
-    await element.updateComplete;
-    expect(element.maxlength).toBeUndefined();
-  });
+    element.maxlength = null
+    await element.updateComplete
+    expect(element.maxlength).toBeUndefined()
+  })
 
   it('renders an empty value when value is explicitly an empty string', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.value = '';
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.value = ''
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
-    expect(input?.value).toBe('');
-  });
+    const input = element.querySelector('input')
+    expect(input?.value).toBe('')
+  })
 
   it('forwards autocapitalize, spellcheck, enterkeyhint, pattern, and list', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
-    element.autocapitalize = 'words';
-    element.spellcheck = true;
-    element.enterkeyhint = 'next';
-    element.pattern = '[a-z]*';
-    element.list = 'options-list';
+    const element = document.createElement('sp-input') as SpectreInputElement
+    element.autocapitalize = 'words'
+    element.spellcheck = true
+    element.enterkeyhint = 'next'
+    element.pattern = '[a-z]*'
+    element.list = 'options-list'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
-    expect(input?.getAttribute('autocapitalize')).toBe('words');
-    expect(input?.getAttribute('spellcheck')).toBe('true');
-    expect(input?.getAttribute('enterkeyhint')).toBe('next');
-    expect(input?.getAttribute('pattern')).toBe('[a-z]*');
-    expect(input?.getAttribute('list')).toBe('options-list');
+    const input = element.querySelector('input')
+    expect(input?.getAttribute('autocapitalize')).toBe('words')
+    expect(input?.getAttribute('spellcheck')).toBe('true')
+    expect(input?.getAttribute('enterkeyhint')).toBe('next')
+    expect(input?.getAttribute('pattern')).toBe('[a-z]*')
+    expect(input?.getAttribute('list')).toBe('options-list')
 
-    element.spellcheck = false;
-    await element.updateComplete;
-    expect(input?.getAttribute('spellcheck')).toBe('false');
-  });
+    element.spellcheck = false
+    await element.updateComplete
+    expect(input?.getAttribute('spellcheck')).toBe('false')
+  })
 
   it('does not render a spellcheck attribute when not explicitly set', async () => {
-    const element = document.createElement('sp-input') as SpectreInputElement;
+    const element = document.createElement('sp-input') as SpectreInputElement
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input');
-    expect(input?.hasAttribute('spellcheck')).toBe(false);
-  });
-});
+    const input = element.querySelector('input')
+    expect(input?.hasAttribute('spellcheck')).toBe(false)
+  })
+})
 
 function superHasIdAttribute(element: HTMLElement): boolean {
-  return HTMLElement.prototype.hasAttribute.call(element, 'id');
+  return HTMLElement.prototype.hasAttribute.call(element, 'id')
 }

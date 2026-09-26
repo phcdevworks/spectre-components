@@ -3,9 +3,15 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 
+import {
+  hoverFocusStateProperties,
+  hoverFocusStates,
+  type SpectreHoverFocusStateProps
+} from '../../utils/states'
+
 import { getFooterLinkClasses } from '@phcdevworks/spectre-ui'
 
-export interface SpectreFooterLinkProps {
+export interface SpectreFooterLinkProps extends SpectreHoverFocusStateProps {
   active?: boolean | undefined
   ariaLabel?: string | null
   disabled?: boolean | undefined
@@ -19,10 +25,14 @@ export class SpectreFooterLinkElement
   implements SpectreFooterLinkProps
 {
   static properties = {
+    ...hoverFocusStateProperties,
     active: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     href: { type: String }
   }
+
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   active: boolean | undefined = false
   disabled: boolean | undefined = false
@@ -69,6 +79,7 @@ export class SpectreFooterLinkElement
 
   private get footerLinkClasses(): string {
     return getFooterLinkClasses({
+      ...hoverFocusStates(this),
       active: this.active ?? false,
       disabled: this.disabled ?? false
     })

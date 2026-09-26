@@ -16,7 +16,7 @@ consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.20.0                              |
+| Current version/status | 1.21.0                              |
 
 ## Standard Workflow
 
@@ -36,6 +36,7 @@ consume Spectre without a framework-specific adapter.
 | Codex       | [CODEX.md](CODEX.md)         |
 | Copilot     | [COPILOT.md](COPILOT.md)     |
 | Jules       | [JULES.md](JULES.md)         |
+| Grok        | [GROK.md](GROK.md)           |
 | Roadmap     | [ROADMAP.md](ROADMAP.md)     |
 | Todo        | [TODO.md](TODO.md)           |
 | Changelog   | [CHANGELOG.md](CHANGELOG.md) |
@@ -702,22 +703,28 @@ recipe.
 
 **Attributes**
 
-| Attribute                 | Type                                              | Default | Description                     |
-| ------------------------- | ------------------------------------------------- | ------- | ------------------------------- |
-| `variant`                 | `info \| success \| warning \| danger \| neutral` | `info`  | Visual style                    |
-| `size`                    | `sm \| md \| lg`                                  | `md`    | Alert size                      |
-| `dismissed`               | boolean                                           | `false` | Dismissed visual state          |
-| `disabled`                | boolean                                           | `false` | Disabled visual state           |
-| `loading`                 | boolean                                           | `false` | Busy visual state               |
-| `full-width`              | boolean                                           | `false` | Spans full container width      |
-| `id` / `title` / `aria-*` | string                                            | —       | Forwarded to the native `<div>` |
+| Attribute                 | Type                                                       | Default   | Description                                     |
+| ------------------------- | ---------------------------------------------------------- | --------- | ----------------------------------------------- |
+| `variant`                 | `info \| success \| warning \| danger \| neutral \| brand` | `info`    | Visual style                                    |
+| `size`                    | `sm \| md \| lg`                                           | `md`      | Alert size                                      |
+| `dismissible`             | boolean                                                    | `false`   | Renders a close button that dismisses the alert |
+| `dismiss-label`           | string                                                     | `Dismiss` | Accessible name of the close button             |
+| `dismissed`               | boolean                                                    | `false`   | Dismissed (hidden) state                        |
+| `disabled`                | boolean                                                    | `false`   | Disabled visual state                           |
+| `loading`                 | boolean                                                    | `false`   | Busy visual state                               |
+| `full-width`              | boolean                                                    | `false`   | Spans full container width                      |
+| `id` / `title` / `aria-*` | string                                                     | —         | Forwarded to the native `<div>`                 |
 
-**Content projection** — children become the alert content.
+**Content projection** — an element with `slot="icon"` renders in the leading
+icon slot, colored by the variant; all other children become the alert content.
 
 **Accessibility** — renders `role="alert"` and reflects the `loading` state to
 `aria-busy`.
 
-**Internal target** — `[data-sp-alert-native]` selects the native `<div>`.
+**Events** — `sp-dismiss` (bubbling) when the close button dismisses the alert.
+
+**Internal targets** — `[data-sp-alert-native]` selects the native `<div>`;
+`[data-sp-alert-dismiss]` selects the close button.
 
 ---
 
@@ -1333,6 +1340,577 @@ switches with `level` while the recipe call and styling stay the same.
 **Internal target** — `[data-sp-text-native]` selects the rendered native
 element.
 
+---
+
+### sp-tabs / sp-tab-panel
+
+Renders an ARIA tablist from its `sp-tab-panel` children, backed by the Spectre
+tabs recipes. Each panel supplies its tab's label; `sp-tabs` renders the tab
+buttons and owns selection.
+
+```html
+<sp-tabs aria-label="Account settings">
+  <sp-tab-panel label="Profile">Profile settings</sp-tab-panel>
+  <sp-tab-panel label="Security">Security settings</sp-tab-panel>
+</sp-tabs>
+```
+
+**`sp-tabs` attributes**
+
+| Attribute        | Type           | Default | Description                                                                     |
+| ---------------- | -------------- | ------- | ------------------------------------------------------------------------------- |
+| `selected-index` | number         | `0`     | Selected panel; a disabled or missing panel falls back to the first enabled one |
+| `variant`        | `line \| pill` | `line`  | Indicator-edge or segmented-control treatment                                   |
+| `vertical`       | boolean        | `false` | Places the tab list beside the panels                                           |
+| `full-width`     | boolean        | `false` | Tabs share the list width equally                                               |
+| `aria-label`     | string         | —       | Forwarded to the tablist                                                        |
+| `id` / `title`   | string         | —       | Forwarded to the tabs container                                                 |
+
+**`sp-tab-panel` attributes**
+
+| Attribute      | Type    | Default | Description                                                     |
+| -------------- | ------- | ------- | --------------------------------------------------------------- |
+| `label`        | string  | —       | Tab button text                                                 |
+| `disabled`     | boolean | `false` | Disables the tab                                                |
+| `selected`     | boolean | `false` | Reflects selection; set by the parent `sp-tabs`, not by authors |
+| `id` / `title` | string  | —       | Forwarded to the native `role="tabpanel"` element               |
+
+**Behavior** — follows the WAI-ARIA tabs pattern with automatic activation:
+roving `tabindex`, `ArrowLeft`/`ArrowRight` (`ArrowUp`/`ArrowDown` when
+`vertical`), `Home`, and `End`, skipping disabled tabs.
+
+**Events** — `sp-change` (bubbling) with `detail: { index }` when the user
+selects a tab.
+
+**Internal targets** — `[data-sp-tabs-native]` selects the tabs container,
+`[data-sp-tabs-tab]` each tab button, and `[data-sp-tab-panel-native]` each
+panel.
+
+---
+
+### sp-accordion / sp-accordion-item
+
+Renders a stack of disclosure items backed by the Spectre accordion recipes.
+
+```html
+<sp-accordion>
+  <sp-accordion-item label="Shipping" open>Ships in 2 days.</sp-accordion-item>
+  <sp-accordion-item label="Returns">30 day returns.</sp-accordion-item>
+</sp-accordion>
+```
+
+**`sp-accordion` attributes**
+
+| Attribute      | Type    | Default | Description                                                           |
+| -------------- | ------- | ------- | --------------------------------------------------------------------- |
+| `flush`        | boolean | `false` | Drops the outer border and radius                                     |
+| `multiple`     | boolean | `false` | Lets several items stay open; otherwise opening one closes the others |
+| `id` / `title` | string  | —       | Forwarded to the accordion container                                  |
+
+**`sp-accordion-item` attributes**
+
+| Attribute                 | Type    | Default | Description                    |
+| ------------------------- | ------- | ------- | ------------------------------ |
+| `label`                   | string  | —       | Header text                    |
+| `open`                    | boolean | `false` | Expanded state                 |
+| `disabled`                | boolean | `false` | Prevents toggling              |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the header button |
+
+**Content projection** — an element with `slot="header"` replaces the `label`
+text in the header; all other children become the panel content.
+
+**Accessibility** — the header is a native `<button>` with `aria-expanded` and
+`aria-controls`; the panel is a `role="region"` labelled by its header.
+
+**Events** — `sp-open` and `sp-close` (bubbling) from the item when the user
+toggles it. The single-open behavior responds to user toggles only; setting
+`open` programmatically does not close sibling items.
+
+**Host classes** — the item host carries the `sp-accordion__item` recipe
+classes (author classes are preserved) so the recipe's divider between sibling
+items applies.
+
+**Internal targets** — `[data-sp-accordion-native]`,
+`[data-sp-accordion-item-header]`, `[data-sp-accordion-item-panel]`.
+
+---
+
+### sp-breadcrumb
+
+Renders a `<nav>` breadcrumb trail backed by the Spectre breadcrumb recipes.
+Each child element becomes one item; the last one is the current page.
+
+```html
+<sp-breadcrumb>
+  <a href="/">Home</a>
+  <a href="/library">Library</a>
+  <span>Data</span>
+</sp-breadcrumb>
+```
+
+| Attribute      | Type   | Default      | Description                                                           |
+| -------------- | ------ | ------------ | --------------------------------------------------------------------- |
+| `separator`    | string | —            | Replaces the built-in `/` with a decorative (`aria-hidden`) separator |
+| `aria-label`   | string | `Breadcrumb` | Forwarded to the `<nav>`                                              |
+| `id` / `title` | string | —            | Forwarded to the `<nav>`                                              |
+
+**Accessibility** — renders `<nav>` › `<ol>` › `<li>`; the last item gets
+`aria-current="page"`. Projected `<a>` children receive the
+`sp-breadcrumb__link` class.
+
+**Internal target** — `[data-sp-breadcrumb-native]` selects the `<nav>`.
+
+---
+
+### sp-list-group / sp-list-group-item
+
+Renders a list group backed by the Spectre list-group recipes. Each
+`sp-list-group-item` becomes a native row: a `<li>` when every item is static,
+or an `<a>` (with `href`), `<button>` (with `interactive`), or `<div>`
+otherwise.
+
+```html
+<sp-list-group aria-label="Mailboxes">
+  <sp-list-group-item href="/inbox" active>Inbox</sp-list-group-item>
+  <sp-list-group-item interactive>Archive</sp-list-group-item>
+</sp-list-group>
+```
+
+**`sp-list-group` attributes**
+
+| Attribute                 | Type                                                              | Default | Description                                   |
+| ------------------------- | ----------------------------------------------------------------- | ------- | --------------------------------------------- |
+| `flush`                   | boolean                                                           | `false` | Drops the outer border and radius             |
+| `horizontal`              | boolean                                                           | `false` | Lays rows out in a row                        |
+| `accent`                  | `top \| right \| bottom \| left`                                  | —       | Optional decorative edge-rail                 |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied with `accent` |
+| `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the list container               |
+
+**`sp-list-group-item` attributes**
+
+| Attribute                     | Type    | Default | Description                                        |
+| ----------------------------- | ------- | ------- | -------------------------------------------------- |
+| `href`                        | string  | —       | Renders the row as a link                          |
+| `target`                      | string  | —       | Link target                                        |
+| `interactive`                 | boolean | `false` | Renders the row as a button                        |
+| `active`                      | boolean | `false` | Current item; sets `aria-current="true"`           |
+| `selected`                    | boolean | `false` | Subtle checked tint, distinct from `active`        |
+| `disabled`                    | boolean | `false` | Disables a button row; removes a link row's `href` |
+| `id` / `title` / `aria-label` | string  | —       | Forwarded to the rendered row                      |
+
+**Content projection** — the item host (`display: contents`) moves inside the
+rendered row, so its children, including later edits, render in place. Use the
+`sp-list-group__heading` / `sp-list-group__text` classes for two-line rows.
+
+**Events** — `sp-select` (bubbling) from the item when a link or button row is
+activated.
+
+**Internal targets** — `[data-sp-list-group-native]` selects the list
+container, `[data-sp-list-group-row]` each row.
+
+---
+
+### sp-offcanvas
+
+Renders a slide-in dialog panel and backdrop backed by the Spectre offcanvas
+recipes.
+
+| Attribute                 | Type                            | Default | Description                                |
+| ------------------------- | ------------------------------- | ------- | ------------------------------------------ |
+| `open`                    | boolean                         | `false` | Open/closed state                          |
+| `placement`               | `start \| end \| top \| bottom` | `start` | Viewport edge the panel slides in from     |
+| `label`                   | string                          | —       | Header title; also labels the dialog       |
+| `close-label`             | string                          | `Close` | Accessible name of the header close button |
+| `id` / `title` / `aria-*` | string                          | —       | Forwarded to the native dialog element     |
+
+**Content projection** — `slot="header"` replaces the `label` title,
+`slot="footer"` fills the footer region, and all other children become the
+body.
+
+**Behavior** — while open: traps `Tab`/`Shift+Tab` focus, closes on `Esc`, the
+close button, or a backdrop click, focuses the first focusable element once
+the panel is visible, and restores focus on close. The closed panel is `inert`.
+
+**Events** — `sp-close` (bubbling) when the user closes it.
+
+**Internal targets** — `[data-sp-offcanvas-native]` (dialog),
+`[data-sp-offcanvas-backdrop]`, `[data-sp-offcanvas-close]`.
+
+---
+
+### sp-carousel
+
+Renders a slide carousel backed by the Spectre carousel recipes. Each child
+element becomes one slide. The viewport is a native scroll-snap track, so it
+stays swipeable without script.
+
+```html
+<sp-carousel aria-label="Featured work">
+  <img alt="Project one" src="one.jpg" />
+  <img alt="Project two" src="two.jpg" />
+</sp-carousel>
+```
+
+| Attribute         | Type    | Default          | Description                                     |
+| ----------------- | ------- | ---------------- | ----------------------------------------------- |
+| `index`           | number  | `0`              | Active slide                                    |
+| `fade`            | boolean | `false`          | Cross-fades instead of scroll-snapping          |
+| `loop`            | boolean | `false`          | Wraps from the last slide to the first and back |
+| `hide-controls`   | boolean | `false`          | Hides the previous/next buttons                 |
+| `hide-indicators` | boolean | `false`          | Hides the slide indicators                      |
+| `previous-label`  | string  | `Previous slide` | Accessible name of the previous button          |
+| `next-label`      | string  | `Next slide`     | Accessible name of the next button              |
+| `aria-label`      | string  | `Carousel`       | Forwarded to the carousel region                |
+| `id` / `title`    | string  | —                | Forwarded to the carousel region                |
+
+**Accessibility** — follows the WAI-ARIA carousel pattern: a
+`role="region"` with `aria-roledescription="carousel"`, slides as
+`role="group"` with `aria-roledescription="slide"` and an "n of N" label, and a
+polite live region. `ArrowLeft`/`ArrowRight` move between slides. There is no
+autoplay.
+
+**Events** — `sp-change` (bubbling) with `detail: { index }` when the user
+changes slides, including by swiping.
+
+**Internal targets** — `[data-sp-carousel-native]`,
+`[data-sp-carousel-viewport]`, `[data-sp-carousel-slide]`,
+`[data-sp-carousel-prev]`, `[data-sp-carousel-next]`,
+`[data-sp-carousel-indicator]`.
+
+---
+
+### sp-table
+
+Styles an authored `<table>` with the Spectre table recipes and wraps it in the
+horizontal-scroll wrapper. The table must be authored inside the component,
+because the HTML parser drops table parts outside a `<table>`.
+
+```html
+<sp-table striped aria-label="Team members">
+  <table>
+    <thead><tr><th scope="col">Name</th></tr></thead>
+    <tbody><tr><td>Ada</td></tr></tbody>
+  </table>
+</sp-table>
+```
+
+| Attribute                        | Type       | Default | Description                                           |
+| -------------------------------- | ---------- | ------- | ----------------------------------------------------- |
+| `size`                           | `sm \| md` | `md`    | Cell density                                          |
+| `striped`                        | boolean    | `false` | Tints alternating body rows                           |
+| `hoverable`                      | boolean    | `false` | Tints body rows under the pointer                     |
+| `bordered`                       | boolean    | `false` | Borders every cell                                    |
+| `aria-label` / `aria-labelledby` | string     | —       | Makes the wrapper a focusable, labelled scroll region |
+| `id` / `title`                   | string     | —       | Forwarded to the wrapper                              |
+
+Recipe classes are added to the authored `<table>` alongside its own classes.
+For contextual rows, use `aria-selected="true"` or the
+`sp-table__row--{neutral|info|success|warning|danger|selected}` classes.
+
+**Internal target** — `[data-sp-table-native]` selects the wrapper.
+
+---
+
+### sp-pagination
+
+Renders page navigation backed by the Spectre pagination recipes.
+
+```html
+<sp-pagination total="20" page="3"></sp-pagination>
+<sp-pagination total="20" href-template="/posts?page={page}"></sp-pagination>
+```
+
+| Attribute        | Type             | Default      | Description                                                   |
+| ---------------- | ---------------- | ------------ | ------------------------------------------------------------- |
+| `page`           | number           | `1`          | Current page, clamped to `1…total`                            |
+| `total`          | number           | `1`          | Page count                                                    |
+| `siblings`       | number           | `1`          | Pages shown either side of the current one before an ellipsis |
+| `size`           | `sm \| md \| lg` | `md`         | Item size                                                     |
+| `href-template`  | string           | —            | Renders links; `{page}` is replaced with the page number      |
+| `previous-label` | string           | `Previous`   | Previous control text                                         |
+| `next-label`     | string           | `Next`       | Next control text                                             |
+| `aria-label`     | string           | `Pagination` | Forwarded to the `<nav>`                                      |
+| `id` / `title`   | string           | —            | Forwarded to the `<nav>`                                      |
+
+**Accessibility** — the current page has `aria-current="page"`, page items are
+labelled "Page N", and boundary controls are disabled (`aria-disabled` without
+`href` in link mode).
+
+**Events** — `sp-change` (bubbling) with `detail: { page }` when the user picks
+a page. In link mode the browser still follows the link.
+
+**Internal target** — `[data-sp-pagination-native]` selects the `<nav>`.
+
+---
+
+### sp-stepper
+
+Renders a progress stepper backed by the Spectre stepper recipes. Each child
+element becomes one step label.
+
+```html
+<sp-stepper aria-label="Checkout" current="1">
+  <span>Cart</span>
+  <span>Shipping</span>
+  <span>Payment</span>
+</sp-stepper>
+```
+
+| Attribute                 | Type                     | Default      | Description                                             |
+| ------------------------- | ------------------------ | ------------ | ------------------------------------------------------- |
+| `current`                 | number                   | `0`          | Active step; earlier steps are done, later ones pending |
+| `orientation`             | `horizontal \| vertical` | `horizontal` | Layout direction                                        |
+| `id` / `title` / `aria-*` | string                   | —            | Forwarded to the native `<ol>`                          |
+
+**Accessibility** — renders an `<ol>`; the active step has
+`aria-current="step"`. Done steps show a check mark, others their number.
+Setting `current` to the step count marks every step done.
+
+**Internal target** — `[data-sp-stepper-native]` selects the `<ol>`.
+
+---
+
+### sp-switch
+
+Renders a native `<input type="checkbox" role="switch">` inside a `<label>`,
+backed by the Spectre switch recipe. It submits with its form like a checkbox.
+
+| Attribute                 | Type             | Default | Description                                  |
+| ------------------------- | ---------------- | ------- | -------------------------------------------- |
+| `checked`                 | boolean          | `false` | On/off state; follows user toggles           |
+| `size`                    | `sm \| md \| lg` | `md`    | Track size                                   |
+| `label`                   | string           | —       | Visible label when no children are projected |
+| `name` / `value` / `form` | string           | —       | Native form participation (`value` is `on`)  |
+| `disabled` / `required`   | boolean          | `false` | Native constraints                           |
+| `focused`                 | boolean          | `false` | Forced focus look (see Shared Conventions)   |
+| `id` / `title` / `aria-*` | string           | —       | Forwarded to the native input                |
+
+**Content projection** — children become the label text.
+
+---
+
+### sp-range
+
+Renders a native `<input type="range">` backed by the Spectre range recipe. It
+mirrors the value into `--sp-component-range-value` so WebKit/Blink paint the
+filled track.
+
+| Attribute                 | Type    | Default           | Description                         |
+| ------------------------- | ------- | ----------------- | ----------------------------------- |
+| `value`                   | number  | `50`              | Current value, clamped to `min…max` |
+| `min` / `max` / `step`    | number  | `0` / `100` / `1` | Native range bounds                 |
+| `name` / `form`           | string  | —                 | Native form participation           |
+| `disabled` / `focused`    | boolean | `false`           | Disabled state / forced focus look  |
+| `id` / `title` / `aria-*` | string  | —                 | Forwarded to the native input       |
+
+---
+
+### sp-file-input
+
+Renders a native `<input type="file">` backed by the Spectre file-input recipe,
+which styles the browser's file selector button. The `files` getter returns the
+native `FileList`.
+
+| Attribute                             | Type             | Default | Description                        |
+| ------------------------------------- | ---------------- | ------- | ---------------------------------- |
+| `size`                                | `sm \| md \| lg` | `md`    | Control size                       |
+| `invalid` / `success`                 | boolean          | `false` | Validation state (`invalid` wins)  |
+| `accept` / `multiple` / `required`    | string / boolean | —       | Native file constraints            |
+| `name` / `form`                       | string           | —       | Native form participation          |
+| `full-width` / `disabled` / `focused` | boolean          | `false` | Width, disabled, forced focus look |
+| `id` / `title` / `aria-*`             | string           | —       | Forwarded to the native input      |
+
+---
+
+### sp-input-group
+
+Fuses addons and native controls into one bordered control, backed by the
+Spectre input-group recipes. The recipe styles its *direct* children, so the
+group takes native `<input>`, `<select>`, `<button>`, and file inputs rather
+than `sp-*` wrappers. Controls without an `sp-*` class get their recipe class
+(buttons use the `secondary` variant). Children marked `slot="addon"` become
+addons. Authored order is preserved.
+
+```html
+<sp-input-group aria-label="Handle">
+  <span slot="addon">@</span>
+  <input aria-label="Username" />
+  <button type="button">Check</button>
+</sp-input-group>
+```
+
+| Attribute                 | Type    | Default | Description                             |
+| ------------------------- | ------- | ------- | --------------------------------------- |
+| `disabled`                | boolean | `false` | Disabled look for the whole group       |
+| `id` / `title` / `aria-*` | string  | —       | Forwarded to the `role="group"` wrapper |
+
+---
+
+### sp-choice-card
+
+Renders a whole-card option: a `<label>` wrapping a native radio or checkbox,
+backed by the Spectre choice-card recipe. Selection, focus, and disabled styling
+follow the native input. Radio cards that share a `name` keep their `checked`
+properties in sync.
+
+| Attribute                 | Type                | Default | Description                   |
+| ------------------------- | ------------------- | ------- | ----------------------------- |
+| `type`                    | `radio \| checkbox` | `radio` | Native input type             |
+| `checked`                 | boolean             | `false` | Selection state               |
+| `name` / `value` / `form` | string              | —       | Native form participation     |
+| `disabled` / `required`   | boolean             | `false` | Native constraints            |
+| `hovered` / `focused`     | boolean             | `false` | Forced looks                  |
+| `id` / `aria-describedby` | string              | —       | Forwarded to the native input |
+
+**Content projection** — children become the card content (the input's label).
+
+---
+
+### sp-progress
+
+Renders a `role="progressbar"` track and fill backed by the Spectre progress
+recipes.
+
+| Attribute                 | Type                                                       | Default     | Description                                   |
+| ------------------------- | ---------------------------------------------------------- | ----------- | --------------------------------------------- |
+| `value` / `max`           | number                                                     | `0` / `100` | Progress, clamped to `0…max`                  |
+| `variant`                 | `brand \| neutral \| info \| success \| warning \| danger` | `brand`     | Fill color role                               |
+| `size`                    | `sm \| md \| lg`                                           | `md`        | Track height                                  |
+| `indeterminate`           | boolean                                                    | `false`     | Animated sweep; omits `aria-valuenow`         |
+| `label`                   | string                                                     | —           | Visible label above the track; labels the bar |
+| `value-text`              | string                                                     | —           | `aria-valuetext` (e.g. "3 of 8 files")        |
+| `id` / `title` / `aria-*` | string                                                     | —           | Forwarded to the track                        |
+
+---
+
+### sp-popover
+
+A click-toggled, non-modal `role="dialog"` anchored to its trigger, backed by
+the Spectre popover recipes. Unlike `sp-tooltip` it stays open for interaction.
+
+| Attribute       | Type                             | Default        | Description                                   |
+| --------------- | -------------------------------- | -------------- | --------------------------------------------- |
+| `open`          | boolean                          | `false`        | Open state                                    |
+| `placement`     | `top \| bottom \| left \| right` | `bottom`       | Side the panel opens on                       |
+| `label`         | string                           | —              | Header title; also labels the dialog          |
+| `trigger-label` | string                           | `Show details` | Trigger text when no `slot="trigger"` content |
+| `id` / `title`  | string                           | —              | Forwarded to the dialog panel                 |
+
+**Content projection** — `slot="trigger"` fills the trigger button,
+`slot="header"` replaces the `label` title, other children fill the body.
+
+**Behavior** — the trigger toggles it (`aria-expanded`/`aria-controls`); `Esc`
+closes it and refocuses the trigger; an outside click closes it. Without a
+header the dialog is labelled by its trigger.
+
+**Events** — `sp-open` and `sp-close` (bubbling).
+
+---
+
+### sp-datepicker
+
+Renders an inline calendar backed by the Spectre datepicker and day recipes.
+Values are local ISO dates (`YYYY-MM-DD`), with no time-zone shift.
+
+| Attribute                       | Type   | Default                         | Description                                    |
+| ------------------------------- | ------ | ------------------------------- | ---------------------------------------------- |
+| `value`                         | string | —                               | Selected date; malformed dates are dropped     |
+| `min` / `max`                   | string | —                               | Selectable range; days outside it are disabled |
+| `week-start`                    | number | `0`                             | First weekday (`0` Sunday … `6` Saturday)      |
+| `locale`                        | string | browser locale                  | Month, weekday, and day-label formatting       |
+| `name`                          | string | —                               | Submits the value through a hidden input       |
+| `previous-label` / `next-label` | string | `Previous month` / `Next month` | Month button labels                            |
+| `aria-label`                    | string | month title                     | Labels the calendar group                      |
+
+**Accessibility** — every day is a button labelled with its full date,
+`aria-pressed` on the selected day and `aria-current="date"` on today. One day
+is the tab stop (roving `tabindex`). Arrows move by day and week, `Home`/`End`
+go to the week's start and end, and `PageUp`/`PageDown` change the month
+(`Shift` for a year). The month title is a polite live region.
+
+**Events** — `sp-change` (bubbling) with `detail: { value }`.
+
+---
+
+### sp-external-auth-button
+
+One neutral button treatment for every third-party sign-in provider, backed by
+the Spectre external-auth-button recipes. It deliberately carries no provider
+colors. Put the provider logo in `slot="icon"` and the label in the default
+slot.
+
+| Attribute                             | Type               | Default  | Description                        |
+| ------------------------------------- | ------------------ | -------- | ---------------------------------- |
+| `href`                                | string             | —        | Renders a link instead of a button |
+| `type`                                | `button \| submit` | `button` | Native button type                 |
+| `full-width` / `disabled` / `loading` | boolean            | `false`  | Width, disabled, busy states       |
+| `hovered` / `focused` / `active`      | boolean            | `false`  | Forced looks                       |
+| `id` / `title` / `aria-label`         | string             | —        | Forwarded to the native element    |
+
+---
+
+### sp-card-bleed
+
+A band inside `sp-card` (usually media) that runs flush through the card's
+padding, backed by `getCardBleedClasses`.
+
+| Attribute | Type                                              | Default | Description                                           |
+| --------- | ------------------------------------------------- | ------- | ----------------------------------------------------- |
+| `edges`   | space-separated `top right bottom left`, or `all` | —       | Edges to bleed through                                |
+| `padded`  | `sm \| md \| lg`, or bare                         | —       | The card padding step being escaped (bare means `md`) |
+
+---
+
+### sp-prose
+
+Wraps authored long-form HTML (headings, lists, code, quotes, rules) in the
+Spectre prose surface. An `aria-label` also makes it a labelled region.
+
+---
+
+### Shared conventions (spectre-ui 5.3.0 parity)
+
+**Forced interaction states** — components whose recipe supports them accept
+`hovered`, `focused`, and `active` booleans (`hovered`/`focused` only where the
+recipe has no pressed state). They force the look for documentation, previews,
+and visual tests; real interaction is still styled by native pseudo-classes.
+Where a component already uses `active` to mean "current" (`sp-footer-link`,
+`sp-sidebar-link`, `sp-list-group-item`, `sp-nav-item`), it keeps that meaning.
+
+**Part markers** — class-only recipe parts are applied in place to authored
+elements that opt in with a `slot` marker, keeping authored order. Nothing is
+styled by tag name.
+
+| Component                           | Markers                                                              |
+| ----------------------------------- | -------------------------------------------------------------------- |
+| `sp-footer`                         | `heading`, `text`, `muted`, `links`, `divider` (any depth)           |
+| `sp-nav`                            | `links`                                                              |
+| `sp-sidebar`                        | `header`; `group` on a `<details>` (its `<summary>` is styled)       |
+| `sp-dropdown` / `sp-nav-item` menus | `item`, `header`, `divider`                                          |
+| `sp-list-group-item`                | `heading`, `text`                                                    |
+| `sp-carousel` slides                | `caption` (inside a slide)                                           |
+| `sp-table` rows                     | `data-variant="neutral\|info\|success\|warning\|danger"` on a `<tr>` |
+
+**Additions to existing components**
+
+| Component                   | Added                                                                                                                                                      |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sp-button`                 | `warning`, `link`, `light`, `dark` variants                                                                                                                |
+| `sp-badge`                  | `brand` variant, `dot` notification mode, `interactive`                                                                                                    |
+| `sp-spinner` / `sp-toast`   | `inverse` / `neutral` variants                                                                                                                             |
+| `sp-alert`                  | `interactive`                                                                                                                                              |
+| `sp-rating`                 | `interactive`, `pill`, `full-width`                                                                                                                        |
+| `sp-text`                   | `onSurface*` variants; `preset="heading \| display \| lead"` with `heading-level` (`h1`–`h6`, defaults to the element level) and `display-level` (`1`–`6`) |
+| `sp-container`              | `padding` (`sm \| md \| lg`); `max-width` gains `none` and `wide`                                                                                          |
+| `sp-section`                | `spacing` and `gap` (`sm \| md \| lg`)                                                                                                                     |
+| `sp-stack`                  | `basis="none"`                                                                                                                                             |
+| `sp-grid`                   | `col-start` (`1`–`12`, or per-breakpoint JSON like `span`)                                                                                                 |
+| `sp-nav-item`               | `active` (current page, `aria-current`), `disabled`, and dropdown `viewport`, `full-width`, `accent`/`accent-color`                                        |
+| `sp-input`                  | `label`, `helper-text`, `error-message` (wraps the input only when set; an error sets the error state and `aria-invalid`)                                  |
+| `sp-select` / `sp-textarea` | `focused`                                                                                                                                                  |
+| `sp-pricing-card`           | `badge`, `price`, `description`, `header`, `footer` slots                                                                                                  |
+| `sp-testimonial`            | `quote`, `author-image`, `author-name`, `author-title` slots                                                                                               |
+
 ## Package Exports / API Surface
 
 ### Root — `@phcdevworks/spectre-components`
@@ -1408,46 +1986,91 @@ defineSpectreComponents() // registers all sp-* elements
 `SpectreDropdownProps`, `SpectreModalProps`, `SpectreToastProps`,
 `SpectreTooltipProps`
 
+**Broad component inventory**: `defineSpectreTabs`, `defineSpectreTabPanel`,
+`defineSpectreAccordion`, `defineSpectreAccordionItem`,
+`defineSpectreBreadcrumb`, `defineSpectreListGroup`,
+`defineSpectreListGroupItem`, `defineSpectreOffcanvas`,
+`defineSpectreCarousel`, `defineSpectreTable`, `defineSpectrePagination`,
+`defineSpectreStepper`; their element classes and `*Props` interfaces; and
+`spectreTabsVariants`, `spectreOffcanvasPlacements`, `spectreTableSizes`,
+`spectrePaginationSizes`, `spectreStepperOrientations` with the matching
+`SpectreTabsVariant`, `SpectreOffcanvasPlacement`, `SpectreTableSize`,
+`SpectrePaginationSize`, and `SpectreStepperOrientation` types
+
+**spectre-ui 5.3.0 parity**: `defineSpectreSwitch`, `defineSpectreRange`,
+`defineSpectreFileInput`, `defineSpectreInputGroup`, `defineSpectreChoiceCard`,
+`defineSpectreProgress`, `defineSpectrePopover`, `defineSpectreDatepicker`,
+`defineSpectreExternalAuthButton`, `defineSpectreCardBleed`,
+`defineSpectreProse`; their element classes and `*Props` interfaces; and
+`spectreProgressVariants`, `spectreProgressSizes`, `spectreSwitchSizes`,
+`spectreFileInputSizes`, `spectrePopoverPlacements`, `spectreContainerPaddings`,
+`spectreSectionSpacings`, `spectreGridColStarts`, `spectreTableRowVariants`,
+`spectreTextPresets`, `spectreHeadingLevels`, `spectreDisplayLevels` with their
+matching types
+
 ### Subpath entry points
 
 Each entry point registers only that component and exports only its surface:
 
-| Entry point          | Registers           | Key exports                                                                              |
-| -------------------- | ------------------- | ---------------------------------------------------------------------------------------- |
-| `.../button`         | `sp-button`         | `defineSpectreButton`, `SpectreButtonElement`, button constants and types                |
-| `.../input`          | `sp-input`          | `defineSpectreInput`, `SpectreInputElement`, input constants and types                   |
-| `.../textarea`       | `sp-textarea`       | `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`                |
-| `.../select`         | `sp-select`         | `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`                      |
-| `.../checkbox`       | `sp-checkbox`       | `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`                |
-| `.../radio`          | `sp-radio`          | `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`                         |
-| `.../label`          | `sp-label`          | `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`                         |
-| `.../fieldset`       | `sp-fieldset`       | `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`                |
-| `.../badge`          | `sp-badge`          | `defineSpectreBadge`, `SpectreBadgeElement`, badge constants and types                   |
-| `.../card`           | `sp-card`           | `defineSpectreCard`, `SpectreCardElement`, card constants and types                      |
-| `.../icon-box`       | `sp-icon-box`       | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types            |
-| `.../rating`         | `sp-rating`         | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                |
-| `.../testimonial`    | `sp-testimonial`    | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types |
-| `.../alert`          | `sp-alert`          | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                   |
-| `.../avatar`         | `sp-avatar`         | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                |
-| `.../spinner`        | `sp-spinner`        | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types             |
-| `.../tag`            | `sp-tag`            | `defineSpectreTag`, `SpectreTagElement`, tag constants and types                         |
-| `.../pricing-card`   | `sp-pricing-card`   | `defineSpectrePricingCard`, `SpectrePricingCardElement`, `SpectrePricingCardProps`       |
-| `.../container`      | `sp-container`      | `defineSpectreContainer`, `SpectreContainerElement`, container constants and types       |
-| `.../grid`           | `sp-grid`           | `defineSpectreGrid`, `SpectreGridElement`, grid constants and types                      |
-| `.../section`        | `sp-section`        | `defineSpectreSection`, `SpectreSectionElement`, `SpectreSectionProps`                   |
-| `.../stack`          | `sp-stack`          | `defineSpectreStack`, `SpectreStackElement`, stack constants and types                   |
-| `.../nav`            | `sp-nav`            | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                               |
-| `.../nav-item`       | `sp-nav-item`       | `defineSpectreNavItem`, `SpectreNavItemElement`, `SpectreNavItemProps`                   |
-| `.../sidebar`        | `sp-sidebar`        | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                   |
-| `.../sidebar-link`   | `sp-sidebar-link`   | `defineSpectreSidebarLink`, `SpectreSidebarLinkElement`, `SpectreSidebarLinkProps`       |
-| `.../sidebar-toggle` | `sp-sidebar-toggle` | `defineSpectreSidebarToggle`, `SpectreSidebarToggleElement`, `SpectreSidebarToggleProps` |
-| `.../dropdown`       | `sp-dropdown`       | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types          |
-| `.../footer`         | `sp-footer`         | `defineSpectreFooter`, `SpectreFooterElement`, `SpectreFooterProps`                      |
-| `.../footer-link`    | `sp-footer-link`    | `defineSpectreFooterLink`, `SpectreFooterLinkElement`, `SpectreFooterLinkProps`          |
-| `.../footer-chip`    | `sp-footer-chip`    | `defineSpectreFooterChip`, `SpectreFooterChipElement`, `SpectreFooterChipProps`          |
-| `.../modal`          | `sp-modal`          | `defineSpectreModal`, `SpectreModalElement`, `SpectreModalProps`                         |
-| `.../toast`          | `sp-toast`          | `defineSpectreToast`, `SpectreToastElement`, toast constants and types                   |
-| `.../tooltip`        | `sp-tooltip`        | `defineSpectreTooltip`, `SpectreTooltipElement`, tooltip constants and types             |
+| Entry point                | Registers                 | Key exports                                                                                             |
+| -------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `.../button`               | `sp-button`               | `defineSpectreButton`, `SpectreButtonElement`, button constants and types                               |
+| `.../input`                | `sp-input`                | `defineSpectreInput`, `SpectreInputElement`, input constants and types                                  |
+| `.../textarea`             | `sp-textarea`             | `defineSpectreTextarea`, `SpectreTextareaElement`, `SpectreTextareaProps`                               |
+| `.../select`               | `sp-select`               | `defineSpectreSelect`, `SpectreSelectElement`, `SpectreSelectProps`                                     |
+| `.../checkbox`             | `sp-checkbox`             | `defineSpectreCheckbox`, `SpectreCheckboxElement`, `SpectreCheckboxProps`                               |
+| `.../radio`                | `sp-radio`                | `defineSpectreRadio`, `SpectreRadioElement`, `SpectreRadioProps`                                        |
+| `.../label`                | `sp-label`                | `defineSpectreLabel`, `SpectreLabelElement`, `SpectreLabelProps`                                        |
+| `.../fieldset`             | `sp-fieldset`             | `defineSpectreFieldset`, `SpectreFieldsetElement`, `SpectreFieldsetProps`                               |
+| `.../badge`                | `sp-badge`                | `defineSpectreBadge`, `SpectreBadgeElement`, badge constants and types                                  |
+| `.../card`                 | `sp-card`                 | `defineSpectreCard`, `SpectreCardElement`, card constants and types                                     |
+| `.../icon-box`             | `sp-icon-box`             | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types                           |
+| `.../rating`               | `sp-rating`               | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                               |
+| `.../testimonial`          | `sp-testimonial`          | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types                |
+| `.../alert`                | `sp-alert`                | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                                  |
+| `.../avatar`               | `sp-avatar`               | `defineSpectreAvatar`, `SpectreAvatarElement`, avatar constants and types                               |
+| `.../spinner`              | `sp-spinner`              | `defineSpectreSpinner`, `SpectreSpinnerElement`, spinner constants and types                            |
+| `.../tag`                  | `sp-tag`                  | `defineSpectreTag`, `SpectreTagElement`, tag constants and types                                        |
+| `.../pricing-card`         | `sp-pricing-card`         | `defineSpectrePricingCard`, `SpectrePricingCardElement`, `SpectrePricingCardProps`                      |
+| `.../container`            | `sp-container`            | `defineSpectreContainer`, `SpectreContainerElement`, container constants and types                      |
+| `.../grid`                 | `sp-grid`                 | `defineSpectreGrid`, `SpectreGridElement`, grid constants and types                                     |
+| `.../section`              | `sp-section`              | `defineSpectreSection`, `SpectreSectionElement`, `SpectreSectionProps`                                  |
+| `.../stack`                | `sp-stack`                | `defineSpectreStack`, `SpectreStackElement`, stack constants and types                                  |
+| `.../nav`                  | `sp-nav`                  | `defineSpectreNav`, `SpectreNavElement`, `SpectreNavProps`                                              |
+| `.../nav-item`             | `sp-nav-item`             | `defineSpectreNavItem`, `SpectreNavItemElement`, `SpectreNavItemProps`                                  |
+| `.../sidebar`              | `sp-sidebar`              | `defineSpectreSidebar`, `SpectreSidebarElement`, `SpectreSidebarProps`                                  |
+| `.../sidebar-link`         | `sp-sidebar-link`         | `defineSpectreSidebarLink`, `SpectreSidebarLinkElement`, `SpectreSidebarLinkProps`                      |
+| `.../sidebar-toggle`       | `sp-sidebar-toggle`       | `defineSpectreSidebarToggle`, `SpectreSidebarToggleElement`, `SpectreSidebarToggleProps`                |
+| `.../dropdown`             | `sp-dropdown`             | `defineSpectreDropdown`, `SpectreDropdownElement`, dropdown constants and types                         |
+| `.../footer`               | `sp-footer`               | `defineSpectreFooter`, `SpectreFooterElement`, `SpectreFooterProps`                                     |
+| `.../footer-link`          | `sp-footer-link`          | `defineSpectreFooterLink`, `SpectreFooterLinkElement`, `SpectreFooterLinkProps`                         |
+| `.../footer-chip`          | `sp-footer-chip`          | `defineSpectreFooterChip`, `SpectreFooterChipElement`, `SpectreFooterChipProps`                         |
+| `.../modal`                | `sp-modal`                | `defineSpectreModal`, `SpectreModalElement`, `SpectreModalProps`                                        |
+| `.../toast`                | `sp-toast`                | `defineSpectreToast`, `SpectreToastElement`, toast constants and types                                  |
+| `.../tooltip`              | `sp-tooltip`              | `defineSpectreTooltip`, `SpectreTooltipElement`, tooltip constants and types                            |
+| `.../tabs`                 | `sp-tabs`                 | `defineSpectreTabs`, `SpectreTabsElement`, tabs constants and types                                     |
+| `.../tab-panel`            | `sp-tab-panel`            | `defineSpectreTabPanel`, `SpectreTabPanelElement`, `SpectreTabPanelProps`                               |
+| `.../accordion`            | `sp-accordion`            | `defineSpectreAccordion`, `SpectreAccordionElement`, `SpectreAccordionProps`                            |
+| `.../accordion-item`       | `sp-accordion-item`       | `defineSpectreAccordionItem`, `SpectreAccordionItemElement`, `SpectreAccordionItemProps`                |
+| `.../breadcrumb`           | `sp-breadcrumb`           | `defineSpectreBreadcrumb`, `SpectreBreadcrumbElement`, `SpectreBreadcrumbProps`                         |
+| `.../list-group`           | `sp-list-group`           | `defineSpectreListGroup`, `SpectreListGroupElement`, `SpectreListGroupProps`                            |
+| `.../list-group-item`      | `sp-list-group-item`      | `defineSpectreListGroupItem`, `SpectreListGroupItemElement`, `SpectreListGroupItemProps`                |
+| `.../offcanvas`            | `sp-offcanvas`            | `defineSpectreOffcanvas`, `SpectreOffcanvasElement`, offcanvas constants and types                      |
+| `.../carousel`             | `sp-carousel`             | `defineSpectreCarousel`, `SpectreCarouselElement`, `SpectreCarouselProps`                               |
+| `.../table`                | `sp-table`                | `defineSpectreTable`, `SpectreTableElement`, table constants and types                                  |
+| `.../pagination`           | `sp-pagination`           | `defineSpectrePagination`, `SpectrePaginationElement`, pagination constants and types                   |
+| `.../stepper`              | `sp-stepper`              | `defineSpectreStepper`, `SpectreStepperElement`, stepper constants and types                            |
+| `.../card-bleed`           | `sp-card-bleed`           | `defineSpectreCardBleed`, `SpectreCardBleedElement`, `SpectreCardBleedProps`                            |
+| `.../prose`                | `sp-prose`                | `defineSpectreProse`, `SpectreProseElement`, `SpectreProseProps`                                        |
+| `.../progress`             | `sp-progress`             | `defineSpectreProgress`, `SpectreProgressElement`, progress constants and types                         |
+| `.../switch`               | `sp-switch`               | `defineSpectreSwitch`, `SpectreSwitchElement`, switch constants and types                               |
+| `.../range`                | `sp-range`                | `defineSpectreRange`, `SpectreRangeElement`, `SpectreRangeProps`                                        |
+| `.../file-input`           | `sp-file-input`           | `defineSpectreFileInput`, `SpectreFileInputElement`, file-input constants and types                     |
+| `.../external-auth-button` | `sp-external-auth-button` | `defineSpectreExternalAuthButton`, `SpectreExternalAuthButtonElement`, `SpectreExternalAuthButtonProps` |
+| `.../choice-card`          | `sp-choice-card`          | `defineSpectreChoiceCard`, `SpectreChoiceCardElement`, `SpectreChoiceCardProps`                         |
+| `.../input-group`          | `sp-input-group`          | `defineSpectreInputGroup`, `SpectreInputGroupElement`, `SpectreInputGroupProps`                         |
+| `.../popover`              | `sp-popover`              | `defineSpectrePopover`, `SpectrePopoverElement`, popover constants and types                            |
+| `.../datepicker`           | `sp-datepicker`           | `defineSpectreDatepicker`, `SpectreDatepickerElement`, `SpectreDatepickerProps`                         |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside

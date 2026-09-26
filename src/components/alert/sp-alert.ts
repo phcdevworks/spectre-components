@@ -1,25 +1,38 @@
 import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable'
+import { SpectreBaseElement } from '../../utils/base'
 import {
   isAlertVariant,
   isInputSize,
   type SpectreAlertVariant,
   type SpectreInputSize
 } from '../../utils/form'
+import { renderIcon } from '../../utils/icons'
+import { ProjectionController } from '../../utils/projection'
+
+import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
 
 import {
   getAlertClasses,
+  getAlertDismissClasses,
+  getAlertIconClasses,
   type AlertVariant,
   type AlertSize
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreAlertProps {
+export interface SpectreAlertProps extends SpectreInteractionStateProps {
+  interactive?: boolean | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
+  dismissLabel?: string | undefined
   dismissed?: boolean | undefined
+  dismissible?: boolean | undefined
   disabled?: boolean | undefined
   fullWidth?: boolean | undefined
   id?: string | null | undefined
@@ -30,11 +43,15 @@ export interface SpectreAlertProps {
 }
 
 export class SpectreAlertElement
-  extends SpectreProjectableElement
+  extends SpectreBaseElement
   implements SpectreAlertProps
 {
   static properties = {
+    interactive: { type: Boolean, reflect: true },
+    ...interactionStateProperties,
+    dismissLabel: { attribute: 'dismiss-label', type: String },
     dismissed: { type: Boolean, reflect: true },
+    dismissible: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
@@ -42,7 +59,15 @@ export class SpectreAlertElement
     variant: { type: String, reflect: true }
   }
 
+  interactive: boolean | undefined = false
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
+
+  dismissLabel: string | undefined = 'Dismiss'
   dismissed: boolean | undefined = false
+  dismissible: boolean | undefined = false
   disabled: boolean | undefined = false
   fullWidth: boolean | undefined = false
   loading: boolean | undefined = false
@@ -65,23 +90,21 @@ export class SpectreAlertElement
     super.title = value
   }
 
-  protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-alert-native]')
-  }
-
-  protected override isInternalNode(node: Node): boolean {
-    if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false
-    }
-    const el = node as Element
-    return el.hasAttribute('data-sp-alert-native')
-  }
+  private readonly projection = new ProjectionController(this, [
+    'data-sp-alert-native'
+  ])
 
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
   ): void {
+    if (changedProperties.has('dismissLabel') && !this.dismissLabel) {
+      this.dismissLabel = 'Dismiss'
+    }
     if (changedProperties.has('dismissed') && this.dismissed == null) {
       this.dismissed = false
+    }
+    if (changedProperties.has('dismissible') && this.dismissible == null) {
+      this.dismissible = false
     }
     if (changedProperties.has('disabled') && this.disabled == null) {
       this.disabled = false
@@ -106,10 +129,21 @@ export class SpectreAlertElement
     }
   }
 
+  private dismiss(): void {
+    if (this.dismissed) {
+      return
+    }
+    this.dismissed = true
+    this.dispatchEvent(new CustomEvent('sp-dismiss', { bubbles: true }))
+  }
+
   private get alertClasses(): string {
     return getAlertClasses({
+      interactive: this.interactive ?? false,
+      ...interactionStates(this),
       disabled: this.isDisabled,
       dismissed: this.dismissed ?? false,
+      dismissible: this.dismissible ?? false,
       fullWidth: this.fullWidth ?? false,
       loading: this.loading ?? false,
       size: this.size as AlertSize,
@@ -129,7 +163,27 @@ export class SpectreAlertElement
       role="alert"
       title="${ifDefined(this.title || undefined)}"
     >
-      ${this.hasProjectedContent ? this.projectedContent : nothing}
+      ${
+        this.projection.has('icon')
+          ? html`<span class="${getAlertIconClasses()}"
+              >${this.projection.nodes('icon')}</span
+            >`
+          : nothing
+      }
+      ${this.projection.has() ? this.projection.nodes() : nothing}
+      ${
+        this.dismissible
+          ? html`<button
+              aria-label="${this.dismissLabel ?? 'Dismiss'}"
+              class="${getAlertDismissClasses()}"
+              data-sp-alert-dismiss
+              type="button"
+              @click="${() => this.dismiss()}"
+            >
+              ${renderIcon('close')}
+            </button>`
+          : nothing
+      }
     </div>`
   }
 }

@@ -4,6 +4,8 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isGridAlign,
+  isGridColStart,
+  isGridColStartOptions,
   isGridColumns,
   isGridExplicitTemplateOptions,
   isGridFixedTracksOptions,
@@ -17,6 +19,8 @@ import {
   isGridSpanOptions,
   sanitizeUtilityClasses,
   type SpectreGridAlign,
+  type SpectreGridColStart,
+  type SpectreGridColStartOptions,
   type SpectreGridColumns,
   type SpectreGridExplicitTemplateOptions,
   type SpectreGridFixedTracksOptions,
@@ -33,6 +37,8 @@ import {
 import {
   getGridClasses,
   type GridAlign,
+  type GridColStart,
+  type GridColStartOptions,
   type GridColumns,
   type GridExplicitTemplateOptions,
   type GridFixedTracksOptions,
@@ -52,6 +58,7 @@ export interface SpectreGridProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
+  colStart?: SpectreGridColStart | SpectreGridColStartOptions | undefined
   columns?: SpectreGridColumns | undefined
   columnGap?: SpectreGridGap | undefined
   explicitTemplate?: SpectreGridExplicitTemplateOptions | undefined
@@ -76,6 +83,7 @@ export class SpectreGridElement
 {
   static properties = {
     align: { type: String, reflect: true },
+    colStart: { attribute: 'col-start', type: Object },
     columns: { type: Number, reflect: true },
     columnGap: { attribute: 'column-gap', type: String, reflect: true },
     explicitTemplate: { attribute: 'explicit-template', type: Object },
@@ -92,6 +100,7 @@ export class SpectreGridElement
   }
 
   align: SpectreGridAlign | undefined = undefined
+  colStart: SpectreGridColStart | SpectreGridColStartOptions | undefined
   columns: SpectreGridColumns | undefined = 1
   columnGap: SpectreGridGap | undefined = undefined
   explicitTemplate: SpectreGridExplicitTemplateOptions | undefined = undefined
@@ -248,6 +257,14 @@ export class SpectreGridElement
       this.offset = undefined
     }
     if (
+      changedProperties.has('colStart') &&
+      this.colStart !== undefined &&
+      !isGridColStart(this.colStart) &&
+      !isGridColStartOptions(this.colStart)
+    ) {
+      this.colStart = undefined
+    }
+    if (
       changedProperties.has('rowSpan') &&
       this.rowSpan !== undefined &&
       !isGridSpan(this.rowSpan) &&
@@ -308,6 +325,9 @@ export class SpectreGridElement
       }),
       ...(this.offset !== undefined && {
         offset: this.offset as GridOffset | GridOffsetOptions
+      }),
+      ...(this.colStart !== undefined && {
+        colStart: this.colStart as GridColStart | GridColStartOptions
       }),
       ...(this.rowSpan !== undefined && {
         rowSpan: this.rowSpan as GridSpan | GridSpanOptions

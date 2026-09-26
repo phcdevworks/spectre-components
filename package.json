@@ -1,6 +1,6 @@
 {
   "name": "@phcdevworks/spectre-components",
-  "version": "1.20.0",
+  "version": "1.21.0",
   "description": "@phcdevworks/spectre-components is the web-component layer of the Spectre system. It provides accessible, framework-independent interface components built on Spectre's shared design contracts.",
   "keywords": [
     "phcdevworks",
@@ -33,7 +33,7 @@
     "node": "^22.13.0 || >=24.0.0"
   },
   "type": "module",
-  "packageManager": "npm@12.0.2",
+  "packageManager": "npm@12.1.0",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -217,6 +217,121 @@
       "types": "./dist/text.d.ts",
       "import": "./dist/text.js",
       "require": "./dist/text.cjs"
+    },
+    "./tabs": {
+      "types": "./dist/tabs.d.ts",
+      "import": "./dist/tabs.js",
+      "require": "./dist/tabs.cjs"
+    },
+    "./tab-panel": {
+      "types": "./dist/tab-panel.d.ts",
+      "import": "./dist/tab-panel.js",
+      "require": "./dist/tab-panel.cjs"
+    },
+    "./accordion": {
+      "types": "./dist/accordion.d.ts",
+      "import": "./dist/accordion.js",
+      "require": "./dist/accordion.cjs"
+    },
+    "./accordion-item": {
+      "types": "./dist/accordion-item.d.ts",
+      "import": "./dist/accordion-item.js",
+      "require": "./dist/accordion-item.cjs"
+    },
+    "./breadcrumb": {
+      "types": "./dist/breadcrumb.d.ts",
+      "import": "./dist/breadcrumb.js",
+      "require": "./dist/breadcrumb.cjs"
+    },
+    "./list-group": {
+      "types": "./dist/list-group.d.ts",
+      "import": "./dist/list-group.js",
+      "require": "./dist/list-group.cjs"
+    },
+    "./list-group-item": {
+      "types": "./dist/list-group-item.d.ts",
+      "import": "./dist/list-group-item.js",
+      "require": "./dist/list-group-item.cjs"
+    },
+    "./offcanvas": {
+      "types": "./dist/offcanvas.d.ts",
+      "import": "./dist/offcanvas.js",
+      "require": "./dist/offcanvas.cjs"
+    },
+    "./carousel": {
+      "types": "./dist/carousel.d.ts",
+      "import": "./dist/carousel.js",
+      "require": "./dist/carousel.cjs"
+    },
+    "./table": {
+      "types": "./dist/table.d.ts",
+      "import": "./dist/table.js",
+      "require": "./dist/table.cjs"
+    },
+    "./pagination": {
+      "types": "./dist/pagination.d.ts",
+      "import": "./dist/pagination.js",
+      "require": "./dist/pagination.cjs"
+    },
+    "./stepper": {
+      "types": "./dist/stepper.d.ts",
+      "import": "./dist/stepper.js",
+      "require": "./dist/stepper.cjs"
+    },
+    "./card-bleed": {
+      "types": "./dist/card-bleed.d.ts",
+      "import": "./dist/card-bleed.js",
+      "require": "./dist/card-bleed.cjs"
+    },
+    "./prose": {
+      "types": "./dist/prose.d.ts",
+      "import": "./dist/prose.js",
+      "require": "./dist/prose.cjs"
+    },
+    "./progress": {
+      "types": "./dist/progress.d.ts",
+      "import": "./dist/progress.js",
+      "require": "./dist/progress.cjs"
+    },
+    "./switch": {
+      "types": "./dist/switch.d.ts",
+      "import": "./dist/switch.js",
+      "require": "./dist/switch.cjs"
+    },
+    "./range": {
+      "types": "./dist/range.d.ts",
+      "import": "./dist/range.js",
+      "require": "./dist/range.cjs"
+    },
+    "./file-input": {
+      "types": "./dist/file-input.d.ts",
+      "import": "./dist/file-input.js",
+      "require": "./dist/file-input.cjs"
+    },
+    "./external-auth-button": {
+      "types": "./dist/external-auth-button.d.ts",
+      "import": "./dist/external-auth-button.js",
+      "require": "./dist/external-auth-button.cjs"
+    },
+    "./choice-card": {
+      "types": "./dist/choice-card.d.ts",
+      "import": "./dist/choice-card.js",
+      "require": "./dist/choice-card.cjs"
+    },
+    "./input-group": {
+      "types": "./dist/input-group.d.ts",
+      "import": "./dist/input-group.js",
+      "require": "./dist/input-group.cjs"
+    },
+    "./popover": {
+      "types": "./dist/popover.d.ts",
+      "import": "./dist/popover.js",
+      "require": "./dist/popover.cjs"
+    },
+    "./datepicker": {
+      "types": "./dist/datepicker.d.ts",
+      "import": "./dist/datepicker.js",
+      "require": "./dist/datepicker.cjs"
     }
   },
   "files": [
@@ -253,29 +368,29 @@
     "typescript": "^5.0 || ^6.0 || ^7.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^4.9.0",
-    "@phcdevworks/spectre-ui": "^5.2.0",
+    "@phcdevworks/spectre-tokens": "^4.11.0",
+    "@phcdevworks/spectre-ui": "^5.3.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@phcdevworks/spectre-manifest": "^1.2.0",
     "@playwright/test": "^1.63.0",
-    "@types/node": "^26.6.2",
-    "@typescript-eslint/eslint-plugin": "^8.70.0",
-    "@typescript-eslint/parser": "^8.70.0",
+    "@types/node": "^26.6.3",
+    "@typescript-eslint/eslint-plugin": "^8.70.1",
+    "@typescript-eslint/parser": "^8.70.1",
     "@typescript/native": "npm:typescript@^7.0.2",
     "axe-core": "^4.13.0",
     "eslint": "^10.11.0",
     "globals": "^17.12.0",
     "happy-dom": "^20.14.5",
     "jiti": "^2.7.0",
-    "prettier": "^3.9.8",
+    "prettier": "^3.9.9",
     "tsup": "^8.5.1",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.70.0",
-    "vite": "^8.3.0",
-    "vitest": "^5.0.1"
+    "typescript-eslint": "^8.70.1",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
   },
   "allowScripts": {
     "esbuild@0.28.2": true

@@ -1,9 +1,12 @@
-import { spectreTestimonialVariants, type SpectreTestimonialVariant } from '../../utils/form';
+import {
+  spectreTestimonialVariants,
+  type SpectreTestimonialVariant
+} from '../../utils/form'
 
 export {
   defineSpectreTestimonial,
   SpectreTestimonialElement,
-  type SpectreTestimonialProps,
-} from './sp-testimonial';
+  type SpectreTestimonialProps
+} from './sp-testimonial'
 
-export { spectreTestimonialVariants, type SpectreTestimonialVariant };
+export { spectreTestimonialVariants, type SpectreTestimonialVariant }

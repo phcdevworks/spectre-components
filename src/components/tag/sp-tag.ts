@@ -10,12 +10,18 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
   getTagClasses,
   type TagVariant,
   type TagSize
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreTagProps {
+export interface SpectreTagProps extends SpectreInteractionStateProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -36,6 +42,7 @@ export class SpectreTagElement
   implements SpectreTagProps
 {
   static properties = {
+    ...interactionStateProperties,
     dismissible: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
@@ -45,6 +52,10 @@ export class SpectreTagElement
     size: { type: String, reflect: true },
     variant: { type: String, reflect: true }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   dismissible: boolean | undefined = false
   disabled: boolean | undefined = false
@@ -120,6 +131,7 @@ export class SpectreTagElement
 
   private get tagClasses(): string {
     return getTagClasses({
+      ...interactionStates(this),
       disabled: this.isDisabled,
       dismissible: this.dismissible ?? false,
       fullWidth: this.fullWidth ?? false,

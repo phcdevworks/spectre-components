@@ -8,6 +8,7 @@ import { isInputSize, type SpectreInputSize } from '../../utils/form'
 import { getSelectClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreSelectProps {
+  focused?: boolean | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -35,6 +36,7 @@ export class SpectreSelectElement
   implements SpectreSelectProps
 {
   static properties = {
+    focused: { type: Boolean, reflect: true },
     autocomplete: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
@@ -48,6 +50,8 @@ export class SpectreSelectElement
     success: { type: Boolean, reflect: true },
     value: { type: String }
   }
+
+  focused: boolean | undefined = false
 
   autocomplete: string | undefined
   disabled: boolean | undefined = false
@@ -198,6 +202,7 @@ export class SpectreSelectElement
 
   private get selectClasses(): string {
     return getSelectClasses({
+      focused: this.focused ?? false,
       fullWidth: this.fullWidth ?? false,
       pill: this.pill ?? false,
       size: this.size as SpectreInputSize,

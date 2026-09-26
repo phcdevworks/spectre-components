@@ -15,6 +15,12 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
   getCardClasses,
   type CardAccentColor,
   type CardAccentEdge,
@@ -44,7 +50,7 @@ const paddedConverter = {
   }
 }
 
-export interface SpectreCardProps {
+export interface SpectreCardProps extends SpectreInteractionStateProps {
   accent?: SpectreAccentEdge | undefined
   accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
@@ -66,6 +72,7 @@ export class SpectreCardElement
   implements SpectreCardProps
 {
   static properties = {
+    ...interactionStateProperties,
     accent: { type: String, reflect: true },
     accentColor: { attribute: 'accent-color', type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -76,6 +83,10 @@ export class SpectreCardElement
     padded: { converter: paddedConverter, reflect: true },
     variant: { type: String, reflect: true }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   accent: SpectreAccentEdge | undefined = undefined
   accentColor: SpectreAccentColor | undefined = undefined
@@ -161,6 +172,7 @@ export class SpectreCardElement
 
   private get cardClasses(): string {
     const recipeClasses = getCardClasses({
+      ...interactionStates(this),
       ...(this.accent !== undefined && {
         accent: this.accent as CardAccentEdge
       }),

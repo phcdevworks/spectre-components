@@ -13,6 +13,12 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
   getButtonClasses,
   getInputLabelClasses,
   type ButtonSize,
@@ -21,7 +27,7 @@ import {
 
 export type SpectreButtonTarget = '_blank' | '_self' | '_parent' | '_top'
 
-export interface SpectreButtonProps {
+export interface SpectreButtonProps extends SpectreInteractionStateProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -53,6 +59,7 @@ export class SpectreButtonElement
   implements SpectreButtonProps
 {
   static properties = {
+    ...interactionStateProperties,
     compact: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
     form: { type: String },
@@ -72,6 +79,10 @@ export class SpectreButtonElement
     variant: { type: String, reflect: true },
     value: { type: String }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   compact: boolean | undefined = false
   disabled: boolean | undefined = false
@@ -198,6 +209,7 @@ export class SpectreButtonElement
 
   private get buttonClasses(): string {
     const recipeClasses = getButtonClasses({
+      ...interactionStates(this),
       compact: this.compact ?? false,
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,

@@ -1,7 +1,8 @@
 import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
-import { SpectreProjectableElement } from '../../utils/projectable'
+import { SpectreBaseElement } from '../../utils/base'
+import { ProjectionController } from '../../utils/projection'
 import {
   isAccentColor,
   isAccentEdge,
@@ -10,12 +11,22 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
+  getPricingCardBadgeClasses,
+  getPricingCardDescriptionClasses,
+  getPricingCardPriceClasses,
+  getPricingCardPriceContainerClasses,
   getPricingCardClasses,
   type PricingCardAccentColor,
   type PricingCardAccentEdge
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectrePricingCardProps {
+export interface SpectrePricingCardProps extends SpectreInteractionStateProps {
   accent?: SpectreAccentEdge | undefined
   accentColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
@@ -31,10 +42,11 @@ export interface SpectrePricingCardProps {
 }
 
 export class SpectrePricingCardElement
-  extends SpectreProjectableElement
+  extends SpectreBaseElement
   implements SpectrePricingCardProps
 {
   static properties = {
+    ...interactionStateProperties,
     accent: { type: String, reflect: true },
     accentColor: { attribute: 'accent-color', type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -43,6 +55,10 @@ export class SpectrePricingCardElement
     interactive: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   accent: SpectreAccentEdge | undefined = undefined
   accentColor: SpectreAccentColor | undefined = undefined
@@ -68,17 +84,9 @@ export class SpectrePricingCardElement
     super.title = value
   }
 
-  protected override getContentContainer(): Element | null {
-    return this.querySelector('[data-sp-pricing-card-native]')
-  }
-
-  protected override isInternalNode(node: Node): boolean {
-    if (node.nodeType !== Node.ELEMENT_NODE) {
-      return false
-    }
-    const el = node as Element
-    return el.hasAttribute('data-sp-pricing-card-native')
-  }
+  private readonly projection = new ProjectionController(this, [
+    'data-sp-pricing-card-native'
+  ])
 
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
@@ -116,6 +124,7 @@ export class SpectrePricingCardElement
 
   private get pricingCardClasses(): string {
     return getPricingCardClasses({
+      ...interactionStates(this),
       ...(this.accent !== undefined && {
         accent: this.accent as PricingCardAccentEdge
       }),
@@ -142,7 +151,31 @@ export class SpectrePricingCardElement
       role="${ifDefined(this.hasForwardedLabel ? 'group' : undefined)}"
       title="${ifDefined(this.title || undefined)}"
     >
-      ${this.hasProjectedContent ? this.projectedContent : nothing}
+      ${this.projection.nodes('header')}
+      ${
+        this.projection.has('badge')
+          ? html`<div class="${getPricingCardBadgeClasses()}">
+              ${this.projection.nodes('badge')}
+            </div>`
+          : nothing
+      }
+      ${
+        this.projection.has('price')
+          ? html`<div class="${getPricingCardPriceContainerClasses()}">
+              <div class="${getPricingCardPriceClasses()}">
+                ${this.projection.nodes('price')}
+              </div>
+            </div>`
+          : nothing
+      }
+      ${
+        this.projection.has('description')
+          ? html`<div class="${getPricingCardDescriptionClasses()}">
+              ${this.projection.nodes('description')}
+            </div>`
+          : nothing
+      }
+      ${this.projection.nodes()} ${this.projection.nodes('footer')}
     </div>`
   }
 }

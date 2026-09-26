@@ -3,6 +3,7 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreBaseElement } from '../../utils/base'
 import { hasMeaningfulContent } from '../../utils/dom'
+import { applyPartClasses, childElements } from '../../utils/parts'
 import {
   isAccentColor,
   isAccentEdge,
@@ -14,6 +15,9 @@ import {
 
 import {
   getDropdownClasses,
+  getDropdownDividerClasses,
+  getDropdownHeaderClasses,
+  getDropdownItemClasses,
   getDropdownMenuClasses,
   type DropdownAccentColor,
   type DropdownAccentEdge
@@ -220,6 +224,17 @@ export class SpectreDropdownElement
     if (changedProperties.has('viewport') && this.viewport == null) {
       this.viewport = false
     }
+  }
+
+  protected override updated(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    super.updated(changedProperties)
+    applyPartClasses(childElements(this.menuContent), {
+      divider: getDropdownDividerClasses(),
+      header: getDropdownHeaderClasses(),
+      item: getDropdownItemClasses()
+    })
   }
 
   private handleDocumentClick = (event: MouseEvent): void => {

@@ -1,5 +1,5 @@
 export {
   defineSpectreRadio,
   SpectreRadioElement,
-  type SpectreRadioProps,
-} from './sp-radio';
+  type SpectreRadioProps
+} from './sp-radio'

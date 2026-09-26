@@ -10,12 +10,18 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
   getIconBoxClasses,
   type IconBoxVariant,
   type IconBoxSize
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreIconBoxProps {
+export interface SpectreIconBoxProps extends SpectreInteractionStateProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -35,6 +41,7 @@ export class SpectreIconBoxElement
   implements SpectreIconBoxProps
 {
   static properties = {
+    ...interactionStateProperties,
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     interactive: { type: Boolean, reflect: true },
@@ -43,6 +50,10 @@ export class SpectreIconBoxElement
     size: { type: String, reflect: true },
     variant: { type: String, reflect: true }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   disabled: boolean | undefined = false
   fullWidth: boolean | undefined = false
@@ -114,6 +125,7 @@ export class SpectreIconBoxElement
 
   private get iconBoxClasses(): string {
     return getIconBoxClasses({
+      ...interactionStates(this),
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
       interactive: this.interactive ?? false,

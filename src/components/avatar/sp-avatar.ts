@@ -10,12 +10,18 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
   getAvatarClasses,
   type AvatarShape,
   type AvatarSize
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreAvatarProps {
+export interface SpectreAvatarProps extends SpectreInteractionStateProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -35,6 +41,7 @@ export class SpectreAvatarElement
   implements SpectreAvatarProps
 {
   static properties = {
+    ...interactionStateProperties,
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     interactive: { type: Boolean, reflect: true },
@@ -43,6 +50,10 @@ export class SpectreAvatarElement
     shape: { type: String, reflect: true },
     size: { type: String, reflect: true }
   }
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   disabled: boolean | undefined = false
   fullWidth: boolean | undefined = false
@@ -114,6 +125,7 @@ export class SpectreAvatarElement
 
   private get avatarClasses(): string {
     return getAvatarClasses({
+      ...interactionStates(this),
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
       interactive: this.interactive ?? false,

@@ -82,7 +82,7 @@ Audit sequence:
 4. `CONTRIBUTING.md` - human contributor workflow.
 5. `ROADMAP.md` - strategic direction and rationale.
 6. `TODO.md` - phased execution list.
-7. `CLAUDE.md`, `CODEX.md`, `JULES.md`, and `COPILOT.md` - agent-specific
+7. `CLAUDE.md`, `CODEX.md`, `JULES.md`, `GROK.md`, and `COPILOT.md` - agent-specific
    workflow (authority hierarchy lives in `AGENTS.md`).
 8. `CHANGELOG.md` - pending release notes and API classification.
 

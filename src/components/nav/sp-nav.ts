@@ -1,6 +1,7 @@
 import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
+import { applyPartClasses, childElements } from '../../utils/parts'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isAccentColor,
@@ -14,6 +15,7 @@ import {
 
 import {
   getNavClasses,
+  getNavLinksClasses,
   type NavAccentColor,
   type NavAccentEdge,
   type NavAlign
@@ -137,6 +139,15 @@ export class SpectreNavElement
     })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
     return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
+  }
+
+  protected override updated(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    super.updated(changedProperties)
+    applyPartClasses(childElements(this.projectedContent), {
+      links: getNavLinksClasses()
+    })
   }
 
   override render() {

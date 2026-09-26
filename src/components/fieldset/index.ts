@@ -1,5 +1,5 @@
 export {
   defineSpectreFieldset,
   SpectreFieldsetElement,
-  type SpectreFieldsetProps,
-} from './sp-fieldset';
+  type SpectreFieldsetProps
+} from './sp-fieldset'

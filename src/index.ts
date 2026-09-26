@@ -35,6 +35,29 @@ import { defineSpectreSidebarToggle } from './components/sidebar-toggle'
 import { defineSpectreToast } from './components/toast'
 import { defineSpectreTooltip } from './components/tooltip'
 import { defineSpectreText } from './components/text'
+import { defineSpectreTabs } from './components/tabs'
+import { defineSpectreTabPanel } from './components/tab-panel'
+import { defineSpectreAccordion } from './components/accordion'
+import { defineSpectreAccordionItem } from './components/accordion-item'
+import { defineSpectreBreadcrumb } from './components/breadcrumb'
+import { defineSpectreListGroup } from './components/list-group'
+import { defineSpectreListGroupItem } from './components/list-group-item'
+import { defineSpectreOffcanvas } from './components/offcanvas'
+import { defineSpectreCarousel } from './components/carousel'
+import { defineSpectreTable } from './components/table'
+import { defineSpectrePagination } from './components/pagination'
+import { defineSpectreStepper } from './components/stepper'
+import { defineSpectreCardBleed } from './components/card-bleed'
+import { defineSpectreProse } from './components/prose'
+import { defineSpectreProgress } from './components/progress'
+import { defineSpectreSwitch } from './components/switch'
+import { defineSpectreRange } from './components/range'
+import { defineSpectreFileInput } from './components/file-input'
+import { defineSpectreExternalAuthButton } from './components/external-auth-button'
+import { defineSpectreChoiceCard } from './components/choice-card'
+import { defineSpectreInputGroup } from './components/input-group'
+import { defineSpectrePopover } from './components/popover'
+import { defineSpectreDatepicker } from './components/datepicker'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -72,4 +95,27 @@ export function defineSpectreComponents(): void {
   defineSpectreToast()
   defineSpectreTooltip()
   defineSpectreText()
+  defineSpectreTabs()
+  defineSpectreTabPanel()
+  defineSpectreAccordion()
+  defineSpectreAccordionItem()
+  defineSpectreBreadcrumb()
+  defineSpectreListGroup()
+  defineSpectreListGroupItem()
+  defineSpectreOffcanvas()
+  defineSpectreCarousel()
+  defineSpectreTable()
+  defineSpectrePagination()
+  defineSpectreStepper()
+  defineSpectreCardBleed()
+  defineSpectreProse()
+  defineSpectreProgress()
+  defineSpectreSwitch()
+  defineSpectreRange()
+  defineSpectreFileInput()
+  defineSpectreExternalAuthButton()
+  defineSpectreChoiceCard()
+  defineSpectreInputGroup()
+  defineSpectrePopover()
+  defineSpectreDatepicker()
 }

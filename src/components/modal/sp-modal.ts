@@ -1,6 +1,7 @@
 import { html, nothing } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
+import { getFocusableElements, trapFocus } from '../../utils/focus'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isAccentColor,
@@ -15,15 +16,6 @@ import {
   type ModalAccentColor,
   type ModalAccentEdge
 } from '@phcdevworks/spectre-ui'
-
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'button:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])'
-].join(',')
 
 export interface SpectreModalProps {
   accent?: SpectreAccentEdge | undefined
@@ -143,16 +135,8 @@ export class SpectreModalElement
     return this.querySelector('[data-sp-modal-native]')
   }
 
-  private get focusableElements(): HTMLElement[] {
-    const modal = this.modalElement
-    if (!modal) {
-      return []
-    }
-    return Array.from(modal.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
-  }
-
   private focusFirstElement(): void {
-    const [first] = this.focusableElements
+    const [first] = getFocusableElements(this.modalElement)
     ;(first ?? this.modalElement)?.focus()
   }
 
@@ -167,27 +151,7 @@ export class SpectreModalElement
     }
 
     if (event.key === 'Tab') {
-      this.trapFocus(event)
-    }
-  }
-
-  private trapFocus(event: KeyboardEvent): void {
-    const focusable = this.focusableElements
-    if (focusable.length === 0) {
-      event.preventDefault()
-      return
-    }
-
-    const first = focusable[0]
-    const last = focusable[focusable.length - 1]
-    const active = document.activeElement
-
-    if (event.shiftKey && active === first) {
-      event.preventDefault()
-      last?.focus()
-    } else if (!event.shiftKey && active === last) {
-      event.preventDefault()
-      first?.focus()
+      trapFocus(event, this.modalElement)
     }
   }
 

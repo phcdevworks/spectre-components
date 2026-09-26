@@ -4,14 +4,14 @@ import {
   spectreAccentEdges,
   type SpectreAccentEdge,
   spectreCardVariants,
-  type SpectreCardVariant,
-} from '../../utils/form';
+  type SpectreCardVariant
+} from '../../utils/form'
 
 export {
   defineSpectreCard,
   SpectreCardElement,
-  type SpectreCardProps,
-} from './sp-card';
+  type SpectreCardProps
+} from './sp-card'
 
 export {
   spectreAccentColors as spectreCardAccentColors,
@@ -19,5 +19,5 @@ export {
   spectreAccentEdges as spectreCardAccentEdges,
   type SpectreAccentEdge as SpectreCardAccentEdge,
   spectreCardVariants,
-  type SpectreCardVariant,
-};
+  type SpectreCardVariant
+}

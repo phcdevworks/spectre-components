@@ -34,15 +34,16 @@ file does not restate delivered work.
 | 16    | Card, grid, and inverse surface variants — size-scale card padding, native grid role forwarding, inverse/on-inverse roles, and Spectre 5 recipe alignment                                        | 1.18.0       |
 | 17 | Content lifecycle and form reliability — projection fixes, native radio form ownership, grid role coverage, browser CI, packed export checks, and validated dependency updates | 1.19.0 |
 | 18 | `sp-badge` `innerClass`/`inner-class` utility hook parity, requested by a downstream integration; `sp-card` `accent`/`accentColor` decorative edge-rail properties backed by `getCardClasses` (`spectre-ui` 5.1.0), requested by downstream integrations on 2026-09-18; accent-rail parity sweep extending the same `accent`/`accentColor` contract to `sp-nav`, `sp-footer`, `sp-modal`, `sp-toast`, `sp-tooltip`, `sp-dropdown`, `sp-testimonial`, `sp-pricing-card`, and `sp-badge` (`accentRail`/`accentRailColor`); `sp-dropdown` `viewport` full-bleed menu-width tier, all backed by `spectre-ui` 5.2.0 | 1.20.0 |
+| 19 | Broad component inventory, approved by Bradley Potts on 2026-09-24 — `sp-tabs`/`sp-tab-panel`, `sp-accordion`/`sp-accordion-item`, `sp-breadcrumb`, `sp-list-group`/`sp-list-group-item`, `sp-offcanvas`, `sp-carousel`, `sp-table`, `sp-pagination`, `sp-stepper`, plus `sp-alert` `brand`/`dismissible`/icon slot, all backed by `spectre-ui` 5.3.0 | 1.21.0 |
+| 20 | Full `spectre-ui` 5.3.0 recipe parity — `sp-switch`, `sp-range`, `sp-file-input`, `sp-input-group`, `sp-choice-card`, `sp-progress`, `sp-popover`, `sp-datepicker`, `sp-external-auth-button`, `sp-card-bleed`, `sp-prose`; new variants and options across existing components; typography presets; forced interaction states; Astro-matching sub-part slots; opt-in part markers | 1.21.0 |
 
 ---
 
 ## What's Next
 
-Nothing queued. New component or contract work is demand-driven: it opens only
-when `spectre-ui` (or another downstream consumer) surfaces a concrete missing
-recipe or requirement, and requires explicit approval from Bradley Potts per
-`AGENTS.md`. See [TODO.md](TODO.md).
+Nothing queued. Every `spectre-ui` 5.3.0 recipe helper has a component
+consumer. New components are built proactively whenever a future `spectre-ui`
+release publishes a recipe with no component. See [TODO.md](TODO.md).
 
 ---
 
@@ -56,4 +57,5 @@ recipe or requirement, and requires explicit approval from Bradley Potts per
   adapter packages.
 - App shells, routing, service workers, manifest behavior, and startup
   orchestration.
-- Speculative components without upstream recipe support and explicit approval.
+- Components without a published `spectre-ui` recipe behind them (add the
+  recipe upstream first).

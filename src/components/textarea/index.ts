@@ -1,5 +1,5 @@
 export {
   defineSpectreTextarea,
   SpectreTextareaElement,
-  type SpectreTextareaProps,
-} from './sp-textarea';
+  type SpectreTextareaProps
+} from './sp-textarea'

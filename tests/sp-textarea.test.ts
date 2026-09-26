@@ -1,387 +1,391 @@
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { defineSpectreTextarea, SpectreTextareaElement } from '../src';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { defineSpectreTextarea, SpectreTextareaElement } from '../src'
 
 describe('sp-textarea', () => {
   beforeAll(() => {
-    defineSpectreTextarea();
-  });
+    defineSpectreTextarea()
+  })
 
   afterEach(() => {
-    document.body.innerHTML = '';
-  });
+    document.body.innerHTML = ''
+  })
 
   it('renders a native textarea with Spectre UI classes', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.placeholder = 'Add more detail';
-    element.rows = 4;
-    element.fullWidth = true;
-    element.pill = true;
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.placeholder = 'Add more detail'
+    element.rows = 4
+    element.fullWidth = true
+    element.pill = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
+    const textarea = element.querySelector('textarea')
 
-    expect(textarea).not.toBeNull();
-    expect(textarea?.className).toContain('sp-textarea');
-    expect(textarea?.className).toContain('sp-textarea--md');
-    expect(textarea?.className).toContain('sp-textarea--full');
-    expect(textarea?.className).toContain('sp-textarea--pill');
-    expect(textarea?.getAttribute('placeholder')).toBe('Add more detail');
-    expect(textarea?.getAttribute('rows')).toBe('4');
-    expect(textarea?.getAttribute('aria-invalid')).toBeNull();
-  });
+    expect(textarea).not.toBeNull()
+    expect(textarea?.className).toContain('sp-textarea')
+    expect(textarea?.className).toContain('sp-textarea--md')
+    expect(textarea?.className).toContain('sp-textarea--full')
+    expect(textarea?.className).toContain('sp-textarea--pill')
+    expect(textarea?.getAttribute('placeholder')).toBe('Add more detail')
+    expect(textarea?.getAttribute('rows')).toBe('4')
+    expect(textarea?.getAttribute('aria-invalid')).toBeNull()
+  })
 
   it('reflects disabled, readonly, required, and name to the native textarea and handles dynamic updates', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.disabled = true;
-    element.readonly = true;
-    element.required = true;
-    element.name = 'notes';
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.disabled = true
+    element.readonly = true
+    element.required = true
+    element.name = 'notes'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let textarea = element.querySelector('textarea');
+    let textarea = element.querySelector('textarea')
 
-    expect(textarea?.disabled).toBe(true);
-    expect(textarea?.readOnly).toBe(true);
-    expect(textarea?.required).toBe(true);
-    expect(textarea?.getAttribute('name')).toBe('notes');
-    expect(textarea?.className).toContain('sp-textarea--disabled');
+    expect(textarea?.disabled).toBe(true)
+    expect(textarea?.readOnly).toBe(true)
+    expect(textarea?.required).toBe(true)
+    expect(textarea?.getAttribute('name')).toBe('notes')
+    expect(textarea?.className).toContain('sp-textarea--disabled')
 
-    element.disabled = false;
-    element.readonly = false;
-    element.required = false;
-    await element.updateComplete;
+    element.disabled = false
+    element.readonly = false
+    element.required = false
+    await element.updateComplete
 
-    textarea = element.querySelector('textarea');
-    expect(textarea?.disabled).toBe(false);
-    expect(textarea?.readOnly).toBe(false);
-    expect(textarea?.required).toBe(false);
-    expect(textarea?.className).not.toContain('sp-textarea--disabled');
-  });
+    textarea = element.querySelector('textarea')
+    expect(textarea?.disabled).toBe(false)
+    expect(textarea?.readOnly).toBe(false)
+    expect(textarea?.required).toBe(false)
+    expect(textarea?.className).not.toContain('sp-textarea--disabled')
+  })
 
   it('applies invalid semantics without overriding forwarded labeling', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.invalid = true;
-    element.setAttribute('aria-label', 'Project summary');
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.invalid = true
+    element.setAttribute('aria-label', 'Project summary')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
+    const textarea = element.querySelector('textarea')
 
-    expect(textarea?.getAttribute('aria-invalid')).toBe('true');
-    expect(textarea?.getAttribute('aria-label')).toBe('Project summary');
-    expect(textarea?.className).toContain('sp-textarea--invalid');
-  });
+    expect(textarea?.getAttribute('aria-invalid')).toBe('true')
+    expect(textarea?.getAttribute('aria-label')).toBe('Project summary')
+    expect(textarea?.className).toContain('sp-textarea--invalid')
+  })
 
   it('supports initial value from attribute and property updates', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.setAttribute('value', 'Initial notes');
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.setAttribute('value', 'Initial notes')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let textarea = element.querySelector('textarea');
-    expect(textarea?.value).toBe('Initial notes');
+    let textarea = element.querySelector('textarea')
+    expect(textarea?.value).toBe('Initial notes')
 
-    element.value = 'Updated notes';
-    await element.updateComplete;
+    element.value = 'Updated notes'
+    await element.updateComplete
 
-    textarea = element.querySelector('textarea');
-    expect(textarea?.value).toBe('Updated notes');
-  });
+    textarea = element.querySelector('textarea')
+    expect(textarea?.value).toBe('Updated notes')
+  })
 
   it('applies the consumer-facing id to the native textarea without duplicating it on the host', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.setAttribute('id', 'project-notes');
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.setAttribute('id', 'project-notes')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let textarea = element.querySelector('textarea');
+    let textarea = element.querySelector('textarea')
 
-    expect(element.id).toBe('project-notes');
-    expect(element.getAttribute('id')).toBe('project-notes');
-    expect(superHasIdAttribute(element)).toBe(false);
-    expect(textarea?.id).toBe('project-notes');
+    expect(element.id).toBe('project-notes')
+    expect(element.getAttribute('id')).toBe('project-notes')
+    expect(superHasIdAttribute(element)).toBe(false)
+    expect(textarea?.id).toBe('project-notes')
 
-    element.id = 'customer-notes';
-    await element.updateComplete;
+    element.id = 'customer-notes'
+    await element.updateComplete
 
-    textarea = element.querySelector('textarea');
+    textarea = element.querySelector('textarea')
 
-    expect(element.id).toBe('customer-notes');
-    expect(superHasIdAttribute(element)).toBe(false);
-    expect(textarea?.id).toBe('customer-notes');
-  });
+    expect(element.id).toBe('customer-notes')
+    expect(superHasIdAttribute(element)).toBe(false)
+    expect(textarea?.id).toBe('customer-notes')
+  })
 
   it('keeps host value in sync while native textarea input and change events bubble normally', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    const onInput = vi.fn();
-    const onChange = vi.fn();
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    const onInput = vi.fn()
+    const onChange = vi.fn()
 
-    element.addEventListener('input', onInput);
-    element.addEventListener('change', onChange);
+    element.addEventListener('input', onInput)
+    element.addEventListener('change', onChange)
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
+    const textarea = element.querySelector('textarea')
 
-    expect(textarea).not.toBeNull();
+    expect(textarea).not.toBeNull()
 
-    textarea!.value = 'Typed notes';
-    textarea!.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
-    await element.updateComplete;
+    textarea!.value = 'Typed notes'
+    textarea!.dispatchEvent(
+      new Event('input', { bubbles: true, composed: true })
+    )
+    await element.updateComplete
 
-    expect(element.value).toBe('Typed notes');
-    expect(onInput).toHaveBeenCalledTimes(1);
+    expect(element.value).toBe('Typed notes')
+    expect(onInput).toHaveBeenCalledTimes(1)
 
-    textarea!.dispatchEvent(new Event('change', { bubbles: true }));
-    await element.updateComplete;
+    textarea!.dispatchEvent(new Event('change', { bubbles: true }))
+    await element.updateComplete
 
-    expect(element.value).toBe('Typed notes');
-    expect(onChange).toHaveBeenCalledTimes(1);
-  });
+    expect(element.value).toBe('Typed notes')
+    expect(onChange).toHaveBeenCalledTimes(1)
+  })
 
   it('forwards aria-labelledby and aria-describedby', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.setAttribute('aria-labelledby', 'label-id');
-    element.setAttribute('aria-describedby', 'desc-id');
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.setAttribute('aria-labelledby', 'label-id')
+    element.setAttribute('aria-describedby', 'desc-id')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
-    expect(textarea?.getAttribute('aria-labelledby')).toBe('label-id');
-    expect(textarea?.getAttribute('aria-describedby')).toBe('desc-id');
-  });
+    const textarea = element.querySelector('textarea')
+    expect(textarea?.getAttribute('aria-labelledby')).toBe('label-id')
+    expect(textarea?.getAttribute('aria-describedby')).toBe('desc-id')
+  })
 
   it('coerces unsupported numeric values to safe defaults only where needed', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.rows = 0;
-    element.maxlength = -10;
-    element.minlength = -2;
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.rows = 0
+    element.maxlength = -10
+    element.minlength = -2
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
+    const textarea = element.querySelector('textarea')
 
-    expect(element.rows).toBe(2);
-    expect(textarea?.getAttribute('rows')).toBe('2');
-    expect(textarea?.hasAttribute('maxlength')).toBe(false);
-    expect(textarea?.hasAttribute('minlength')).toBe(false);
-  });
+    expect(element.rows).toBe(2)
+    expect(textarea?.getAttribute('rows')).toBe('2')
+    expect(textarea?.hasAttribute('maxlength')).toBe(false)
+    expect(textarea?.hasAttribute('minlength')).toBe(false)
+  })
 
   it('handles focus and blur correctly', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    document.body.append(element);
-    await element.updateComplete;
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
-    const onFocus = vi.fn();
-    const onBlur = vi.fn();
+    const textarea = element.querySelector('textarea')
+    const onFocus = vi.fn()
+    const onBlur = vi.fn()
 
-    textarea?.addEventListener('focus', onFocus);
-    textarea?.addEventListener('blur', onBlur);
+    textarea?.addEventListener('focus', onFocus)
+    textarea?.addEventListener('blur', onBlur)
 
-    element.focus();
-    expect(onFocus).toHaveBeenCalled();
+    element.focus()
+    expect(onFocus).toHaveBeenCalled()
 
-    element.blur();
-    expect(onBlur).toHaveBeenCalled();
-  });
+    element.blur()
+    expect(onBlur).toHaveBeenCalled()
+  })
 
   it('forwards title to the native textarea', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.title = 'Please enter your feedback';
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.title = 'Please enter your feedback'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
-    expect(textarea?.getAttribute('title')).toBe('Please enter your feedback');
-  });
+    const textarea = element.querySelector('textarea')
+    expect(textarea?.getAttribute('title')).toBe('Please enter your feedback')
+  })
 
   it('forwards the form attribute to the native textarea', async () => {
-    const element = document.createElement('sp-textarea') as SpectreTextareaElement;
-    element.form = 'test-form';
+    const element = document.createElement(
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.form = 'test-form'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
-    expect(textarea?.getAttribute('form')).toBe('test-form');
-  });
+    const textarea = element.querySelector('textarea')
+    expect(textarea?.getAttribute('form')).toBe('test-form')
+  })
 
   it('participates in ancestor form submission via FormData', async () => {
-    const form = document.createElement('form');
+    const form = document.createElement('form')
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.name = 'bio';
-    element.value = 'Hello world';
-    form.append(element);
-    document.body.append(form);
-    await element.updateComplete;
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.name = 'bio'
+    element.value = 'Hello world'
+    form.append(element)
+    document.body.append(form)
+    await element.updateComplete
 
-    const formData = new FormData(form);
-    expect(formData.get('bio')).toBe('Hello world');
-  });
+    const formData = new FormData(form)
+    expect(formData.get('bio')).toBe('Hello world')
+  })
 
   it('reports native required validity through the wrapper', async () => {
-    const form = document.createElement('form');
+    const form = document.createElement('form')
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.name = 'bio';
-    element.required = true;
-    form.append(element);
-    document.body.append(form);
-    await element.updateComplete;
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.name = 'bio'
+    element.required = true
+    form.append(element)
+    document.body.append(form)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea') as HTMLTextAreaElement;
+    const textarea = element.querySelector('textarea') as HTMLTextAreaElement
 
-    expect(textarea.checkValidity()).toBe(false);
-    expect(form.checkValidity()).toBe(false);
+    expect(textarea.checkValidity()).toBe(false)
+    expect(form.checkValidity()).toBe(false)
 
-    element.value = 'Hello world';
-    await element.updateComplete;
+    element.value = 'Hello world'
+    await element.updateComplete
 
-    expect(textarea.checkValidity()).toBe(true);
-    expect(form.checkValidity()).toBe(true);
-  });
+    expect(textarea.checkValidity()).toBe(true)
+    expect(form.checkValidity()).toBe(true)
+  })
 
   it('applies classes for size, loading, and success states', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.size = 'sm';
-    element.loading = true;
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.size = 'sm'
+    element.loading = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let textarea = element.querySelector('textarea');
-    expect(textarea?.className).toContain('sp-textarea--sm');
-    expect(textarea?.className).toContain('sp-textarea--loading');
-    expect(textarea?.getAttribute('aria-busy')).toBe('true');
+    let textarea = element.querySelector('textarea')
+    expect(textarea?.className).toContain('sp-textarea--sm')
+    expect(textarea?.className).toContain('sp-textarea--loading')
+    expect(textarea?.getAttribute('aria-busy')).toBe('true')
 
-    element.loading = false;
-    element.success = true;
-    element.size = 'lg';
-    await element.updateComplete;
+    element.loading = false
+    element.success = true
+    element.size = 'lg'
+    await element.updateComplete
 
-    textarea = element.querySelector('textarea');
-    expect(textarea?.className).toContain('sp-textarea--lg');
-    expect(textarea?.className).toContain('sp-textarea--success');
-    expect(textarea?.getAttribute('aria-busy')).toBe('false');
-  });
+    textarea = element.querySelector('textarea')
+    expect(textarea?.className).toContain('sp-textarea--lg')
+    expect(textarea?.className).toContain('sp-textarea--success')
+    expect(textarea?.getAttribute('aria-busy')).toBe('false')
+  })
 
   it('forwards autocomplete, autofocus, and inputmode', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.autocomplete = 'on';
-    element.autofocus = true;
-    element.inputmode = 'text';
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.autocomplete = 'on'
+    element.autofocus = true
+    element.inputmode = 'text'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
-    expect(textarea?.getAttribute('autocomplete')).toBe('on');
-    expect(textarea?.hasAttribute('autofocus')).toBe(true);
-    expect(textarea?.getAttribute('inputmode')).toBe('text');
-  });
+    const textarea = element.querySelector('textarea')
+    expect(textarea?.getAttribute('autocomplete')).toBe('on')
+    expect(textarea?.hasAttribute('autofocus')).toBe(true)
+    expect(textarea?.getAttribute('inputmode')).toBe('text')
+  })
 
   it('tightens maxlength, minlength and rows validation', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
+      'sp-textarea'
+    ) as SpectreTextareaElement
     // @ts-expect-error -- exercising runtime coercion for invalid consumer values
-    element.maxlength = 'invalid';
-    element.minlength = -5;
-    element.rows = 0;
+    element.maxlength = 'invalid'
+    element.minlength = -5
+    element.rows = 0
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.maxlength).toBeUndefined();
-    expect(element.minlength).toBeUndefined();
-    expect(element.rows).toBe(2);
+    expect(element.maxlength).toBeUndefined()
+    expect(element.minlength).toBeUndefined()
+    expect(element.rows).toBe(2)
 
-    element.rows = 5;
-    await element.updateComplete;
-    expect(element.rows).toBe(5);
+    element.rows = 5
+    await element.updateComplete
+    expect(element.rows).toBe(5)
 
     // @ts-expect-error -- exercising runtime coercion for invalid consumer values
-    element.rows = null;
-    await element.updateComplete;
-    expect(element.rows).toBe(2);
-  });
+    element.rows = null
+    await element.updateComplete
+    expect(element.rows).toBe(2)
+  })
 
   it('reflects rows to the host attribute', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.rows = 5;
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.rows = 5
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.getAttribute('rows')).toBe('5');
+    expect(element.getAttribute('rows')).toBe('5')
 
-    const textarea = element.querySelector('textarea');
-    expect(textarea?.getAttribute('rows')).toBe('5');
-  });
+    const textarea = element.querySelector('textarea')
+    expect(textarea?.getAttribute('rows')).toBe('5')
+  })
 
   it('forwards autocapitalize, spellcheck, and enterkeyhint', async () => {
     const element = document.createElement(
-      'sp-textarea',
-    ) as SpectreTextareaElement;
-    element.autocapitalize = 'sentences';
-    element.spellcheck = true;
-    element.enterkeyhint = 'send';
+      'sp-textarea'
+    ) as SpectreTextareaElement
+    element.autocapitalize = 'sentences'
+    element.spellcheck = true
+    element.enterkeyhint = 'send'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const textarea = element.querySelector('textarea');
-    expect(textarea?.getAttribute('autocapitalize')).toBe('sentences');
-    expect(textarea?.getAttribute('spellcheck')).toBe('true');
-    expect(textarea?.getAttribute('enterkeyhint')).toBe('send');
+    const textarea = element.querySelector('textarea')
+    expect(textarea?.getAttribute('autocapitalize')).toBe('sentences')
+    expect(textarea?.getAttribute('spellcheck')).toBe('true')
+    expect(textarea?.getAttribute('enterkeyhint')).toBe('send')
 
-    element.spellcheck = false;
-    await element.updateComplete;
-    expect(textarea?.getAttribute('spellcheck')).toBe('false');
-  });
-});
+    element.spellcheck = false
+    await element.updateComplete
+    expect(textarea?.getAttribute('spellcheck')).toBe('false')
+  })
+})
 
 function superHasIdAttribute(element: HTMLElement): boolean {
-  return HTMLElement.prototype.hasAttribute.call(element, 'id');
+  return HTMLElement.prototype.hasAttribute.call(element, 'id')
 }

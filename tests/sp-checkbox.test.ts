@@ -1,354 +1,396 @@
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { defineSpectreCheckbox, SpectreCheckboxElement } from '../src';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { defineSpectreCheckbox, SpectreCheckboxElement } from '../src'
 
 describe('sp-checkbox', () => {
   beforeAll(() => {
-    defineSpectreCheckbox();
-  });
+    defineSpectreCheckbox()
+  })
 
   afterEach(() => {
-    document.body.innerHTML = '';
-  });
+    document.body.innerHTML = ''
+  })
 
   it('renders a native checkbox and label text', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.label = 'Accept terms';
-    element.name = 'terms';
-    element.value = 'accepted';
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.label = 'Accept terms'
+    element.name = 'terms'
+    element.value = 'accepted'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
     const input = element.querySelector(
-      'input[type=checkbox]',
-    ) as HTMLInputElement | null;
-    const label = element.querySelector('.sp-label');
+      'input[type=checkbox]'
+    ) as HTMLInputElement | null
+    const label = element.querySelector('.sp-label')
 
-    expect(input).not.toBeNull();
-    expect(input?.getAttribute('name')).toBe('terms');
-    expect(input?.getAttribute('value')).toBe('accepted');
-    expect(label?.textContent).toBe('Accept terms');
-  });
+    expect(input).not.toBeNull()
+    expect(input?.getAttribute('name')).toBe('terms')
+    expect(input?.getAttribute('value')).toBe('accepted')
+    expect(label?.textContent).toBe('Accept terms')
+  })
 
   it('toggles via native space-key activation on the native checkbox', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    document.body.append(element)
+    await element.updateComplete
 
     const input = element.querySelector<HTMLInputElement>(
-      'input[type=checkbox]',
-    );
-    expect(input).not.toBeNull();
+      'input[type=checkbox]'
+    )
+    expect(input).not.toBeNull()
 
     // Browsers toggle a checkbox's `checked` state on Space before firing
     // `click`/`change` — simulate that native sequence directly on the
     // native input to verify our `checked` property tracks it.
-    input!.checked = true;
-    input!.dispatchEvent(new Event('input', { bubbles: true }));
-    input!.dispatchEvent(new Event('change', { bubbles: true }));
-    await element.updateComplete;
+    input!.checked = true
+    input!.dispatchEvent(new Event('input', { bubbles: true }))
+    input!.dispatchEvent(new Event('change', { bubbles: true }))
+    await element.updateComplete
 
-    expect(element.checked).toBe(true);
-  });
+    expect(element.checked).toBe(true)
+  })
 
   it('does not intercept or preventDefault native keydown events', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    document.body.append(element)
+    await element.updateComplete
 
     const input = element.querySelector<HTMLInputElement>(
-      'input[type=checkbox]',
-    );
+      'input[type=checkbox]'
+    )
     const event = new KeyboardEvent('keydown', {
       key: ' ',
       bubbles: true,
-      cancelable: true,
-    });
+      cancelable: true
+    })
 
-    input?.dispatchEvent(event);
+    input?.dispatchEvent(event)
 
-    expect(event.defaultPrevented).toBe(false);
-  });
+    expect(event.defaultPrevented).toBe(false)
+  })
 
   it('forwards the form attribute to the native checkbox', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.form = 'test-form';
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.form = 'test-form'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
     const input = element.querySelector<HTMLInputElement>(
-      'input[type=checkbox]',
-    );
-    expect(input?.getAttribute('form')).toBe('test-form');
-  });
+      'input[type=checkbox]'
+    )
+    expect(input?.getAttribute('form')).toBe('test-form')
+  })
 
   it('participates in ancestor form submission via FormData only when checked', async () => {
-    const form = document.createElement('form');
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.name = 'terms';
-    element.value = 'accepted';
-    form.append(element);
-    document.body.append(form);
-    await element.updateComplete;
+    const form = document.createElement('form')
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.name = 'terms'
+    element.value = 'accepted'
+    form.append(element)
+    document.body.append(form)
+    await element.updateComplete
 
-    expect(new FormData(form).get('terms')).toBeNull();
+    expect(new FormData(form).get('terms')).toBeNull()
 
-    element.checked = true;
-    await element.updateComplete;
+    element.checked = true
+    await element.updateComplete
 
-    expect(new FormData(form).get('terms')).toBe('accepted');
-  });
+    expect(new FormData(form).get('terms')).toBe('accepted')
+  })
 
   it('reports native required validity through the wrapper', async () => {
-    const form = document.createElement('form');
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.name = 'terms';
-    element.required = true;
-    form.append(element);
-    document.body.append(form);
-    await element.updateComplete;
+    const form = document.createElement('form')
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.name = 'terms'
+    element.required = true
+    form.append(element)
+    document.body.append(form)
+    await element.updateComplete
 
     const input = element.querySelector<HTMLInputElement>(
-      'input[type=checkbox]',
-    )!;
+      'input[type=checkbox]'
+    )!
 
-    expect(input.checkValidity()).toBe(false);
-    expect(form.checkValidity()).toBe(false);
+    expect(input.checkValidity()).toBe(false)
+    expect(form.checkValidity()).toBe(false)
 
-    element.checked = true;
-    await element.updateComplete;
+    element.checked = true
+    await element.updateComplete
 
-    expect(input.checkValidity()).toBe(true);
-    expect(form.checkValidity()).toBe(true);
-  });
+    expect(input.checkValidity()).toBe(true)
+    expect(form.checkValidity()).toBe(true)
+  })
 
   it('supports rich content labels via projection', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.innerHTML = '<span>Accept <strong>Terms</strong></span>';
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.innerHTML = '<span>Accept <strong>Terms</strong></span>'
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const label = element.querySelector('label');
-    expect(label?.innerHTML).toContain('<span>Accept <strong>Terms</strong></span>');
+    const label = element.querySelector('label')
+    expect(label?.innerHTML).toContain(
+      '<span>Accept <strong>Terms</strong></span>'
+    )
 
     // Should favor projected content over label property
-    element.label = 'Should be ignored';
-    await element.updateComplete;
-    expect(label?.innerHTML).toContain('<span>Accept <strong>Terms</strong></span>');
-    expect(label?.textContent).not.toContain('Should be ignored');
-  });
+    element.label = 'Should be ignored'
+    await element.updateComplete
+    expect(label?.innerHTML).toContain(
+      '<span>Accept <strong>Terms</strong></span>'
+    )
+    expect(label?.textContent).not.toContain('Should be ignored')
+  })
 
   it('forwards the consumer-facing id to the native checkbox only', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.setAttribute('id', 'terms-checkbox');
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.setAttribute('id', 'terms-checkbox')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input[type=checkbox]');
+    const input = element.querySelector('input[type=checkbox]')
 
-    expect(element.getAttribute('id')).toBe('terms-checkbox');
-    expect(superHasIdAttribute(element)).toBe(false);
-    expect(input?.id).toBe('terms-checkbox');
-  });
+    expect(element.getAttribute('id')).toBe('terms-checkbox')
+    expect(superHasIdAttribute(element)).toBe(false)
+    expect(input?.id).toBe('terms-checkbox')
+  })
 
   it('forwards aria labeling and only sets aria-invalid when invalid', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.setAttribute('aria-label', 'Accept terms');
-    element.setAttribute('aria-labelledby', 'terms-label');
-    element.setAttribute('aria-describedby', 'terms-help');
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.setAttribute('aria-label', 'Accept terms')
+    element.setAttribute('aria-labelledby', 'terms-label')
+    element.setAttribute('aria-describedby', 'terms-help')
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let input = element.querySelector('input[type=checkbox]');
+    let input = element.querySelector('input[type=checkbox]')
 
-    expect(input?.getAttribute('aria-label')).toBe('Accept terms');
-    expect(input?.getAttribute('aria-labelledby')).toBe('terms-label');
-    expect(input?.getAttribute('aria-describedby')).toBe('terms-help');
-    expect(input?.hasAttribute('aria-invalid')).toBe(false);
+    expect(input?.getAttribute('aria-label')).toBe('Accept terms')
+    expect(input?.getAttribute('aria-labelledby')).toBe('terms-label')
+    expect(input?.getAttribute('aria-describedby')).toBe('terms-help')
+    expect(input?.hasAttribute('aria-invalid')).toBe(false)
 
-    element.invalid = true;
-    await element.updateComplete;
+    element.invalid = true
+    await element.updateComplete
 
-    input = element.querySelector('input[type=checkbox]');
-    expect(input?.getAttribute('aria-invalid')).toBe('true');
-  });
+    input = element.querySelector('input[type=checkbox]')
+    expect(input?.getAttribute('aria-invalid')).toBe('true')
+  })
 
   it('keeps checked state in sync while native events bubble', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    const onInput = vi.fn();
-    const onChange = vi.fn();
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    const onInput = vi.fn()
+    const onChange = vi.fn()
 
-    element.addEventListener('input', onInput);
-    element.addEventListener('change', onChange);
+    element.addEventListener('input', onInput)
+    element.addEventListener('change', onChange)
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input[type=checkbox]');
+    const input = element.querySelector('input[type=checkbox]')
 
-    expect(input).not.toBeNull();
+    expect(input).not.toBeNull()
 
-    if (input === null || (input instanceof HTMLInputElement) === false) {
-      throw new Error('Expected a native checkbox input');
+    if (input === null || input instanceof HTMLInputElement === false) {
+      throw new Error('Expected a native checkbox input')
     }
 
-    input.checked = true;
-    input.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
-    await element.updateComplete;
+    input.checked = true
+    input.dispatchEvent(new Event('input', { bubbles: true, composed: true }))
+    await element.updateComplete
 
-    expect(element.checked).toBe(true);
-    expect(onInput).toHaveBeenCalledTimes(1);
+    expect(element.checked).toBe(true)
+    expect(onInput).toHaveBeenCalledTimes(1)
 
-    input.dispatchEvent(new Event('change', { bubbles: true }));
-    await element.updateComplete;
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+    await element.updateComplete
 
-    expect(element.checked).toBe(true);
-    expect(onChange).toHaveBeenCalledTimes(1);
-  });
+    expect(element.checked).toBe(true)
+    expect(onChange).toHaveBeenCalledTimes(1)
+  })
 
   it('passes focus and blur through to the native checkbox', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input[type=checkbox]');
-    const onFocus = vi.fn();
-    const onBlur = vi.fn();
+    const input = element.querySelector('input[type=checkbox]')
+    const onFocus = vi.fn()
+    const onBlur = vi.fn()
 
-    input?.addEventListener('focus', onFocus);
-    input?.addEventListener('blur', onBlur);
+    input?.addEventListener('focus', onFocus)
+    input?.addEventListener('blur', onBlur)
 
-    element.focus();
-    expect(onFocus).toHaveBeenCalled();
+    element.focus()
+    expect(onFocus).toHaveBeenCalled()
 
-    element.blur();
-    expect(onBlur).toHaveBeenCalled();
-  });
+    element.blur()
+    expect(onBlur).toHaveBeenCalled()
+  })
 
   it('reflects label, title, and autofocus properties', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.label = 'Reflected Label';
-    element.title = 'Checkbox Title';
-    element.autofocus = true;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.label = 'Reflected Label'
+    element.title = 'Checkbox Title'
+    element.autofocus = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const input = element.querySelector('input[type=checkbox]');
+    const input = element.querySelector('input[type=checkbox]')
 
-    expect(element.getAttribute('label')).toBe('Reflected Label');
-    expect(element.getAttribute('title')).toBe('Checkbox Title');
-    expect(element.hasAttribute('autofocus')).toBe(true);
-    expect(input?.getAttribute('title')).toBe('Checkbox Title');
-    expect(input?.hasAttribute('autofocus')).toBe(true);
-  });
+    expect(element.getAttribute('label')).toBe('Reflected Label')
+    expect(element.getAttribute('title')).toBe('Checkbox Title')
+    expect(element.hasAttribute('autofocus')).toBe(true)
+    expect(input?.getAttribute('title')).toBe('Checkbox Title')
+    expect(input?.hasAttribute('autofocus')).toBe(true)
+  })
 
   it('normalizes null/undefined value to "on"', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.value = null as never;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.value = null as never
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.value).toBe('on');
-    const input = element.querySelector('input[type=checkbox]');
-    expect(input?.getAttribute('value')).toBe('on');
-  });
+    expect(element.value).toBe('on')
+    const input = element.querySelector('input[type=checkbox]')
+    expect(input?.getAttribute('value')).toBe('on')
+  })
 
   it('preserves an empty string as a valid value', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.value = '';
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.value = ''
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.value).toBe('');
-    const input = element.querySelector('input[type=checkbox]');
-    expect(input?.getAttribute('value')).toBe('');
-  });
+    expect(element.value).toBe('')
+    const input = element.querySelector('input[type=checkbox]')
+    expect(input?.getAttribute('value')).toBe('')
+  })
 
   it('does not render a label span if label is empty', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.label = '';
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.label = ''
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    const label = element.querySelector('.sp-label');
-    expect(label).toBeNull();
-  });
+    const label = element.querySelector('.sp-label')
+    expect(label).toBeNull()
+  })
 
   it('supports loading state and forwards aria-busy', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.loading = true;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.loading = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
     const input = element.querySelector(
-      'input[type=checkbox]',
-    ) as HTMLInputElement | null;
-    expect(input?.disabled).toBe(true);
-    expect(input?.getAttribute('aria-busy')).toBe('true');
+      'input[type=checkbox]'
+    ) as HTMLInputElement | null
+    expect(input?.disabled).toBe(true)
+    expect(input?.getAttribute('aria-busy')).toBe('true')
 
-    element.loading = false;
-    await element.updateComplete;
-    expect(input?.disabled).toBe(false);
-    expect(input?.getAttribute('aria-busy')).toBe('false');
-  });
+    element.loading = false
+    await element.updateComplete
+    expect(input?.disabled).toBe(false)
+    expect(input?.getAttribute('aria-busy')).toBe('false')
+  })
 
   it('supports success state', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.success = true;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.success = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    expect(element.success).toBe(true);
-    expect(element.hasAttribute('success')).toBe(true);
-  });
+    expect(element.success).toBe(true)
+    expect(element.hasAttribute('success')).toBe(true)
+  })
 
   it('forwards required to the native checkbox and handles dynamic updates', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    element.required = true;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    element.required = true
 
-    document.body.append(element);
-    await element.updateComplete;
+    document.body.append(element)
+    await element.updateComplete
 
-    let input = element.querySelector<HTMLInputElement>('input[type=checkbox]');
-    expect(input?.required).toBe(true);
+    let input = element.querySelector<HTMLInputElement>('input[type=checkbox]')
+    expect(input?.required).toBe(true)
 
-    element.required = false;
-    await element.updateComplete;
+    element.required = false
+    await element.updateComplete
 
-    input = element.querySelector<HTMLInputElement>('input[type=checkbox]');
-    expect(input?.required).toBe(false);
-  });
+    input = element.querySelector<HTMLInputElement>('input[type=checkbox]')
+    expect(input?.required).toBe(false)
+  })
 
   it('applies checked and disabled modifier classes to the indicator', async () => {
-    const element = document.createElement('sp-checkbox') as SpectreCheckboxElement;
-    document.body.append(element);
-    await element.updateComplete;
+    const element = document.createElement(
+      'sp-checkbox'
+    ) as SpectreCheckboxElement
+    document.body.append(element)
+    await element.updateComplete
 
-    let indicator = element.querySelector('[data-sp-checkbox-indicator]');
-    expect(indicator?.className).toBe('sp-checkbox-indicator');
+    let indicator = element.querySelector('[data-sp-checkbox-indicator]')
+    expect(indicator?.className).toBe('sp-checkbox-indicator')
 
-    element.checked = true;
-    await element.updateComplete;
-    indicator = element.querySelector('[data-sp-checkbox-indicator]');
-    expect(indicator?.className).toContain('sp-checkbox-indicator--checked');
+    element.checked = true
+    await element.updateComplete
+    indicator = element.querySelector('[data-sp-checkbox-indicator]')
+    expect(indicator?.className).toContain('sp-checkbox-indicator--checked')
 
-    element.disabled = true;
-    await element.updateComplete;
-    indicator = element.querySelector('[data-sp-checkbox-indicator]');
-    expect(indicator?.className).toContain('sp-checkbox-indicator--disabled');
-  });
-});
+    element.disabled = true
+    await element.updateComplete
+    indicator = element.querySelector('[data-sp-checkbox-indicator]')
+    expect(indicator?.className).toContain('sp-checkbox-indicator--disabled')
+  })
+})
 
 function superHasIdAttribute(element: HTMLElement): boolean {
-  return HTMLElement.prototype.hasAttribute.call(element, 'id');
+  return HTMLElement.prototype.hasAttribute.call(element, 'id')
 }

@@ -19,7 +19,11 @@ export const spectreButtonVariants = [
   'success',
   'cta',
   'accent',
-  'inverse'
+  'inverse',
+  'warning',
+  'link',
+  'light',
+  'dark'
 ] as const
 
 export type SpectreButtonVariant = (typeof spectreButtonVariants)[number]
@@ -69,7 +73,8 @@ export const spectreBadgeVariants = [
   'outline',
   'accent',
   'cta',
-  'inverse'
+  'inverse',
+  'brand'
 ] as const
 
 export type SpectreBadgeVariant = (typeof spectreBadgeVariants)[number]
@@ -83,7 +88,8 @@ export const spectreAlertVariants = [
   'success',
   'warning',
   'danger',
-  'neutral'
+  'neutral',
+  'brand'
 ] as const
 
 export type SpectreAlertVariant = (typeof spectreAlertVariants)[number]
@@ -190,7 +196,8 @@ export const spectreSpinnerVariants = [
   'info',
   'neutral',
   'accent',
-  'cta'
+  'cta',
+  'inverse'
 ] as const
 
 export type SpectreSpinnerVariant = (typeof spectreSpinnerVariants)[number]
@@ -238,7 +245,7 @@ export function isAvatarShape(value: unknown): value is SpectreAvatarShape {
   return (spectreAvatarShapes as readonly string[]).includes(value as string)
 }
 
-export const spectreContainerMaxWidths = ['prose'] as const
+export const spectreContainerMaxWidths = ['none', 'prose', 'wide'] as const
 
 export type SpectreContainerMaxWidth =
   (typeof spectreContainerMaxWidths)[number]
@@ -517,7 +524,7 @@ export function isStackDirection(
   return (spectreStackDirections as readonly string[]).includes(value as string)
 }
 
-export const spectreStackBases = ['sidebar'] as const
+export const spectreStackBases = ['none', 'sidebar'] as const
 
 export type SpectreStackBasis = (typeof spectreStackBases)[number]
 
@@ -571,7 +578,8 @@ export const spectreToastVariants = [
   'info',
   'success',
   'warning',
-  'danger'
+  'danger',
+  'neutral'
 ] as const
 
 export type SpectreToastVariant = (typeof spectreToastVariants)[number]
@@ -635,7 +643,12 @@ export const spectreTextVariants = [
   'meta',
   'brand',
   'onInverse',
-  'onInverseMuted'
+  'onInverseMuted',
+  'onSurface',
+  'onSurfaceMuted',
+  'onSurfaceSubtle',
+  'onSurfaceMeta',
+  'onSurfaceBrand'
 ] as const
 
 export type SpectreTextVariant = (typeof spectreTextVariants)[number]
@@ -680,6 +693,176 @@ export type SpectreTextTransform = (typeof spectreTextTransforms)[number]
 
 export function isTextTransform(value: unknown): value is SpectreTextTransform {
   return (spectreTextTransforms as readonly string[]).includes(value as string)
+}
+
+export const spectreTabsVariants = ['line', 'pill'] as const
+
+export type SpectreTabsVariant = (typeof spectreTabsVariants)[number]
+
+export function isTabsVariant(value: unknown): value is SpectreTabsVariant {
+  return (spectreTabsVariants as readonly string[]).includes(value as string)
+}
+
+export const spectreOffcanvasPlacements = [
+  'start',
+  'end',
+  'top',
+  'bottom'
+] as const
+
+export type SpectreOffcanvasPlacement =
+  (typeof spectreOffcanvasPlacements)[number]
+
+export function isOffcanvasPlacement(
+  value: unknown
+): value is SpectreOffcanvasPlacement {
+  return (spectreOffcanvasPlacements as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreTableSizes = ['sm', 'md'] as const
+
+export type SpectreTableSize = (typeof spectreTableSizes)[number]
+
+export function isTableSize(value: unknown): value is SpectreTableSize {
+  return (spectreTableSizes as readonly string[]).includes(value as string)
+}
+
+export const spectreStepperOrientations = ['horizontal', 'vertical'] as const
+
+export type SpectreStepperOrientation =
+  (typeof spectreStepperOrientations)[number]
+
+export function isStepperOrientation(
+  value: unknown
+): value is SpectreStepperOrientation {
+  return (spectreStepperOrientations as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreSpacingScale = ['sm', 'md', 'lg'] as const
+
+export type SpectreSpacingStep = (typeof spectreSpacingScale)[number]
+
+export function isSpacingStep(value: unknown): value is SpectreSpacingStep {
+  return (spectreSpacingScale as readonly string[]).includes(value as string)
+}
+
+export const spectreGridColStarts = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+] as const
+
+export type SpectreGridColStart = (typeof spectreGridColStarts)[number]
+
+export function isGridColStart(value: unknown): value is SpectreGridColStart {
+  return (spectreGridColStarts as readonly number[]).includes(value as number)
+}
+
+export interface SpectreGridColStartOptions {
+  base?: SpectreGridColStart
+  md?: SpectreGridColStart
+  lg?: SpectreGridColStart
+}
+
+export function isGridColStartOptions(
+  value: unknown
+): value is SpectreGridColStartOptions {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  const candidate = value as Record<string, unknown>
+  return (
+    (candidate.base === undefined || isGridColStart(candidate.base)) &&
+    (candidate.md === undefined || isGridColStart(candidate.md)) &&
+    (candidate.lg === undefined || isGridColStart(candidate.lg))
+  )
+}
+
+export const spectrePopoverPlacements = [
+  'top',
+  'bottom',
+  'left',
+  'right'
+] as const
+
+export type SpectrePopoverPlacement = (typeof spectrePopoverPlacements)[number]
+
+export function isPopoverPlacement(
+  value: unknown
+): value is SpectrePopoverPlacement {
+  return (spectrePopoverPlacements as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreProgressVariants = [
+  'brand',
+  'neutral',
+  'info',
+  'success',
+  'warning',
+  'danger'
+] as const
+
+export type SpectreProgressVariant = (typeof spectreProgressVariants)[number]
+
+export function isProgressVariant(
+  value: unknown
+): value is SpectreProgressVariant {
+  return (spectreProgressVariants as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreTextPresets = ['heading', 'display', 'lead'] as const
+
+export type SpectreTextPreset = (typeof spectreTextPresets)[number]
+
+export function isTextPreset(value: unknown): value is SpectreTextPreset {
+  return (spectreTextPresets as readonly string[]).includes(value as string)
+}
+
+export const spectreHeadingLevels = [
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6'
+] as const
+
+export type SpectreHeadingLevel = (typeof spectreHeadingLevels)[number]
+
+export function isHeadingLevel(value: unknown): value is SpectreHeadingLevel {
+  return (spectreHeadingLevels as readonly string[]).includes(value as string)
+}
+
+export const spectreDisplayLevels = [1, 2, 3, 4, 5, 6] as const
+
+export type SpectreDisplayLevel = (typeof spectreDisplayLevels)[number]
+
+export function isDisplayLevel(value: unknown): value is SpectreDisplayLevel {
+  return (spectreDisplayLevels as readonly number[]).includes(value as number)
+}
+
+export const spectreTableRowVariants = [
+  'neutral',
+  'info',
+  'success',
+  'warning',
+  'danger'
+] as const
+
+export type SpectreTableRowVariant = (typeof spectreTableRowVariants)[number]
+
+export function isTableRowVariant(
+  value: unknown
+): value is SpectreTableRowVariant {
+  return (spectreTableRowVariants as readonly string[]).includes(
+    value as string
+  )
 }
 
 export function normalizeInt(

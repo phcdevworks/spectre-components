@@ -348,9 +348,14 @@
         "values": [
           "defineSpectreContainer",
           "SpectreContainerElement",
-          "spectreContainerMaxWidths"
+          "spectreContainerMaxWidths",
+          "spectreContainerPaddings"
         ],
-        "types": ["SpectreContainerProps", "SpectreContainerMaxWidth"]
+        "types": [
+          "SpectreContainerProps",
+          "SpectreContainerMaxWidth",
+          "SpectreContainerPadding"
+        ]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -367,9 +372,16 @@
           "defineSpectreGrid",
           "SpectreGridElement",
           "spectreGridColumns",
-          "spectreGridGaps"
+          "spectreGridGaps",
+          "spectreGridColStarts"
         ],
-        "types": ["SpectreGridProps", "SpectreGridColumns", "SpectreGridGap"]
+        "types": [
+          "SpectreGridProps",
+          "SpectreGridColumns",
+          "SpectreGridGap",
+          "SpectreGridColStart",
+          "SpectreGridColStartOptions"
+        ]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -382,8 +394,12 @@
       "entryPoint": "./section",
       "distFile": "dist/section.js",
       "exports": {
-        "values": ["defineSpectreSection", "SpectreSectionElement"],
-        "types": ["SpectreSectionProps"]
+        "values": [
+          "defineSpectreSection",
+          "SpectreSectionElement",
+          "spectreSectionSpacings"
+        ],
+        "types": ["SpectreSectionProps", "SpectreSectionSpacing"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -607,15 +623,392 @@
           "spectreTextSizes",
           "spectreTextVariants",
           "spectreTextFamilies",
-          "spectreTextLevels"
+          "spectreTextLevels",
+          "spectreTextPresets",
+          "spectreHeadingLevels",
+          "spectreDisplayLevels"
         ],
         "types": [
           "SpectreTextProps",
           "SpectreTextSize",
           "SpectreTextVariant",
           "SpectreTextFamily",
-          "SpectreTextLevel"
+          "SpectreTextLevel",
+          "SpectreTextPreset",
+          "SpectreHeadingLevel",
+          "SpectreDisplayLevel"
         ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-tabs",
+      "elementClass": "SpectreTabsElement",
+      "entryPoint": "./tabs",
+      "distFile": "dist/tabs.js",
+      "exports": {
+        "values": [
+          "defineSpectreTabs",
+          "SpectreTabsElement",
+          "spectreTabsVariants"
+        ],
+        "types": ["SpectreTabsProps", "SpectreTabsVariant"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-tab-panel",
+      "elementClass": "SpectreTabPanelElement",
+      "entryPoint": "./tab-panel",
+      "distFile": "dist/tab-panel.js",
+      "exports": {
+        "values": ["defineSpectreTabPanel", "SpectreTabPanelElement"],
+        "types": ["SpectreTabPanelProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-accordion",
+      "elementClass": "SpectreAccordionElement",
+      "entryPoint": "./accordion",
+      "distFile": "dist/accordion.js",
+      "exports": {
+        "values": ["defineSpectreAccordion", "SpectreAccordionElement"],
+        "types": ["SpectreAccordionProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-accordion-item",
+      "elementClass": "SpectreAccordionItemElement",
+      "entryPoint": "./accordion-item",
+      "distFile": "dist/accordion-item.js",
+      "exports": {
+        "values": ["defineSpectreAccordionItem", "SpectreAccordionItemElement"],
+        "types": ["SpectreAccordionItemProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-breadcrumb",
+      "elementClass": "SpectreBreadcrumbElement",
+      "entryPoint": "./breadcrumb",
+      "distFile": "dist/breadcrumb.js",
+      "exports": {
+        "values": ["defineSpectreBreadcrumb", "SpectreBreadcrumbElement"],
+        "types": ["SpectreBreadcrumbProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-list-group",
+      "elementClass": "SpectreListGroupElement",
+      "entryPoint": "./list-group",
+      "distFile": "dist/list-group.js",
+      "exports": {
+        "values": ["defineSpectreListGroup", "SpectreListGroupElement"],
+        "types": ["SpectreListGroupProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-list-group-item",
+      "elementClass": "SpectreListGroupItemElement",
+      "entryPoint": "./list-group-item",
+      "distFile": "dist/list-group-item.js",
+      "exports": {
+        "values": ["defineSpectreListGroupItem", "SpectreListGroupItemElement"],
+        "types": ["SpectreListGroupItemProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-offcanvas",
+      "elementClass": "SpectreOffcanvasElement",
+      "entryPoint": "./offcanvas",
+      "distFile": "dist/offcanvas.js",
+      "exports": {
+        "values": [
+          "defineSpectreOffcanvas",
+          "SpectreOffcanvasElement",
+          "spectreOffcanvasPlacements"
+        ],
+        "types": ["SpectreOffcanvasProps", "SpectreOffcanvasPlacement"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-carousel",
+      "elementClass": "SpectreCarouselElement",
+      "entryPoint": "./carousel",
+      "distFile": "dist/carousel.js",
+      "exports": {
+        "values": ["defineSpectreCarousel", "SpectreCarouselElement"],
+        "types": ["SpectreCarouselProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-table",
+      "elementClass": "SpectreTableElement",
+      "entryPoint": "./table",
+      "distFile": "dist/table.js",
+      "exports": {
+        "values": [
+          "defineSpectreTable",
+          "SpectreTableElement",
+          "spectreTableSizes",
+          "spectreTableRowVariants"
+        ],
+        "types": [
+          "SpectreTableProps",
+          "SpectreTableSize",
+          "SpectreTableRowVariant"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-pagination",
+      "elementClass": "SpectrePaginationElement",
+      "entryPoint": "./pagination",
+      "distFile": "dist/pagination.js",
+      "exports": {
+        "values": [
+          "defineSpectrePagination",
+          "SpectrePaginationElement",
+          "spectrePaginationSizes"
+        ],
+        "types": ["SpectrePaginationProps", "SpectrePaginationSize"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-stepper",
+      "elementClass": "SpectreStepperElement",
+      "entryPoint": "./stepper",
+      "distFile": "dist/stepper.js",
+      "exports": {
+        "values": [
+          "defineSpectreStepper",
+          "SpectreStepperElement",
+          "spectreStepperOrientations"
+        ],
+        "types": ["SpectreStepperProps", "SpectreStepperOrientation"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-card-bleed",
+      "elementClass": "SpectreCardBleedElement",
+      "entryPoint": "./card-bleed",
+      "distFile": "dist/card-bleed.js",
+      "exports": {
+        "values": ["defineSpectreCardBleed", "SpectreCardBleedElement"],
+        "types": ["SpectreCardBleedProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-prose",
+      "elementClass": "SpectreProseElement",
+      "entryPoint": "./prose",
+      "distFile": "dist/prose.js",
+      "exports": {
+        "values": ["defineSpectreProse", "SpectreProseElement"],
+        "types": ["SpectreProseProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-progress",
+      "elementClass": "SpectreProgressElement",
+      "entryPoint": "./progress",
+      "distFile": "dist/progress.js",
+      "exports": {
+        "values": [
+          "defineSpectreProgress",
+          "SpectreProgressElement",
+          "spectreProgressVariants",
+          "spectreProgressSizes"
+        ],
+        "types": [
+          "SpectreProgressProps",
+          "SpectreProgressVariant",
+          "SpectreProgressSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-switch",
+      "elementClass": "SpectreSwitchElement",
+      "entryPoint": "./switch",
+      "distFile": "dist/switch.js",
+      "exports": {
+        "values": [
+          "defineSpectreSwitch",
+          "SpectreSwitchElement",
+          "spectreSwitchSizes"
+        ],
+        "types": ["SpectreSwitchProps", "SpectreSwitchSize"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-range",
+      "elementClass": "SpectreRangeElement",
+      "entryPoint": "./range",
+      "distFile": "dist/range.js",
+      "exports": {
+        "values": ["defineSpectreRange", "SpectreRangeElement"],
+        "types": ["SpectreRangeProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-file-input",
+      "elementClass": "SpectreFileInputElement",
+      "entryPoint": "./file-input",
+      "distFile": "dist/file-input.js",
+      "exports": {
+        "values": [
+          "defineSpectreFileInput",
+          "SpectreFileInputElement",
+          "spectreFileInputSizes"
+        ],
+        "types": ["SpectreFileInputProps", "SpectreFileInputSize"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-external-auth-button",
+      "elementClass": "SpectreExternalAuthButtonElement",
+      "entryPoint": "./external-auth-button",
+      "distFile": "dist/external-auth-button.js",
+      "exports": {
+        "values": [
+          "defineSpectreExternalAuthButton",
+          "SpectreExternalAuthButtonElement"
+        ],
+        "types": ["SpectreExternalAuthButtonProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-choice-card",
+      "elementClass": "SpectreChoiceCardElement",
+      "entryPoint": "./choice-card",
+      "distFile": "dist/choice-card.js",
+      "exports": {
+        "values": ["defineSpectreChoiceCard", "SpectreChoiceCardElement"],
+        "types": ["SpectreChoiceCardProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-input-group",
+      "elementClass": "SpectreInputGroupElement",
+      "entryPoint": "./input-group",
+      "distFile": "dist/input-group.js",
+      "exports": {
+        "values": ["defineSpectreInputGroup", "SpectreInputGroupElement"],
+        "types": ["SpectreInputGroupProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-popover",
+      "elementClass": "SpectrePopoverElement",
+      "entryPoint": "./popover",
+      "distFile": "dist/popover.js",
+      "exports": {
+        "values": [
+          "defineSpectrePopover",
+          "SpectrePopoverElement",
+          "spectrePopoverPlacements"
+        ],
+        "types": ["SpectrePopoverProps", "SpectrePopoverPlacement"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-datepicker",
+      "elementClass": "SpectreDatepickerElement",
+      "entryPoint": "./datepicker",
+      "distFile": "dist/datepicker.js",
+      "exports": {
+        "values": ["defineSpectreDatepicker", "SpectreDatepickerElement"],
+        "types": ["SpectreDatepickerProps"]
       },
       "contracts": {
         "renderMode": "light-dom",

@@ -15,6 +15,12 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
   getBadgeClasses,
   type BadgeAccentRailColor,
   type BadgeAccentRailEdge,
@@ -22,7 +28,9 @@ import {
   type BadgeSize
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreBadgeProps {
+export interface SpectreBadgeProps extends SpectreInteractionStateProps {
+  dot?: boolean | undefined
+  interactive?: boolean | undefined
   accentRail?: SpectreAccentEdge | undefined
   accentRailColor?: SpectreAccentColor | undefined
   ariaLabel?: string | null
@@ -43,6 +51,9 @@ export class SpectreBadgeElement
   implements SpectreBadgeProps
 {
   static properties = {
+    dot: { type: Boolean, reflect: true },
+    interactive: { type: Boolean, reflect: true },
+    ...interactionStateProperties,
     accentRail: { attribute: 'accent-rail', type: String, reflect: true },
     accentRailColor: {
       attribute: 'accent-rail-color',
@@ -56,6 +67,14 @@ export class SpectreBadgeElement
     size: { type: String, reflect: true },
     variant: { type: String, reflect: true }
   }
+
+  dot: boolean | undefined = false
+
+  interactive: boolean | undefined = false
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   accentRail: SpectreAccentEdge | undefined = undefined
   accentRailColor: SpectreAccentColor | undefined = undefined
@@ -136,6 +155,9 @@ export class SpectreBadgeElement
 
   private get badgeClasses(): string {
     const recipeClasses = getBadgeClasses({
+      dot: this.dot ?? false,
+      interactive: this.interactive ?? false,
+      ...interactionStates(this),
       ...(this.accentRail !== undefined && {
         accentRail: this.accentRail as BadgeAccentRailEdge
       }),

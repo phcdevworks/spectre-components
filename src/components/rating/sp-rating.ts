@@ -9,6 +9,12 @@ import {
 } from '../../utils/form'
 
 import {
+  interactionStateProperties,
+  interactionStates,
+  type SpectreInteractionStateProps
+} from '../../utils/states'
+
+import {
   getRatingClasses,
   getRatingStarsClasses,
   getRatingStarClasses,
@@ -16,7 +22,10 @@ import {
   type RatingSize
 } from '@phcdevworks/spectre-ui'
 
-export interface SpectreRatingProps {
+export interface SpectreRatingProps extends SpectreInteractionStateProps {
+  fullWidth?: boolean | undefined
+  pill?: boolean | undefined
+  interactive?: boolean | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
@@ -35,6 +44,10 @@ export class SpectreRatingElement
   implements SpectreRatingProps
 {
   static properties = {
+    fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    pill: { type: Boolean, reflect: true },
+    interactive: { type: Boolean, reflect: true },
+    ...interactionStateProperties,
     disabled: { type: Boolean, reflect: true },
     label: { type: String, reflect: true },
     loading: { type: Boolean, reflect: true },
@@ -42,6 +55,16 @@ export class SpectreRatingElement
     size: { type: String, reflect: true },
     value: { type: Number, reflect: true }
   }
+
+  fullWidth: boolean | undefined = false
+
+  pill: boolean | undefined = false
+
+  interactive: boolean | undefined = false
+
+  active: boolean | undefined = false
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   disabled: boolean | undefined = false
   label: string | undefined
@@ -93,6 +116,10 @@ export class SpectreRatingElement
 
   private get ratingClasses(): string {
     return getRatingClasses({
+      fullWidth: this.fullWidth ?? false,
+      pill: this.pill ?? false,
+      interactive: this.interactive ?? false,
+      ...interactionStates(this),
       disabled: this.isDisabled,
       loading: this.loading ?? false,
       size: this.size as RatingSize

@@ -3,7 +3,10 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getFieldsetClasses, getFieldsetLegendClasses } from '@phcdevworks/spectre-ui'
+import {
+  getFieldsetClasses,
+  getFieldsetLegendClasses
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreFieldsetProps {
   ariaLabel?: string | null

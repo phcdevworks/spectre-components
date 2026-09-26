@@ -4,7 +4,10 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 
-import { getCheckboxClasses, getInputLabelClasses } from '@phcdevworks/spectre-ui'
+import {
+  getCheckboxClasses,
+  getInputLabelClasses
+} from '@phcdevworks/spectre-ui'
 
 export interface SpectreCheckboxProps {
   ariaLabel?: string | null

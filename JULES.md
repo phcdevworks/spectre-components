@@ -14,7 +14,8 @@ AI-agent governance.
 ## Operating Principles
 
 1. Read `AGENTS.md` before taking any action.
-2. Commit and push only when the full validation gate passes clean.
+2. Commit and push only when the full validation gate (`npm run check`) passes
+   clean.
 3. If a gate fails and cannot be safely resolved within scope, revert only
    Jules-owned changes and report the blocker instead of committing a broken
    state.

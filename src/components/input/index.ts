@@ -5,5 +5,5 @@ export {
   SpectreInputElement,
   type SpectreInputProps,
   type SpectreInputSize,
-  type SpectreInputType,
-} from './sp-input';
+  type SpectreInputType
+} from './sp-input'

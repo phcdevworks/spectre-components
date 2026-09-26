@@ -279,9 +279,7 @@ describe('sp-grid', () => {
     const div = element.querySelector('div[data-sp-grid-native]')
 
     expect(div?.getAttribute('role')).toBe('table')
-    expect(HTMLElement.prototype.hasAttribute.call(element, 'role')).toBe(
-      false
-    )
+    expect(HTMLElement.prototype.hasAttribute.call(element, 'role')).toBe(false)
     expect(element.getAttribute('role')).toBe('table')
   })
 

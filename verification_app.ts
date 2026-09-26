@@ -236,6 +236,180 @@ const template = html`
       <a href="#settings">Settings</a>
     </sp-sidebar>
   </section>
+
+  <section>
+    <h2>sp-alert (dismissible / icon)</h2>
+    <sp-alert variant="brand" dismissible>
+      <svg slot="icon" viewBox="0 0 16 16" aria-hidden="true">
+        <circle cx="8" cy="8" r="6" />
+      </svg>
+      A new version is available.
+    </sp-alert>
+  </section>
+
+  <section>
+    <h2>sp-tabs / sp-tab-panel</h2>
+    <sp-tabs aria-label="Account settings">
+      <sp-tab-panel label="Profile">Profile settings</sp-tab-panel>
+      <sp-tab-panel label="Security">Security settings</sp-tab-panel>
+      <sp-tab-panel label="Billing" disabled>Billing settings</sp-tab-panel>
+    </sp-tabs>
+    <sp-tabs variant="pill" vertical aria-label="Vertical pills">
+      <sp-tab-panel label="One">First panel</sp-tab-panel>
+      <sp-tab-panel label="Two">Second panel</sp-tab-panel>
+    </sp-tabs>
+  </section>
+
+  <section>
+    <h2>sp-accordion / sp-accordion-item</h2>
+    <sp-accordion data-verify="accordion">
+      <sp-accordion-item label="Shipping" open
+        >Ships in 2 days.</sp-accordion-item
+      >
+      <sp-accordion-item label="Returns">30 day returns.</sp-accordion-item>
+      <sp-accordion-item label="Warranty" disabled>One year.</sp-accordion-item>
+    </sp-accordion>
+  </section>
+
+  <section>
+    <h2>sp-breadcrumb</h2>
+    <sp-breadcrumb data-verify="breadcrumb">
+      <a href="#home">Home</a>
+      <a href="#library">Library</a>
+      <span>Data</span>
+    </sp-breadcrumb>
+  </section>
+
+  <section>
+    <h2>sp-list-group / sp-list-group-item</h2>
+    <sp-list-group
+      data-verify="list-group"
+      accent="left"
+      aria-label="Mailboxes"
+    >
+      <sp-list-group-item href="#inbox" active>Inbox</sp-list-group-item>
+      <sp-list-group-item interactive>Archive</sp-list-group-item>
+      <sp-list-group-item interactive disabled>Spam</sp-list-group-item>
+    </sp-list-group>
+  </section>
+
+  <section>
+    <h2>sp-offcanvas</h2>
+    <sp-offcanvas data-verify="offcanvas" label="Filters" placement="end">
+      <p>Filter content</p>
+      <sp-button slot="footer" variant="primary">Apply</sp-button>
+    </sp-offcanvas>
+  </section>
+
+  <section>
+    <h2>sp-carousel</h2>
+    <sp-carousel data-verify="carousel" aria-label="Featured">
+      <sp-card><p>Slide one</p></sp-card>
+      <sp-card><p>Slide two</p></sp-card>
+      <sp-card><p>Slide three</p></sp-card>
+    </sp-carousel>
+  </section>
+
+  <section>
+    <h2>sp-table</h2>
+    <sp-table data-verify="table" striped hoverable aria-label="Team">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ada</td>
+            <td>Engineer</td>
+          </tr>
+          <tr>
+            <td>Grace</td>
+            <td>Admiral</td>
+          </tr>
+        </tbody>
+      </table>
+    </sp-table>
+  </section>
+
+  <section>
+    <h2>sp-pagination</h2>
+    <sp-pagination total="20" page="10"></sp-pagination>
+  </section>
+
+  <section>
+    <h2>sp-stepper</h2>
+    <sp-stepper data-verify="stepper" aria-label="Checkout" current="1">
+      <span>Cart</span>
+      <span>Shipping</span>
+      <span>Payment</span>
+    </sp-stepper>
+  </section>
+  <section>
+    <h2>Form controls: sp-switch / sp-range / sp-file-input</h2>
+    <sp-switch data-verify="switch" checked>Email alerts</sp-switch>
+    <sp-range data-verify="range" aria-label="Volume" value="25"></sp-range>
+    <sp-file-input aria-label="Attachment"></sp-file-input>
+  </section>
+
+  <section>
+    <h2>sp-input-group</h2>
+    <sp-input-group data-verify="input-group" aria-label="Handle">
+      <span slot="addon">@</span>
+      <input aria-label="Username" />
+      <button type="button">Check</button>
+    </sp-input-group>
+  </section>
+
+  <section>
+    <h2>sp-choice-card</h2>
+    <sp-choice-card name="ship" value="std" checked
+      >Standard shipping</sp-choice-card
+    >
+    <sp-choice-card name="ship" value="exp">Express shipping</sp-choice-card>
+  </section>
+
+  <section>
+    <h2>sp-progress</h2>
+    <sp-progress
+      data-verify="progress"
+      label="Uploading"
+      value="40"
+    ></sp-progress>
+    <sp-progress
+      aria-label="Loading"
+      indeterminate
+      variant="info"
+    ></sp-progress>
+  </section>
+
+  <section>
+    <h2>sp-popover</h2>
+    <sp-popover data-verify="popover" label="Details">
+      <span slot="trigger">Info</span>
+      <p>Popover body</p>
+    </sp-popover>
+  </section>
+
+  <section>
+    <h2>sp-datepicker</h2>
+    <sp-datepicker data-verify="datepicker" value="2026-09-15"></sp-datepicker>
+  </section>
+
+  <section>
+    <h2>sp-external-auth-button / sp-card-bleed / sp-prose</h2>
+    <sp-external-auth-button>Continue with Example</sp-external-auth-button>
+    <sp-card>
+      <sp-card-bleed edges="top" padded><p>Bleed band</p></sp-card-bleed>
+      <p>Card body</p>
+    </sp-card>
+    <sp-prose
+      ><h3>Prose</h3>
+      <p>Body with <code>code</code>.</p></sp-prose
+    >
+  </section>
 `
 
 render(template, document.body)
