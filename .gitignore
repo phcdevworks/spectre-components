@@ -5,6 +5,7 @@ node_modules/
 dist/
 dist_verify/
 coverage/
+.dts-entries/
 
 # Playwright
 test-results/

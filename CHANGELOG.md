@@ -6,6 +6,22 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+Contract change type: N/A
+
+### Fixed
+
+- `npm run build` and `npm run dev` no longer run out of memory
+  (`ERR_WORKER_OUT_OF_MEMORY`). The `rollup-plugin-dts` copy bundled in tsup
+  only puts entries into one TypeScript program when they share a directory,
+  so declaration builds created a full program for each component entry
+  (about 65 MB each) and passed the 4 GB heap limit at 61 entries. The new
+  `scripts/build.ts` builds declarations from one-line re-export stubs in one
+  temporary directory. Peak memory drops from 5.2 GB to 1.3 GB and stays flat
+  as components are added. The published declarations are unchanged except
+  that root re-exports are now listed alphabetically.
+  `tsup.config.ts` remains the source of entry points. `npm run dev` runs the
+  same script with `--watch`, which keeps the stubs until the watcher exits.
+
 ## [1.22.0] - 2026-10-04
 
 **Release Title:** Child Themes and Layout Parity

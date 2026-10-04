@@ -351,9 +351,9 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "node --max-old-space-size=4096 ./node_modules/tsup/dist/cli-default.js --config tsup.config.ts",
+    "build": "node --experimental-strip-types scripts/build.ts",
     "clean": "rm -rf dist coverage",
-    "dev": "node --max-old-space-size=4096 ./node_modules/tsup/dist/cli-default.js --config tsup.config.ts --watch",
+    "dev": "node --experimental-strip-types scripts/build.ts --watch",
     "verify:app": "vite",
     "typecheck": "tsc --noEmit",
     "release:propose": "node --experimental-strip-types scripts/propose-version.ts",
