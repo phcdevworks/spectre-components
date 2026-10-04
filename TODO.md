@@ -1,6 +1,6 @@
 # Spectre Components Execution Todo
 
-Phases 1 through 20 are complete — see
+Phases 1 through 21 are complete — see
 [ROADMAP.md](ROADMAP.md) for the full delivery history and
 [CHANGELOG.md](CHANGELOG.md) for release-by-release detail.
 

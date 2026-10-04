@@ -36,13 +36,14 @@ file does not restate delivered work.
 | 18 | `sp-badge` `innerClass`/`inner-class` utility hook parity, requested by a downstream integration; `sp-card` `accent`/`accentColor` decorative edge-rail properties backed by `getCardClasses` (`spectre-ui` 5.1.0), requested by downstream integrations on 2026-09-18; accent-rail parity sweep extending the same `accent`/`accentColor` contract to `sp-nav`, `sp-footer`, `sp-modal`, `sp-toast`, `sp-tooltip`, `sp-dropdown`, `sp-testimonial`, `sp-pricing-card`, and `sp-badge` (`accentRail`/`accentRailColor`); `sp-dropdown` `viewport` full-bleed menu-width tier, all backed by `spectre-ui` 5.2.0 | 1.20.0 |
 | 19 | Broad component inventory, approved by Bradley Potts on 2026-09-24 — `sp-tabs`/`sp-tab-panel`, `sp-accordion`/`sp-accordion-item`, `sp-breadcrumb`, `sp-list-group`/`sp-list-group-item`, `sp-offcanvas`, `sp-carousel`, `sp-table`, `sp-pagination`, `sp-stepper`, plus `sp-alert` `brand`/`dismissible`/icon slot, all backed by `spectre-ui` 5.3.0 | 1.21.0 |
 | 20 | Full `spectre-ui` 5.3.0 recipe parity — `sp-switch`, `sp-range`, `sp-file-input`, `sp-input-group`, `sp-choice-card`, `sp-progress`, `sp-popover`, `sp-datepicker`, `sp-external-auth-button`, `sp-card-bleed`, `sp-prose`; new variants and options across existing components; typography presets; forced interaction states; Astro-matching sub-part slots; opt-in part markers | 1.21.0 |
+| 21 | `spectre-ui` 5.4.0 child-theme contracts, requested by a downstream integration — `sp-footer` `appearance`/`surface`, `sp-section` `hero`/`attached`, `xl`–`4xl` layout spacing steps and the 8px grid rule, `sp-text` `weight`, `sp-logo-cloud`, `sp-skeleton`; fixes for the `sp-stack` legacy `align` hint, nested `sp-grid` item placement, and the inline `sp-text` line box | 1.22.0 |
 
 ---
 
 ## What's Next
 
-Nothing queued. Every `spectre-ui` 5.3.0 recipe helper has a component
-consumer. New components are built proactively whenever a future `spectre-ui`
+Nothing queued. Every `spectre-ui` 5.4.0 recipe helper has a component
+consumer. New components are built proactively whenever a `spectre-ui`
 release publishes a recipe with no component. See [TODO.md](TODO.md).
 
 ---

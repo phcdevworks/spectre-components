@@ -3,14 +3,17 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
+  isSectionHero,
   isSpacingStep,
   sanitizeUtilityClasses,
+  type SpectreSectionHero,
   type SpectreSpacingStep
 } from '../../utils/form'
 
 import {
   getSectionClasses,
   type SectionGap,
+  type SectionRecipeOptions,
   type SectionSpacing
 } from '@phcdevworks/spectre-ui'
 
@@ -18,7 +21,9 @@ export interface SpectreSectionProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
+  attached?: boolean | undefined
   gap?: SpectreSpacingStep | undefined
+  hero?: SpectreSectionHero | undefined
   id?: string | null | undefined
   innerClass?: string | undefined
   spacing?: SpectreSpacingStep | undefined
@@ -30,12 +35,16 @@ export class SpectreSectionElement
   implements SpectreSectionProps
 {
   static properties = {
+    attached: { type: Boolean, reflect: true },
     gap: { type: String, reflect: true },
+    hero: { type: String, reflect: true },
     innerClass: { attribute: 'inner-class', type: String },
     spacing: { type: String, reflect: true }
   }
 
+  attached: boolean | undefined = false
   gap: SpectreSpacingStep | undefined = undefined
+  hero: SpectreSectionHero | undefined = undefined
   innerClass: string | undefined = undefined
   spacing: SpectreSpacingStep | undefined = undefined
 
@@ -83,6 +92,16 @@ export class SpectreSectionElement
       this.gap = undefined
     }
     if (
+      changedProperties.has('hero') &&
+      this.hero != null &&
+      !isSectionHero(this.hero)
+    ) {
+      this.hero = undefined
+    }
+    if (changedProperties.has('attached') && this.attached == null) {
+      this.attached = false
+    }
+    if (
       changedProperties.has('spacing') &&
       this.spacing != null &&
       !isSpacingStep(this.spacing)
@@ -93,7 +112,11 @@ export class SpectreSectionElement
 
   private get sectionClasses(): string {
     const recipeClasses = getSectionClasses({
+      ...(this.attached === true && { attached: true }),
       ...(this.gap != null && { gap: this.gap as SectionGap }),
+      ...(this.hero != null && {
+        hero: this.hero as NonNullable<SectionRecipeOptions['hero']>
+      }),
       ...(this.spacing != null && {
         spacing: this.spacing as SectionSpacing
       })

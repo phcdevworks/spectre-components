@@ -12,6 +12,7 @@ import {
   isTextSize,
   isTextTransform,
   isTextVariant,
+  isTextWeight,
   type SpectreDisplayLevel,
   type SpectreHeadingLevel,
   type SpectreTextFamily,
@@ -19,7 +20,8 @@ import {
   type SpectreTextLevel,
   type SpectreTextSize,
   type SpectreTextTransform,
-  type SpectreTextVariant
+  type SpectreTextVariant,
+  type SpectreTextWeight
 } from '../../utils/form'
 
 import {
@@ -54,6 +56,7 @@ export interface SpectreTextProps {
   title?: string | null | undefined
   transform?: SpectreTextTransform | undefined
   variant?: SpectreTextVariant | undefined
+  weight?: SpectreTextWeight | undefined
 }
 
 export class SpectreTextElement
@@ -68,7 +71,8 @@ export class SpectreTextElement
     preset: { type: String, reflect: true },
     size: { type: String, reflect: true },
     transform: { type: String, reflect: true },
-    variant: { type: String, reflect: true }
+    variant: { type: String, reflect: true },
+    weight: { type: Number, reflect: true }
   }
 
   displayLevel: SpectreDisplayLevel | undefined = undefined
@@ -79,6 +83,9 @@ export class SpectreTextElement
   size: SpectreTextSize | undefined = 'md'
   transform: SpectreTextTransform | undefined
   variant: SpectreTextVariant | undefined = 'default'
+  weight: SpectreTextWeight | undefined = undefined
+
+  private ownsHostDisplay = false
 
   protected override willUpdate(
     changedProperties: Map<PropertyKey, unknown>
@@ -130,6 +137,31 @@ export class SpectreTextElement
     ) {
       this.transform = undefined
     }
+
+    if (
+      changedProperties.has('weight') &&
+      this.weight != null &&
+      !isTextWeight(this.weight)
+    ) {
+      this.weight = undefined
+    }
+  }
+
+  // An inline-level host would otherwise be a box (blockified in flex and
+  // grid layouts) whose inherited line-height strut sets a floor on the line
+  // box. `display: contents` lets the native element's size recipe set it.
+  protected override updated(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    super.updated(changedProperties)
+    const inline = this.level === 'span'
+    if (inline && !this.style.display) {
+      this.style.display = 'contents'
+      this.ownsHostDisplay = true
+    } else if (!inline && this.ownsHostDisplay) {
+      this.style.removeProperty('display')
+      this.ownsHostDisplay = false
+    }
   }
 
   override get id(): string {
@@ -179,7 +211,8 @@ export class SpectreTextElement
       ...(this.family !== undefined && { family: this.family }),
       size: this.size ?? 'md',
       ...(this.transform !== undefined && { transform: this.transform }),
-      variant: this.variant ?? 'default'
+      variant: this.variant ?? 'default',
+      ...(this.weight != null && { weight: this.weight })
     })
   }
 

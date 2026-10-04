@@ -82,7 +82,9 @@ export class SpectreGridElement
   implements SpectreGridProps
 {
   static properties = {
-    align: { type: String, reflect: true },
+    // Not reflected: an `align="center"` host attribute is the legacy HTML
+    // presentational hint for `text-align: center`.
+    align: { type: String },
     colStart: { attribute: 'col-start', type: Object },
     columns: { type: Number, reflect: true },
     columnGap: { attribute: 'column-gap', type: String, reflect: true },
@@ -189,6 +191,9 @@ export class SpectreGridElement
       this.role = initialRole
     }
     this.style.display ||= 'block'
+    if (this.hasUpdated) {
+      this.requestUpdate()
+    }
   }
 
   protected override getContentContainer(): Element | null {
@@ -311,8 +316,20 @@ export class SpectreGridElement
     }
   }
 
-  private get gridClasses(): string {
-    const recipeClasses = getGridClasses({
+  private hostPlacementClasses: string[] = []
+
+  // When this grid is itself an item of a parent grid, the parent lays out
+  // the host, so item placement only takes effect on the host element.
+  private get isGridItem(): boolean {
+    const parent = this.parentElement
+    return (
+      parent instanceof SpectreGridElement ||
+      parent?.classList.contains('sp-grid') === true
+    )
+  }
+
+  private get containerOptions() {
+    return {
       columns: this.columns as GridColumns,
       gap: this.gap as GridGap,
       ...(this.align !== undefined && { align: this.align as GridAlign }),
@@ -320,6 +337,32 @@ export class SpectreGridElement
         columnGap: this.columnGap as GridGap
       }),
       ...(this.rowGap !== undefined && { rowGap: this.rowGap as GridGap }),
+      ...(this.leadingTracks !== undefined && {
+        leadingTracks: this.leadingTracks as GridLeadingTracksOptions
+      }),
+      ...(this.fixedTracks !== undefined && {
+        fixedTracks: this.fixedTracks as GridFixedTracksOptions
+      }),
+      ...(this.explicitTemplate !== undefined && {
+        explicitTemplate: this.explicitTemplate as GridExplicitTemplateOptions
+      })
+    }
+  }
+
+  private get placementClasses(): string[] {
+    const containerClasses = new Set(
+      getGridClasses(this.containerOptions).split(/\s+/)
+    )
+    return getGridClasses({
+      ...this.containerOptions,
+      ...this.placementOptions
+    })
+      .split(/\s+/)
+      .filter((name) => name && !containerClasses.has(name))
+  }
+
+  private get placementOptions() {
+    return {
       ...(this.span !== undefined && {
         span: this.span as GridSpan | GridSpanOptions
       }),
@@ -337,19 +380,37 @@ export class SpectreGridElement
       }),
       ...(this.order !== undefined && {
         order: this.order as GridOrder | GridOrderOptions
-      }),
-      ...(this.leadingTracks !== undefined && {
-        leadingTracks: this.leadingTracks as GridLeadingTracksOptions
-      }),
-      ...(this.fixedTracks !== undefined && {
-        fixedTracks: this.fixedTracks as GridFixedTracksOptions
-      }),
-      ...(this.explicitTemplate !== undefined && {
-        explicitTemplate: this.explicitTemplate as GridExplicitTemplateOptions
       })
+    }
+  }
+
+  private get gridClasses(): string {
+    const recipeClasses = getGridClasses({
+      ...this.containerOptions,
+      ...(!this.isGridItem && this.placementOptions)
     })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
     return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses
+  }
+
+  protected override updated(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    super.updated(changedProperties)
+    this.syncHostPlacement()
+  }
+
+  private syncHostPlacement(): void {
+    const next = this.isGridItem ? this.placementClasses : []
+    this.hostPlacementClasses
+      .filter((name) => !next.includes(name))
+      .forEach((name) => this.classList.remove(name))
+    const added = next.filter((name) => !this.classList.contains(name))
+    this.classList.add(...added)
+    this.hostPlacementClasses = [
+      ...this.hostPlacementClasses.filter((name) => next.includes(name)),
+      ...added
+    ]
   }
 
   override render() {

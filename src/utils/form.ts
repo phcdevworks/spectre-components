@@ -147,6 +147,66 @@ export function isAccentColor(value: unknown): value is SpectreAccentColor {
   return (spectreAccentColors as readonly string[]).includes(value as string)
 }
 
+export const spectreFooterAppearances = ['dark', 'light', 'system'] as const
+
+export type SpectreFooterAppearance = (typeof spectreFooterAppearances)[number]
+
+export function isFooterAppearance(
+  value: unknown
+): value is SpectreFooterAppearance {
+  return (spectreFooterAppearances as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreFooterSurfaces = [
+  'page',
+  'card',
+  'subtle',
+  'inverse',
+  'hero'
+] as const
+
+export type SpectreFooterSurface = (typeof spectreFooterSurfaces)[number]
+
+export function isFooterSurface(value: unknown): value is SpectreFooterSurface {
+  return (spectreFooterSurfaces as readonly string[]).includes(value as string)
+}
+
+export const spectreLogoCloudSizes = ['sm', 'md', 'lg'] as const
+
+export type SpectreLogoCloudSize = (typeof spectreLogoCloudSizes)[number]
+
+export function isLogoCloudSize(value: unknown): value is SpectreLogoCloudSize {
+  return (spectreLogoCloudSizes as readonly string[]).includes(value as string)
+}
+
+export const spectreLogoCloudFills = ['subtle', 'card', 'none'] as const
+
+export type SpectreLogoCloudFill = (typeof spectreLogoCloudFills)[number]
+
+export function isLogoCloudFill(value: unknown): value is SpectreLogoCloudFill {
+  return (spectreLogoCloudFills as readonly string[]).includes(value as string)
+}
+
+export const spectreSkeletonShapes = ['text', 'rect', 'circle'] as const
+
+export type SpectreSkeletonShape = (typeof spectreSkeletonShapes)[number]
+
+export function isSkeletonShape(value: unknown): value is SpectreSkeletonShape {
+  return (spectreSkeletonShapes as readonly string[]).includes(value as string)
+}
+
+export const spectreSectionHeroSizes = ['sm', 'md', 'lg'] as const
+
+export type SpectreSectionHero = (typeof spectreSectionHeroSizes)[number]
+
+export function isSectionHero(value: unknown): value is SpectreSectionHero {
+  return (spectreSectionHeroSizes as readonly string[]).includes(
+    value as string
+  )
+}
+
 export const spectreIconBoxVariants = [
   'primary',
   'secondary',
@@ -266,7 +326,15 @@ export function isGridColumns(value: unknown): value is SpectreGridColumns {
   return (spectreGridColumns as readonly number[]).includes(value as number)
 }
 
-export const spectreGridGaps = ['sm', 'md', 'lg'] as const
+export const spectreGridGaps = [
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  '2xl',
+  '3xl',
+  '4xl'
+] as const
 
 export type SpectreGridGap = (typeof spectreGridGaps)[number]
 
@@ -548,7 +616,15 @@ export function isStackAlign(value: unknown): value is SpectreStackAlign {
   return (spectreStackAligns as readonly string[]).includes(value as string)
 }
 
-export const spectreStackGaps = ['sm', 'md', 'lg'] as const
+export const spectreStackGaps = [
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  '2xl',
+  '3xl',
+  '4xl'
+] as const
 
 export type SpectreStackGap = (typeof spectreStackGaps)[number]
 
@@ -682,6 +758,14 @@ export function isTextLevel(value: unknown): value is SpectreTextLevel {
   return (spectreTextLevels as readonly string[]).includes(value as string)
 }
 
+export const spectreTextWeights = [400, 500, 600, 700, 800, 900] as const
+
+export type SpectreTextWeight = (typeof spectreTextWeights)[number]
+
+export function isTextWeight(value: unknown): value is SpectreTextWeight {
+  return (spectreTextWeights as readonly number[]).includes(value as number)
+}
+
 export const spectreTextTransforms = [
   'none',
   'uppercase',
@@ -742,7 +826,15 @@ export function isStepperOrientation(
   )
 }
 
-export const spectreSpacingScale = ['sm', 'md', 'lg'] as const
+export const spectreSpacingScale = [
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  '2xl',
+  '3xl',
+  '4xl'
+] as const
 
 export type SpectreSpacingStep = (typeof spectreSpacingScale)[number]
 

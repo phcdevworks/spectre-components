@@ -397,9 +397,14 @@
         "values": [
           "defineSpectreSection",
           "SpectreSectionElement",
-          "spectreSectionSpacings"
+          "spectreSectionSpacings",
+          "spectreSectionHeroSizes"
         ],
-        "types": ["SpectreSectionProps", "SpectreSectionSpacing"]
+        "types": [
+          "SpectreSectionProps",
+          "SpectreSectionSpacing",
+          "SpectreSectionHero"
+        ]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -469,8 +474,17 @@
       "entryPoint": "./footer",
       "distFile": "dist/footer.js",
       "exports": {
-        "values": ["defineSpectreFooter", "SpectreFooterElement"],
-        "types": ["SpectreFooterProps"]
+        "values": [
+          "defineSpectreFooter",
+          "SpectreFooterElement",
+          "spectreFooterAppearances",
+          "spectreFooterSurfaces"
+        ],
+        "types": [
+          "SpectreFooterProps",
+          "SpectreFooterAppearance",
+          "SpectreFooterSurface"
+        ]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -626,10 +640,12 @@
           "spectreTextLevels",
           "spectreTextPresets",
           "spectreHeadingLevels",
-          "spectreDisplayLevels"
+          "spectreDisplayLevels",
+          "spectreTextWeights"
         ],
         "types": [
           "SpectreTextProps",
+          "SpectreTextWeight",
           "SpectreTextSize",
           "SpectreTextVariant",
           "SpectreTextFamily",
@@ -1009,6 +1025,47 @@
       "exports": {
         "values": ["defineSpectreDatepicker", "SpectreDatepickerElement"],
         "types": ["SpectreDatepickerProps"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-logo-cloud",
+      "elementClass": "SpectreLogoCloudElement",
+      "entryPoint": "./logo-cloud",
+      "distFile": "dist/logo-cloud.js",
+      "exports": {
+        "values": [
+          "defineSpectreLogoCloud",
+          "SpectreLogoCloudElement",
+          "spectreLogoCloudFills",
+          "spectreLogoCloudSizes"
+        ],
+        "types": [
+          "SpectreLogoCloudProps",
+          "SpectreLogoCloudFill",
+          "SpectreLogoCloudSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-skeleton",
+      "elementClass": "SpectreSkeletonElement",
+      "entryPoint": "./skeleton",
+      "distFile": "dist/skeleton.js",
+      "exports": {
+        "values": [
+          "defineSpectreSkeleton",
+          "SpectreSkeletonElement",
+          "spectreSkeletonShapes"
+        ],
+        "types": ["SpectreSkeletonProps", "SpectreSkeletonShape"]
       },
       "contracts": {
         "renderMode": "light-dom",

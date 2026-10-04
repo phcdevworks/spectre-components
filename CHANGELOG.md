@@ -6,6 +6,68 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.22.0] - 2026-10-04
+
+**Release Title:** Child Themes and Layout Parity
+
+Contract change type: additive
+
+### Added
+
+- `@phcdevworks/spectre-ui` 5.4.0 parity, requested by a downstream integration
+  (2026-09-24 to 2026-10-01):
+  - `sp-footer` `appearance` (`dark` | `light` | `system`, default `dark`)
+    and `surface` (`page` | `card` | `subtle` | `inverse` | `hero`), passed
+    through to `getFooterClasses`. A site can switch the footer palette or
+    put it on a published surface role without selecting `.sp-footer` or
+    `[data-sp-footer-native]`.
+  - `sp-section` `hero` (`sm` | `md` | `lg`) for asymmetric hero padding, and
+    a boolean `attached` that drops the top padding of a band belonging to the
+    section above. Both pass through to `getSectionClasses`. The hero size is
+    an attribute on `sp-section` rather than a separate `sp-hero`, and it uses
+    the recipe's own option name.
+  - `xl`, `2xl`, `3xl`, and `4xl` steps on `sp-section` `spacing`/`gap`,
+    `sp-stack` `gap`, `sp-grid` `gap`/`row-gap`/`column-gap`, and
+    `sp-container` `padding`. The README documents the 8px layout grid rule.
+  - `sp-text` `weight` (`400`–`900`), passed through to
+    `getTextClasses({ weight })`.
+  - `sp-logo-cloud` on `getLogoCloudClasses`/`getLogoCloudItemClasses`, with
+    `size`, `fill`, and `muted`. Each direct child becomes a tile. It has its
+    own `./logo-cloud` subpath entry point.
+  - `sp-skeleton` on `getSkeletonClasses`, with `shape` (`text` | `rect` |
+    `circle`) and `animated`. The placeholder is `aria-hidden`, a `rect` fills
+    the box its host is given, and the shimmer stops under reduced motion. It
+    has its own `./skeleton` subpath entry point. Every `spectre-ui` 5.4.0
+    recipe now has a component consumer.
+  - Exported allowlists: `spectreFooterAppearances`, `spectreFooterSurfaces`,
+    `spectreSectionHeroSizes`, `spectreTextWeights`, `spectreLogoCloudSizes`,
+    `spectreLogoCloudFills`, and `spectreSkeletonShapes`, with their types.
+- Browser regression coverage (`browser-tests/layout-fixes.spec.ts`) for
+  stack text alignment, nested grid placement, inline text line boxes, and
+  logo cloud tiles, plus `browser-tests/skeleton.spec.ts` for skeleton shapes
+  and reduced motion.
+
+### Changed
+
+- Regenerated the Playwright visual baselines for `spectre-ui` 5.4.0's
+  documented visual changes: control heights and padding, badge and tag
+  padding on the 8px grid, and the 16px `md` stack and grid gap.
+
+### Fixed
+
+- `sp-stack` no longer centers its text by default. `align` is no longer
+  reflected, so the default stops writing an `align="center"` host attribute,
+  which browsers treat as the legacy `text-align: center` hint. `sp-grid` and
+  `sp-nav` stop reflecting `align` for the same reason. An authored `align`
+  attribute is still read.
+- `span`, `offset`, `col-start`, `row-span`, `row-offset`, and `order` now take
+  effect on a nested `sp-grid`. When the host is a child of a grid, those
+  placement classes go on the host instead of the inner `<div>`. Classes
+  authored on the host are left alone.
+- An `sp-text` with `level="span"` renders its host as `display: contents`, so
+  its line box comes from its own size recipe instead of the inherited body
+  line-height. An inline `display` set on the host still wins.
+
 ## [1.21.0] - 2026-09-26
 
 **Release Title:** Expanded Components and Recipe Parity
@@ -951,7 +1013,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.21.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.22.0...HEAD
+[1.22.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.21.0...v1.22.0
 [1.21.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.20.0...v1.21.0
 [1.20.0]:

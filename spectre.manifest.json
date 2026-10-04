@@ -89,7 +89,9 @@
         "./choice-card",
         "./input-group",
         "./popover",
-        "./datepicker"
+        "./datepicker",
+        "./logo-cloud",
+        "./skeleton"
       ],
       "dependencies": [
         "@phcdevworks/spectre-tokens",

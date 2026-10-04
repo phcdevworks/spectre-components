@@ -58,6 +58,8 @@ import { defineSpectreChoiceCard } from './components/choice-card'
 import { defineSpectreInputGroup } from './components/input-group'
 import { defineSpectrePopover } from './components/popover'
 import { defineSpectreDatepicker } from './components/datepicker'
+import { defineSpectreLogoCloud } from './components/logo-cloud'
+import { defineSpectreSkeleton } from './components/skeleton'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -118,4 +120,6 @@ export function defineSpectreComponents(): void {
   defineSpectreInputGroup()
   defineSpectrePopover()
   defineSpectreDatepicker()
+  defineSpectreLogoCloud()
+  defineSpectreSkeleton()
 }

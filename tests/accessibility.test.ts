@@ -593,6 +593,14 @@ describe('accessibility audit', () => {
     [
       'sp-text presets',
       '<sp-text level="h2" preset="heading">Title</sp-text><sp-text preset="lead">Intro</sp-text>'
+    ],
+    [
+      'sp-logo-cloud',
+      '<sp-logo-cloud aria-label="Partners" muted><a href="/a"><img alt="Acme" src="a.svg" /></a></sp-logo-cloud>'
+    ],
+    [
+      'sp-skeleton in a busy region',
+      '<div aria-busy="true" aria-label="Loading profile" role="region"><sp-skeleton shape="circle"></sp-skeleton><sp-skeleton animated></sp-skeleton><sp-skeleton shape="rect"></sp-skeleton></div>'
     ]
   ])('%s has no violations', async (_name, markup) => {
     const el = document.createElement('div')

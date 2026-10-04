@@ -41,7 +41,9 @@ export class SpectreNavElement
   static properties = {
     accent: { type: String, reflect: true },
     accentColor: { attribute: 'accent-color', type: String, reflect: true },
-    align: { type: String, reflect: true },
+    // Not reflected: an `align="center"` host attribute is the legacy HTML
+    // presentational hint for `text-align: center`.
+    align: { type: String },
     bordered: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
     innerClass: { attribute: 'inner-class', type: String },

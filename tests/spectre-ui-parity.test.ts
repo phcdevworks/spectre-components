@@ -126,7 +126,7 @@ describe('spectre-ui 5.3.0 parity', () => {
   })
 
   it('sp-section drops invalid spacing values', async () => {
-    const root = await mount('<sp-section spacing="xl"></sp-section>')
+    const root = await mount('<sp-section spacing="5xl"></sp-section>')
     const section = root.querySelector('sp-section') as HTMLElement & {
       spacing?: string
     }
@@ -390,6 +390,183 @@ describe('spectre-ui 5.3.0 parity', () => {
     )
     expect(classesOf(root, '[data-sp-list-group-row]')).toMatch(
       /--focus|is-focus/
+    )
+  })
+})
+
+describe('spectre-ui 5.4.0 parity', () => {
+  beforeAll(() => {
+    defineSpectreComponents()
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  it('sp-footer defaults to the dark appearance and forwards light/system', async () => {
+    const root = await mount(`
+      <sp-footer></sp-footer>
+      <sp-footer appearance="light"></sp-footer>
+      <sp-footer appearance="system"></sp-footer>
+      <sp-footer appearance="neon"></sp-footer>`)
+    const [dark, light, system, neon] = Array.from(
+      root.querySelectorAll('[data-sp-footer-native]')
+    )
+    expect(dark?.className).toBe('sp-footer')
+    expect(light?.className).toContain('sp-footer--light')
+    expect(system?.className).toContain('sp-footer--system')
+    expect(neon?.className).toBe('sp-footer')
+    const bogus = root.querySelector(
+      'sp-footer:last-of-type'
+    ) as HTMLElement & {
+      appearance?: string
+    }
+    expect(bogus.appearance).toBe('dark')
+  })
+
+  it('sp-footer forwards a surface role and drops unknown ones', async () => {
+    const root = await mount(`
+      <sp-footer surface="card" appearance="light"></sp-footer>
+      <sp-footer surface="neon"></sp-footer>`)
+    const [card, bogus] = Array.from(
+      root.querySelectorAll('[data-sp-footer-native]')
+    )
+    expect(card?.className).toContain('sp-footer--surface-card')
+    expect(card?.className).toContain('sp-footer--light')
+    expect(bogus?.className).not.toContain('surface')
+  })
+
+  it('sp-stack does not put a legacy align="center" hint on the host', async () => {
+    const root = await mount('<sp-stack><p>Text</p></sp-stack>')
+    const stack = root.querySelector('sp-stack') as HTMLElement & {
+      align?: string
+    }
+    expect(stack.align).toBe('center')
+    expect(stack.hasAttribute('align')).toBe(false)
+    expect(classesOf(root, '[data-sp-stack-native]')).toBe('sp-stack')
+  })
+
+  it.each([
+    ['sp-grid', '[data-sp-grid-native]'],
+    ['sp-nav', '[data-sp-nav-native]']
+  ])('%s does not reflect align onto the host', async (tag, selector) => {
+    const root = await mount(`<${tag}></${tag}>`)
+    const element = root.querySelector(tag) as HTMLElement & {
+      align?: string
+      updateComplete: Promise<boolean>
+    }
+    element.align = 'center'
+    await element.updateComplete
+    expect(element.hasAttribute('align')).toBe(false)
+    expect(classesOf(root, selector)).toContain('center')
+  })
+
+  it('sp-stack still reads an authored align attribute', async () => {
+    const root = await mount('<sp-stack align="stretch"></sp-stack>')
+    expect(classesOf(root, '[data-sp-stack-native]')).toContain('stretch')
+  })
+
+  it('a nested sp-grid puts item placement on its host', async () => {
+    const root = await mount(`
+      <sp-grid columns="3">
+        <sp-grid id="inner" columns="2" span='{"base":12,"lg":2}' order="2"></sp-grid>
+      </sp-grid>`)
+    const inner = root.querySelector('sp-grid sp-grid') as HTMLElement
+    const innerNative = inner.querySelector('[data-sp-grid-native]')
+    expect(inner.classList).toContain('sp-col-span-12')
+    expect(inner.classList).toContain('sp-lg-col-span-2')
+    expect(inner.classList).toContain('sp-order-2')
+    expect(innerNative?.className).toContain('sp-grid-cols-2')
+    expect(innerNative?.className).not.toContain('col-span')
+    expect(innerNative?.className).not.toContain('order')
+  })
+
+  it('a nested sp-grid keeps authored host classes and tracks placement changes', async () => {
+    const root = await mount(`
+      <sp-grid columns="3">
+        <sp-grid class="custom sp-lg-col-span-2" span='{"lg":2}'></sp-grid>
+      </sp-grid>`)
+    const inner = root.querySelector('sp-grid sp-grid') as HTMLElement & {
+      span?: unknown
+      updateComplete: Promise<boolean>
+    }
+    inner.span = 3
+    await inner.updateComplete
+    expect(inner.classList).toContain('custom')
+    expect(inner.classList).toContain('sp-lg-col-span-2')
+    expect(inner.classList).toContain('sp-col-span-3')
+    inner.span = undefined
+    await inner.updateComplete
+    expect(inner.classList).not.toContain('sp-col-span-3')
+    expect(inner.classList).toContain('sp-lg-col-span-2')
+  })
+
+  it('a top-level sp-grid keeps item placement on its native element', async () => {
+    const root = await mount('<sp-grid span="2"></sp-grid>')
+    const grid = root.querySelector('sp-grid') as HTMLElement
+    expect(grid.classList).not.toContain('sp-col-span-2')
+    expect(classesOf(root, '[data-sp-grid-native]')).toContain('sp-col-span-2')
+  })
+
+  it.each([
+    ['sp-section', 'spacing="2xl"', 'section', /sp-section--[a-z-]*2xl/],
+    ['sp-section', 'gap="4xl"', 'section', /sp-section--[a-z-]*4xl/],
+    ['sp-stack', 'gap="xl"', '[data-sp-stack-native]', /gap-xl/],
+    ['sp-grid', 'gap="3xl"', '[data-sp-grid-native]', /gap-3xl/],
+    ['sp-grid', 'row-gap="2xl"', '[data-sp-grid-native]', /2xl/],
+    ['sp-grid', 'column-gap="4xl"', '[data-sp-grid-native]', /4xl/],
+    ['sp-container', 'padding="xl"', '[data-sp-container-native]', /xl/]
+  ])('%s accepts the larger step %s', async (tag, attribute, selector, re) => {
+    const root = await mount(`<${tag} ${attribute}></${tag}>`)
+    expect(classesOf(root, selector)).toMatch(re)
+  })
+
+  it('sp-section forwards hero sizes and drops unknown ones', async () => {
+    const root = await mount(`
+      <sp-section hero="lg" spacing="sm"></sp-section>
+      <sp-section hero="xl"></sp-section>`)
+    const [hero, bogus] = Array.from(root.querySelectorAll('section'))
+    expect(hero?.className).toContain('sp-section--hero-lg')
+    expect(bogus?.className).not.toContain('hero')
+  })
+
+  it('sp-section forwards attached', async () => {
+    const root = await mount('<sp-section attached></sp-section>')
+    expect(classesOf(root, 'section')).toContain('sp-section--attached')
+  })
+
+  it('sp-text forwards a token weight and drops unknown ones', async () => {
+    const root = await mount(`
+      <sp-text weight="700">Bold</sp-text>
+      <sp-text weight="650">Odd</sp-text>`)
+    const [bold, odd] = Array.from(root.querySelectorAll('p'))
+    expect(bold?.className).toContain('sp-font-700')
+    expect(odd?.className).not.toContain('sp-font-')
+  })
+
+  it('an inline-level sp-text takes its line box from the native span', async () => {
+    const root = await mount(`
+      <sp-text level="span" size="sm">Small</sp-text>
+      <sp-text>Block</sp-text>`)
+    const [span, block] = Array.from(
+      root.querySelectorAll('sp-text')
+    ) as (HTMLElement & {
+      level?: string
+      updateComplete: Promise<boolean>
+    })[]
+    expect(span?.style.display).toBe('contents')
+    expect(block?.style.display).toBe('')
+    span!.level = 'p'
+    await span!.updateComplete
+    expect(span?.style.display).toBe('')
+  })
+
+  it('an inline-level sp-text keeps an authored host display', async () => {
+    const root = await mount(
+      '<sp-text level="span" style="display: inline-block">Chip</sp-text>'
+    )
+    expect((root.querySelector('sp-text') as HTMLElement).style.display).toBe(
+      'inline-block'
     )
   })
 })

@@ -40,7 +40,9 @@ export class SpectreStackElement
   implements SpectreStackProps
 {
   static properties = {
-    align: { type: String, reflect: true },
+    // Not reflected: an `align="center"` host attribute is the legacy HTML
+    // presentational hint for `text-align: center`.
+    align: { type: String },
     basis: { type: String, reflect: true },
     direction: { type: String, reflect: true },
     gap: { type: String, reflect: true },

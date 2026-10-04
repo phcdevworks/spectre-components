@@ -6,9 +6,13 @@ import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isAccentColor,
   isAccentEdge,
+  isFooterAppearance,
+  isFooterSurface,
   sanitizeUtilityClasses,
   type SpectreAccentColor,
-  type SpectreAccentEdge
+  type SpectreAccentEdge,
+  type SpectreFooterAppearance,
+  type SpectreFooterSurface
 } from '../../utils/form'
 
 import {
@@ -19,17 +23,21 @@ import {
   getFooterMutedClasses,
   getFooterTextClasses,
   type FooterAccentColor,
-  type FooterAccentEdge
+  type FooterAccentEdge,
+  type FooterAppearance,
+  type FooterSurface
 } from '@phcdevworks/spectre-ui'
 
 export interface SpectreFooterProps {
   accent?: SpectreAccentEdge | undefined
   accentColor?: SpectreAccentColor | undefined
+  appearance?: SpectreFooterAppearance | undefined
   ariaLabel?: string | null
   bordered?: boolean | undefined
   fullWidth?: boolean | undefined
   id?: string | null | undefined
   innerClass?: string | undefined
+  surface?: SpectreFooterSurface | undefined
   title?: string | null | undefined
 }
 
@@ -40,16 +48,20 @@ export class SpectreFooterElement
   static properties = {
     accent: { type: String, reflect: true },
     accentColor: { attribute: 'accent-color', type: String, reflect: true },
+    appearance: { type: String, reflect: true },
     bordered: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
-    innerClass: { attribute: 'inner-class', type: String }
+    innerClass: { attribute: 'inner-class', type: String },
+    surface: { type: String, reflect: true }
   }
 
   accent: SpectreAccentEdge | undefined = undefined
   accentColor: SpectreAccentColor | undefined = undefined
+  appearance: SpectreFooterAppearance | undefined = 'dark'
   bordered: boolean | undefined = false
   fullWidth: boolean | undefined = false
   innerClass: string | undefined = undefined
+  surface: SpectreFooterSurface | undefined = undefined
 
   override get id(): string {
     return super.id
@@ -101,6 +113,19 @@ export class SpectreFooterElement
     ) {
       this.accentColor = undefined
     }
+    if (
+      changedProperties.has('appearance') &&
+      (this.appearance == null || !isFooterAppearance(this.appearance))
+    ) {
+      this.appearance = 'dark'
+    }
+    if (
+      changedProperties.has('surface') &&
+      this.surface != null &&
+      !isFooterSurface(this.surface)
+    ) {
+      this.surface = undefined
+    }
     if (changedProperties.has('bordered') && this.bordered == null) {
       this.bordered = false
     }
@@ -117,8 +142,12 @@ export class SpectreFooterElement
       ...(this.accentColor !== undefined && {
         accentColor: this.accentColor as FooterAccentColor
       }),
+      appearance: (this.appearance ?? 'dark') as FooterAppearance,
       bordered: this.bordered ?? false,
-      fullWidth: this.fullWidth ?? false
+      fullWidth: this.fullWidth ?? false,
+      ...(this.surface !== undefined && {
+        surface: this.surface as FooterSurface
+      })
     })
     const utilityClasses = sanitizeUtilityClasses(this.innerClass)
     return utilityClasses ? `${recipeClasses} ${utilityClasses}` : recipeClasses

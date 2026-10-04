@@ -410,6 +410,57 @@ const template = html`
       <p>Body with <code>code</code>.</p></sp-prose
     >
   </section>
+
+  <section>
+    <h2>sp-logo-cloud</h2>
+    <sp-logo-cloud data-verify="logo-cloud" size="sm" muted>
+      <a href="#a" aria-label="Partner A"
+        ><svg viewBox="0 0 10 10" aria-hidden="true">
+          <circle cx="5" cy="5" r="5" fill="currentColor" /></svg
+      ></a>
+      <a href="#b" aria-label="Partner B"
+        ><svg viewBox="0 0 10 10" aria-hidden="true">
+          <rect width="10" height="10" fill="currentColor" /></svg
+      ></a>
+    </sp-logo-cloud>
+  </section>
+
+  <section>
+    <h2>sp-skeleton</h2>
+    <div aria-busy="true" aria-label="Loading profile" role="region">
+      <sp-grid data-verify="skeleton" columns="3" align="stretch">
+        <sp-skeleton shape="circle"></sp-skeleton>
+        <sp-skeleton shape="rect" animated></sp-skeleton>
+        <sp-stack align="stretch" gap="sm">
+          <sp-skeleton animated></sp-skeleton>
+          <sp-skeleton></sp-skeleton>
+          <sp-skeleton></sp-skeleton>
+        </sp-stack>
+      </sp-grid>
+    </div>
+  </section>
+
+  <section>
+    <h2>Layout fixes (spectre-ui 5.4.0)</h2>
+    <sp-stack data-verify="stack-text"><p>Left-aligned text</p></sp-stack>
+    <sp-grid data-verify="nested-grid" columns="3">
+      <sp-grid columns="2" .span=${2}
+        ><p>A</p>
+        <p>B</p></sp-grid
+      >
+      <p>C</p>
+    </sp-grid>
+    <sp-stack data-verify="text-spans" gap="sm" align="stretch">
+      <sp-text level="span" size="xs">First</sp-text>
+      <sp-text level="span" size="xs">Second</sp-text>
+    </sp-stack>
+    <sp-section data-verify="hero-section" hero="sm" attached
+      ><p>Hero band</p></sp-section
+    >
+    <sp-footer data-verify="footer-light" appearance="light" surface="subtle"
+      ><p>Light footer</p></sp-footer
+    >
+  </section>
 `
 
 render(template, document.body)
