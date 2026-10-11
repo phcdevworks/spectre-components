@@ -14,7 +14,9 @@ import {
   spectreDisplayLevels,
   type SpectreDisplayLevel,
   spectreTextWeights,
-  type SpectreTextWeight
+  type SpectreTextWeight,
+  spectreTextLeadings,
+  type SpectreTextLeading
 } from '../../utils/form'
 
 export {
@@ -39,5 +41,7 @@ export {
   spectreDisplayLevels,
   type SpectreDisplayLevel,
   spectreTextWeights,
-  type SpectreTextWeight
+  type SpectreTextWeight,
+  spectreTextLeadings,
+  type SpectreTextLeading
 }

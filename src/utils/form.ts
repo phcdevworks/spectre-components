@@ -19,6 +19,7 @@ export const spectreButtonVariants = [
   'success',
   'cta',
   'accent',
+  'accentOutline',
   'inverse',
   'warning',
   'link',
@@ -138,7 +139,8 @@ export const spectreAccentColors = [
   'success',
   'warning',
   'danger',
-  'cta'
+  'cta',
+  'accent'
 ] as const
 
 export type SpectreAccentColor = (typeof spectreAccentColors)[number]
@@ -187,6 +189,87 @@ export type SpectreLogoCloudFill = (typeof spectreLogoCloudFills)[number]
 
 export function isLogoCloudFill(value: unknown): value is SpectreLogoCloudFill {
   return (spectreLogoCloudFills as readonly string[]).includes(value as string)
+}
+
+export const spectreQuoteSizes = ['sm', 'md', 'lg', 'xl'] as const
+
+export type SpectreQuoteSize = (typeof spectreQuoteSizes)[number]
+
+export function isQuoteSize(value: unknown): value is SpectreQuoteSize {
+  return (spectreQuoteSizes as readonly string[]).includes(value as string)
+}
+
+export const spectreQuoteSurfaces = ['plain', 'subtle', 'inverse'] as const
+
+export type SpectreQuoteSurface = (typeof spectreQuoteSurfaces)[number]
+
+export function isQuoteSurface(value: unknown): value is SpectreQuoteSurface {
+  return (spectreQuoteSurfaces as readonly string[]).includes(value as string)
+}
+
+export const spectreQuoteAccents = ['none', 'edge', 'mark'] as const
+
+export type SpectreQuoteAccent = (typeof spectreQuoteAccents)[number]
+
+export function isQuoteAccent(value: unknown): value is SpectreQuoteAccent {
+  return (spectreQuoteAccents as readonly string[]).includes(value as string)
+}
+
+export const spectreQuoteAligns = ['start', 'center'] as const
+
+export type SpectreQuoteAlign = (typeof spectreQuoteAligns)[number]
+
+export function isQuoteAlign(value: unknown): value is SpectreQuoteAlign {
+  return (spectreQuoteAligns as readonly string[]).includes(value as string)
+}
+
+export const spectreStatSizes = ['sm', 'md', 'lg', 'xl'] as const
+
+export type SpectreStatSize = (typeof spectreStatSizes)[number]
+
+export function isStatSize(value: unknown): value is SpectreStatSize {
+  return (spectreStatSizes as readonly string[]).includes(value as string)
+}
+
+export const spectreStatAligns = ['start', 'center', 'end'] as const
+
+export type SpectreStatAlign = (typeof spectreStatAligns)[number]
+
+export function isStatAlign(value: unknown): value is SpectreStatAlign {
+  return (spectreStatAligns as readonly string[]).includes(value as string)
+}
+
+export const spectreStatSurfaces = ['page', 'surface', 'inverse'] as const
+
+export type SpectreStatSurface = (typeof spectreStatSurfaces)[number]
+
+export function isStatSurface(value: unknown): value is SpectreStatSurface {
+  return (spectreStatSurfaces as readonly string[]).includes(value as string)
+}
+
+export const spectreSectionHeadLayouts = ['stacked', 'split'] as const
+
+export type SpectreSectionHeadLayout =
+  (typeof spectreSectionHeadLayouts)[number]
+
+export function isSectionHeadLayout(
+  value: unknown
+): value is SpectreSectionHeadLayout {
+  return (spectreSectionHeadLayouts as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreSectionHeadAligns = ['start', 'center'] as const
+
+export type SpectreSectionHeadAlign = (typeof spectreSectionHeadAligns)[number]
+
+export function isSectionHeadAlign(
+  value: unknown
+): value is SpectreSectionHeadAlign {
+  return (spectreSectionHeadAligns as readonly string[]).includes(
+    value as string
+  )
 }
 
 export const spectreSkeletonShapes = ['text', 'rect', 'circle'] as const
@@ -553,9 +636,30 @@ export function isGridFixedTracksOptions(
   return isGridFixedTrackCount(candidate.count)
 }
 
+export interface SpectreGridFixedTrackCountOptions {
+  base?: SpectreGridFixedTrackCount
+  md?: SpectreGridFixedTrackCount
+  lg?: SpectreGridFixedTrackCount
+}
+
+export function isGridFixedTrackCountOptions(
+  value: unknown
+): value is SpectreGridFixedTrackCountOptions {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  const candidate = value as Record<string, unknown>
+  return (
+    (candidate.base === undefined || isGridFixedTrackCount(candidate.base)) &&
+    (candidate.md === undefined || isGridFixedTrackCount(candidate.md)) &&
+    (candidate.lg === undefined || isGridFixedTrackCount(candidate.lg))
+  )
+}
+
 export const spectreGridTemplates = [
   'edge-fluid-edge',
-  'label-fluid-fluid'
+  'label-fluid-fluid',
+  'fluid-fixed'
 ] as const
 
 export type SpectreGridTemplate = (typeof spectreGridTemplates)[number]
@@ -564,9 +668,32 @@ export function isGridTemplate(value: unknown): value is SpectreGridTemplate {
   return (spectreGridTemplates as readonly string[]).includes(value as string)
 }
 
+export interface SpectreGridTemplateOptions {
+  base?: SpectreGridTemplate
+  md?: SpectreGridTemplate
+  lg?: SpectreGridTemplate
+}
+
+export function isGridTemplateOptions(
+  value: unknown
+): value is SpectreGridTemplateOptions {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  const candidate = value as Record<string, unknown>
+  return (
+    (candidate.base === undefined || isGridTemplate(candidate.base)) &&
+    (candidate.md === undefined || isGridTemplate(candidate.md)) &&
+    (candidate.lg === undefined || isGridTemplate(candidate.lg))
+  )
+}
+
+// A responsive `weight` or `count` applies only at the breakpoints where
+// `template` is also set; the recipe owns that resolution.
 export interface SpectreGridExplicitTemplateOptions {
-  template: SpectreGridTemplate
-  weight?: SpectreGridLeadingWeight
+  template: SpectreGridTemplate | SpectreGridTemplateOptions
+  weight?: SpectreGridLeadingWeight | SpectreGridLeadingWeightOptions
+  count?: SpectreGridFixedTrackCount | SpectreGridFixedTrackCountOptions
 }
 
 export function isGridExplicitTemplateOptions(
@@ -577,8 +704,14 @@ export function isGridExplicitTemplateOptions(
   }
   const candidate = value as Record<string, unknown>
   return (
-    isGridTemplate(candidate.template) &&
-    (candidate.weight === undefined || isGridLeadingWeight(candidate.weight))
+    (isGridTemplate(candidate.template) ||
+      isGridTemplateOptions(candidate.template)) &&
+    (candidate.weight === undefined ||
+      isGridLeadingWeight(candidate.weight) ||
+      isGridLeadingWeightOptions(candidate.weight)) &&
+    (candidate.count === undefined ||
+      isGridFixedTrackCount(candidate.count) ||
+      isGridFixedTrackCountOptions(candidate.count))
   )
 }
 
@@ -718,13 +851,17 @@ export const spectreTextVariants = [
   'subtle',
   'meta',
   'brand',
+  'accent',
   'onInverse',
   'onInverseMuted',
+  'onInverseBrand',
+  'onInverseAccent',
   'onSurface',
   'onSurfaceMuted',
   'onSurfaceSubtle',
   'onSurfaceMeta',
-  'onSurfaceBrand'
+  'onSurfaceBrand',
+  'onSurfaceAccent'
 ] as const
 
 export type SpectreTextVariant = (typeof spectreTextVariants)[number]
@@ -764,6 +901,21 @@ export type SpectreTextWeight = (typeof spectreTextWeights)[number]
 
 export function isTextWeight(value: unknown): value is SpectreTextWeight {
   return (spectreTextWeights as readonly number[]).includes(value as number)
+}
+
+export const spectreTextLeadings = [
+  'none',
+  'tight',
+  'snug',
+  'normal',
+  'relaxed',
+  'loose'
+] as const
+
+export type SpectreTextLeading = (typeof spectreTextLeadings)[number]
+
+export function isTextLeading(value: unknown): value is SpectreTextLeading {
+  return (spectreTextLeadings as readonly string[]).includes(value as string)
 }
 
 export const spectreTextTransforms = [
@@ -824,6 +976,14 @@ export function isStepperOrientation(
   return (spectreStepperOrientations as readonly string[]).includes(
     value as string
   )
+}
+
+export const spectreStepperTones = ['brand', 'accent'] as const
+
+export type SpectreStepperTone = (typeof spectreStepperTones)[number]
+
+export function isStepperTone(value: unknown): value is SpectreStepperTone {
+  return (spectreStepperTones as readonly string[]).includes(value as string)
 }
 
 export const spectreSpacingScale = [

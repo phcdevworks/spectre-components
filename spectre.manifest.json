@@ -91,7 +91,10 @@
         "./popover",
         "./datepicker",
         "./logo-cloud",
-        "./skeleton"
+        "./skeleton",
+        "./quote",
+        "./stat",
+        "./section-head"
       ],
       "dependencies": [
         "@phcdevworks/spectre-tokens",

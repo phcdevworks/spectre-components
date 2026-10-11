@@ -373,14 +373,19 @@
           "SpectreGridElement",
           "spectreGridColumns",
           "spectreGridGaps",
-          "spectreGridColStarts"
+          "spectreGridColStarts",
+          "spectreGridTemplates"
         ],
         "types": [
           "SpectreGridProps",
           "SpectreGridColumns",
           "SpectreGridGap",
           "SpectreGridColStart",
-          "SpectreGridColStartOptions"
+          "SpectreGridColStartOptions",
+          "SpectreGridExplicitTemplateOptions",
+          "SpectreGridFixedTrackCountOptions",
+          "SpectreGridTemplate",
+          "SpectreGridTemplateOptions"
         ]
       },
       "contracts": {
@@ -641,7 +646,8 @@
           "spectreTextPresets",
           "spectreHeadingLevels",
           "spectreDisplayLevels",
-          "spectreTextWeights"
+          "spectreTextWeights",
+          "spectreTextLeadings"
         ],
         "types": [
           "SpectreTextProps",
@@ -652,7 +658,8 @@
           "SpectreTextLevel",
           "SpectreTextPreset",
           "SpectreHeadingLevel",
-          "SpectreDisplayLevel"
+          "SpectreDisplayLevel",
+          "SpectreTextLeading"
         ]
       },
       "contracts": {
@@ -844,9 +851,14 @@
         "values": [
           "defineSpectreStepper",
           "SpectreStepperElement",
-          "spectreStepperOrientations"
+          "spectreStepperOrientations",
+          "spectreStepperTones"
         ],
-        "types": ["SpectreStepperProps", "SpectreStepperOrientation"]
+        "types": [
+          "SpectreStepperProps",
+          "SpectreStepperOrientation",
+          "SpectreStepperTone"
+        ]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -1066,6 +1078,83 @@
           "spectreSkeletonShapes"
         ],
         "types": ["SpectreSkeletonProps", "SpectreSkeletonShape"]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-quote",
+      "elementClass": "SpectreQuoteElement",
+      "entryPoint": "./quote",
+      "distFile": "dist/quote.js",
+      "exports": {
+        "values": [
+          "defineSpectreQuote",
+          "SpectreQuoteElement",
+          "spectreQuoteAccentColors",
+          "spectreQuoteAccents",
+          "spectreQuoteAligns",
+          "spectreQuoteSizes",
+          "spectreQuoteSurfaces"
+        ],
+        "types": [
+          "SpectreQuoteProps",
+          "SpectreQuoteAccentColor",
+          "SpectreQuoteAccent",
+          "SpectreQuoteAlign",
+          "SpectreQuoteSize",
+          "SpectreQuoteSurface"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-stat",
+      "elementClass": "SpectreStatElement",
+      "entryPoint": "./stat",
+      "distFile": "dist/stat.js",
+      "exports": {
+        "values": [
+          "defineSpectreStat",
+          "SpectreStatElement",
+          "spectreStatAligns",
+          "spectreStatSizes",
+          "spectreStatSurfaces"
+        ],
+        "types": [
+          "SpectreStatProps",
+          "SpectreStatAlign",
+          "SpectreStatSize",
+          "SpectreStatSurface"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-section-head",
+      "elementClass": "SpectreSectionHeadElement",
+      "entryPoint": "./section-head",
+      "distFile": "dist/section-head.js",
+      "exports": {
+        "values": [
+          "defineSpectreSectionHead",
+          "SpectreSectionHeadElement",
+          "spectreSectionHeadAligns",
+          "spectreSectionHeadLayouts"
+        ],
+        "types": [
+          "SpectreSectionHeadProps",
+          "SpectreSectionHeadAlign",
+          "SpectreSectionHeadLayout"
+        ]
       },
       "contracts": {
         "renderMode": "light-dom",

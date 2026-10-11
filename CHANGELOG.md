@@ -6,7 +6,62 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
-Contract change type: N/A
+## [1.23.0] - 2026-10-11
+
+**Release Title:** Child-Theme Components and Recipe Parity
+
+Contract change type: additive
+
+### Added
+
+- `@phcdevworks/spectre-ui` 5.5.0 parity, requested by `spectre-base`
+  (2026-10-11) so a child theme no longer restyles component internals:
+  - `sp-text` `leading` (`none` | `tight` | `snug` | `normal` | `relaxed` |
+    `loose`), passed through to `getTextClasses({ leading })`, and the
+    `accent`, `onSurfaceAccent`, `onInverseBrand`, and `onInverseAccent`
+    variants. Like `weight`, `leading` applies to the text recipe only; a
+    `preset` keeps its own line height.
+  - `sp-button` `variant="accentOutline"`.
+  - `sp-stepper` `tone` (`brand` | `accent`) on the active and done steps.
+    Without `tone` the step classes are unchanged.
+  - `accent-color="accent"` on every component with an accent rail.
+  - `sp-quote` on `getQuoteClasses` and its text and attribution recipes,
+    with `size` (`sm` to an `xl` statement), `surface` (`plain` | `subtle` |
+    `inverse`), `accent` (`edge` | `mark` | `none`), `accent-color`, `align`,
+    and `cite`. Unslotted content is the quote; the `avatar`, `name`, `role`,
+    and `organization` slots build the `<figcaption>`. It is a new component
+    rather than an `sp-testimonial` option because the recipe is a separate
+    family. It has its own `./quote` subpath entry point.
+  - `sp-stat` on `getStatClasses` and its figure, unit, and label recipes,
+    with `size`, `align`, and `surface` (`page` | `surface` | `inverse`). The
+    `unit` slot takes the surface's accent colour. Own `./stat` entry point.
+  - `sp-section-head` on `getSectionHeadClasses`, with `layout` (`stacked` |
+    `split`) and `align`. The `eyebrow` and `title` slots fill the title
+    part; the lead and the `actions` slot fill the lead part. Own
+    `./section-head` entry point. Every `spectre-ui` 5.5.0 recipe now has a
+    component consumer.
+  - Exported allowlists: `spectreTextLeadings`, `spectreStepperTones`,
+    `spectreQuoteSizes`, `spectreQuoteSurfaces`, `spectreQuoteAccents`,
+    `spectreQuoteAccentColors`, `spectreQuoteAligns`, `spectreStatSizes`,
+    `spectreStatAligns`, `spectreStatSurfaces`, `spectreSectionHeadLayouts`,
+    and `spectreSectionHeadAligns`, with their types.
+- Phase 17 element roles (`spectre-tokens` 4.13.0, styled by `spectre-ui`
+  5.5.0): `sp-prose` `accent-markers` colours list markers with the accent
+  role. `sp-table` captions and footer rows, `sp-select` option states, link
+  underlines, bold weights, `<meter>`, and code syntax colours need no
+  component change, because the recipe CSS styles the native elements these
+  components already render. Tests cover the `sp-table` caption and footer.
+  No component was added for `<meter>` or code blocks, because `spectre-ui`
+  has no recipe for either.
+
+- `sp-grid` `explicit-template` accepts the `fluid-fixed` template with its
+  `count` (1–4 fixed tracks, default 2), and per-breakpoint
+  `{ base, md, lg }` values for `template`, `weight`, and `count`, matching
+  `getGridClasses`. A responsive `weight` or `count` applies only where
+  `template` is also set. Exports `spectreGridTemplates` and the
+  `SpectreGridTemplate`, `SpectreGridTemplateOptions`,
+  `SpectreGridFixedTrackCountOptions`, and
+  `SpectreGridExplicitTemplateOptions` types.
 
 ### Fixed
 
@@ -1029,7 +1084,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.22.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.23.0...HEAD
+[1.23.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.22.0...v1.23.0
 [1.22.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.21.0...v1.22.0
 [1.21.0]:

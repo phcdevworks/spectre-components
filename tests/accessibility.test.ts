@@ -601,6 +601,22 @@ describe('accessibility audit', () => {
     [
       'sp-skeleton in a busy region',
       '<div aria-busy="true" aria-label="Loading profile" role="region"><sp-skeleton shape="circle"></sp-skeleton><sp-skeleton animated></sp-skeleton><sp-skeleton shape="rect"></sp-skeleton></div>'
+    ],
+    [
+      'sp-quote with an avatar attribution',
+      '<sp-quote size="xl" surface="inverse" accent="mark"><p>Shipped in a week.</p><img slot="avatar" alt="" src="a.png" /><span slot="name">Ada Lovelace</span><span slot="role">CTO</span><span slot="organization">Analytical Co</span></sp-quote>'
+    ],
+    [
+      'sp-stat',
+      '<sp-stat size="lg" surface="surface">98<span slot="unit">%</span><span slot="label">Uptime</span></sp-stat>'
+    ],
+    [
+      'sp-section-head split',
+      '<sp-section-head layout="split"><p slot="eyebrow">Work</p><h2 slot="title">Selected projects</h2><p>Case studies.</p><a slot="actions" href="/work">All work</a></sp-section-head>'
+    ],
+    [
+      'sp-stepper with the accent tone',
+      '<sp-stepper aria-label="Progress" current="1" tone="accent"><span>One</span><span>Two</span></sp-stepper>'
     ]
   ])('%s has no violations', async (_name, markup) => {
     const el = document.createElement('div')

@@ -60,6 +60,9 @@ import { defineSpectrePopover } from './components/popover'
 import { defineSpectreDatepicker } from './components/datepicker'
 import { defineSpectreLogoCloud } from './components/logo-cloud'
 import { defineSpectreSkeleton } from './components/skeleton'
+import { defineSpectreQuote } from './components/quote'
+import { defineSpectreStat } from './components/stat'
+import { defineSpectreSectionHead } from './components/section-head'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -122,4 +125,7 @@ export function defineSpectreComponents(): void {
   defineSpectreDatepicker()
   defineSpectreLogoCloud()
   defineSpectreSkeleton()
+  defineSpectreQuote()
+  defineSpectreStat()
+  defineSpectreSectionHead()
 }

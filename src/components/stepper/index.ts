@@ -6,5 +6,7 @@ export {
 
 export {
   spectreStepperOrientations,
-  type SpectreStepperOrientation
+  spectreStepperTones,
+  type SpectreStepperOrientation,
+  type SpectreStepperTone
 } from '../../utils/form'

@@ -570,3 +570,170 @@ describe('spectre-ui 5.4.0 parity', () => {
     )
   })
 })
+
+describe('spectre-ui 5.5.0 parity', () => {
+  beforeAll(() => {
+    defineSpectreComponents()
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  it('sp-text forwards leading to the text recipe', async () => {
+    const root = await mount('<sp-text leading="tight">Statement</sp-text>')
+    expect(classesOf(root, 'p')).toContain('sp-text--leading-tight')
+  })
+
+  it('sp-text drops an invalid leading', async () => {
+    const root = await mount('<sp-text leading="huge">Statement</sp-text>')
+    const text = root.querySelector('sp-text') as HTMLElement & {
+      leading?: string
+    }
+    expect(text.leading).toBeUndefined()
+    expect(classesOf(root, 'p')).not.toContain('leading')
+  })
+
+  it.each([
+    ['accent', 'sp-text--accent'],
+    ['onSurfaceAccent', 'on-surface-accent'],
+    ['onInverseBrand', 'on-inverse-brand'],
+    ['onInverseAccent', 'on-inverse-accent']
+  ])('sp-text accepts the %s variant', async (variant, expected) => {
+    const root = await mount(`<sp-text variant="${variant}">Eyebrow</sp-text>`)
+    expect(classesOf(root, 'p')).toContain(expected)
+  })
+
+  it('sp-button accepts the accentOutline variant', async () => {
+    const root = await mount(
+      '<sp-button variant="accentOutline">Talk to us</sp-button>'
+    )
+    expect(classesOf(root, 'button')).toContain('sp-btn--accent-outline')
+  })
+
+  it('sp-stepper forwards tone to the active and done steps', async () => {
+    const root = await mount(`<sp-stepper current="1" tone="accent">
+      <span>A</span><span>B</span><span>C</span>
+    </sp-stepper>`)
+    const steps = Array.from(root.querySelectorAll('li'))
+    expect(steps.every((step) => step.className.includes('tone-accent'))).toBe(
+      true
+    )
+  })
+
+  it('sp-stepper keeps the default step classes without a tone', async () => {
+    const root = await mount(`<sp-stepper current="1" tone="purple">
+      <span>A</span><span>B</span>
+    </sp-stepper>`)
+    expect(root.querySelector('li')?.className).not.toContain('tone')
+  })
+
+  it('accepts the accent rail colour', async () => {
+    const root = await mount(
+      '<sp-card accent="left" accent-color="accent">Card</sp-card>'
+    )
+    expect(classesOf(root, '[data-sp-card-native]')).toContain('accent')
+    const card = root.querySelector('sp-card') as HTMLElement & {
+      accentColor?: string
+    }
+    expect(card.accentColor).toBe('accent')
+  })
+
+  describe('Phase 17 element roles', () => {
+    it('sp-prose forwards accent-markers', async () => {
+      const root = await mount(
+        '<sp-prose accent-markers><ul><li>One</li></ul></sp-prose>'
+      )
+      expect(classesOf(root, '[data-sp-prose-native]')).toContain(
+        'sp-prose--accent-markers'
+      )
+    })
+
+    it('sp-prose keeps the muted markers by default', async () => {
+      const root = await mount('<sp-prose><ul><li>One</li></ul></sp-prose>')
+      expect(classesOf(root, '[data-sp-prose-native]')).toBe('sp-prose')
+    })
+
+    it('sp-table keeps an authored caption and footer inside .sp-table', async () => {
+      const root = await mount(`<sp-table><table>
+        <caption>Q3 revenue</caption>
+        <tbody><tr><td>1</td></tr></tbody>
+        <tfoot><tr><td>Total</td></tr></tfoot>
+      </table></sp-table>`)
+      const table = root.querySelector('table')
+      expect(table?.className).toContain('sp-table')
+      expect(table?.querySelector(':scope > caption')).not.toBeNull()
+      expect(table?.querySelector(':scope > tfoot td')?.textContent).toBe(
+        'Total'
+      )
+    })
+  })
+})
+
+describe('sp-grid explicit-template parity', () => {
+  beforeAll(() => {
+    defineSpectreComponents()
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  async function gridClasses(value: unknown): Promise<string> {
+    const root = await mount('<sp-grid></sp-grid>')
+    const grid = root.querySelector('sp-grid') as Updatable & {
+      explicitTemplate?: unknown
+    }
+    grid.explicitTemplate = value
+    await grid.updateComplete
+    return classesOf(root, '[data-sp-grid-native]')
+  }
+
+  it('renders fluid-fixed with the recipe default of two fixed tracks', async () => {
+    expect(await gridClasses({ template: 'fluid-fixed' })).toContain(
+      'sp-grid-template--fluid-fixed-2'
+    )
+  })
+
+  it('forwards a fixed track count', async () => {
+    expect(await gridClasses({ template: 'fluid-fixed', count: 3 })).toContain(
+      'sp-grid-template--fluid-fixed-3'
+    )
+  })
+
+  it('forwards per-breakpoint templates and counts', async () => {
+    const classes = await gridClasses({
+      template: { base: 'fluid-fixed', lg: 'fluid-fixed' },
+      count: { base: 1, lg: 4 }
+    })
+    expect(classes).toContain('sp-grid-template--fluid-fixed-1')
+    expect(classes).toContain('sp-lg-grid-template--fluid-fixed-4')
+  })
+
+  it('forwards per-breakpoint weights', async () => {
+    const classes = await gridClasses({
+      template: { base: 'label-fluid-fluid', md: 'label-fluid-fluid' },
+      weight: { base: 2, md: 3 }
+    })
+    expect(classes).toContain('sp-grid-template--label-fluid-fluid-2')
+    expect(classes).toContain('sp-md-grid-template--label-fluid-fluid-3')
+  })
+
+  it('reads the explicit-template attribute', async () => {
+    const root = await mount(
+      `<sp-grid explicit-template='{"template":"fluid-fixed","count":4}'></sp-grid>`
+    )
+    expect(classesOf(root, '[data-sp-grid-native]')).toContain(
+      'sp-grid-template--fluid-fixed-4'
+    )
+  })
+
+  it.each([
+    { template: 'fluid-fixed', count: 5 },
+    { template: 'fluid-fluid' },
+    { template: { lg: 'bogus' } },
+    { template: 'fluid-fixed', count: { lg: 9 } }
+  ])('drops invalid options %j', async (value) => {
+    expect(await gridClasses(value)).not.toContain('grid-template')
+  })
+})

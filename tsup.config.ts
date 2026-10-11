@@ -64,7 +64,10 @@ export default defineConfig({
     popover: 'src/components/popover/index.ts',
     datepicker: 'src/components/datepicker/index.ts',
     'logo-cloud': 'src/components/logo-cloud/index.ts',
-    skeleton: 'src/components/skeleton/index.ts'
+    skeleton: 'src/components/skeleton/index.ts',
+    quote: 'src/components/quote/index.ts',
+    stat: 'src/components/stat/index.ts',
+    'section-head': 'src/components/section-head/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,

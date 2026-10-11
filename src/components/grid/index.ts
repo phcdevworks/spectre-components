@@ -3,11 +3,16 @@ import {
   spectreGridGaps,
   spectreGridAligns,
   spectreGridColStarts,
+  spectreGridTemplates,
   type SpectreGridColumns,
   type SpectreGridGap,
   type SpectreGridAlign,
   type SpectreGridColStart,
-  type SpectreGridColStartOptions
+  type SpectreGridColStartOptions,
+  type SpectreGridExplicitTemplateOptions,
+  type SpectreGridFixedTrackCountOptions,
+  type SpectreGridTemplate,
+  type SpectreGridTemplateOptions
 } from '../../utils/form'
 
 export {
@@ -21,9 +26,14 @@ export {
   spectreGridGaps,
   spectreGridAligns,
   spectreGridColStarts,
+  spectreGridTemplates,
   type SpectreGridColumns,
   type SpectreGridGap,
   type SpectreGridAlign,
   type SpectreGridColStart,
-  type SpectreGridColStartOptions
+  type SpectreGridColStartOptions,
+  type SpectreGridExplicitTemplateOptions,
+  type SpectreGridFixedTrackCountOptions,
+  type SpectreGridTemplate,
+  type SpectreGridTemplateOptions
 }

@@ -7,6 +7,7 @@ import {
   isDisplayLevel,
   isHeadingLevel,
   isTextFamily,
+  isTextLeading,
   isTextPreset,
   isTextLevel,
   isTextSize,
@@ -16,6 +17,7 @@ import {
   type SpectreDisplayLevel,
   type SpectreHeadingLevel,
   type SpectreTextFamily,
+  type SpectreTextLeading,
   type SpectreTextPreset,
   type SpectreTextLevel,
   type SpectreTextSize,
@@ -50,6 +52,7 @@ export interface SpectreTextProps {
   family?: SpectreTextFamily | undefined
   headingLevel?: SpectreHeadingLevel | undefined
   id?: string | null | undefined
+  leading?: SpectreTextLeading | undefined
   level?: SpectreTextLevel | undefined
   preset?: SpectreTextPreset | undefined
   size?: SpectreTextSize | undefined
@@ -67,6 +70,7 @@ export class SpectreTextElement
     displayLevel: { attribute: 'display-level', type: Number, reflect: true },
     family: { type: String, reflect: true },
     headingLevel: { attribute: 'heading-level', type: String, reflect: true },
+    leading: { type: String, reflect: true },
     level: { type: String, reflect: true },
     preset: { type: String, reflect: true },
     size: { type: String, reflect: true },
@@ -78,6 +82,7 @@ export class SpectreTextElement
   displayLevel: SpectreDisplayLevel | undefined = undefined
   family: SpectreTextFamily | undefined
   headingLevel: SpectreHeadingLevel | undefined = undefined
+  leading: SpectreTextLeading | undefined = undefined
   level: SpectreTextLevel | undefined = 'p'
   preset: SpectreTextPreset | undefined = undefined
   size: SpectreTextSize | undefined = 'md'
@@ -116,6 +121,14 @@ export class SpectreTextElement
 
     if (changedProperties.has('family') && !isTextFamily(this.family)) {
       this.family = undefined
+    }
+
+    if (
+      changedProperties.has('leading') &&
+      this.leading != null &&
+      !isTextLeading(this.leading)
+    ) {
+      this.leading = undefined
     }
 
     if (changedProperties.has('level') && !isTextLevel(this.level)) {
@@ -209,6 +222,7 @@ export class SpectreTextElement
     }
     return getTextClasses({
       ...(this.family !== undefined && { family: this.family }),
+      ...(this.leading != null && { leading: this.leading }),
       size: this.size ?? 'md',
       ...(this.transform !== undefined && { transform: this.transform }),
       variant: this.variant ?? 'default',

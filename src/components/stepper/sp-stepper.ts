@@ -4,8 +4,10 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreBaseElement } from '../../utils/base'
 import {
   isStepperOrientation,
+  isStepperTone,
   normalizeInt,
-  type SpectreStepperOrientation
+  type SpectreStepperOrientation,
+  type SpectreStepperTone
 } from '../../utils/form'
 import { renderIcon } from '../../utils/icons'
 import { ProjectionController } from '../../utils/projection'
@@ -25,6 +27,7 @@ export interface SpectreStepperProps {
   id?: string | null | undefined
   orientation?: SpectreStepperOrientation | undefined
   title?: string | null | undefined
+  tone?: SpectreStepperTone | undefined
 }
 
 export class SpectreStepperElement
@@ -33,11 +36,13 @@ export class SpectreStepperElement
 {
   static properties = {
     current: { type: Number, reflect: true },
-    orientation: { type: String, reflect: true }
+    orientation: { type: String, reflect: true },
+    tone: { type: String, reflect: true }
   }
 
   current: number | undefined = 0
   orientation: SpectreStepperOrientation | undefined = 'horizontal'
+  tone: SpectreStepperTone | undefined = undefined
 
   private readonly projection = new ProjectionController(this, [
     'data-sp-stepper-native'
@@ -76,6 +81,13 @@ export class SpectreStepperElement
     ) {
       this.orientation = 'horizontal'
     }
+    if (
+      changedProperties.has('tone') &&
+      this.tone != null &&
+      !isStepperTone(this.tone)
+    ) {
+      this.tone = undefined
+    }
   }
 
   private stateFor(index: number): StepperStepState {
@@ -101,7 +113,10 @@ export class SpectreStepperElement
         const state = this.stateFor(index)
         return html`<li
           aria-current="${ifDefined(state === 'active' ? 'step' : undefined)}"
-          class="${getStepperStepClasses({ state })}"
+          class="${getStepperStepClasses({
+            state,
+            ...(this.tone != null && { tone: this.tone })
+          })}"
           data-state="${state}"
         >
           <span aria-hidden="true" class="${getStepperIndicatorClasses()}"

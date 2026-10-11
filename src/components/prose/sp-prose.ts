@@ -7,6 +7,7 @@ import { ProjectionController } from '../../utils/projection'
 import { getProseClasses } from '@phcdevworks/spectre-ui'
 
 export interface SpectreProseProps {
+  accentMarkers?: boolean | undefined
   ariaLabel?: string | null
   id?: string | null | undefined
   title?: string | null | undefined
@@ -17,6 +18,12 @@ export class SpectreProseElement
   extends SpectreBaseElement
   implements SpectreProseProps
 {
+  static properties = {
+    accentMarkers: { attribute: 'accent-markers', type: Boolean, reflect: true }
+  }
+
+  accentMarkers: boolean | undefined = false
+
   private readonly projection = new ProjectionController(this, [
     'data-sp-prose-native'
   ])
@@ -45,7 +52,7 @@ export class SpectreProseElement
   override render() {
     return html`<div
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
-      class="${getProseClasses()}"
+      class="${getProseClasses({ accentMarkers: this.accentMarkers ?? false })}"
       data-sp-prose-native
       id="${ifDefined(this.id || undefined)}"
       role="${ifDefined(this.forwardedAriaLabel ? 'region' : undefined)}"

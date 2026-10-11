@@ -341,6 +341,9 @@ rules.
 | `sp-datepicker`           | `SpectreDatepickerElement`         | `@phcdevworks/spectre-components/datepicker`           |
 | `sp-logo-cloud`           | `SpectreLogoCloudElement`          | `@phcdevworks/spectre-components/logo-cloud`           |
 | `sp-skeleton`             | `SpectreSkeletonElement`           | `@phcdevworks/spectre-components/skeleton`             |
+| `sp-quote`                | `SpectreQuoteElement`              | `@phcdevworks/spectre-components/quote`                |
+| `sp-stat`                 | `SpectreStatElement`               | `@phcdevworks/spectre-components/stat`                 |
+| `sp-section-head`         | `SpectreSectionHeadElement`        | `@phcdevworks/spectre-components/section-head`         |
 
 ## Core Component Contract
 

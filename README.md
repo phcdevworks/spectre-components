@@ -16,7 +16,7 @@ consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.22.0                              |
+| Current version/status | 1.23.0                              |
 
 ## Standard Workflow
 
@@ -334,31 +334,31 @@ when the button needs to navigate rather than submit/act.
 
 **Attributes**
 
-| Attribute          | Type                                                                             | Default   | Description                                                                   |
-| ------------------ | -------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
-| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent \| inverse` | `primary` | Visual style                                                                  |
-| `size`             | `sm \| md \| lg`                                                                 | `md`      | Control size                                                                  |
-| `type`             | `button \| submit \| reset`                                                      | `button`  | Native button type (ignored when rendered as a link)                          |
-| `href`             | string                                                                           | —         | Renders `<a href>` instead of `<button>` (unless `disabled`/`loading`)        |
-| `target`           | `_blank \| _self \| _parent \| _top`                                             | —         | Forwarded to the native `<a>` when `href` is set                              |
-| `rel`              | string                                                                           | —         | Forwarded to the native `<a>` when `href` is set                              |
-| `label`            | string                                                                           | —         | Text label (overridden by content projection)                                 |
-| `loading`          | boolean                                                                          | `false`   | Busy state — disables the button/link and shows loading label                 |
-| `loading-label`    | string                                                                           | `Loading` | Accessible text shown during loading                                          |
-| `disabled`         | boolean                                                                          | `false`   | Disables the button; if `href` is also set, still renders `<button disabled>` |
-| `full-width`       | boolean                                                                          | `false`   | Spans full container width                                                    |
-| `pill`             | boolean                                                                          | `false`   | Pill / fully-rounded corners                                                  |
-| `compact`          | boolean                                                                          | `false`   | Denser padding/height variant                                                 |
-| `inner-class`      | string                                                                           | —         | Spectre utility classes applied to the native `<button>`/`<a>`                |
-| `name`             | string                                                                           | —         | Form field name                                                               |
-| `value`            | string                                                                           | `''`      | Submitted value                                                               |
-| `form`             | string                                                                           | —         | Associates with a form by ID                                                  |
-| `autofocus`        | boolean                                                                          | `false`   | Autofocus on page load                                                        |
-| `id`               | string                                                                           | —         | Forwarded to the native element                                               |
-| `title`            | string                                                                           | —         | Forwarded to the native element                                               |
-| `aria-label`       | string                                                                           | —         | Forwarded to the native element                                               |
-| `aria-labelledby`  | string                                                                           | —         | Forwarded to the native element                                               |
-| `aria-describedby` | string                                                                           | —         | Forwarded to the native element                                               |
+| Attribute          | Type                                                                                              | Default   | Description                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
+| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent \| accentOutline \| inverse` | `primary` | Visual style                                                                  |
+| `size`             | `sm \| md \| lg`                                                                                  | `md`      | Control size                                                                  |
+| `type`             | `button \| submit \| reset`                                                                       | `button`  | Native button type (ignored when rendered as a link)                          |
+| `href`             | string                                                                                            | —         | Renders `<a href>` instead of `<button>` (unless `disabled`/`loading`)        |
+| `target`           | `_blank \| _self \| _parent \| _top`                                                              | —         | Forwarded to the native `<a>` when `href` is set                              |
+| `rel`              | string                                                                                            | —         | Forwarded to the native `<a>` when `href` is set                              |
+| `label`            | string                                                                                            | —         | Text label (overridden by content projection)                                 |
+| `loading`          | boolean                                                                                           | `false`   | Busy state — disables the button/link and shows loading label                 |
+| `loading-label`    | string                                                                                            | `Loading` | Accessible text shown during loading                                          |
+| `disabled`         | boolean                                                                                           | `false`   | Disables the button; if `href` is also set, still renders `<button disabled>` |
+| `full-width`       | boolean                                                                                           | `false`   | Spans full container width                                                    |
+| `pill`             | boolean                                                                                           | `false`   | Pill / fully-rounded corners                                                  |
+| `compact`          | boolean                                                                                           | `false`   | Denser padding/height variant                                                 |
+| `inner-class`      | string                                                                                            | —         | Spectre utility classes applied to the native `<button>`/`<a>`                |
+| `name`             | string                                                                                            | —         | Form field name                                                               |
+| `value`            | string                                                                                            | `''`      | Submitted value                                                               |
+| `form`             | string                                                                                            | —         | Associates with a form by ID                                                  |
+| `autofocus`        | boolean                                                                                           | `false`   | Autofocus on page load                                                        |
+| `id`               | string                                                                                            | —         | Forwarded to the native element                                               |
+| `title`            | string                                                                                            | —         | Forwarded to the native element                                               |
+| `aria-label`       | string                                                                                            | —         | Forwarded to the native element                                               |
+| `aria-labelledby`  | string                                                                                            | —         | Forwarded to the native element                                               |
+| `aria-describedby` | string                                                                                            | —         | Forwarded to the native element                                               |
 
 **Events** — native button/link events bubble normally (`click`, `focus`,
 `blur`).
@@ -895,23 +895,23 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 
 **Attributes**
 
-| Attribute                          | Type                                                                                     | Default | Description                                                                     |
-| ---------------------------------- | ---------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------- |
-| `columns`                          | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                                            | `1`     | Number of grid columns                                                          |
-| `gap`                              | `sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl`                                              | `md`    | Gap between grid items                                                          |
-| `align`                            | `start \| center \| end \| baseline \| stretch`                                          | —       | Cross-axis alignment of grid items                                              |
-| `span`                             | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only)                             | —       | Column span for a grid item, single value or per-breakpoint                     |
-| `column-gap`                       | any `gap` step (JS: `columnGap`)                                                         | —       | Overrides `gap` on the column axis only                                         |
-| `row-gap`                          | any `gap` step (JS: `rowGap`)                                                            | —       | Overrides `gap` on the row axis only                                            |
-| `offset`                           | `0-11` or `{ base?, md?, lg? }` (JS property only)                                       | —       | Column offset for a grid item, single value or per-breakpoint                   |
-| `row-span`                         | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS: `rowSpan`)                                | —       | Row span for a grid item, single value or per-breakpoint                        |
-| `row-offset`                       | `0-11` or `{ base?, md?, lg? }` (JS: `rowOffset`)                                        | —       | Row offset for a grid item, single value or per-breakpoint                      |
-| `order`                            | `'first' \| 'last' \| 'none' \| 1-12` or `{ base?, md?, lg? }` (JS property only)        | —       | Reorders a grid item independent of source order                                |
-| `leading-tracks`                   | `{ weight: 1.5\|1.6\|2\|2.5\|3 \| { base?, md?, lg? } }` (JS: `leadingTracks`)           | —       | One wider leading column plus `columns - 1` equal columns                       |
-| `fixed-tracks`                     | `{ count: 1\|2\|3\|4 }` (JS: `fixedTracks`)                                              | —       | Fixed-width repeated tracks (`--sp-space-240`), replaces `columns`              |
-| `explicit-template`                | `{ template: 'edge-fluid-edge'\|'label-fluid-fluid', weight? }` (JS: `explicitTemplate`) | —       | Named asymmetric column shape; replaces `columns`/`leadingTracks`/`fixedTracks` |
-| `inner-class`                      | string                                                                                   | —       | Spectre utility classes applied to the native `<div>`                           |
-| `id` / `title` / `aria-*` / `role` | string                                                                                   | —       | Forwarded to the native `<div>`                                                 |
+| Attribute                          | Type                                                                                                                                                    | Default | Description                                                                     |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------- |
+| `columns`                          | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                                                                                                           | `1`     | Number of grid columns                                                          |
+| `gap`                              | `sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl`                                                                                                             | `md`    | Gap between grid items                                                          |
+| `align`                            | `start \| center \| end \| baseline \| stretch`                                                                                                         | —       | Cross-axis alignment of grid items                                              |
+| `span`                             | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only)                                                                                            | —       | Column span for a grid item, single value or per-breakpoint                     |
+| `column-gap`                       | any `gap` step (JS: `columnGap`)                                                                                                                        | —       | Overrides `gap` on the column axis only                                         |
+| `row-gap`                          | any `gap` step (JS: `rowGap`)                                                                                                                           | —       | Overrides `gap` on the row axis only                                            |
+| `offset`                           | `0-11` or `{ base?, md?, lg? }` (JS property only)                                                                                                      | —       | Column offset for a grid item, single value or per-breakpoint                   |
+| `row-span`                         | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS: `rowSpan`)                                                                                               | —       | Row span for a grid item, single value or per-breakpoint                        |
+| `row-offset`                       | `0-11` or `{ base?, md?, lg? }` (JS: `rowOffset`)                                                                                                       | —       | Row offset for a grid item, single value or per-breakpoint                      |
+| `order`                            | `'first' \| 'last' \| 'none' \| 1-12` or `{ base?, md?, lg? }` (JS property only)                                                                       | —       | Reorders a grid item independent of source order                                |
+| `leading-tracks`                   | `{ weight: 1.5\|1.6\|2\|2.5\|3 \| { base?, md?, lg? } }` (JS: `leadingTracks`)                                                                          | —       | One wider leading column plus `columns - 1` equal columns                       |
+| `fixed-tracks`                     | `{ count: 1\|2\|3\|4 }` (JS: `fixedTracks`)                                                                                                             | —       | Fixed-width repeated tracks (`--sp-space-240`), replaces `columns`              |
+| `explicit-template`                | `{ template: 'edge-fluid-edge'\|'label-fluid-fluid'\|'fluid-fixed', weight?, count? }`, each value plain or `{ base, md, lg }` (JS: `explicitTemplate`) | —       | Named asymmetric column shape; replaces `columns`/`leadingTracks`/`fixedTracks` |
+| `inner-class`                      | string                                                                                                                                                  | —       | Spectre utility classes applied to the native `<div>`                           |
+| `id` / `title` / `aria-*` / `role` | string                                                                                                                                                  | —       | Forwarded to the native `<div>`                                                 |
 
 `leading-tracks`, `fixed-tracks`, `explicit-template`, and any per-breakpoint
 `{ base?, md?, lg? }` shape are JS-property-only (set via the DOM property, not
@@ -1391,17 +1391,20 @@ switches with `level` while the recipe call and styling stay the same.
 
 **Attributes**
 
-| Attribute                 | Type                                                                         | Default   | Description                                      |
-| ------------------------- | ---------------------------------------------------------------------------- | --------- | ------------------------------------------------ |
-| `level`                   | `h1 \| h2 \| h3 \| h4 \| h5 \| h6 \| p \| span`                              | `p`       | Rendered element tag                             |
-| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl \| 5xl \| 6xl`              | `md`      | Text size scale                                  |
-| `variant`                 | `default \| muted \| subtle \| meta \| brand \| onInverse \| onInverseMuted` | `default` | Text color role                                  |
-| `family`                  | `sans \| serif \| mono`                                                      | —         | Optional font family override                    |
-| `transform`               | `none \| uppercase \| lowercase \| capitalize`                               | —         | Optional text transform                          |
-| `weight`                  | `400 \| 500 \| 600 \| 700 \| 800 \| 900`                                     | —         | Token weight; overrides the size preset's weight |
-| `id` / `title` / `aria-*` | string                                                                       | —         | Forwarded to the rendered native element         |
+| Attribute                 | Type                                                                                                                        | Default   | Description                                                                             |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------- | --------------------------------------------------------------------------------------- |
+| `level`                   | `h1 \| h2 \| h3 \| h4 \| h5 \| h6 \| p \| span`                                                                             | `p`       | Rendered element tag                                                                    |
+| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl \| 5xl \| 6xl`                                                             | `md`      | Text size scale                                                                         |
+| `variant`                 | `default \| muted \| subtle \| meta \| brand \| accent \| onInverse \| onInverseMuted \| onInverseBrand \| onInverseAccent` | `default` | Text color role; the `onSurface*` roles (including `onSurfaceAccent`) are also accepted |
+| `family`                  | `sans \| serif \| mono`                                                                                                     | —         | Optional font family override                                                           |
+| `transform`               | `none \| uppercase \| lowercase \| capitalize`                                                                              | —         | Optional text transform                                                                 |
+| `weight`                  | `400 \| 500 \| 600 \| 700 \| 800 \| 900`                                                                                    | —         | Token weight; overrides the size preset's weight                                        |
+| `leading`                 | `none \| tight \| snug \| normal \| relaxed \| loose`                                                                       | —         | Line height from the `--sp-leading-*` scale; overrides the size preset's                |
+| `id` / `title` / `aria-*` | string                                                                                                                      | —         | Forwarded to the rendered native element                                                |
 
-`weight` applies to the text recipe; a `preset` sets its own weight.
+`weight` and `leading` apply to the text recipe; a `preset` sets its own weight
+and line height. The `accent` variants are for eyebrows and short accents; a
+child theme re-points the single `text.*.accent` role.
 
 **Inline line box** — with `level="span"` the host renders as
 `display: contents`, so the native `<span>` takes its line box from its own size
@@ -1685,7 +1688,9 @@ because the HTML parser drops table parts outside a `<table>`.
 
 Recipe classes are added to the authored `<table>` alongside its own classes.
 For contextual rows, use `aria-selected="true"` or the
-`sp-table__row--{neutral|info|success|warning|danger|selected}` classes.
+`sp-table__row--{neutral|info|success|warning|danger|selected}` classes. An
+authored `<caption>` and `<tfoot>` take the `--sp-table-caption-*` and
+`--sp-table-footer-*` roles from the recipe CSS, with no extra markup.
 
 **Internal target** — `[data-sp-table-native]` selects the wrapper.
 
@@ -1736,11 +1741,12 @@ element becomes one step label.
 </sp-stepper>
 ```
 
-| Attribute                 | Type                     | Default      | Description                                             |
-| ------------------------- | ------------------------ | ------------ | ------------------------------------------------------- |
-| `current`                 | number                   | `0`          | Active step; earlier steps are done, later ones pending |
-| `orientation`             | `horizontal \| vertical` | `horizontal` | Layout direction                                        |
-| `id` / `title` / `aria-*` | string                   | —            | Forwarded to the native `<ol>`                          |
+| Attribute                 | Type                     | Default      | Description                                                    |
+| ------------------------- | ------------------------ | ------------ | -------------------------------------------------------------- |
+| `current`                 | number                   | `0`          | Active step; earlier steps are done, later ones pending        |
+| `orientation`             | `horizontal \| vertical` | `horizontal` | Layout direction                                               |
+| `tone`                    | `brand \| accent`        | —            | Colours the active and done steps; unset keeps today's colours |
+| `id` / `title` / `aria-*` | string                   | —            | Forwarded to the native `<ol>`                                 |
 
 **Accessibility** — renders an `<ol>`; the active step has
 `aria-current="step"`. Done steps show a check mark, others their number.
@@ -1946,6 +1952,14 @@ padding, backed by `getCardBleedClasses`.
 Wraps authored long-form HTML (headings, lists, code, quotes, rules) in the
 Spectre prose surface. An `aria-label` also makes it a labelled region.
 
+| Attribute        | Type    | Default | Description                                              |
+| ---------------- | ------- | ------- | -------------------------------------------------------- |
+| `accent-markers` | boolean | `false` | Colours list markers with the accent role, not the muted |
+
+Element roles from `spectre-ui` 5.5.0 apply inside it automatically: `<del>`,
+`<ins>`, `<s>`, `<dl>`, `<figcaption>`, `<caption>`, bold weights, link
+underlines, and syntax colours in highlighted `<pre>` blocks.
+
 ---
 
 ### sp-logo-cloud
@@ -2007,6 +2021,103 @@ it arrives:
 
 ---
 
+### sp-quote
+
+A blockquote or pull quote with an attribution, backed by `getQuoteClasses` and
+its text and attribution part recipes.
+
+| Attribute                 | Type                                                                        | Default  | Description                                              |
+| ------------------------- | --------------------------------------------------------------------------- | -------- | -------------------------------------------------------- |
+| `size`                    | `sm \| md \| lg \| xl`                                                      | `md`     | Type scale of the quoted text; `xl` is a large statement |
+| `surface`                 | `plain \| subtle \| inverse`                                                | `plain`  | `subtle` and `inverse` add a padded panel                |
+| `accent`                  | `none \| edge \| mark`                                                      | `edge`   | Leading rail, decorative quote mark, or the neutral rule |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta \| accent` | `accent` | Rail and mark tone                                       |
+| `align`                   | `start \| center`                                                           | `start`  | Text alignment                                           |
+| `cite`                    | string                                                                      | —        | Source URL, forwarded to the native `<blockquote>`       |
+| `id` / `title` / `aria-*` | string                                                                      | —        | Forwarded to the native `<figure>`                       |
+
+Unslotted content becomes the quoted text inside a `<blockquote>`. The `avatar`,
+`name`, `role`, and `organization` slots build a `<figcaption>`; role and
+organization share one line, separated by a comma. The attribution is left out
+when none of them is given.
+
+```html
+<sp-quote size="xl" surface="inverse" accent="mark">
+  <p>They shipped the redesign in a week.</p>
+  <img slot="avatar" src="ada.jpg" alt="" />
+  <span slot="name">Ada Lovelace</span>
+  <span slot="role">CTO</span>
+  <span slot="organization">Analytical Co</span>
+</sp-quote>
+```
+
+Use `sp-testimonial` for a review card; use `sp-quote` for a pull quote or a
+statement in running content.
+
+**Internal target** — `[data-sp-quote-native]` selects the native `<figure>`.
+
+---
+
+### sp-stat
+
+A single metric for stat rails, metric cards, and case-study figures, backed by
+`getStatClasses` and its figure, unit, and label part recipes.
+
+| Attribute                 | Type                         | Default | Description                                                 |
+| ------------------------- | ---------------------------- | ------- | ----------------------------------------------------------- |
+| `size`                    | `sm \| md \| lg \| xl`       | `md`    | Type scale of the figure                                    |
+| `align`                   | `start \| center \| end`     | `start` | Alignment of the figure and label                           |
+| `surface`                 | `page \| surface \| inverse` | `page`  | What the stat sits on; picks the text roles and unit accent |
+| `id` / `title` / `aria-*` | string                       | —       | Forwarded to the native `<div>`                             |
+
+Unslotted content is the figure, which uses tabular numerals. The `unit` slot
+follows it in the accent colour, and the `label` slot renders beneath. An
+`aria-label` makes the stat a labelled group.
+
+```html
+<sp-stat size="lg" surface="surface">
+  98<span slot="unit">%</span>
+  <span slot="label">Uptime over twelve months</span>
+</sp-stat>
+```
+
+**Internal target** — `[data-sp-stat-native]` selects the native `<div>`.
+
+---
+
+### sp-section-head
+
+The heading block at the top of a section, backed by `getSectionHeadClasses` and
+its title and lead part recipes.
+
+| Attribute                 | Type               | Default   | Description                                                     |
+| ------------------------- | ------------------ | --------- | --------------------------------------------------------------- |
+| `layout`                  | `stacked \| split` | `stacked` | `split` puts the title left and the lead right from `lg` upward |
+| `align`                   | `start \| center`  | `start`   | Stacked layout only; `center` centres the head at prose width   |
+| `id` / `title` / `aria-*` | string             | —         | Forwarded to the native `<div>`                                 |
+
+The `eyebrow` and `title` slots fill the title part. Unslotted content (the
+lead) and the `actions` slot fill the lead part. Typography comes from the
+elements you author, for example `sp-text` presets.
+
+```html
+<sp-section-head layout="split">
+  <sp-text slot="eyebrow" size="sm" variant="accent" transform="uppercase"
+    >Work</sp-text
+  >
+  <sp-text slot="title" level="h2" preset="heading">Selected projects</sp-text>
+  <sp-text preset="lead">Case studies from the last year.</sp-text>
+  <sp-button slot="actions" variant="accentOutline" href="/work"
+    >All work</sp-button
+  >
+</sp-section-head>
+```
+
+**Internal target** — `[data-sp-section-head-native]` selects the native
+`<div>`.
+
+---
+
 ### Shared conventions (spectre-ui 5.3.0 parity)
 
 **Forced interaction states** — components whose recipe supports them accept
@@ -2053,6 +2164,12 @@ styled by tag name.
 **spectre-ui 5.4.0 additions**: `sp-footer` `appearance` and `surface`;
 `sp-section` `hero` and `attached`; `sp-text` `weight`; `xl`–`4xl` steps on
 every layout spacing attribute; and the new `sp-logo-cloud` and `sp-skeleton`.
+
+**spectre-ui 5.5.0 additions**: `sp-text` `leading` and the `accent`,
+`onSurfaceAccent`, `onInverseBrand`, and `onInverseAccent` variants; `sp-button`
+`accentOutline`; `sp-stepper` `tone`; `sp-prose` `accent-markers`;
+`accent-color="accent"` on every accent rail; and the new `sp-quote`, `sp-stat`,
+and `sp-section-head`.
 
 ## Package Exports / API Surface
 
@@ -2157,6 +2274,14 @@ their element classes and `*Props` interfaces; and `spectreSkeletonShapes`,
 `spectreFooterSurfaces`, `spectreSectionHeroSizes`, `spectreTextWeights` with
 their matching types
 
+**spectre-ui 5.5.0 parity**: `defineSpectreQuote`, `defineSpectreStat`,
+`defineSpectreSectionHead`, their element classes and `*Props` interfaces; and
+`spectreQuoteSizes`, `spectreQuoteSurfaces`, `spectreQuoteAccents`,
+`spectreQuoteAccentColors`, `spectreQuoteAligns`, `spectreStatSizes`,
+`spectreStatAligns`, `spectreStatSurfaces`, `spectreSectionHeadLayouts`,
+`spectreSectionHeadAligns`, `spectreTextLeadings`, `spectreStepperTones` with
+their matching types
+
 ### Subpath entry points
 
 Each entry point registers only that component and exports only its surface:
@@ -2222,6 +2347,9 @@ Each entry point registers only that component and exports only its surface:
 | `.../datepicker`           | `sp-datepicker`           | `defineSpectreDatepicker`, `SpectreDatepickerElement`, `SpectreDatepickerProps`                         |
 | `.../logo-cloud`           | `sp-logo-cloud`           | `defineSpectreLogoCloud`, `SpectreLogoCloudElement`, logo-cloud constants and types                     |
 | `.../skeleton`             | `sp-skeleton`             | `defineSpectreSkeleton`, `SpectreSkeletonElement`, skeleton constants and types                         |
+| `.../quote`                | `sp-quote`                | `defineSpectreQuote`, `SpectreQuoteElement`, quote constants and types                                  |
+| `.../stat`                 | `sp-stat`                 | `defineSpectreStat`, `SpectreStatElement`, stat constants and types                                     |
+| `.../section-head`         | `sp-section-head`         | `defineSpectreSectionHead`, `SpectreSectionHeadElement`, section-head constants and types               |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside

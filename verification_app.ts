@@ -461,6 +461,45 @@ const template = html`
       ><p>Light footer</p></sp-footer
     >
   </section>
+
+  <section>
+    <h2>Content recipes (spectre-ui 5.5.0)</h2>
+    <sp-section-head data-verify="section-head" layout="split">
+      <sp-text slot="eyebrow" size="sm" variant="accent" transform="uppercase"
+        >Work</sp-text
+      >
+      <sp-text slot="title" level="h2" preset="heading" leading="tight"
+        >Selected projects</sp-text
+      >
+      <sp-text preset="lead">Case studies from the last year.</sp-text>
+      <sp-button slot="actions" variant="accentOutline">All work</sp-button>
+    </sp-section-head>
+    <sp-quote data-verify="quote" size="lg" surface="subtle" accent="mark">
+      <p>They shipped the redesign in a week.</p>
+      <span slot="name">Ada Lovelace</span>
+      <span slot="role">CTO</span>
+      <span slot="organization">Analytical Co</span>
+    </sp-quote>
+    <sp-grid data-verify="stats" columns="3">
+      <sp-stat
+        >98<span slot="unit">%</span><span slot="label">Uptime</span></sp-stat
+      >
+      <sp-stat size="lg" align="center"
+        >4<span slot="unit">x</span><span slot="label">Faster</span></sp-stat
+      >
+      <sp-stat align="end">120<span slot="unit">k+</span></sp-stat>
+    </sp-grid>
+    <sp-stepper data-verify="stepper-tone" current="1" tone="accent">
+      <span>Brief</span>
+      <span>Build</span>
+      <span>Launch</span>
+    </sp-stepper>
+    <sp-prose data-verify="prose-markers" accent-markers
+      ><ul>
+        <li>Accent markers</li>
+      </ul></sp-prose
+    >
+  </section>
 `
 
 render(template, document.body)
