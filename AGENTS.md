@@ -45,40 +45,42 @@ Claude Code.
 tag authority** in this repository, effective 2026-07-25 by explicit direction
 from Bradley Potts — see the Commit Policy section in each agent's own guide
 ([CODEX.md](CODEX.md), [COPILOT.md](COPILOT.md), [JULES.md](JULES.md)). **OpenAI
-Codex** additionally has release authority: Codex cuts a release — version bump, changelog versioning, `v<version>` git
-tag, and GitHub Release publish via `gh` — only when Bradley Potts says to get
-this repo ready for release; a plain commit request commits and pushes only,
-with no version bump, tag, or release; see `CODEX.md` "Release Mechanics" for
-the full procedure. **OpenAI Codex additionally executes git operations on
-Claude Code's behalf**: when Claude Code hands off validated work, Codex is
-responsible for staging, committing, tagging, and pushing it, not only Codex's
-own documentation/hygiene/release commits. **npm publishing remains Bradley
-Potts's sole authority** — no agent runs `npm publish`. Bradley Potts retains
-ultimate ownership and can revoke or narrow any of this at any time. This grant
-covers git and release operations within each agent's own scope of work as
-defined above — it does not expand what any agent is authorized to decide
-otherwise. ChatGPT has no repository access and is excluded.
+Codex** additionally has release authority: Codex cuts a release — version bump,
+changelog versioning, `v<version>` git tag, and GitHub Release publish via `gh`
+— only when Bradley Potts says to get this repo ready for release; a plain
+commit request commits and pushes only, with no version bump, tag, or release;
+see `CODEX.md` "Release Mechanics" for the full procedure. **OpenAI Codex
+additionally executes git operations on Claude Code's behalf**: when Claude Code
+hands off validated work, Codex is responsible for staging, committing, tagging,
+and pushing it, not only Codex's own documentation/hygiene/release commits.
+**npm publishing remains Bradley Potts's sole authority** — no agent runs
+`npm publish`. Bradley Potts retains ultimate ownership and can revoke or narrow
+any of this at any time. This grant covers git and release operations within
+each agent's own scope of work as defined above — it does not expand what any
+agent is authorized to decide otherwise. ChatGPT has no repository access and is
+excluded.
 
-**xAI Grok (including Grok Bot, the same agent running automatically) has
-commit and push authority** here, effective 2026-09-26 by explicit direction
-from Bradley Potts — see [GROK.md](GROK.md) "Git Authority." Grok commits and
-pushes its own work only: it does not create or push tags, cut releases, merge
-pull requests, or publish packages.
+**xAI Grok (including Grok Bot, the same agent running automatically) has commit
+and push authority** here, effective 2026-09-26 by explicit direction from
+Bradley Potts — see [GROK.md](GROK.md) "Git Authority." Grok commits and pushes
+its own work only: it does not create or push tags, cut releases, merge pull
+requests, or publish packages.
 
 **A commit is not finished until it is pushed.** Every agent that still holds
-git authority under this roster — Codex, Copilot, Jules, Grok — must push immediately
-after committing (`git push`, including any needed `-u`/tags) as part of the
-same action — never leave a commit sitting local only. This closes a recurring
-gap where an agent commits and stops short of pushing, leaving work stranded on
-the machine.
+git authority under this roster — Codex, Copilot, Jules, Grok — must push
+immediately after committing (`git push`, including any needed `-u`/tags) as
+part of the same action — never leave a commit sitting local only. This closes a
+recurring gap where an agent commits and stops short of pushing, leaving work
+stranded on the machine.
 
 **Commit authorship is human-only.** No agent with git authority under this
-roster — Codex, Copilot, Jules, or Grok — adds itself (or any other AI) as a commit
-author or co-author — no `Co-Authored-By: Claude`/`Codex`/`Copilot`/`Jules`/`Grok`
-trailer, no author-field changes, in this repository. The git author/committer
-stays Bradley Potts (or the configured human git user) on every commit,
-regardless of which agent performed the work. Push and tag authority above does
-not extend to authorship attribution.
+roster — Codex, Copilot, Jules, or Grok — adds itself (or any other AI) as a
+commit author or co-author — no
+`Co-Authored-By: Claude`/`Codex`/`Copilot`/`Jules`/`Grok` trailer, no
+author-field changes, in this repository. The git author/committer stays Bradley
+Potts (or the configured human git user) on every commit, regardless of which
+agent performed the work. Push and tag authority above does not extend to
+authorship attribution.
 
 ## Cross-Repo Access
 
@@ -165,16 +167,16 @@ Roadmap Self-Expansion." Applied to this repo:
 
 ## Catching Up With spectre-tokens
 
-`spectre-tokens/DOWNSTREAM_PARITY.md` is the catch-up checklist for
-everything `spectre-tokens` publishes. It groups every `--sp-*` CSS variable
-in `@phcdevworks/spectre-tokens/index.css` into the family a recipe,
-stylesheet, or component consumes, and marks which ones vary by color mode.
-It is regenerated on every tokens build, so it always matches the published
-CSS. It is a derived artifact: `spectre-tokens/tokens/` and
-`contract.manifest.json` stay the source of truth for what a token means.
+`spectre-tokens/DOWNSTREAM_PARITY.md` is the catch-up checklist for everything
+`spectre-tokens` publishes. It groups every `--sp-*` CSS variable in
+`@phcdevworks/spectre-tokens/index.css` into the family a recipe, stylesheet, or
+component consumes, and marks which ones vary by color mode. It is regenerated
+on every tokens build, so it always matches the published CSS. It is a derived
+artifact: `spectre-tokens/tokens/` and `contract.manifest.json` stay the source
+of truth for what a token means.
 
-To see what this repo still has to consume, run from `spectre-tokens` (read-only;
-it never modifies the scanned repo):
+To see what this repo still has to consume, run from `spectre-tokens`
+(read-only; it never modifies the scanned repo):
 
 ```bash
 npm run audit:parity -- spectre-components
@@ -184,11 +186,11 @@ It prints each family as a checklist (`[x]` fully referenced, `[ ]` with the
 missing variables listed, "no consumer" if nothing uses it yet), scanning
 `spectre-components/src`.
 
-Components consume tokens through `spectre-ui` recipes, so a new family
-normally reaches this repo after `spectre-ui` builds its recipe. Use the
-checklist to spot families that need a component attribute or variant (for
-example a size, density, elevation, or mode option), then wait for the
-matching `spectre-ui` recipe instead of reading the variable directly.
+Components consume tokens through `spectre-ui` recipes, so a new family normally
+reaches this repo after `spectre-ui` builds its recipe. Use the checklist to
+spot families that need a component attribute or variant (for example a size,
+density, elevation, or mode option), then wait for the matching `spectre-ui`
+recipe instead of reading the variable directly.
 
 ## Shared Source Rules
 
@@ -344,6 +346,9 @@ rules.
 | `sp-quote`                | `SpectreQuoteElement`              | `@phcdevworks/spectre-components/quote`                |
 | `sp-stat`                 | `SpectreStatElement`               | `@phcdevworks/spectre-components/stat`                 |
 | `sp-section-head`         | `SpectreSectionHeadElement`        | `@phcdevworks/spectre-components/section-head`         |
+| `sp-link`                 | `SpectreLinkElement`               | `@phcdevworks/spectre-components/link`                 |
+| `sp-divider`              | `SpectreDividerElement`            | `@phcdevworks/spectre-components/divider`              |
+| `sp-surface`              | `SpectreSurfaceElement`            | `@phcdevworks/spectre-components/surface`              |
 
 ## Core Component Contract
 

@@ -500,6 +500,49 @@ const template = html`
       </ul></sp-prose
     >
   </section>
+
+  <section>
+    <h2>Recipe parity (spectre-ui 5.7.0)</h2>
+    <sp-text
+      data-verify="text-57"
+      size="9xl"
+      font-size="48"
+      tracking="tight"
+      balance
+      >Balanced display line</sp-text
+    >
+    <sp-text tabular-nums>0123456789</sp-text>
+    <sp-grid data-verify="grid-responsive" columns='{"base":1,"md":2,"lg":4}'>
+      <div>One</div>
+      <div>Two</div>
+      <div>Three</div>
+      <div>Four</div>
+    </sp-grid>
+    <p>
+      Read the
+      <sp-link
+        data-verify="link"
+        href="#"
+        decoration="thick"
+        underline-offset="lg"
+        >docs</sp-link
+      >.
+    </p>
+    <sp-divider data-verify="divider"></sp-divider>
+    <sp-surface
+      data-verify="surface"
+      surface="inverse"
+      as="section"
+      inner-class="sp-p-8"
+    >
+      <sp-text variant="onInverse">Inverse surface</sp-text>
+      <sp-link href="#" tone="onInverse" current>Current page</sp-link>
+    </sp-surface>
+    <ul>
+      <sp-surface as="li" surface="subtle" hover>Hoverable item</sp-surface>
+      <sp-surface as="li" surface="subtle" selected>Selected item</sp-surface>
+    </ul>
+  </section>
 `
 
 render(template, document.body)

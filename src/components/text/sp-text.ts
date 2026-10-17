@@ -6,22 +6,30 @@ import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isDisplayLevel,
   isHeadingLevel,
+  isTextDecoration,
   isTextFamily,
+  isTextFontSize,
   isTextLeading,
   isTextPreset,
   isTextLevel,
   isTextSize,
+  isTextTracking,
   isTextTransform,
+  isTextUnderlineOffset,
   isTextVariant,
   isTextWeight,
   type SpectreDisplayLevel,
   type SpectreHeadingLevel,
+  type SpectreTextDecoration,
   type SpectreTextFamily,
+  type SpectreTextFontSize,
   type SpectreTextLeading,
   type SpectreTextPreset,
   type SpectreTextLevel,
   type SpectreTextSize,
+  type SpectreTextTracking,
   type SpectreTextTransform,
+  type SpectreTextUnderlineOffset,
   type SpectreTextVariant,
   type SpectreTextWeight
 } from '../../utils/form'
@@ -48,16 +56,22 @@ export interface SpectreTextProps {
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
+  balance?: boolean | undefined
+  decoration?: SpectreTextDecoration | undefined
   displayLevel?: SpectreDisplayLevel | undefined
   family?: SpectreTextFamily | undefined
+  fontSize?: SpectreTextFontSize | undefined
   headingLevel?: SpectreHeadingLevel | undefined
   id?: string | null | undefined
   leading?: SpectreTextLeading | undefined
   level?: SpectreTextLevel | undefined
   preset?: SpectreTextPreset | undefined
   size?: SpectreTextSize | undefined
+  tabularNums?: boolean | undefined
   title?: string | null | undefined
+  tracking?: SpectreTextTracking | undefined
   transform?: SpectreTextTransform | undefined
+  underlineOffset?: SpectreTextUnderlineOffset | undefined
   variant?: SpectreTextVariant | undefined
   weight?: SpectreTextWeight | undefined
 }
@@ -67,26 +81,42 @@ export class SpectreTextElement
   implements SpectreTextProps
 {
   static properties = {
+    balance: { type: Boolean, reflect: true },
+    decoration: { type: String, reflect: true },
     displayLevel: { attribute: 'display-level', type: Number, reflect: true },
     family: { type: String, reflect: true },
+    fontSize: { attribute: 'font-size', type: Number, reflect: true },
     headingLevel: { attribute: 'heading-level', type: String, reflect: true },
     leading: { type: String, reflect: true },
     level: { type: String, reflect: true },
     preset: { type: String, reflect: true },
     size: { type: String, reflect: true },
+    tabularNums: { attribute: 'tabular-nums', type: Boolean, reflect: true },
+    tracking: { type: String, reflect: true },
     transform: { type: String, reflect: true },
+    underlineOffset: {
+      attribute: 'underline-offset',
+      type: String,
+      reflect: true
+    },
     variant: { type: String, reflect: true },
     weight: { type: Number, reflect: true }
   }
 
+  balance: boolean | undefined = false
+  decoration: SpectreTextDecoration | undefined = undefined
   displayLevel: SpectreDisplayLevel | undefined = undefined
   family: SpectreTextFamily | undefined
+  fontSize: SpectreTextFontSize | undefined = undefined
   headingLevel: SpectreHeadingLevel | undefined = undefined
   leading: SpectreTextLeading | undefined = undefined
   level: SpectreTextLevel | undefined = 'p'
   preset: SpectreTextPreset | undefined = undefined
   size: SpectreTextSize | undefined = 'md'
+  tabularNums: boolean | undefined = false
+  tracking: SpectreTextTracking | undefined = undefined
   transform: SpectreTextTransform | undefined
+  underlineOffset: SpectreTextUnderlineOffset | undefined = undefined
   variant: SpectreTextVariant | undefined = 'default'
   weight: SpectreTextWeight | undefined = undefined
 
@@ -158,6 +188,46 @@ export class SpectreTextElement
     ) {
       this.weight = undefined
     }
+
+    if (
+      changedProperties.has('fontSize') &&
+      this.fontSize != null &&
+      !isTextFontSize(this.fontSize)
+    ) {
+      this.fontSize = undefined
+    }
+
+    if (
+      changedProperties.has('tracking') &&
+      this.tracking != null &&
+      !isTextTracking(this.tracking)
+    ) {
+      this.tracking = undefined
+    }
+
+    if (
+      changedProperties.has('decoration') &&
+      this.decoration != null &&
+      !isTextDecoration(this.decoration)
+    ) {
+      this.decoration = undefined
+    }
+
+    if (
+      changedProperties.has('underlineOffset') &&
+      this.underlineOffset != null &&
+      !isTextUnderlineOffset(this.underlineOffset)
+    ) {
+      this.underlineOffset = undefined
+    }
+
+    if (changedProperties.has('balance') && this.balance == null) {
+      this.balance = false
+    }
+
+    if (changedProperties.has('tabularNums') && this.tabularNums == null) {
+      this.tabularNums = false
+    }
   }
 
   // An inline-level host would otherwise be a box (blockified in flex and
@@ -221,10 +291,18 @@ export class SpectreTextElement
         return getLeadClasses()
     }
     return getTextClasses({
+      ...(this.balance && { balance: true }),
+      ...(this.decoration != null && { decoration: this.decoration }),
       ...(this.family !== undefined && { family: this.family }),
+      ...(this.fontSize != null && { fontSize: this.fontSize }),
       ...(this.leading != null && { leading: this.leading }),
       size: this.size ?? 'md',
+      ...(this.tabularNums && { tabularNums: true }),
+      ...(this.tracking != null && { tracking: this.tracking }),
       ...(this.transform !== undefined && { transform: this.transform }),
+      ...(this.underlineOffset != null && {
+        underlineOffset: this.underlineOffset
+      }),
       variant: this.variant ?? 'default',
       ...(this.weight != null && { weight: this.weight })
     })

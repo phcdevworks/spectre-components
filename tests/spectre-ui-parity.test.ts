@@ -737,3 +737,136 @@ describe('sp-grid explicit-template parity', () => {
     expect(await gridClasses(value)).not.toContain('grid-template')
   })
 })
+
+describe('spectre-ui 5.7.0 parity', () => {
+  beforeAll(() => {
+    defineSpectreComponents()
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  it.each(['7xl', '8xl', '9xl'])('sp-text accepts size="%s"', async (size) => {
+    const root = await mount(`<sp-text size="${size}">Hero</sp-text>`)
+    expect(classesOf(root, 'p')).toContain(`sp-text--${size}`)
+  })
+
+  it('sp-text forwards the 5.7.0 text options to the text recipe', async () => {
+    const root = await mount(
+      '<sp-text font-size="24" tracking="wide" decoration="thick" underline-offset="lg" tabular-nums balance>42</sp-text>'
+    )
+    const classes = classesOf(root, 'p')
+    expect(classes).toContain('sp-font-size-24')
+    expect(classes).toContain('sp-tracking-wide')
+    expect(classes).toContain('sp-decoration-thick')
+    expect(classes).toContain('sp-underline-offset-lg')
+    expect(classes).toContain('sp-tabular-nums')
+    expect(classes).toContain('sp-text-balance')
+  })
+
+  it('sp-text drops invalid 5.7.0 text options', async () => {
+    const root = await mount(
+      '<sp-text font-size="13" tracking="loose" decoration="heavy" underline-offset="xl">Text</sp-text>'
+    )
+    const text = root.querySelector('sp-text') as HTMLElement & {
+      decoration?: string
+      fontSize?: number
+      tracking?: string
+      underlineOffset?: string
+    }
+    expect(text.fontSize).toBeUndefined()
+    expect(text.tracking).toBeUndefined()
+    expect(text.decoration).toBeUndefined()
+    expect(text.underlineOffset).toBeUndefined()
+    expect(classesOf(root, 'p')).toBe('sp-text sp-text--md sp-text--default')
+  })
+
+  it('sp-text keeps a preset free of text recipe options', async () => {
+    const root = await mount(
+      '<sp-text level="h2" preset="heading" font-size="24" balance>Title</sp-text>'
+    )
+    const classes = classesOf(root, 'h2')
+    expect(classes).not.toContain('sp-font-size-24')
+    expect(classes).not.toContain('sp-text-balance')
+  })
+
+  describe('sp-grid responsive columns', () => {
+    it('reads a { base, md, lg } columns attribute', async () => {
+      const root = await mount(
+        `<sp-grid columns='{"base":1,"md":2,"lg":4}'></sp-grid>`
+      )
+      const classes = classesOf(root, '[data-sp-grid-native]')
+      expect(classes).toContain('sp-grid-cols-1')
+      expect(classes).toContain('sp-md-grid-cols-2')
+      expect(classes).toContain('sp-lg-grid-cols-4')
+    })
+
+    it('accepts columns="auto"', async () => {
+      const root = await mount('<sp-grid columns="auto"></sp-grid>')
+      expect(classesOf(root, '[data-sp-grid-native]')).toContain(
+        'sp-grid-cols-auto'
+      )
+    })
+
+    it('still reads a numeric columns attribute', async () => {
+      const root = await mount('<sp-grid columns="3"></sp-grid>')
+      const grid = root.querySelector('sp-grid') as HTMLElement & {
+        columns?: unknown
+      }
+      expect(grid.columns).toBe(3)
+      expect(classesOf(root, '[data-sp-grid-native]')).toContain(
+        'sp-grid-cols-3'
+      )
+    })
+
+    it.each(['{"md":"auto"}', '{"base":5}', '{"lg":0}', 'bogus'])(
+      'falls back to one column for %s',
+      async (value) => {
+        const root = await mount(`<sp-grid columns='${value}'></sp-grid>`)
+        const grid = root.querySelector('sp-grid') as HTMLElement & {
+          columns?: unknown
+        }
+        expect(grid.columns).toBe(1)
+        const classes = classesOf(root, '[data-sp-grid-native]')
+        expect(classes).toContain('sp-grid-cols-1')
+        expect(classes).not.toMatch(/sp-(md|lg)-grid-cols/)
+      }
+    )
+  })
+})
+
+describe('spectre-ui 5.7.0 utility recipes', () => {
+  it('re-exports the utility recipes and mode constants unchanged', async () => {
+    const root = await import('../src')
+    const ui = await import('@phcdevworks/spectre-ui')
+    const names = [
+      'getAspectRatioClasses',
+      'getBorderClasses',
+      'getChartColorClasses',
+      'getColorClasses',
+      'getElevationClasses',
+      'getIconSizeClasses',
+      'getLayoutClasses',
+      'getMotionClasses',
+      'getOpacityClasses',
+      'getPaletteClasses',
+      'getShadowClasses',
+      'getSpacingClasses',
+      'getZIndexClasses',
+      'spectreDensityModes',
+      'spectreThemeModes'
+    ] as const
+    for (const name of names) {
+      expect(root[name]).toBe(ui[name])
+    }
+  })
+
+  it('feeds a utility recipe into inner-class', async () => {
+    const { getSpacingClasses } = await import('../src')
+    const root = await mount(
+      `<sp-surface surface="subtle" inner-class="${getSpacingClasses({ p: 8 })}"></sp-surface>`
+    )
+    expect(classesOf(root, '[data-sp-surface-native]')).toContain('sp-p-8')
+  })
+})

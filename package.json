@@ -1,6 +1,6 @@
 {
   "name": "@phcdevworks/spectre-components",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "description": "@phcdevworks/spectre-components is the web-component layer of the Spectre system. It provides accessible, framework-independent interface components built on Spectre's shared design contracts.",
   "keywords": [
     "phcdevworks",
@@ -357,6 +357,21 @@
       "types": "./dist/section-head.d.ts",
       "import": "./dist/section-head.js",
       "require": "./dist/section-head.cjs"
+    },
+    "./link": {
+      "types": "./dist/link.d.ts",
+      "import": "./dist/link.js",
+      "require": "./dist/link.cjs"
+    },
+    "./divider": {
+      "types": "./dist/divider.d.ts",
+      "import": "./dist/divider.js",
+      "require": "./dist/divider.cjs"
+    },
+    "./surface": {
+      "types": "./dist/surface.d.ts",
+      "import": "./dist/surface.js",
+      "require": "./dist/surface.cjs"
     }
   },
   "files": [
@@ -393,29 +408,29 @@
     "typescript": "^5.0 || ^6.0 || ^7.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^4.13.0",
-    "@phcdevworks/spectre-ui": "^5.5.0",
+    "@phcdevworks/spectre-tokens": "^4.14.0",
+    "@phcdevworks/spectre-ui": "^5.7.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@phcdevworks/spectre-manifest": "^1.2.0",
-    "@playwright/test": "^1.64.0",
+    "@phcdevworks/spectre-manifest": "^2.0.0",
+    "@playwright/test": "^1.64.1",
     "@types/node": "^26.6.5",
-    "@typescript-eslint/eslint-plugin": "^8.71.1",
-    "@typescript-eslint/parser": "^8.71.1",
+    "@typescript-eslint/eslint-plugin": "^8.71.2",
+    "@typescript-eslint/parser": "^8.71.2",
     "@typescript/native": "npm:typescript@^7.0.2",
     "axe-core": "^4.14.0",
-    "eslint": "^10.12.0",
+    "eslint": "^10.13.0",
     "globals": "^17.13.0",
-    "happy-dom": "^20.14.6",
+    "happy-dom": "^21.0.3",
     "jiti": "^2.7.0",
     "prettier": "^3.9.10",
-    "tsup": "^8.5.1",
+    "tsup": "^9.0.0",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.71.1",
+    "typescript-eslint": "^8.71.2",
     "vite": "^8.3.4",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.5"
   },
   "allowScripts": {
     "esbuild@0.28.2": true

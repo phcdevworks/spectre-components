@@ -67,7 +67,10 @@ export default defineConfig({
     skeleton: 'src/components/skeleton/index.ts',
     quote: 'src/components/quote/index.ts',
     stat: 'src/components/stat/index.ts',
-    'section-head': 'src/components/section-head/index.ts'
+    'section-head': 'src/components/section-head/index.ts',
+    link: 'src/components/link/index.ts',
+    divider: 'src/components/divider/index.ts',
+    surface: 'src/components/surface/index.ts'
   },
   format: ['esm', 'cjs'],
   sourcemap: true,

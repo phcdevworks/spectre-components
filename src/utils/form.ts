@@ -401,12 +401,42 @@ export function isContainerMaxWidth(
   )
 }
 
-export const spectreGridColumns = [1, 2, 3, 4, 6, 12] as const
+export const spectreGridColumns = [1, 2, 3, 4, 6, 12, 'auto'] as const
 
 export type SpectreGridColumns = (typeof spectreGridColumns)[number]
 
 export function isGridColumns(value: unknown): value is SpectreGridColumns {
-  return (spectreGridColumns as readonly number[]).includes(value as number)
+  return (spectreGridColumns as readonly (number | string)[]).includes(
+    value as number | string
+  )
+}
+
+export type SpectreGridResponsiveColumns = Exclude<SpectreGridColumns, 'auto'>
+
+export interface SpectreGridColumnsOptions {
+  base?: SpectreGridColumns
+  md?: SpectreGridResponsiveColumns
+  lg?: SpectreGridResponsiveColumns
+}
+
+function isGridResponsiveColumns(
+  value: unknown
+): value is SpectreGridResponsiveColumns {
+  return value !== 'auto' && isGridColumns(value)
+}
+
+export function isGridColumnsOptions(
+  value: unknown
+): value is SpectreGridColumnsOptions {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  const candidate = value as Record<string, unknown>
+  return (
+    (candidate.base === undefined || isGridColumns(candidate.base)) &&
+    (candidate.md === undefined || isGridResponsiveColumns(candidate.md)) &&
+    (candidate.lg === undefined || isGridResponsiveColumns(candidate.lg))
+  )
 }
 
 export const spectreGridGaps = [
@@ -836,7 +866,10 @@ export const spectreTextSizes = [
   '3xl',
   '4xl',
   '5xl',
-  '6xl'
+  '6xl',
+  '7xl',
+  '8xl',
+  '9xl'
 ] as const
 
 export type SpectreTextSize = (typeof spectreTextSizes)[number]
@@ -916,6 +949,99 @@ export type SpectreTextLeading = (typeof spectreTextLeadings)[number]
 
 export function isTextLeading(value: unknown): value is SpectreTextLeading {
   return (spectreTextLeadings as readonly string[]).includes(value as string)
+}
+
+export const spectreTextFontSizes = [
+  12, 14, 16, 18, 20, 24, 30, 36, 48, 60, 72, 96, 128
+] as const
+
+export type SpectreTextFontSize = (typeof spectreTextFontSizes)[number]
+
+export function isTextFontSize(value: unknown): value is SpectreTextFontSize {
+  return (spectreTextFontSizes as readonly number[]).includes(value as number)
+}
+
+export const spectreTextTrackings = [
+  'tightest',
+  'tighter',
+  'tight',
+  'normal',
+  'wide',
+  'wider',
+  'widest'
+] as const
+
+export type SpectreTextTracking = (typeof spectreTextTrackings)[number]
+
+export function isTextTracking(value: unknown): value is SpectreTextTracking {
+  return (spectreTextTrackings as readonly string[]).includes(value as string)
+}
+
+export const spectreTextDecorations = ['thin', 'base', 'thick'] as const
+
+export type SpectreTextDecoration = (typeof spectreTextDecorations)[number]
+
+export function isTextDecoration(
+  value: unknown
+): value is SpectreTextDecoration {
+  return (spectreTextDecorations as readonly string[]).includes(value as string)
+}
+
+export const spectreTextUnderlineOffsets = ['sm', 'md', 'lg'] as const
+
+export type SpectreTextUnderlineOffset =
+  (typeof spectreTextUnderlineOffsets)[number]
+
+export function isTextUnderlineOffset(
+  value: unknown
+): value is SpectreTextUnderlineOffset {
+  return (spectreTextUnderlineOffsets as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreLinkTones = ['default', 'onInverse'] as const
+
+export type SpectreLinkTone = (typeof spectreLinkTones)[number]
+
+export function isLinkTone(value: unknown): value is SpectreLinkTone {
+  return (spectreLinkTones as readonly string[]).includes(value as string)
+}
+
+export const spectreSurfaces = [
+  'page',
+  'card',
+  'input',
+  'overlay',
+  'subtle',
+  'hero',
+  'hover',
+  'selected',
+  'active',
+  'divider',
+  'inverse'
+] as const
+
+export type SpectreSurface = (typeof spectreSurfaces)[number]
+
+export function isSurface(value: unknown): value is SpectreSurface {
+  return (spectreSurfaces as readonly string[]).includes(value as string)
+}
+
+export const spectreSurfaceTags = [
+  'div',
+  'section',
+  'article',
+  'aside',
+  'header',
+  'footer',
+  'li'
+] as const
+
+export type SpectreSurfaceTag = (typeof spectreSurfaceTags)[number]
+
+export function isSurfaceTag(value: unknown): value is SpectreSurfaceTag {
+  return (spectreSurfaceTags as readonly string[]).includes(value as string)
 }
 
 export const spectreTextTransforms = [

@@ -615,6 +615,10 @@ describe('accessibility audit', () => {
       '<sp-section-head layout="split"><p slot="eyebrow">Work</p><h2 slot="title">Selected projects</h2><p>Case studies.</p><a slot="actions" href="/work">All work</a></sp-section-head>'
     ],
     [
+      'sp-link, sp-divider, and sp-surface',
+      '<sp-surface surface="subtle" as="section" aria-label="Docs"><sp-link href="/docs" current>Docs</sp-link><sp-divider></sp-divider><sp-surface surface="inverse"><sp-link href="/blog" tone="onInverse">Blog</sp-link></sp-surface></sp-surface>'
+    ],
+    [
       'sp-stepper with the accent tone',
       '<sp-stepper aria-label="Progress" current="1" tone="accent"><span>One</span><span>Two</span></sp-stepper>'
     ]

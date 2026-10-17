@@ -6,6 +6,56 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.24.0] - 2026-10-17
+
+**Release Title:** Recipe and Utility Parity
+
+Contract change type: additive
+
+### Added
+
+- `@phcdevworks/spectre-ui` 5.7.0 parity, matching `spectre-ui-astro` 4.13.0:
+  - `sp-link` on `getLinkClasses`, with `tone` (`default` | `onInverse`),
+    `decoration`, `underline-offset`, `current` (`aria-current="page"`),
+    `href`, `target`, and `rel`. Own `./link` entry point.
+  - `sp-divider` on `getDividerClasses`, rendering an `<hr>`, with
+    `inner-class`. Own `./divider` entry point.
+  - `sp-surface` on `getSurfaceClasses`, with every `--sp-surface-*` role,
+    the `hover`, `selected`, and `active` states, `as` (`div` | `section` |
+    `article` | `aside` | `header` | `footer` | `li`), and `inner-class`.
+    With `as="li"` the host is `display: contents`. Own `./surface` entry
+    point.
+  - `sp-text` `font-size` (numeric `12`–`128` scale), `tracking`,
+    `decoration`, `underline-offset`, `tabular-nums`, and `balance`, passed
+    to `getTextClasses` like `weight` and `leading`. A `preset` ignores them.
+    `size` takes `7xl`, `8xl`, and `9xl`.
+  - `sp-grid` `columns` takes `auto` and per-breakpoint `{ base, md, lg }`
+    values, as a property or a JSON attribute. Numeric attributes read as
+    before.
+  - Exported allowlists: `spectreLinkTones`, `spectreLinkDecorations`,
+    `spectreLinkUnderlineOffsets`, `spectreSurfaces`, `spectreSurfaceTags`,
+    `spectreTextFontSizes`, `spectreTextTrackings`, `spectreTextDecorations`,
+    and `spectreTextUnderlineOffsets`, with their types, plus
+    `SpectreGridColumnsOptions` and `SpectreGridResponsiveColumns`.
+- The root entry re-exports the `spectre-ui` 5.7.0 utility recipes unchanged,
+  with their option and scale types, as `spectre-ui-astro` does:
+  `getSpacingClasses`, `getLayoutClasses`, `getColorClasses`,
+  `getPaletteClasses`, `getBorderClasses`, `getShadowClasses`,
+  `getOpacityClasses`, `getZIndexClasses`, `getIconSizeClasses`,
+  `getAspectRatioClasses`, `getElevationClasses`, `getMotionClasses`, and
+  `getChartColorClasses`. They have no element; pass their output to
+  `inner-class`. `spectreThemeModes` and `spectreDensityModes` are
+  re-exported too.
+
+### Changed
+
+- Dependency ranges raised to `@phcdevworks/spectre-ui@^5.7.0` and
+  `@phcdevworks/spectre-tokens@^4.14.0`. Through `spectre-ui` 5.6.0, the
+  `sp-text` `lg`–`6xl` sizes follow the Tailwind-aligned font scale, so each
+  renders one step smaller than before (`lg` is 18px instead of 20px). Use the
+  next size up to keep a previous size. Components that used those steps
+  internally render unchanged.
+
 ## [1.23.0] - 2026-10-11
 
 **Release Title:** Child-Theme Components and Recipe Parity
@@ -1084,7 +1134,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.23.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.24.0...HEAD
+[1.24.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.23.0...v1.24.0
 [1.23.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.22.0...v1.23.0
 [1.22.0]:

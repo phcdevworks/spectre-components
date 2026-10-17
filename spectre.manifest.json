@@ -94,7 +94,10 @@
         "./skeleton",
         "./quote",
         "./stat",
-        "./section-head"
+        "./section-head",
+        "./link",
+        "./divider",
+        "./surface"
       ],
       "dependencies": [
         "@phcdevworks/spectre-tokens",

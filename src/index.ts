@@ -1,4 +1,5 @@
 export * from './components'
+export * from './utilities'
 
 import { defineSpectreButton } from './components/button'
 import { defineSpectreInput } from './components/input'
@@ -63,6 +64,9 @@ import { defineSpectreSkeleton } from './components/skeleton'
 import { defineSpectreQuote } from './components/quote'
 import { defineSpectreStat } from './components/stat'
 import { defineSpectreSectionHead } from './components/section-head'
+import { defineSpectreLink } from './components/link'
+import { defineSpectreDivider } from './components/divider'
+import { defineSpectreSurface } from './components/surface'
 
 export function defineSpectreComponents(): void {
   defineSpectreButton()
@@ -128,4 +132,7 @@ export function defineSpectreComponents(): void {
   defineSpectreQuote()
   defineSpectreStat()
   defineSpectreSectionHead()
+  defineSpectreLink()
+  defineSpectreDivider()
+  defineSpectreSurface()
 }

@@ -379,6 +379,8 @@
         "types": [
           "SpectreGridProps",
           "SpectreGridColumns",
+          "SpectreGridColumnsOptions",
+          "SpectreGridResponsiveColumns",
           "SpectreGridGap",
           "SpectreGridColStart",
           "SpectreGridColStartOptions",
@@ -647,7 +649,11 @@
           "spectreHeadingLevels",
           "spectreDisplayLevels",
           "spectreTextWeights",
-          "spectreTextLeadings"
+          "spectreTextLeadings",
+          "spectreTextFontSizes",
+          "spectreTextTrackings",
+          "spectreTextDecorations",
+          "spectreTextUnderlineOffsets"
         ],
         "types": [
           "SpectreTextProps",
@@ -659,7 +665,11 @@
           "SpectreTextPreset",
           "SpectreHeadingLevel",
           "SpectreDisplayLevel",
-          "SpectreTextLeading"
+          "SpectreTextLeading",
+          "SpectreTextFontSize",
+          "SpectreTextTracking",
+          "SpectreTextDecoration",
+          "SpectreTextUnderlineOffset"
         ]
       },
       "contracts": {
@@ -1160,13 +1170,97 @@
         "renderMode": "light-dom",
         "shadowDomApproved": false
       }
+    },
+    {
+      "tag": "sp-link",
+      "elementClass": "SpectreLinkElement",
+      "entryPoint": "./link",
+      "distFile": "dist/link.js",
+      "exports": {
+        "values": [
+          "defineSpectreLink",
+          "SpectreLinkElement",
+          "spectreLinkTones",
+          "spectreLinkDecorations",
+          "spectreLinkUnderlineOffsets"
+        ],
+        "types": [
+          "SpectreLinkProps",
+          "SpectreLinkTone",
+          "SpectreLinkDecoration",
+          "SpectreLinkUnderlineOffset"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-divider",
+      "elementClass": "SpectreDividerElement",
+      "entryPoint": "./divider",
+      "distFile": "dist/divider.js",
+      "exports": {
+        "values": [
+          "defineSpectreDivider",
+          "SpectreDividerElement"
+        ],
+        "types": [
+          "SpectreDividerProps"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-surface",
+      "elementClass": "SpectreSurfaceElement",
+      "entryPoint": "./surface",
+      "distFile": "dist/surface.js",
+      "exports": {
+        "values": [
+          "defineSpectreSurface",
+          "SpectreSurfaceElement",
+          "spectreSurfaces",
+          "spectreSurfaceTags"
+        ],
+        "types": [
+          "SpectreSurfaceProps",
+          "SpectreSurface",
+          "SpectreSurfaceTag"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
     }
   ],
   "rootEntry": {
     "entryPoint": ".",
     "distFile": "dist/index.js",
     "exports": {
-      "values": ["defineSpectreComponents"]
+      "values": [
+        "defineSpectreComponents",
+        "getAspectRatioClasses",
+        "getBorderClasses",
+        "getChartColorClasses",
+        "getColorClasses",
+        "getElevationClasses",
+        "getIconSizeClasses",
+        "getLayoutClasses",
+        "getMotionClasses",
+        "getOpacityClasses",
+        "getPaletteClasses",
+        "getShadowClasses",
+        "getSpacingClasses",
+        "getZIndexClasses",
+        "spectreDensityModes",
+        "spectreThemeModes"
+      ]
     }
   },
   "globalContracts": {

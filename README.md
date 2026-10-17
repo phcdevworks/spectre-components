@@ -16,7 +16,7 @@ consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.23.0                              |
+| Current version/status | 1.24.0                              |
 
 ## Standard Workflow
 
@@ -897,7 +897,7 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 
 | Attribute                          | Type                                                                                                                                                    | Default | Description                                                                     |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------------------- |
-| `columns`                          | `1 \| 2 \| 3 \| 4 \| 6 \| 12`                                                                                                                           | `1`     | Number of grid columns                                                          |
+| `columns`                          | `1 \| 2 \| 3 \| 4 \| 6 \| 12 \| auto` or `{ base?, md?, lg? }` (JSON attribute; `auto` is base-only)                                                    | `1`     | Number of grid columns, single value or per-breakpoint                          |
 | `gap`                              | `sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl`                                                                                                             | `md`    | Gap between grid items                                                          |
 | `align`                            | `start \| center \| end \| baseline \| stretch`                                                                                                         | —       | Cross-axis alignment of grid items                                              |
 | `span`                             | `1-12 \| 'full'` or `{ base?, md?, lg? }` (JS property only)                                                                                            | —       | Column span for a grid item, single value or per-breakpoint                     |
@@ -915,7 +915,8 @@ Renders a `<div>` grid layout backed by the Spectre grid recipe.
 
 `leading-tracks`, `fixed-tracks`, `explicit-template`, and any per-breakpoint
 `{ base?, md?, lg? }` shape are JS-property-only (set via the DOM property, not
-an HTML attribute string).
+an HTML attribute string). `columns` is the exception: it also reads a JSON
+attribute, for example `columns='{"base":1,"md":2,"lg":4}'`.
 
 Setting `role` (e.g. `role="table"`) reflects it directly onto the native
 `<div>`. `sp-grid` renders its light-DOM children into that single container, so
@@ -1394,17 +1395,25 @@ switches with `level` while the recipe call and styling stay the same.
 | Attribute                 | Type                                                                                                                        | Default   | Description                                                                             |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------- | --------------------------------------------------------------------------------------- |
 | `level`                   | `h1 \| h2 \| h3 \| h4 \| h5 \| h6 \| p \| span`                                                                             | `p`       | Rendered element tag                                                                    |
-| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl \| 4xl \| 5xl \| 6xl`                                                             | `md`      | Text size scale                                                                         |
+| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl` … `9xl`                                                                                 | `md`      | Text size scale                                                                         |
 | `variant`                 | `default \| muted \| subtle \| meta \| brand \| accent \| onInverse \| onInverseMuted \| onInverseBrand \| onInverseAccent` | `default` | Text color role; the `onSurface*` roles (including `onSurfaceAccent`) are also accepted |
 | `family`                  | `sans \| serif \| mono`                                                                                                     | —         | Optional font family override                                                           |
 | `transform`               | `none \| uppercase \| lowercase \| capitalize`                                                                              | —         | Optional text transform                                                                 |
 | `weight`                  | `400 \| 500 \| 600 \| 700 \| 800 \| 900`                                                                                    | —         | Token weight; overrides the size preset's weight                                        |
 | `leading`                 | `none \| tight \| snug \| normal \| relaxed \| loose`                                                                       | —         | Line height from the `--sp-leading-*` scale; overrides the size preset's                |
+| `font-size`               | `12 \| 14 \| 16 \| 18 \| 20 \| 24 \| 30 \| 36 \| 48 \| 60 \| 72 \| 96 \| 128`                                               | —         | Exact `--sp-font-size-*` step; overrides only the size preset's font size               |
+| `tracking`                | `tightest \| tighter \| tight \| normal \| wide \| wider \| widest`                                                         | —         | Letter spacing from the `--sp-tracking-*` scale                                         |
+| `decoration`              | `thin \| base \| thick`                                                                                                     | —         | Underline thickness                                                                     |
+| `underline-offset`        | `sm \| md \| lg`                                                                                                            | —         | Gap between the text and its underline                                                  |
+| `tabular-nums`            | boolean                                                                                                                     | `false`   | Tabular numerals for figures that update in place                                       |
+| `balance`                 | boolean                                                                                                                     | `false`   | Balanced line wrapping so a short headline does not end on an orphan                    |
 | `id` / `title` / `aria-*` | string                                                                                                                      | —         | Forwarded to the rendered native element                                                |
 
-`weight` and `leading` apply to the text recipe; a `preset` sets its own weight
-and line height. The `accent` variants are for eyebrows and short accents; a
-child theme re-points the single `text.*.accent` role.
+`weight`, `leading`, and the other typography overrides (`font-size`,
+`tracking`, `decoration`, `underline-offset`, `tabular-nums`, `balance`) apply
+to the text recipe only; a `preset` sets its own type. The `accent` variants are
+for eyebrows and short accents; a child theme re-points the single
+`text.*.accent` role.
 
 **Inline line box** — with `level="span"` the host renders as
 `display: contents`, so the native `<span>` takes its line box from its own size
@@ -2118,6 +2127,72 @@ elements you author, for example `sp-text` presets.
 
 ---
 
+### sp-link
+
+An inline text link backed by `getLinkClasses`.
+
+| Attribute                 | Type                    | Default   | Description                                       |
+| ------------------------- | ----------------------- | --------- | ------------------------------------------------- |
+| `href`                    | string                  | —         | Link destination                                  |
+| `tone`                    | `default \| onInverse`  | `default` | `onInverse` for a link on an inverse surface      |
+| `decoration`              | `thin \| base \| thick` | —         | Overrides the default thin underline              |
+| `underline-offset`        | `sm \| md \| lg`        | —         | Overrides the default `md` underline offset       |
+| `current`                 | boolean                 | `false`   | Marks the current page with `aria-current="page"` |
+| `target` / `rel`          | string                  | —         | Forwarded to the native `<a>`                     |
+| `id` / `title` / `aria-*` | string                  | —         | Forwarded to the native `<a>`                     |
+
+```html
+<p>Read the <sp-link href="/docs" underline-offset="lg">docs</sp-link>.</p>
+```
+
+**Content projection** — children become the link content.
+
+**Internal target** — `[data-sp-link-native]` selects the native `<a>`.
+
+---
+
+### sp-divider
+
+A horizontal rule backed by `getDividerClasses`.
+
+| Attribute                     | Type   | Default | Description                                   |
+| ----------------------------- | ------ | ------- | --------------------------------------------- |
+| `inner-class`                 | string | —       | Spectre utility classes applied to the `<hr>` |
+| `id` / `title` / `aria-label` | string | —       | Forwarded to the native `<hr>`                |
+
+**Internal target** — `[data-sp-divider-native]` selects the native `<hr>`.
+
+---
+
+### sp-surface
+
+A container painted with a `--sp-surface-*` role, backed by `getSurfaceClasses`.
+
+| Attribute                       | Type                                                                                                           | Default | Description                                                         |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------- |
+| `surface`                       | `page \| card \| subtle \| overlay \| input \| inverse \| hero` (and `hover`, `selected`, `active`, `divider`) | —       | Surface role; no background when unset                              |
+| `hover` / `selected` / `active` | boolean                                                                                                        | `false` | Paints the hover, selected, or active surface state                 |
+| `as`                            | `div \| section \| article \| aside \| header \| footer \| li`                                                 | `div`   | Rendered element tag                                                |
+| `inner-class`                   | string                                                                                                         | —       | Spectre utility classes (for example padding) on the native element |
+| `id` / `title` / `aria-*`       | string                                                                                                         | —       | Forwarded to the native element                                     |
+
+With `as="li"` the host renders as `display: contents`, so the `<li>` is laid
+out directly by its list. An inline `style="display: ..."` you set on the host
+wins.
+
+```html
+<sp-surface surface="inverse" as="section" inner-class="sp-p-8">
+  <sp-text variant="onInverse">Dark band</sp-text>
+  <sp-link href="/start" tone="onInverse">Get started</sp-link>
+</sp-surface>
+```
+
+**Content projection** — children become the element content.
+
+**Internal target** — `[data-sp-surface-native]` selects the native element.
+
+---
+
 ### Shared conventions (spectre-ui 5.3.0 parity)
 
 **Forced interaction states** — components whose recipe supports them accept
@@ -2170,6 +2245,13 @@ every layout spacing attribute; and the new `sp-logo-cloud` and `sp-skeleton`.
 `accentOutline`; `sp-stepper` `tone`; `sp-prose` `accent-markers`;
 `accent-color="accent"` on every accent rail; and the new `sp-quote`, `sp-stat`,
 and `sp-section-head`.
+
+**spectre-ui 5.7.0 additions**: `sp-text` `font-size`, `tracking`, `decoration`,
+`underline-offset`, `tabular-nums`, `balance`, and the `7xl`–`9xl` sizes;
+`sp-grid` per-breakpoint `columns` and `columns="auto"`; and the new `sp-link`,
+`sp-divider`, and `sp-surface`. The utility-only recipes (`getSpacingClasses`,
+`getLayoutClasses`, `getColorClasses`, and the rest) have no element; the root
+entry re-exports them, so pass their output to `inner-class`.
 
 ## Package Exports / API Surface
 
@@ -2282,6 +2364,28 @@ their matching types
 `spectreSectionHeadAligns`, `spectreTextLeadings`, `spectreStepperTones` with
 their matching types
 
+**spectre-ui 5.7.0 parity**: `defineSpectreLink`, `defineSpectreDivider`,
+`defineSpectreSurface`, their element classes and `*Props` interfaces; and
+`spectreLinkTones`, `spectreLinkDecorations`, `spectreLinkUnderlineOffsets`,
+`spectreSurfaces`, `spectreSurfaceTags`, `spectreTextFontSizes`,
+`spectreTextTrackings`, `spectreTextDecorations`, `spectreTextUnderlineOffsets`
+with their matching types, plus `SpectreGridColumnsOptions` and
+`SpectreGridResponsiveColumns`
+
+**Utility recipes** (re-exported unchanged from `@phcdevworks/spectre-ui`, root
+entry only): `getSpacingClasses`, `getLayoutClasses`, `getColorClasses`,
+`getPaletteClasses`, `getBorderClasses`, `getShadowClasses`,
+`getOpacityClasses`, `getZIndexClasses`, `getIconSizeClasses`,
+`getAspectRatioClasses`, `getElevationClasses`, `getMotionClasses`,
+`getChartColorClasses`, `spectreThemeModes`, and `spectreDensityModes`, with
+their option and scale types
+
+```ts
+import { getSpacingClasses } from '@phcdevworks/spectre-components'
+
+surface.innerClass = getSpacingClasses({ p: 8 })
+```
+
 ### Subpath entry points
 
 Each entry point registers only that component and exports only its surface:
@@ -2350,6 +2454,9 @@ Each entry point registers only that component and exports only its surface:
 | `.../quote`                | `sp-quote`                | `defineSpectreQuote`, `SpectreQuoteElement`, quote constants and types                                  |
 | `.../stat`                 | `sp-stat`                 | `defineSpectreStat`, `SpectreStatElement`, stat constants and types                                     |
 | `.../section-head`         | `sp-section-head`         | `defineSpectreSectionHead`, `SpectreSectionHeadElement`, section-head constants and types               |
+| `.../link`                 | `sp-link`                 | `defineSpectreLink`, `SpectreLinkElement`, link constants and types                                     |
+| `.../divider`              | `sp-divider`              | `defineSpectreDivider`, `SpectreDividerElement`, `SpectreDividerProps`                                  |
+| `.../surface`              | `sp-surface`              | `defineSpectreSurface`, `SpectreSurfaceElement`, surface constants and types                            |
 
 Size constants are shared between input, textarea, and select. Import
 `spectreInputSizes` / `SpectreInputSize` from `.../input` when needed alongside

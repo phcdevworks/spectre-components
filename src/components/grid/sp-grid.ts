@@ -7,6 +7,7 @@ import {
   isGridColStart,
   isGridColStartOptions,
   isGridColumns,
+  isGridColumnsOptions,
   isGridExplicitTemplateOptions,
   isGridFixedTracksOptions,
   isGridGap,
@@ -22,6 +23,7 @@ import {
   type SpectreGridColStart,
   type SpectreGridColStartOptions,
   type SpectreGridColumns,
+  type SpectreGridColumnsOptions,
   type SpectreGridExplicitTemplateOptions,
   type SpectreGridFixedTracksOptions,
   type SpectreGridGap,
@@ -40,6 +42,7 @@ import {
   type GridColStart,
   type GridColStartOptions,
   type GridColumns,
+  type GridColumnsOptions,
   type GridExplicitTemplateOptions,
   type GridFixedTracksOptions,
   type GridGap,
@@ -51,7 +54,26 @@ import {
   type GridSpan,
   type GridSpanOptions
 } from '@phcdevworks/spectre-ui'
-import { normalizeInt } from '../../utils/form'
+
+// A count, `auto`, or a JSON `{ base, md, lg }` object.
+const columnsConverter = {
+  fromAttribute(value: string | null): unknown {
+    if (value == null) {
+      return undefined
+    }
+    try {
+      return JSON.parse(value) as unknown
+    } catch {
+      return value
+    }
+  },
+  toAttribute(value: unknown): string | undefined {
+    if (value == null) {
+      return undefined
+    }
+    return typeof value === 'object' ? JSON.stringify(value) : String(value)
+  }
+}
 
 export interface SpectreGridProps {
   align?: SpectreGridAlign | undefined
@@ -59,7 +81,7 @@ export interface SpectreGridProps {
   ariaLabelledBy?: string | null
   ariaDescribedBy?: string | null
   colStart?: SpectreGridColStart | SpectreGridColStartOptions | undefined
-  columns?: SpectreGridColumns | undefined
+  columns?: SpectreGridColumns | SpectreGridColumnsOptions | undefined
   columnGap?: SpectreGridGap | undefined
   explicitTemplate?: SpectreGridExplicitTemplateOptions | undefined
   fixedTracks?: SpectreGridFixedTracksOptions | undefined
@@ -86,7 +108,7 @@ export class SpectreGridElement
     // presentational hint for `text-align: center`.
     align: { type: String },
     colStart: { attribute: 'col-start', type: Object },
-    columns: { type: Number, reflect: true },
+    columns: { converter: columnsConverter, reflect: true },
     columnGap: { attribute: 'column-gap', type: String, reflect: true },
     explicitTemplate: { attribute: 'explicit-template', type: Object },
     fixedTracks: { attribute: 'fixed-tracks', type: Object },
@@ -103,7 +125,7 @@ export class SpectreGridElement
 
   align: SpectreGridAlign | undefined = undefined
   colStart: SpectreGridColStart | SpectreGridColStartOptions | undefined
-  columns: SpectreGridColumns | undefined = 1
+  columns: SpectreGridColumns | SpectreGridColumnsOptions | undefined = 1
   columnGap: SpectreGridGap | undefined = undefined
   explicitTemplate: SpectreGridExplicitTemplateOptions | undefined = undefined
   fixedTracks: SpectreGridFixedTracksOptions | undefined = undefined
@@ -218,12 +240,12 @@ export class SpectreGridElement
     ) {
       this.align = undefined
     }
-    if (changedProperties.has('columns')) {
-      const normalized = normalizeInt(this.columns, undefined, 1)
-      this.columns =
-        normalized != null && isGridColumns(normalized)
-          ? (normalized as SpectreGridColumns)
-          : 1
+    if (
+      changedProperties.has('columns') &&
+      !isGridColumns(this.columns) &&
+      !isGridColumnsOptions(this.columns)
+    ) {
+      this.columns = 1
     }
     if (
       changedProperties.has('gap') &&
@@ -330,7 +352,7 @@ export class SpectreGridElement
 
   private get containerOptions() {
     return {
-      columns: this.columns as GridColumns,
+      columns: this.columns as GridColumns | GridColumnsOptions,
       gap: this.gap as GridGap,
       ...(this.align !== undefined && { align: this.align as GridAlign }),
       ...(this.columnGap !== undefined && {

@@ -16,7 +16,15 @@ import {
   spectreTextWeights,
   type SpectreTextWeight,
   spectreTextLeadings,
-  type SpectreTextLeading
+  type SpectreTextLeading,
+  spectreTextFontSizes,
+  type SpectreTextFontSize,
+  spectreTextTrackings,
+  type SpectreTextTracking,
+  spectreTextDecorations,
+  type SpectreTextDecoration,
+  spectreTextUnderlineOffsets,
+  type SpectreTextUnderlineOffset
 } from '../../utils/form'
 
 export {
@@ -43,5 +51,13 @@ export {
   spectreTextWeights,
   type SpectreTextWeight,
   spectreTextLeadings,
-  type SpectreTextLeading
+  type SpectreTextLeading,
+  spectreTextFontSizes,
+  type SpectreTextFontSize,
+  spectreTextTrackings,
+  type SpectreTextTracking,
+  spectreTextDecorations,
+  type SpectreTextDecoration,
+  spectreTextUnderlineOffsets,
+  type SpectreTextUnderlineOffset
 }
