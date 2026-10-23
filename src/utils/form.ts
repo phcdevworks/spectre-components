@@ -18,6 +18,7 @@ export const spectreButtonVariants = [
   'danger',
   'success',
   'cta',
+  'action',
   'accent',
   'accentOutline',
   'inverse',
@@ -166,7 +167,8 @@ export const spectreFooterSurfaces = [
   'card',
   'subtle',
   'inverse',
-  'hero'
+  'hero',
+  'action'
 ] as const
 
 export type SpectreFooterSurface = (typeof spectreFooterSurfaces)[number]
@@ -237,6 +239,37 @@ export type SpectreStatAlign = (typeof spectreStatAligns)[number]
 
 export function isStatAlign(value: unknown): value is SpectreStatAlign {
   return (spectreStatAligns as readonly string[]).includes(value as string)
+}
+
+export const spectreStatUnitTones = ['accent', 'action'] as const
+
+export type SpectreStatUnitTone = (typeof spectreStatUnitTones)[number]
+
+export function isStatUnitTone(value: unknown): value is SpectreStatUnitTone {
+  return (spectreStatUnitTones as readonly string[]).includes(value as string)
+}
+
+export const spectreQuoteAccentColors = [
+  ...spectreAccentColors,
+  'action'
+] as const
+
+export type SpectreQuoteAccentColor = (typeof spectreQuoteAccentColors)[number]
+
+export function isQuoteAccentColor(
+  value: unknown
+): value is SpectreQuoteAccentColor {
+  return (spectreQuoteAccentColors as readonly string[]).includes(
+    value as string
+  )
+}
+
+export const spectreProseSizes = ['md', 'lg', 'xl'] as const
+
+export type SpectreProseSize = (typeof spectreProseSizes)[number]
+
+export function isProseSize(value: unknown): value is SpectreProseSize {
+  return (spectreProseSizes as readonly string[]).includes(value as string)
 }
 
 export const spectreStatSurfaces = ['page', 'surface', 'inverse'] as const
@@ -1272,4 +1305,20 @@ export function sanitizeUtilityClasses(
     .split(/\s+/)
     .filter((token) => spectreUtilityClassPattern.test(token))
     .join(' ')
+}
+
+export const spectreIconSizes = [
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  '2xl',
+  '3xl'
+] as const
+
+export type SpectreIconSize = (typeof spectreIconSizes)[number]
+
+export function isIconSize(value: unknown): value is SpectreIconSize {
+  return (spectreIconSizes as readonly string[]).includes(value as string)
 }

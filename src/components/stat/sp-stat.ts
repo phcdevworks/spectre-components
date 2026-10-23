@@ -6,9 +6,11 @@ import {
   isStatAlign,
   isStatSize,
   isStatSurface,
+  isStatUnitTone,
   type SpectreStatAlign,
   type SpectreStatSize,
-  type SpectreStatSurface
+  type SpectreStatSurface,
+  type SpectreStatUnitTone
 } from '../../utils/form'
 import { ProjectionController } from '../../utils/projection'
 
@@ -28,6 +30,7 @@ export interface SpectreStatProps {
   size?: SpectreStatSize | undefined
   surface?: SpectreStatSurface | undefined
   title?: string | null | undefined
+  unitTone?: SpectreStatUnitTone | undefined
 }
 
 export class SpectreStatElement
@@ -37,12 +40,14 @@ export class SpectreStatElement
   static properties = {
     align: { type: String, reflect: true },
     size: { type: String, reflect: true },
-    surface: { type: String, reflect: true }
+    surface: { type: String, reflect: true },
+    unitTone: { attribute: 'unit-tone', type: String, reflect: true }
   }
 
   align: SpectreStatAlign | undefined = 'start'
   size: SpectreStatSize | undefined = 'md'
   surface: SpectreStatSurface | undefined = 'page'
+  unitTone: SpectreStatUnitTone | undefined = 'accent'
 
   private readonly projection = new ProjectionController(this, [
     'data-sp-stat-native'
@@ -90,6 +95,12 @@ export class SpectreStatElement
     ) {
       this.surface = 'page'
     }
+    if (
+      changedProperties.has('unitTone') &&
+      (this.unitTone == null || !isStatUnitTone(this.unitTone))
+    ) {
+      this.unitTone = 'accent'
+    }
   }
 
   override render() {
@@ -100,7 +111,8 @@ export class SpectreStatElement
       class="${getStatClasses({
         align: this.align ?? 'start',
         size: this.size ?? 'md',
-        surface: this.surface ?? 'page'
+        surface: this.surface ?? 'page',
+        unitTone: this.unitTone ?? 'accent'
       })}"
       data-sp-stat-native
       id="${ifDefined(this.id || undefined)}"

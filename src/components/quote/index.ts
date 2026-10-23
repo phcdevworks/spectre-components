@@ -5,12 +5,12 @@ export {
 } from './sp-quote'
 
 export {
-  spectreAccentColors as spectreQuoteAccentColors,
+  spectreQuoteAccentColors,
   spectreQuoteAccents,
   spectreQuoteAligns,
   spectreQuoteSizes,
   spectreQuoteSurfaces,
-  type SpectreAccentColor as SpectreQuoteAccentColor,
+  type SpectreQuoteAccentColor,
   type SpectreQuoteAccent,
   type SpectreQuoteAlign,
   type SpectreQuoteSize,

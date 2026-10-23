@@ -8,7 +8,9 @@ export {
   spectreStatAligns,
   spectreStatSizes,
   spectreStatSurfaces,
+  spectreStatUnitTones,
   type SpectreStatAlign,
   type SpectreStatSize,
-  type SpectreStatSurface
+  type SpectreStatSurface,
+  type SpectreStatUnitTone
 } from '../../utils/form'

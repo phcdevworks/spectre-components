@@ -16,6 +16,7 @@ export default defineConfig({
     badge: 'src/components/badge/index.ts',
     card: 'src/components/card/index.ts',
     'icon-box': 'src/components/icon-box/index.ts',
+    icon: 'src/components/icon/index.ts',
     rating: 'src/components/rating/index.ts',
     testimonial: 'src/components/testimonial/index.ts',
     alert: 'src/components/alert/index.ts',

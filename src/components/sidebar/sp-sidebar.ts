@@ -1,6 +1,7 @@
-import { html, nothing } from 'lit'
+import { html, nothing, render } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
+import { renderIcon } from '../../utils/icons'
 import { applyPartClasses, childElements } from '../../utils/parts'
 import { SpectreProjectableElement } from '../../utils/projectable'
 
@@ -8,6 +9,8 @@ import {
   getSidebarBackdropClasses,
   getSidebarClasses,
   getSidebarGroupClasses,
+  getSidebarGroupContentClasses,
+  getSidebarGroupIconClasses,
   getSidebarGroupSummaryClasses,
   getSidebarHeaderClasses,
   getSidebarToggleClasses
@@ -156,10 +159,21 @@ export class SpectreSidebarElement
     elements
       .filter((element) => element.getAttribute('slot') === 'group')
       .forEach((group) => {
-        const summary = group.querySelector(':scope > summary')
-        summary?.classList.add(
-          ...getSidebarGroupSummaryClasses().split(/\s+/).filter(Boolean)
-        )
+        const summary = group.querySelector<HTMLElement>(':scope > summary')
+        if (summary) {
+          summary.classList.add(
+            ...getSidebarGroupSummaryClasses().split(/\s+/).filter(Boolean)
+          )
+          // Lit keeps one part per container, so repeat renders reuse the
+          // chevron instead of appending another.
+          render(
+            renderIcon('chevronRight', getSidebarGroupIconClasses()),
+            summary
+          )
+        }
+        applyPartClasses(group.children, {
+          content: getSidebarGroupContentClasses()
+        })
       })
   }
 

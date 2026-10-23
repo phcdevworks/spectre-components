@@ -16,7 +16,7 @@ consume Spectre without a framework-specific adapter.
 | Project team           | `project-design`                    |
 | Repository role        | Spectre L3a Lit web component layer |
 | Package/artifact       | `@phcdevworks/spectre-components`   |
-| Current version/status | 1.24.0                              |
+| Current version/status | 1.25.0                              |
 
 ## Standard Workflow
 
@@ -336,7 +336,7 @@ when the button needs to navigate rather than submit/act.
 
 | Attribute          | Type                                                                                              | Default   | Description                                                                   |
 | ------------------ | ------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------- |
-| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| accent \| accentOutline \| inverse` | `primary` | Visual style                                                                  |
+| `variant`          | `primary \| secondary \| ghost \| danger \| success \| cta \| action \| accent \| accentOutline \| inverse` | `primary` | Visual style                                                                  |
 | `size`             | `sm \| md \| lg`                                                                                  | `md`      | Control size                                                                  |
 | `type`             | `button \| submit \| reset`                                                                       | `button`  | Native button type (ignored when rendered as a link)                          |
 | `href`             | string                                                                                            | —         | Renders `<a href>` instead of `<button>` (unless `disabled`/`loading`)        |
@@ -636,6 +636,7 @@ Renders a `<div>` icon container backed by the Spectre icon-box recipe.
 | ------------------------- | -------------------------------------------------------------------------------------------------------------- | --------- | ------------------------------- |
 | `variant`                 | `primary \| secondary \| ghost \| danger \| success \| warning \| info \| accent \| cta \| neutral \| outline` | `primary` | Visual style                    |
 | `size`                    | `sm \| md \| lg`                                                                                               | `md`      | Icon-box size                   |
+| `icon-size`               | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl`                                                                       | —         | Glyph size from `--sp-icon-*`; omitted keeps 1em of the box |
 | `disabled`                | boolean                                                                                                        | `false`   | Disabled visual state           |
 | `loading`                 | boolean                                                                                                        | `false`   | Busy visual state               |
 | `interactive`             | boolean                                                                                                        | `false`   | Applies interactive styling     |
@@ -643,15 +644,81 @@ Renders a `<div>` icon container backed by the Spectre icon-box recipe.
 | `full-width`              | boolean                                                                                                        | `false`   | Spans full container width      |
 | `id` / `title` / `aria-*` | string                                                                                                         | —         | Forwarded to the native `<div>` |
 
-**Content projection** — children become the icon-box content.
+**Content projection** — children become the icon-box content. Project an
+`sp-icon` to render a glyph by name:
+
+```html
+<sp-icon-box icon-size="xl"><sp-icon name="shield-check"></sp-icon></sp-icon-box>
+```
 
 **Internal target** — `[data-sp-icon-box-native]` selects the native `<div>`.
 
 ---
 
+### sp-icon
+
+Renders an inline `<svg>` glyph by name from an icon set registered from
+`@phcdevworks/spectre-ui/icons`. Nothing is registered by default, so a page
+only ships the icons it registers.
+
+```ts
+import { defineSpectreIcon, registerIconSet, registerIcons } from '@phcdevworks/spectre-components/icon'
+import * as lucide from '@phcdevworks/spectre-ui/icons'
+import { ShieldCheck } from '@phcdevworks/spectre-ui/icons'
+import * as faSolid from '@phcdevworks/spectre-ui/icons/fa-solid'
+
+defineSpectreIcon()
+registerIconSet(lucide) // every Lucide icon, under set "lucide"
+registerIcons('lucide', { ShieldCheck }) // or only the icons a page uses
+registerIconSet(faSolid) // filled icons, under set "fa-solid"
+```
+
+```html
+<sp-icon name="shield-check"></sp-icon>
+<sp-icon set="fa-solid" name="star" size="lg" label="Favourite"></sp-icon>
+```
+
+`registerIconSet()` takes any `@phcdevworks/spectre-ui/icons` entry and
+registers it under its `iconSet.id`: `lucide` (outline, the default set),
+`mdi`, `brands`, `fa-solid`, `fa-regular`, or `fa-brands`. Names match
+case- and punctuation-insensitively (`shield-check`, `ShieldCheck`). Lucide
+icons use their export name; Material Design Icons drop the `mdi` prefix;
+Font Awesome icons use their `iconName`; Simple Icons brands use their
+`slug`. An `sp-icon` that connects before its set is registered renders once
+it is.
+
+**Attributes**
+
+| Attribute                 | Type                                         | Default  | Description                                                    |
+| ------------------------- | -------------------------------------------- | -------- | -------------------------------------------------------------- |
+| `name`                    | string                                       | —        | Icon name; an unknown name renders nothing                     |
+| `set`                     | string                                       | `lucide` | Registered set name                                            |
+| `size`                    | `xs \| sm \| md \| lg \| xl \| 2xl \| 3xl` | —        | `getIconSizeClasses` size; omitted follows the font size (1em) |
+| `label`                   | string                                       | —        | Accessible name; omitted renders the icon decorative           |
+| `id` / `title` / `aria-*` | string                                       | —        | Forwarded to the native `<svg>`; `title` renders `<title>`     |
+
+**Accessibility** — decorative by default (`aria-hidden="true"`). A `label`,
+`aria-label`, or `aria-labelledby` renders `role="img"` with that name.
+
+**Colour** — outline icons stroke and filled icons fill with
+`currentColor`, so the surrounding text colour or `sp-icon-box` variant
+applies.
+
+**Licences** — the icon data lives in `@phcdevworks/spectre-ui` and its
+pinned dependencies, not in this package. Each entry's `iconSet.license`
+names its licence: Lucide (ISC), Material Design Icons (Apache-2.0), Font
+Awesome Free (icons CC BY 4.0, code MIT; attribution required), and Simple
+Icons (CC0-1.0, brand logos subject to their owners' trademark guidelines).
+
+**Internal target** — `[data-sp-icon-native]` selects the native `<svg>`.
+
+---
+
 ### sp-rating
 
-Renders a read-only rating visualization with generated star spans.
+Renders a read-only rating visualization with generated star spans. Each
+star draws a filled star glyph at 1em of the rating size, coloured by
+`--sp-component-rating-star-filled` and `--sp-component-rating-star-empty`.
 
 **Attributes**
 
@@ -1019,7 +1086,7 @@ Renders a `<footer>` backed by the Spectre footer recipe.
 | `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta` | `brand` | Accent rail color; only applied when `accent` is set     |
 | `full-width`              | boolean                                                           | `false` | Spans full container width                               |
 | `appearance`              | `dark \| light \| system`                                         | `dark`  | Color palette; `system` follows `prefers-color-scheme`   |
-| `surface`                 | `page \| card \| subtle \| inverse \| hero`                       | —       | Paints the footer on a published surface role            |
+| `surface`                 | `page \| card \| subtle \| inverse \| hero \| action`            | —       | Paints the footer on a published surface role; `action` uses the theme's action colour (`data-spectre-action`) |
 | `inner-class`             | string                                                            | —       | Spectre utility classes applied to the native `<footer>` |
 | `id` / `title` / `aria-*` | string                                                            | —       | Forwarded to the native `<footer>`                       |
 
@@ -1179,7 +1246,16 @@ Spectre sidebar recipe.
 | `id` / `title` / `aria-*` | string  | —                | Forwarded to the native `<aside>`                                                     |
 
 **Content projection** — children become the sidebar content (links, navigation
-groups, etc.).
+groups, etc.). A `<details slot="group">` is a collapsible group: its
+`<summary>` is styled and gets a disclosure chevron that turns when the group
+opens, and a child with `slot="content"` gets the group content spacing.
+
+```html
+<details slot="group">
+  <summary>Guides</summary>
+  <div slot="content"><sp-sidebar-link href="/start">Start</sp-sidebar-link></div>
+</details>
+```
 
 **Behavior** — clicking the toggle button opens/closes the sidebar; clicking the
 backdrop or pressing `Esc` closes it. Toggling sets `data-sidebar-open`
@@ -1238,6 +1314,7 @@ toggle, or leave both in place to control the same sidebar from two triggers.
 | ------------------------- | ------ | ---------------- | ------------------------------------------------------------------------------------------------ |
 | `for`                     | string | —                | `id` of the target `sp-sidebar`'s native content (the id set on the `sp-sidebar` element itself) |
 | `label`                   | string | `Toggle sidebar` | Accessible label when no icon content is projected                                               |
+| `hovered` / `focused`     | boolean | `false`         | Forces the hover or focus look, for previews and visual tests                                    |
 | `id` / `title` / `aria-*` | string | —                | Forwarded to the native `<button>`                                                               |
 
 **Content projection** — children become the button's icon content; falls back
@@ -1964,6 +2041,7 @@ Spectre prose surface. An `aria-label` also makes it a labelled region.
 | Attribute        | Type    | Default | Description                                              |
 | ---------------- | ------- | ------- | -------------------------------------------------------- |
 | `accent-markers` | boolean | `false` | Colours list markers with the accent role, not the muted |
+| `size`           | `md \| lg \| xl` | — | Body text size from the `--sp-font-*` preset; omitted inherits the surrounding size |
 
 Element roles from `spectre-ui` 5.5.0 apply inside it automatically: `<del>`,
 `<ins>`, `<s>`, `<dl>`, `<figcaption>`, `<caption>`, bold weights, link
@@ -2040,7 +2118,7 @@ its text and attribution part recipes.
 | `size`                    | `sm \| md \| lg \| xl`                                                      | `md`     | Type scale of the quoted text; `xl` is a large statement |
 | `surface`                 | `plain \| subtle \| inverse`                                                | `plain`  | `subtle` and `inverse` add a padded panel                |
 | `accent`                  | `none \| edge \| mark`                                                      | `edge`   | Leading rail, decorative quote mark, or the neutral rule |
-| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta \| accent` | `accent` | Rail and mark tone                                       |
+| `accent-color`            | `neutral \| brand \| info \| success \| warning \| danger \| cta \| accent \| action` | `accent` | Rail and mark tone                                       |
 | `align`                   | `start \| center`                                                           | `start`  | Text alignment                                           |
 | `cite`                    | string                                                                      | —        | Source URL, forwarded to the native `<blockquote>`       |
 | `id` / `title` / `aria-*` | string                                                                      | —        | Forwarded to the native `<figure>`                       |
@@ -2077,6 +2155,7 @@ A single metric for stat rails, metric cards, and case-study figures, backed by
 | `size`                    | `sm \| md \| lg \| xl`       | `md`    | Type scale of the figure                                    |
 | `align`                   | `start \| center \| end`     | `start` | Alignment of the figure and label                           |
 | `surface`                 | `page \| surface \| inverse` | `page`  | What the stat sits on; picks the text roles and unit accent |
+| `unit-tone`               | `accent \| action`           | `accent` | Unit colour; `action` uses the theme's action colour (an `inverse` stat keeps its accent) |
 | `id` / `title` / `aria-*` | string                       | —       | Forwarded to the native `<div>`                             |
 
 Unslotted content is the figure, which uses tabular numerals. The `unit` slot
@@ -2403,6 +2482,7 @@ Each entry point registers only that component and exports only its surface:
 | `.../badge`                | `sp-badge`                | `defineSpectreBadge`, `SpectreBadgeElement`, badge constants and types                                  |
 | `.../card`                 | `sp-card`                 | `defineSpectreCard`, `SpectreCardElement`, card constants and types                                     |
 | `.../icon-box`             | `sp-icon-box`             | `defineSpectreIconBox`, `SpectreIconBoxElement`, icon-box constants and types                           |
+| `.../icon`                 | `sp-icon`                 | `defineSpectreIcon`, `SpectreIconElement`, `registerIcons`, `registerIconSet`, icon constants and types |
 | `.../rating`               | `sp-rating`               | `defineSpectreRating`, `SpectreRatingElement`, rating constants and types                               |
 | `.../testimonial`          | `sp-testimonial`          | `defineSpectreTestimonial`, `SpectreTestimonialElement`, testimonial constants and types                |
 | `.../alert`                | `sp-alert`                | `defineSpectreAlert`, `SpectreAlertElement`, alert constants and types                                  |

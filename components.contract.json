@@ -188,12 +188,42 @@
           "defineSpectreIconBox",
           "SpectreIconBoxElement",
           "spectreIconBoxVariants",
-          "spectreIconBoxSizes"
+          "spectreIconBoxSizes",
+          "spectreIconBoxIconSizes"
         ],
         "types": [
           "SpectreIconBoxProps",
           "SpectreIconBoxVariant",
-          "SpectreIconBoxSize"
+          "SpectreIconBoxSize",
+          "SpectreIconBoxIconSize"
+        ]
+      },
+      "contracts": {
+        "renderMode": "light-dom",
+        "shadowDomApproved": false
+      }
+    },
+    {
+      "tag": "sp-icon",
+      "elementClass": "SpectreIconElement",
+      "entryPoint": "./icon",
+      "distFile": "dist/icon.js",
+      "exports": {
+        "values": [
+          "defineSpectreIcon",
+          "SpectreIconElement",
+          "registerIcons",
+          "registerIconSet",
+          "spectreIconSizes"
+        ],
+        "types": [
+          "SpectreIconProps",
+          "SpectreIconSize",
+          "SpectreIconData",
+          "SpectreIconSetModule",
+          "SpectreLucideIconData",
+          "SpectreFontAwesomeIconData",
+          "SpectreSimpleIconData"
         ]
       },
       "contracts": {
@@ -895,8 +925,12 @@
       "entryPoint": "./prose",
       "distFile": "dist/prose.js",
       "exports": {
-        "values": ["defineSpectreProse", "SpectreProseElement"],
-        "types": ["SpectreProseProps"]
+        "values": [
+          "defineSpectreProse",
+          "SpectreProseElement",
+          "spectreProseSizes"
+        ],
+        "types": ["SpectreProseProps", "SpectreProseSize"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -1134,13 +1168,15 @@
           "SpectreStatElement",
           "spectreStatAligns",
           "spectreStatSizes",
-          "spectreStatSurfaces"
+          "spectreStatSurfaces",
+          "spectreStatUnitTones"
         ],
         "types": [
           "SpectreStatProps",
           "SpectreStatAlign",
           "SpectreStatSize",
-          "SpectreStatSurface"
+          "SpectreStatSurface",
+          "SpectreStatUnitTone"
         ]
       },
       "contracts": {
@@ -1202,13 +1238,8 @@
       "entryPoint": "./divider",
       "distFile": "dist/divider.js",
       "exports": {
-        "values": [
-          "defineSpectreDivider",
-          "SpectreDividerElement"
-        ],
-        "types": [
-          "SpectreDividerProps"
-        ]
+        "values": ["defineSpectreDivider", "SpectreDividerElement"],
+        "types": ["SpectreDividerProps"]
       },
       "contracts": {
         "renderMode": "light-dom",
@@ -1227,11 +1258,7 @@
           "spectreSurfaces",
           "spectreSurfaceTags"
         ],
-        "types": [
-          "SpectreSurfaceProps",
-          "SpectreSurface",
-          "SpectreSurfaceTag"
-        ]
+        "types": ["SpectreSurfaceProps", "SpectreSurface", "SpectreSurfaceTag"]
       },
       "contracts": {
         "renderMode": "light-dom",

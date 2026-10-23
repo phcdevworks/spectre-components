@@ -6,6 +6,61 @@ reflects package releases published to npm.
 
 ## [Unreleased]
 
+## [1.25.0] - 2026-10-23
+
+**Release Title:** Icons and Action Parity
+
+Contract change type: additive
+
+### Added
+
+- `sp-icon` renders a glyph by name from the icon sets `@phcdevworks/spectre-ui`
+  5.8.0 ships at `@phcdevworks/spectre-ui/icons`. `registerIconSet()` registers
+  a whole entry under its `iconSet.id` (`lucide`, `mdi`, `brands`,
+  `fa-solid`, `fa-regular`, `fa-brands`), and `registerIcons(set, icons)`
+  registers only the icons a page uses, so nothing ships by default. Lucide is
+  the default outline set; `set="fa-solid"` covers filled icons. Attributes:
+  `name`, `set`, `size` (`xs`–`3xl`, through `getIconSizeClasses`; omitted
+  follows the font size), and `label` (omitted renders the icon decorative).
+  The registry is shared across entry points. Own `./icon` entry point.
+  Requested by `spectre-base`.
+- `spectre-ui` 5.8.0 `action` colour options, so a child theme recolours them
+  with `data-spectre-action` on `<html>`: `sp-button` `variant="action"`,
+  `sp-stat` `unit-tone` (`accent` | `action`), `sp-quote`
+  `accent-color="action"`, and `sp-footer` `surface="action"`. New exports:
+  `spectreStatUnitTones`, `SpectreStatUnitTone`; `spectreQuoteAccentColors`
+  and `SpectreQuoteAccentColor` now list `action`.
+- `sp-sidebar` groups use the 5.8.0 group recipes: each `<details
+  slot="group">` summary gets a disclosure chevron
+  (`getSidebarGroupIconClasses`) that turns when the group opens, and a
+  child with `slot="content"` gets `getSidebarGroupContentClasses`.
+- `sp-sidebar-toggle` `hovered` and `focused` force the hover and focus look
+  through `getSidebarToggleClasses`.
+- `sp-prose` `size` (`md` | `lg` | `xl`) sets the body text size through
+  `getProseClasses({ size })`. New exports: `spectreProseSizes`,
+  `SpectreProseSize`.
+- `sp-icon-box` `icon-size` (`xs`–`3xl`) sizes the projected glyph through
+  `getIconBoxClasses({ iconSize })` (`spectre-ui` 5.8.0). New exports:
+  `spectreIconBoxIconSizes`, `SpectreIconBoxIconSize`.
+
+### Fixed
+
+- `sp-rating` stars rendered empty, so only the label showed. Each star now
+  draws Lucide's star glyph, filled with `currentColor` at 1em of the rating
+  size, so `.sp-rating-star` and `.sp-rating-star--filled` colour it from
+  `--sp-component-rating-star-empty` and `-filled`. Requested by
+  `spectre-base`.
+
+### Changed
+
+- `@phcdevworks/spectre-tokens` range moves to `^4.15.0` and
+  `@phcdevworks/spectre-ui` to `^5.8.0`.
+- Through `spectre-ui` 5.8.0, component text no longer drops below the 16px
+  minimum. Existing `sp-label`, `sp-fieldset` legends, helper and error text,
+  tabs, table text, breadcrumb text, accordion panels, footer text, and prose
+  captions that used 12px or 14px roles now render at 16px with the matching
+  line height. Visual regression baselines reflect the larger form text.
+
 ## [1.24.0] - 2026-10-17
 
 **Release Title:** Recipe and Utility Parity
@@ -1134,7 +1189,9 @@ Contract change type: N/A
 - Tightened property validation and control consistency for early public APIs.
 
 [unreleased]:
-  https://github.com/phcdevworks/spectre-components/compare/v1.24.0...HEAD
+  https://github.com/phcdevworks/spectre-components/compare/v1.25.0...HEAD
+[1.25.0]:
+  https://github.com/phcdevworks/spectre-components/compare/v1.24.0...v1.25.0
 [1.24.0]:
   https://github.com/phcdevworks/spectre-components/compare/v1.23.0...v1.24.0
 [1.23.0]:

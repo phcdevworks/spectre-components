@@ -48,6 +48,28 @@ describe('sp-rating', () => {
     expect(stars?.length).toBe(5)
   })
 
+  it('draws a filled star glyph in every star, coloured through currentColor', async () => {
+    const element = document.createElement('sp-rating') as SpectreRatingElement
+    element.max = 5
+    element.value = 2
+
+    document.body.append(element)
+    await element.updateComplete
+
+    const stars = element.querySelectorAll('.sp-rating-star')
+    const filled = element.querySelectorAll('.sp-rating-star--filled')
+
+    expect(stars.length).toBe(5)
+    expect(filled.length).toBe(2)
+    for (const star of stars) {
+      const glyph = star.querySelector('svg')
+      expect(glyph?.getAttribute('fill')).toBe('currentColor')
+      expect(glyph?.getAttribute('aria-hidden')).toBe('true')
+      expect(glyph?.getAttribute('width')).toBe('1em')
+      expect(glyph?.querySelector('path')?.getAttribute('d')).toBeTruthy()
+    }
+  })
+
   it('generates a default aria-label expressing value out of max', async () => {
     const element = document.createElement('sp-rating') as SpectreRatingElement
     element.value = 4

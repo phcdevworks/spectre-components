@@ -53,6 +53,24 @@ describe('sp-icon-box', () => {
     expect(div?.className).toContain('lg')
   })
 
+  it('sizes the projected glyph from icon-size and drops unknown sizes', async () => {
+    const element = document.createElement(
+      'sp-icon-box'
+    ) as SpectreIconBoxElement
+    element.setAttribute('icon-size', '2xl')
+    document.body.append(element)
+    await element.updateComplete
+
+    const div = element.querySelector('[data-sp-icon-box-native]')
+    expect(element.iconSize).toBe('2xl')
+    expect(div?.className).toContain('sp-iconbox--icon-2xl')
+
+    element.setAttribute('icon-size', 'huge')
+    await element.updateComplete
+    expect(element.iconSize).toBeUndefined()
+    expect(div?.className).not.toContain('sp-iconbox--icon-')
+  })
+
   it('falls back to variant=primary for an invalid variant', async () => {
     const element = document.createElement(
       'sp-icon-box'

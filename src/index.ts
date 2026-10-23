@@ -12,6 +12,7 @@ import { defineSpectreFieldset } from './components/fieldset'
 import { defineSpectreBadge } from './components/badge'
 import { defineSpectreCard } from './components/card'
 import { defineSpectreIconBox } from './components/icon-box'
+import { defineSpectreIcon } from './components/icon'
 import { defineSpectreRating } from './components/rating'
 import { defineSpectreTestimonial } from './components/testimonial'
 import { defineSpectreAlert } from './components/alert'
@@ -80,6 +81,7 @@ export function defineSpectreComponents(): void {
   defineSpectreBadge()
   defineSpectreCard()
   defineSpectreIconBox()
+  defineSpectreIcon()
   defineSpectreRating()
   defineSpectreTestimonial()
   defineSpectreAlert()

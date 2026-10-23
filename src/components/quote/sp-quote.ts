@@ -3,12 +3,12 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreBaseElement } from '../../utils/base'
 import {
-  isAccentColor,
+  isQuoteAccentColor,
   isQuoteAccent,
   isQuoteAlign,
   isQuoteSize,
   isQuoteSurface,
-  type SpectreAccentColor,
+  type SpectreQuoteAccentColor,
   type SpectreQuoteAccent,
   type SpectreQuoteAlign,
   type SpectreQuoteSize,
@@ -27,7 +27,7 @@ import {
 
 export interface SpectreQuoteProps {
   accent?: SpectreQuoteAccent | undefined
-  accentColor?: SpectreAccentColor | undefined
+  accentColor?: SpectreQuoteAccentColor | undefined
   align?: SpectreQuoteAlign | undefined
   ariaLabel?: string | null
   ariaLabelledBy?: string | null
@@ -53,7 +53,7 @@ export class SpectreQuoteElement
   }
 
   accent: SpectreQuoteAccent | undefined = 'edge'
-  accentColor: SpectreAccentColor | undefined = undefined
+  accentColor: SpectreQuoteAccentColor | undefined = undefined
   align: SpectreQuoteAlign | undefined = 'start'
   cite: string | undefined
   size: SpectreQuoteSize | undefined = 'md'
@@ -96,7 +96,7 @@ export class SpectreQuoteElement
     if (
       changedProperties.has('accentColor') &&
       this.accentColor != null &&
-      !isAccentColor(this.accentColor)
+      !isQuoteAccentColor(this.accentColor)
     ) {
       this.accentColor = undefined
     }

@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit'
+import { html, nothing, svg } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreBaseElement } from '../../utils/base'
@@ -13,7 +13,9 @@ import {
   interactionStates,
   type SpectreInteractionStateProps
 } from '../../utils/states'
+import { iconTextSize } from '../../utils/icon-registry'
 
+import { Star } from '@phcdevworks/spectre-ui/icons'
 import {
   getRatingClasses,
   getRatingStarsClasses,
@@ -21,6 +23,14 @@ import {
   getRatingTextClasses,
   type RatingSize
 } from '@phcdevworks/spectre-ui'
+
+// Lucide's star, filled so `.sp-rating-star` and `--filled` colour the whole
+// glyph through currentColor.
+const starGlyph = svg`${Star.map(([, attributes]) =>
+  typeof attributes.d === 'string'
+    ? svg`<path d=${attributes.d}></path>`
+    : nothing
+)}`
 
 export interface SpectreRatingProps extends SpectreInteractionStateProps {
   fullWidth?: boolean | undefined
@@ -144,9 +154,21 @@ export class SpectreRatingElement
     const stars = []
     for (let i = 1; i <= this.effectiveMax; i++) {
       stars.push(
-        html`<span
-          class="${getRatingStarClasses(i <= this.effectiveValue)}"
-        ></span>`
+        html`<span class="${getRatingStarClasses(i <= this.effectiveValue)}"
+          ><svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="${iconTextSize}"
+            stroke="currentColor"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="${iconTextSize}"
+          >
+            ${starGlyph}
+          </svg></span
+        >`
       )
     }
     return stars

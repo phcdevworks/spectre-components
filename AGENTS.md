@@ -294,6 +294,7 @@ rules.
 | `sp-badge`                | `SpectreBadgeElement`              | `@phcdevworks/spectre-components/badge`                |
 | `sp-card`                 | `SpectreCardElement`               | `@phcdevworks/spectre-components/card`                 |
 | `sp-icon-box`             | `SpectreIconBoxElement`            | `@phcdevworks/spectre-components/icon-box`             |
+| `sp-icon`                 | `SpectreIconElement`               | `@phcdevworks/spectre-components/icon`                 |
 | `sp-rating`               | `SpectreRatingElement`             | `@phcdevworks/spectre-components/rating`               |
 | `sp-testimonial`          | `SpectreTestimonialElement`        | `@phcdevworks/spectre-components/testimonial`          |
 | `sp-alert`                | `SpectreAlertElement`              | `@phcdevworks/spectre-components/alert`                |

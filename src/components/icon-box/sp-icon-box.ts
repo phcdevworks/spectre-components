@@ -4,8 +4,10 @@ import { ifDefined } from 'lit/directives/if-defined.js'
 import { SpectreProjectableElement } from '../../utils/projectable'
 import {
   isIconBoxVariant,
+  isIconSize,
   isInputSize,
   type SpectreIconBoxVariant,
+  type SpectreIconSize,
   type SpectreInputSize
 } from '../../utils/form'
 
@@ -27,6 +29,7 @@ export interface SpectreIconBoxProps extends SpectreInteractionStateProps {
   ariaDescribedBy?: string | null
   disabled?: boolean | undefined
   fullWidth?: boolean | undefined
+  iconSize?: SpectreIconSize | undefined
   id?: string | null | undefined
   interactive?: boolean | undefined
   loading?: boolean | undefined
@@ -44,6 +47,7 @@ export class SpectreIconBoxElement
     ...interactionStateProperties,
     disabled: { type: Boolean, reflect: true },
     fullWidth: { attribute: 'full-width', type: Boolean, reflect: true },
+    iconSize: { attribute: 'icon-size', type: String, reflect: true },
     interactive: { type: Boolean, reflect: true },
     loading: { type: Boolean, reflect: true },
     pill: { type: Boolean, reflect: true },
@@ -57,6 +61,7 @@ export class SpectreIconBoxElement
 
   disabled: boolean | undefined = false
   fullWidth: boolean | undefined = false
+  iconSize: SpectreIconSize | undefined
   interactive: boolean | undefined = false
   loading: boolean | undefined = false
   pill: boolean | undefined = false
@@ -100,6 +105,13 @@ export class SpectreIconBoxElement
     if (changedProperties.has('fullWidth') && this.fullWidth == null) {
       this.fullWidth = false
     }
+    if (
+      changedProperties.has('iconSize') &&
+      this.iconSize != null &&
+      !isIconSize(this.iconSize)
+    ) {
+      this.iconSize = undefined
+    }
     if (changedProperties.has('interactive') && this.interactive == null) {
       this.interactive = false
     }
@@ -128,6 +140,7 @@ export class SpectreIconBoxElement
       ...interactionStates(this),
       disabled: this.isDisabled,
       fullWidth: this.fullWidth ?? false,
+      ...(this.iconSize ? { iconSize: this.iconSize } : {}),
       interactive: this.interactive ?? false,
       loading: this.loading ?? false,
       pill: this.pill ?? false,

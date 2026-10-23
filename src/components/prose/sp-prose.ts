@@ -2,6 +2,7 @@ import { html } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreBaseElement } from '../../utils/base'
+import { isProseSize, type SpectreProseSize } from '../../utils/form'
 import { ProjectionController } from '../../utils/projection'
 
 import { getProseClasses } from '@phcdevworks/spectre-ui'
@@ -10,6 +11,7 @@ export interface SpectreProseProps {
   accentMarkers?: boolean | undefined
   ariaLabel?: string | null
   id?: string | null | undefined
+  size?: SpectreProseSize | undefined
   title?: string | null | undefined
 }
 
@@ -19,10 +21,16 @@ export class SpectreProseElement
   implements SpectreProseProps
 {
   static properties = {
-    accentMarkers: { attribute: 'accent-markers', type: Boolean, reflect: true }
+    accentMarkers: {
+      attribute: 'accent-markers',
+      type: Boolean,
+      reflect: true
+    },
+    size: { type: String, reflect: true }
   }
 
   accentMarkers: boolean | undefined = false
+  size: SpectreProseSize | undefined
 
   private readonly projection = new ProjectionController(this, [
     'data-sp-prose-native'
@@ -49,10 +57,25 @@ export class SpectreProseElement
     this.style.display ||= 'block'
   }
 
+  protected override willUpdate(
+    changedProperties: Map<PropertyKey, unknown>
+  ): void {
+    if (
+      changedProperties.has('size') &&
+      this.size != null &&
+      !isProseSize(this.size)
+    ) {
+      this.size = undefined
+    }
+  }
+
   override render() {
     return html`<div
       aria-label="${ifDefined(this.forwardedAriaLabel)}"
-      class="${getProseClasses({ accentMarkers: this.accentMarkers ?? false })}"
+      class="${getProseClasses({
+        accentMarkers: this.accentMarkers ?? false,
+        ...(this.size ? { size: this.size } : {})
+      })}"
       data-sp-prose-native
       id="${ifDefined(this.id || undefined)}"
       role="${ifDefined(this.forwardedAriaLabel ? 'region' : undefined)}"

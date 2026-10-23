@@ -39,13 +39,16 @@ file does not restate delivered work.
 | 21 | `spectre-ui` 5.4.0 child-theme contracts, requested by a downstream integration — `sp-footer` `appearance`/`surface`, `sp-section` `hero`/`attached`, `xl`–`4xl` layout spacing steps and the 8px grid rule, `sp-text` `weight`, `sp-logo-cloud`, `sp-skeleton`; fixes for the `sp-stack` legacy `align` hint, nested `sp-grid` item placement, and the inline `sp-text` line box | 1.22.0 |
 | 22 | `spectre-ui` 5.5.0 child-theme contracts and Phase 17 element roles, requested by `spectre-base` — `sp-text` `leading` and accent variants, `sp-button` `accentOutline`, `sp-stepper` `tone`, the `accent` rail colour, `sp-quote`, `sp-stat`, `sp-section-head`, `sp-prose` `accent-markers` | 1.23.0 |
 | 23 | `spectre-ui` 5.7.0 recipe parity, matching `spectre-ui-astro` 4.13.0 — `sp-link`, `sp-divider`, `sp-surface`; `sp-text` `font-size`, `tracking`, `decoration`, `underline-offset`, `tabular-nums`, `balance`, and `7xl`–`9xl`; per-breakpoint and `auto` `sp-grid` `columns`; utility recipes re-exported from the root | 1.24.0 |
+| 24 | `spectre-ui` 5.8.0 parity — `sp-icon` renders any registered `spectre-ui/icons` set by name, `sp-icon-box` `icon-size`, and filled `sp-rating` star glyphs (requested by `spectre-base`); `action` colour options on `sp-button`, `sp-stat`, `sp-quote`, and `sp-footer`; sidebar group chevron and content recipes; `sp-sidebar-toggle` forced states; `sp-prose` `size` | 1.25.0 |
 
 ---
 
 ## What's Next
 
-Nothing queued. Every `spectre-ui` 5.7.0 component recipe has a component
-consumer. The utility-only recipes (`getSpacingClasses`, `getLayoutClasses`,
+Nothing queued. Every `spectre-ui` 5.8.0 component recipe and option has a
+component consumer. New components are built proactively whenever a
+`spectre-ui` release publishes a recipe with no component. See
+[TODO.md](TODO.md). The utility-only recipes (`getSpacingClasses`, `getLayoutClasses`,
 `getColorClasses`, and the rest) are re-exported from the root as class
 helpers that feed `inner-class`, as they are in `spectre-ui-astro`.
 New components are built proactively whenever a `spectre-ui`

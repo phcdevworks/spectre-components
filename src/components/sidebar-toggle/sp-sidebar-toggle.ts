@@ -2,6 +2,11 @@ import { html } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
 import { SpectreProjectableElement } from '../../utils/projectable'
+import {
+  hoverFocusStateProperties,
+  hoverFocusStates,
+  type SpectreHoverFocusStateProps
+} from '../../utils/states'
 
 import { getSidebarToggleClasses } from '@phcdevworks/spectre-ui'
 
@@ -9,7 +14,7 @@ interface SpectreSidebarTarget extends HTMLElement {
   open?: boolean
 }
 
-export interface SpectreSidebarToggleProps {
+export interface SpectreSidebarToggleProps extends SpectreHoverFocusStateProps {
   ariaLabel?: string | null
   for?: string | undefined
   id?: string | null | undefined
@@ -22,9 +27,13 @@ export class SpectreSidebarToggleElement
   implements SpectreSidebarToggleProps
 {
   static properties = {
+    ...hoverFocusStateProperties,
     for: { type: String },
     label: { type: String }
   }
+
+  focused: boolean | undefined = false
+  hovered: boolean | undefined = false
 
   for: string | undefined = undefined
   label: string | undefined = 'Toggle sidebar'
@@ -127,7 +136,7 @@ export class SpectreSidebarToggleElement
   }
 
   private get toggleClasses(): string {
-    return getSidebarToggleClasses()
+    return getSidebarToggleClasses(hoverFocusStates(this))
   }
 
   override render() {

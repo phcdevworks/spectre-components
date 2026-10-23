@@ -43,6 +43,7 @@
         "./badge",
         "./card",
         "./icon-box",
+        "./icon",
         "./rating",
         "./testimonial",
         "./alert",

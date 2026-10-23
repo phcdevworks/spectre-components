@@ -1,6 +1,8 @@
 import {
   spectreIconBoxVariants,
   type SpectreIconBoxVariant,
+  spectreIconSizes,
+  type SpectreIconSize,
   spectreInputSizes,
   type SpectreInputSize
 } from '../../utils/form'
@@ -15,5 +17,7 @@ export {
   spectreIconBoxVariants,
   type SpectreIconBoxVariant,
   spectreInputSizes as spectreIconBoxSizes,
-  type SpectreInputSize as SpectreIconBoxSize
+  type SpectreInputSize as SpectreIconBoxSize,
+  spectreIconSizes as spectreIconBoxIconSizes,
+  type SpectreIconSize as SpectreIconBoxIconSize
 }

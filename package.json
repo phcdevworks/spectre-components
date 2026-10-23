@@ -1,6 +1,6 @@
 {
   "name": "@phcdevworks/spectre-components",
-  "version": "1.24.0",
+  "version": "1.25.0",
   "description": "@phcdevworks/spectre-components is the web-component layer of the Spectre system. It provides accessible, framework-independent interface components built on Spectre's shared design contracts.",
   "keywords": [
     "phcdevworks",
@@ -33,7 +33,7 @@
     "node": "^22.13.0 || >=24.0.0"
   },
   "type": "module",
-  "packageManager": "npm@12.2.0",
+  "packageManager": "npm@12.2.1",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -97,6 +97,11 @@
       "types": "./dist/icon-box.d.ts",
       "import": "./dist/icon-box.js",
       "require": "./dist/icon-box.cjs"
+    },
+    "./icon": {
+      "types": "./dist/icon.d.ts",
+      "import": "./dist/icon.js",
+      "require": "./dist/icon.cjs"
     },
     "./rating": {
       "types": "./dist/rating.d.ts",
@@ -408,8 +413,8 @@
     "typescript": "^5.0 || ^6.0 || ^7.0"
   },
   "dependencies": {
-    "@phcdevworks/spectre-tokens": "^4.14.0",
-    "@phcdevworks/spectre-ui": "^5.7.0",
+    "@phcdevworks/spectre-tokens": "^4.15.0",
+    "@phcdevworks/spectre-ui": "^5.8.0",
     "lit": "^3.3.3"
   },
   "devDependencies": {
@@ -417,19 +422,19 @@
     "@phcdevworks/spectre-manifest": "^2.0.0",
     "@playwright/test": "^1.64.1",
     "@types/node": "^26.6.5",
-    "@typescript-eslint/eslint-plugin": "^8.71.2",
-    "@typescript-eslint/parser": "^8.71.2",
+    "@typescript-eslint/eslint-plugin": "^8.72.0",
+    "@typescript-eslint/parser": "^8.72.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "axe-core": "^4.14.0",
     "eslint": "^10.13.0",
     "globals": "^17.13.0",
-    "happy-dom": "^21.0.3",
+    "happy-dom": "^21.0.4",
     "jiti": "^2.7.0",
     "prettier": "^3.9.10",
     "tsup": "^9.0.0",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "typescript-eslint": "^8.71.2",
-    "vite": "^8.3.4",
+    "typescript-eslint": "^8.72.0",
+    "vite": "^8.3.5",
     "vitest": "^5.0.5"
   },
   "allowScripts": {
